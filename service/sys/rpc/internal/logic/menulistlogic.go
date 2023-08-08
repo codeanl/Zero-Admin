@@ -23,7 +23,7 @@ func NewMenuListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *MenuList
 
 // 菜单列表
 func (l *MenuListLogic) MenuList(in *sys.MenuListReq) (*sys.MenuListResp, error) {
-	all, _, err := l.svcCtx.MenuModel.GetMenuList(in)
+	all, _, err := l.svcCtx.MenuModel.GetMenuList()
 	if err != nil {
 		return nil, err
 	}

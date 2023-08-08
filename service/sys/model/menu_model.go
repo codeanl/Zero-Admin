@@ -1,17 +1,16 @@
 package model
 
 import (
-	"SimplePick-Mall-Server/service/sys/rpc/sys"
 	"gorm.io/gorm"
 )
 
 type (
 	MenuModel interface {
 		AddMenu(menu *Menu) (err error)
-		GetMenuList(in *sys.MenuListReq) ([]Menu, int64, error)
+		GetMenuList() ([]Menu, int64, error)
 		UpdateMenu(id int64, menu *Menu) error
 		DeleteMenuByIds(ids []int64) error
-		//GetMenusByUserID(userID int64) ([]Menu, error)
+		GetMenusByUserID(userID int64) ([]Menu, error)
 	}
 
 	defaultMenuModel struct {
@@ -43,7 +42,7 @@ func (m *defaultMenuModel) AddMenu(menu *Menu) (err error) {
 	return m.conn.Model(&Menu{}).Create(menu).Error
 }
 
-func (m *defaultMenuModel) GetMenuList(in *sys.MenuListReq) ([]Menu, int64, error) {
+func (m *defaultMenuModel) GetMenuList() ([]Menu, int64, error) {
 	var list []Menu
 	db := m.conn.Model(&Menu{}).Order("order_num ASC")
 	var total int64
@@ -66,26 +65,30 @@ func (m *defaultMenuModel) DeleteMenuByIds(ids []int64) error {
 	return err
 }
 
-//func (m *defaultMenuModel) GetMenusByUserID(userID int64) ([]Menu, error) {
-//	var userrole AdminRole
-//	if err := m.conn.Model(&AdminRole{}).Where("user_id=?", userID).First(&userrole).Error; err != nil {
-//		return nil, err
-//	}
-//	var role Role
-//	if err := m.conn.Model(&Role{}).First(&role, userrole.RoleID).Error; err != nil {
-//		return nil, err
-//	}
-//	var roleMenus []RoleMenu
-//	if err := m.conn.Model(&RoleMenu{}).Where("role_id = ?", role.ID).Find(&roleMenus).Error; err != nil {
-//		return nil, err
-//	}
-//	var menuIDs []uint
-//	for _, rm := range roleMenus {
-//		menuIDs = append(menuIDs, uint(rm.MenuID))
-//	}
-//	var menus []Menu
-//	if err := m.conn.Model(&Menu{}).Where("id IN (?)", menuIDs).Find(&menus).Error; err != nil {
-//		return nil, err
-//	}
-//	return menus, nil
-//}
+func (m *defaultMenuModel) GetMenusByUserID(userID int64) ([]Menu, error) {
+	var userRoles []UserRole
+	if err := m.conn.Model(&UserRole{}).Where("user_id = ?", userID).Find(&userRoles).Error; err != nil {
+		return nil, err
+	}
+
+	var roleIDs []int64
+	for _, userRole := range userRoles {
+		roleIDs = append(roleIDs, userRole.RoleID)
+	}
+
+	var rolemenu []RoleMenu
+	if err := m.conn.Model(&RoleMenu{}).Where("role_id IN (?)", roleIDs).Find(&rolemenu).Error; err != nil {
+		return nil, err
+	}
+
+	var menuIDs []int64
+	for _, role := range rolemenu {
+		menuIDs = append(menuIDs, role.MenuID)
+	}
+
+	var menus []Menu
+	if err := m.conn.Model(&Menu{}).Where("id IN (?)", menuIDs).Find(&menus).Error; err != nil {
+		return nil, err
+	}
+	return menus, nil
+}
