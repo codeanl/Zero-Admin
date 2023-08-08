@@ -1,0 +1,395 @@
+syntax = "proto3";
+
+package sys;
+option go_package = "./sys";
+
+//用户登录
+message LoginReq {
+  string username = 1;
+  string password = 2;
+}
+message LoginResp {
+  string Token = 1;
+  int64 UserID=2;
+}
+//用户信息
+message InfoReq {
+  int64 ID = 1;
+}
+message InfoResp {
+  UserInfo UserInfo=1;
+  repeated string Routes = 3;
+  repeated string Buttons = 4;
+  repeated string Roles = 5;
+}
+message UserInfo{
+  int64  ID = 1;
+  string Username =2;
+  string Phone = 3;
+  string Nickname = 4;
+  string Gender =5;
+  string Avatar = 6;
+  string Email = 7;
+  string Status=8;
+  string RoleName=10;
+  string CreateBy=11;
+  string UpdateBy=12;
+  string CreateAt=13;
+  string UpdateAt=14;
+}
+//添加用户
+message UserAddReq {
+  string Username = 1;
+  string Phone = 2;
+  string Nickname = 3;
+  string Gender =4;
+  string Avatar = 5;
+  string Email = 6;
+  string Status = 7;
+  string Password=8;
+  repeated int64 RoleID =9;
+  string CreateBy=10;
+}
+message UserAddResp {
+  string pong = 1;
+}
+//更新用户
+message UserUpdateReq {
+  int64 ID=1;
+  string Username = 2;
+  string Phone = 3;
+  string Nickname = 4;
+  string Gender =5;
+  string Avatar = 7;
+  string Email = 8;
+  string Status=9;
+  repeated int64 RoleID=10;
+  string UpdateBy=11;
+}
+message UserUpdateResp {
+  string pong = 1;
+}
+//删除用户
+message UserDeleteReq {
+  repeated int64 ids = 1;
+}
+message UserDeleteResp {
+  string pong = 1;
+}
+//用户列表
+message UserListReq {
+  int64 current = 1;
+  int64 pageSize = 2;
+  string nickname = 3;
+  string phone = 4;
+  string username = 5;
+  string status = 6;
+  string gender = 7;
+}
+message UserList{
+  int64 id = 1;
+  string Username = 2;
+  string Phone = 3;
+  string Nickname = 4;
+  string Gender = 5;
+  string Avatar = 6;
+  string Email = 7;
+  string Status = 8;
+  repeated  string RoleName=10;
+  string CreateBy=11;
+  string UpdateBy=12;
+  string CreateAt=13;
+  string UpdateAt=14;
+}
+message UserListResp {
+  int64 total = 1;
+  repeated UserList list = 2;
+}
+//更新密码
+message UpdatePasswordReq {
+  int64 ID = 1;
+  string OldPassword=2;
+  string NewPassword=3;
+}
+message UpdatePasswordResp {
+  string pong = 1;
+}
+//重置密码
+message RestartPasswordReq{
+  int64 ID = 1;
+}
+message RestartPasswordResp{
+  string pong = 1;
+}
+//添加登录日志
+message LoginLogAddReq {
+  int64 UserID = 1;
+  string Status = 2;
+  string IP = 3;
+}
+message LoginLogAddResp {
+  string pong = 1;
+}
+  //登录日志列表
+message LoginLogListReq {
+  int64 Current = 1;
+  int64 PageSize = 2;
+  string Username = 3;
+  string Status = 4;
+}
+message LoginLogListData {
+  int64 ID = 1;
+  string Status = 2;
+  string IP = 3;
+  string CreateTime = 4;
+  int64 UserID=6;
+  string Avatar=7;
+  string Username=8;
+
+}
+message LoginLogListResp{
+  int64 total = 1;
+  repeated  LoginLogListData list = 2;
+}
+//删除登录日志
+message LoginLogDeleteReq {
+  repeated int64 ids = 1;
+}
+message LoginLogDeleteResp {
+  string pong = 1;
+}
+//添加自提点
+message PlaceAddReq {
+  string name = 1;
+  string place = 2;
+  string status = 3;
+  string pic = 4;
+  string phone = 5;
+  string principal = 6;
+  string CreateBy = 7;
+}
+message PlaceAddResp {
+  string pong = 1;
+}
+//自提点列表
+message PlaceUpdateReq {
+  int64 id = 1;
+  string name = 2;
+  string place = 3;
+  string status = 4;
+  string pic = 5;
+  string phone = 6;
+  string principal = 7;
+  string UpdateBy = 8;
+}
+message PlaceUpdateResp {
+  string pong = 1;
+}
+//更新自提点
+message PlaceListReq {
+  string name = 1;
+  string place = 2;
+  string phone = 3;
+  int64 current = 4;
+  int64 pageSize = 5;
+}
+message PlaceListData {
+  int64 id = 1;
+  string name = 2;
+  string place = 3;
+  string status = 4;
+  string pic = 5;
+  string phone = 6;
+  string principal = 7;
+  string CreateBy = 8;
+  string CreateAt = 9;
+  string UpdateBy = 10;
+  string UpdateAt = 11;
+}
+message PlaceListResp{
+  int64 total = 1;
+  repeated  PlaceListData list = 2;
+}
+//删除自提点
+message PlaceDeleteReq {
+  repeated int64 ids = 1;
+}
+message PlaceDeleteResp {
+  string pong = 1;
+}
+//添加角色
+message RoleAddReq {
+  string Name = 1;
+  string Remark = 2;
+  string CreateBy = 3;
+}
+message RoleAddResp {
+  string pong = 1;
+}
+//更新角色
+message RoleUpdateReq {
+  int64 id = 1;
+  string name = 2;
+  string remark = 3;
+  string update_by = 4;
+}
+message RoleUpdateResp {
+  string pong = 1;
+}
+//删除角色
+message RoleDeleteReq {
+  repeated int64 ids = 1;
+}
+message RoleDeleteResp {
+  string pong = 1;
+}
+//角色列表
+message RoleListReq {
+  int64 current = 1;
+  int64 pageSize = 2;
+  string name = 3;
+}
+message RoleListData {
+  int64 id = 1;
+  string name = 2;
+  string remark = 3;
+  string CreateBy = 4;
+  string CreateAt = 5;
+  string UpdateBy = 6;
+  string UpdateAt = 7;
+}
+message RoleListResp {
+  int64 total = 1;
+  repeated  RoleListData list = 2;
+}
+//用户拥有的角色列表
+message RoleByUserListReq {
+  int64 UserID = 1;
+}
+message RoleByUserListResp {
+  repeated  RoleListData list = 2;
+}
+//添加菜单
+message MenuAddReq {
+  string name = 1;
+  int64 parent_id = 2;
+  string url = 3;
+  string type = 5;
+  string icon = 6;
+  int64 order_num = 7;
+  string create_by = 8;
+  string remark = 4;
+  string TAG = 9;
+}
+message MenuAddResp {
+  string pong = 1;
+}
+//更新菜单
+message MenuUpdateReq {
+  int64 id = 1;
+  string name = 2;
+  int64 parent_id = 3;
+  string url = 4;
+  string type = 6;
+  string icon = 7;
+  int64 order_num = 8;
+  string UpdateBy = 9;
+  string remark = 5;
+  string TAG = 10;
+}
+message MenuUpdateResp {
+  string pong = 1;
+}
+//删除菜单
+message MenuDeleteReq {
+  repeated int64 ids = 1;
+}
+message MenuDeleteResp {
+  string pong = 1;
+}
+//菜单列表
+message  MenuListReq{
+
+}
+
+message MenuList{
+  int64 ID = 1;
+  string Name = 2;
+  int64 ParentID = 3;
+  string Url = 4;
+  string Type = 6;
+  string Icon = 7;
+  int64 OrderNum = 8;
+  string CreateBy = 9;
+  string UpdateBy = 5;
+  string Remark = 10;
+  string TAG = 11;
+}
+message MenuListResp{
+  repeated MenuList MenuList =  1;
+}
+//todo 获取角色的菜单
+message QueryMenuByRoleIdReq {
+  repeated int64 id = 1;
+}
+message QueryMenuByRoleIdResp {
+  repeated int64 ids = 1;
+}
+
+service Sys{
+  //用户登录
+  rpc UserLogin(LoginReq) returns(LoginResp);
+  //用户信息
+  rpc UserInfo(InfoReq) returns(InfoResp);
+  //添加用户
+  rpc UserAdd(UserAddReq) returns(UserAddResp);
+  //更新用户
+  rpc UserUpdate(UserUpdateReq) returns(UserUpdateResp);
+  //删除用户
+  rpc UserDelete(UserDeleteReq) returns(UserDeleteResp);
+  //用户列表
+  rpc UserList(UserListReq) returns(UserListResp);
+  //更新密码
+  rpc UpdatePassword(UpdatePasswordReq) returns(UpdatePasswordResp);
+  //重置密码
+  rpc RestartPassword(RestartPasswordReq) returns(RestartPasswordResp);
+
+  //添加登录日志
+  rpc LoginLogAdd(LoginLogAddReq) returns(LoginLogAddResp);
+  //登录日志列表
+  rpc LoginLogList(LoginLogListReq) returns(LoginLogListResp);
+  //删除登录日志
+  rpc LoginLogDelete(LoginLogDeleteReq) returns(LoginLogDeleteResp);
+
+  //添加自提点
+  rpc PlaceAdd(PlaceAddReq) returns(PlaceAddResp);
+  //自提点列表
+  rpc PlaceList(PlaceListReq) returns(PlaceListResp);
+  //更新自提点
+  rpc PlaceUpdate(PlaceUpdateReq) returns(PlaceUpdateResp);
+  //删除自提点
+  rpc PlaceDelete(PlaceDeleteReq) returns(PlaceDeleteResp);
+
+  //添加角色
+  rpc RoleAdd(RoleAddReq) returns(RoleAddResp);
+  //更新角色
+  rpc RoleUpdate(RoleUpdateReq) returns(RoleUpdateResp);
+  //删除角色
+  rpc RoleDelete(RoleDeleteReq) returns(RoleDeleteResp);
+  //角色列表
+  rpc RoleList(RoleListReq) returns(RoleListResp);
+  //用户拥有的角色列表
+  rpc RoleByUserList(RoleByUserListReq) returns(RoleByUserListResp);
+  //获取角色的菜单
+    rpc QueryMenuByRoleId(QueryMenuByRoleIdReq) returns(QueryMenuByRoleIdResp);
+  //  rpc UpdateMenuRole(UpdateMenuRoleReq) returns(UpdateMenuRoleResp);
+
+  //添加菜单
+  rpc MenuAdd(MenuAddReq) returns(MenuAddResp);
+  //菜单列表
+    rpc MenuList(MenuListReq) returns(MenuListResp);
+  //更新菜单
+  rpc MenuUpdate(MenuUpdateReq) returns(MenuUpdateResp);
+  //删除菜单
+  rpc MenuDelete(MenuDeleteReq) returns(MenuDeleteResp);
+}

@@ -1,0 +1,177 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+type(
+ //用户登录
+   loginReq struct {
+        Username string `json:"username"`
+        Password string `json:"password"`
+    }
+    loginResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Data string `json:"data"`
+    }
+    //用户信息
+        UserInfoResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+            Data Data `json:"data"`
+        }
+        Data struct {
+            UserInfo UserInfo  `json:"userInfo"`
+            Routes []string  `json:"routes"`
+            Roles []string  `json:"roles"`
+            Buttons []string  `json:"buttons"`
+        }
+         UserInfo struct{
+               ID int64 `json:"id"`
+               Username string `json:"username"`
+               NickName string `json:"nickname"`
+               Phone string `json:"phone"`
+               Gander string `json:"gender"`
+               Avatar string `json:"avatar"`
+               Email string `json:"email"`
+               Status string `json:"status"`
+               CreateAt string `json:"creat_at"`
+               UpdateAt string `json:"update_at"`
+               CreateBy string `json:"creat_by"`
+               UpdateBy string `json:"update_by"`
+         }
+        //添加用户
+      addUserReq struct {
+                  Username  string `json:"username"`
+                  Phone string `json:"phone"`
+                  Nickname string `json:"nickname"`
+                  Gender string `json:"gender"`
+                  Email string `json:"email"`
+                  Status string `json:"status"`
+                  RoleID []int64 `json:"roleId,optional"`
+              }
+              addUserResp struct {
+                  Code int64 `json:"code"`
+                  Message string `json:"message"`
+              }
+
+         updateUserReq struct {
+                 ID int64 `json:"id"`
+                 Username string `json:"username,optional"`
+                 Phone string `json:"phone,optional"`
+                 Nickname string `json:"nickname,optional"`
+                 Gender string `json:"gender,optional"`
+                 Status string `json:"status,optional"`
+                 Email string `json:"email,optional"`
+                RoleID []int64 `json:"roleId,optional"`
+             }
+             updateUserResp struct {
+                 Code int64 `json:"code"`
+                 Message string `json:"message"`
+             }
+
+        DeleteUserReq struct {
+                   Ids []int64 `json:"ids"`
+               }
+               DeleteUserResp struct {
+                   Code int64 `json:"code"`
+                   Message string `json:"message"`
+               }
+
+        ListUserReq struct {
+               Current int64 `form:"current"`
+               PageSize int64 `form:"pageSize"`
+               Nickname string `form:"nickname,optional"`
+               Phone string `form:"phone,optional"`
+               Username string `form:"username,optional"`
+               Status string `form:"status,optional"`
+               Gander string `form:"gender,optional"`
+           }
+           User struct {
+               ID int64 `json:"id"`
+               Username string `json:"username"`
+               NickName string `json:"nickname"`
+               Phone string `json:"phone"`
+               Gander string `json:"gender"`
+               Avatar string `json:"avatar"`
+               Email string `json:"email"`
+               Status string `json:"status"`
+               CreateAt string `json:"creat_at"`
+               UpdateAt string `json:"update_at"`
+               CreateBy string `json:"creat_by"`
+               UpdateBy string `json:"update_by"`
+               RoleName  []string `json:"roleName"`
+           }
+          ListUserResp struct {
+                Code int64 `json:"code"`
+                Message string `json:"message"`
+                Data []*User `json:"data"`
+                Total int64 `json:"total"`
+            }
+
+            UpdatePasswordReq struct{
+                  OldPassword  string `json:"oldPassword"`
+                  NewPassword  string `json:"newPassword"`
+            }
+            UpdatePasswordResp struct{
+                  Code int64 `json:"code"`
+                   Message string `json:"message"`
+            }
+
+            RestartPasswordReq struct {
+                ID  int64 `json:"id"`
+              }
+              RestartPasswordResp struct {
+              Code int64 `json:"code"`
+               Message string `json:"message"`
+              }
+)
+
+service api {
+    @doc(
+		summary: "登录"
+	)
+    @handler UserLogin
+    post /api/sys/user/login (loginReq) returns (loginResp)
+}
+
+@server(
+    jwt:Auth
+    group: sys/user
+    prefix: /api/sys/user
+)
+service api {
+      @doc(summary: "个人信息")
+       @handler UserInfo
+       get /info  returns (UserInfoResp)
+
+          @doc(summary: "添加")
+           @handler UserAdd
+           post /add (addUserReq) returns (addUserResp)
+
+            @doc(summary: "更新")
+               @handler UserUpdate
+               post /update (updateUserReq) returns (updateUserResp)
+
+         @doc(summary: "删除")
+           @handler UserDelete
+           post /delete (DeleteUserReq) returns (DeleteUserResp)
+
+           @doc(summary: "列表")
+         @handler UserList
+         get /list (ListUserReq) returns (ListUserResp)
+
+
+
+   @doc(summary: "修改密码")
+   @handler UpdatePassword
+   post /updatePassword (UpdatePasswordReq) returns (UpdatePasswordResp)
+
+      @doc(summary: "重置密码")
+        @handler RestartPassword
+        post /restartPassword (RestartPasswordReq)returns (RestartPasswordResp)
+}
