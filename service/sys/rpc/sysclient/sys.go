@@ -64,6 +64,8 @@ type (
 	SysLogListData        = sys.SysLogListData
 	SysLogListReq         = sys.SysLogListReq
 	SysLogListResp        = sys.SysLogListResp
+	UpdateMenuRoleReq     = sys.UpdateMenuRoleReq
+	UpdateMenuRoleResp    = sys.UpdateMenuRoleResp
 	UpdatePasswordReq     = sys.UpdatePasswordReq
 	UpdatePasswordResp    = sys.UpdatePasswordResp
 	UserAddReq            = sys.UserAddReq
@@ -120,6 +122,8 @@ type (
 		RoleByUserList(ctx context.Context, in *RoleByUserListReq, opts ...grpc.CallOption) (*RoleByUserListResp, error)
 		// 获取角色的菜单
 		QueryMenuByRoleId(ctx context.Context, in *QueryMenuByRoleIdReq, opts ...grpc.CallOption) (*QueryMenuByRoleIdResp, error)
+		// 更新角色拥有菜单
+		UpdateMenuRole(ctx context.Context, in *UpdateMenuRoleReq, opts ...grpc.CallOption) (*UpdateMenuRoleResp, error)
 		// 添加菜单
 		MenuAdd(ctx context.Context, in *MenuAddReq, opts ...grpc.CallOption) (*MenuAddResp, error)
 		// 菜单列表
@@ -271,6 +275,12 @@ func (m *defaultSys) RoleByUserList(ctx context.Context, in *RoleByUserListReq, 
 func (m *defaultSys) QueryMenuByRoleId(ctx context.Context, in *QueryMenuByRoleIdReq, opts ...grpc.CallOption) (*QueryMenuByRoleIdResp, error) {
 	client := sys.NewSysClient(m.cli.Conn())
 	return client.QueryMenuByRoleId(ctx, in, opts...)
+}
+
+// 更新角色拥有菜单
+func (m *defaultSys) UpdateMenuRole(ctx context.Context, in *UpdateMenuRoleReq, opts ...grpc.CallOption) (*UpdateMenuRoleResp, error) {
+	client := sys.NewSysClient(m.cli.Conn())
+	return client.UpdateMenuRole(ctx, in, opts...)
 }
 
 // 添加菜单

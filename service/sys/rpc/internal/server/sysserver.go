@@ -148,6 +148,12 @@ func (s *SysServer) QueryMenuByRoleId(ctx context.Context, in *sys.QueryMenuByRo
 	return l.QueryMenuByRoleId(in)
 }
 
+// 更新角色拥有菜单
+func (s *SysServer) UpdateMenuRole(ctx context.Context, in *sys.UpdateMenuRoleReq) (*sys.UpdateMenuRoleResp, error) {
+	l := logic.NewUpdateMenuRoleLogic(ctx, s.svcCtx)
+	return l.UpdateMenuRole(in)
+}
+
 // 添加菜单
 func (s *SysServer) MenuAdd(ctx context.Context, in *sys.MenuAddReq) (*sys.MenuAddResp, error) {
 	l := logic.NewMenuAddLogic(ctx, s.svcCtx)

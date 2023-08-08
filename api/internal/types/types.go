@@ -204,11 +204,11 @@ type DeletePlaceResp struct {
 }
 
 type ListPlaceReq struct {
-	Current  int64  `json:"current,default=1"`
-	PageSize int64  `json:"pageSize,default=20"`
-	Name     string `json:"name,optional "`
-	Place    string `json:"place,optional"`
-	Phone    string `json:"phone,optional"`
+	Current  int64  `form:"current,default=1"`
+	PageSize int64  `form:"pageSize,default=20"`
+	Name     string `form:"name,optional "`
+	Place    string `form:"place,optional"`
+	Phone    string `form:"phone,optional"`
 }
 
 type ListPlaceData struct {
@@ -295,19 +295,10 @@ type RoleMenuReq struct {
 	Id int64 `json:"id,optional"`
 }
 
-type ListtMenuData struct {
-	Key      string `json:"key"`      // 菜单名称
-	Title    string `json:"title"`    // 菜单名称
-	ParentId int64  `json:"parentId"` // 父菜单ID，一级菜单为0
-	Id       int64  `json:"id"`       // 父菜单ID，一级菜单为0
-	Label    string `json:"label"`    // 父菜单ID，一级菜单为0
-}
-
 type RoleMenuResp struct {
-	RoleData []int64          `json:"roleData"`
-	AllData  []*ListtMenuData `json:"allData"`
-	Code     string           `json:"code"`
-	Message  string           `json:"message"`
+	Data    []int64 `json:"data"`
+	Code    int64   `json:"code"`
+	Message string  `json:"message"`
 }
 
 type UpdateRoleMenuReq struct {
@@ -419,4 +410,8 @@ type DeleteSysLogReq struct {
 type DeleteSysLogResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
+}
+
+type UploadResp struct {
+	Data string `json:"data"`
 }

@@ -328,9 +328,9 @@ message MenuList{
 message MenuListResp{
   repeated MenuList MenuList =  1;
 }
-//todo 获取角色的菜单
+
 message QueryMenuByRoleIdReq {
-  repeated int64 id = 1;
+   int64 id = 1;
 }
 message QueryMenuByRoleIdResp {
   repeated int64 ids = 1;
@@ -379,7 +379,16 @@ message SysLogDeleteReq {
 message SysLogDeleteResp {
   string pong = 1;
 }
+//获取角色的菜单
+message UpdateMenuRoleReq {
+  int64 roleId = 1;
+  repeated int64 menuIds = 2;
+  string create_by = 3;
+}
 
+message UpdateMenuRoleResp {
+  string pong = 1;
+}
 service Sys{
   //用户登录
   rpc UserLogin(LoginReq) returns(LoginResp);
@@ -426,7 +435,8 @@ service Sys{
   rpc RoleByUserList(RoleByUserListReq) returns(RoleByUserListResp);
   //获取角色的菜单
     rpc QueryMenuByRoleId(QueryMenuByRoleIdReq) returns(QueryMenuByRoleIdResp);
-  //  rpc UpdateMenuRole(UpdateMenuRoleReq) returns(UpdateMenuRoleResp);
+  //更新角色拥有菜单
+   rpc UpdateMenuRole(UpdateMenuRoleReq) returns(UpdateMenuRoleResp);
 
   //添加菜单
   rpc MenuAdd(MenuAddReq) returns(MenuAddResp);

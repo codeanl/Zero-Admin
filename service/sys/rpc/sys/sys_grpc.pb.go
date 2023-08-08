@@ -40,6 +40,7 @@ const (
 	Sys_RoleList_FullMethodName          = "/sys.Sys/RoleList"
 	Sys_RoleByUserList_FullMethodName    = "/sys.Sys/RoleByUserList"
 	Sys_QueryMenuByRoleId_FullMethodName = "/sys.Sys/QueryMenuByRoleId"
+	Sys_UpdateMenuRole_FullMethodName    = "/sys.Sys/UpdateMenuRole"
 	Sys_MenuAdd_FullMethodName           = "/sys.Sys/MenuAdd"
 	Sys_MenuList_FullMethodName          = "/sys.Sys/MenuList"
 	Sys_MenuUpdate_FullMethodName        = "/sys.Sys/MenuUpdate"
@@ -95,6 +96,8 @@ type SysClient interface {
 	RoleByUserList(ctx context.Context, in *RoleByUserListReq, opts ...grpc.CallOption) (*RoleByUserListResp, error)
 	// 获取角色的菜单
 	QueryMenuByRoleId(ctx context.Context, in *QueryMenuByRoleIdReq, opts ...grpc.CallOption) (*QueryMenuByRoleIdResp, error)
+	// 更新角色拥有菜单
+	UpdateMenuRole(ctx context.Context, in *UpdateMenuRoleReq, opts ...grpc.CallOption) (*UpdateMenuRoleResp, error)
 	// 添加菜单
 	MenuAdd(ctx context.Context, in *MenuAddReq, opts ...grpc.CallOption) (*MenuAddResp, error)
 	// 菜单列表
@@ -308,6 +311,15 @@ func (c *sysClient) QueryMenuByRoleId(ctx context.Context, in *QueryMenuByRoleId
 	return out, nil
 }
 
+func (c *sysClient) UpdateMenuRole(ctx context.Context, in *UpdateMenuRoleReq, opts ...grpc.CallOption) (*UpdateMenuRoleResp, error) {
+	out := new(UpdateMenuRoleResp)
+	err := c.cc.Invoke(ctx, Sys_UpdateMenuRole_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *sysClient) MenuAdd(ctx context.Context, in *MenuAddReq, opts ...grpc.CallOption) (*MenuAddResp, error) {
 	out := new(MenuAddResp)
 	err := c.cc.Invoke(ctx, Sys_MenuAdd_FullMethodName, in, out, opts...)
@@ -417,6 +429,8 @@ type SysServer interface {
 	RoleByUserList(context.Context, *RoleByUserListReq) (*RoleByUserListResp, error)
 	// 获取角色的菜单
 	QueryMenuByRoleId(context.Context, *QueryMenuByRoleIdReq) (*QueryMenuByRoleIdResp, error)
+	// 更新角色拥有菜单
+	UpdateMenuRole(context.Context, *UpdateMenuRoleReq) (*UpdateMenuRoleResp, error)
 	// 添加菜单
 	MenuAdd(context.Context, *MenuAddReq) (*MenuAddResp, error)
 	// 菜单列表
@@ -500,6 +514,9 @@ func (UnimplementedSysServer) RoleByUserList(context.Context, *RoleByUserListReq
 }
 func (UnimplementedSysServer) QueryMenuByRoleId(context.Context, *QueryMenuByRoleIdReq) (*QueryMenuByRoleIdResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryMenuByRoleId not implemented")
+}
+func (UnimplementedSysServer) UpdateMenuRole(context.Context, *UpdateMenuRoleReq) (*UpdateMenuRoleResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMenuRole not implemented")
 }
 func (UnimplementedSysServer) MenuAdd(context.Context, *MenuAddReq) (*MenuAddResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MenuAdd not implemented")
@@ -913,6 +930,24 @@ func _Sys_QueryMenuByRoleId_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Sys_UpdateMenuRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMenuRoleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).UpdateMenuRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sys_UpdateMenuRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).UpdateMenuRole(ctx, req.(*UpdateMenuRoleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Sys_MenuAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MenuAddReq)
 	if err := dec(in); err != nil {
@@ -1129,6 +1164,10 @@ var Sys_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryMenuByRoleId",
 			Handler:    _Sys_QueryMenuByRoleId_Handler,
+		},
+		{
+			MethodName: "UpdateMenuRole",
+			Handler:    _Sys_UpdateMenuRole_Handler,
 		},
 		{
 			MethodName: "MenuAdd",

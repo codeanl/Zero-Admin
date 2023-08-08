@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"log"
 
 	"SimplePick-Mall-Server/service/sys/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/sys/rpc/sys"
@@ -25,8 +26,16 @@ func NewQueryMenuByRoleIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 
 // 获取角色的菜单
 func (l *QueryMenuByRoleIdLogic) QueryMenuByRoleId(in *sys.QueryMenuByRoleIdReq) (*sys.QueryMenuByRoleIdResp, error) {
-
+	all, err := l.svcCtx.RoleMenuModel.GetMenuByRoleId(in.Id)
+	if err != nil {
+		return nil, err
+	}
+	var ids []int64
+	for _, i := range all {
+		ids = append(ids, i.MenuID)
+	}
+	log.Print(ids)
 	return &sys.QueryMenuByRoleIdResp{
-		Ids: nil,
+		Ids: ids,
 	}, nil
 }

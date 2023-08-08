@@ -1,6 +1,8 @@
 package role
 
 import (
+	"SimplePick-Mall-Server/common/errorx"
+	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
 	"SimplePick-Mall-Server/api/internal/svc"
@@ -23,8 +25,18 @@ func NewUpdateRoleMenuLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 	}
 }
 
-func (l *UpdateRoleMenuLogic) UpdateRoleMenu(req *types.UpdateRoleMenuReq) (resp *types.UpdateRoleMenuResp, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+func (l *UpdateRoleMenuLogic) UpdateRoleMenu(req *types.UpdateRoleMenuReq) (*types.UpdateRoleMenuResp, error) {
+	_, err := l.svcCtx.Sys.UpdateMenuRole(l.ctx, &sysclient.UpdateMenuRoleReq{
+		RoleId:   req.RoleId,
+		MenuIds:  req.MenuIds,
+		CreateBy: l.ctx.Value("username").(string),
+	})
+	if err != nil {
+		logx.Error(err)
+		return nil, errorx.NewDefaultError("更新角色菜单失败")
+	}
+	return &types.UpdateRoleMenuResp{
+		Code:    200,
+		Message: "更新角色菜单成功",
+	}, nil
 }

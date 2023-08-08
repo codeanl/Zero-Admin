@@ -9,6 +9,7 @@ import (
 	sysplace "SimplePick-Mall-Server/api/internal/handler/sys/place"
 	sysrole "SimplePick-Mall-Server/api/internal/handler/sys/role"
 	syssystemLog "SimplePick-Mall-Server/api/internal/handler/sys/systemLog"
+	sysupload "SimplePick-Mall-Server/api/internal/handler/sys/upload"
 	sysuser "SimplePick-Mall-Server/api/internal/handler/sys/user"
 	"SimplePick-Mall-Server/api/internal/svc"
 
@@ -103,7 +104,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: sysplace.PlaceDeleteHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/list",
 				Handler: sysplace.PlaceListHandler(serverCtx),
 			},
@@ -196,5 +197,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/sys/systemLog"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/upload",
+				Handler: sysupload.UploadHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/sys"),
 	)
 }

@@ -75,17 +75,10 @@ type(
     RoleMenuReq struct {
         Id int64 `json:"id,optional"`
     }
-   ListtMenuData struct {
-          Key string `json:"key"`                              // 菜单名称
-          Title string `json:"title"`                          // 菜单名称
-          ParentId int64 `json:"parentId"`                     // 父菜单ID，一级菜单为0
-          Id int64 `json:"id"`                                 // 父菜单ID，一级菜单为0
-          Label string `json:"label"`                          // 父菜单ID，一级菜单为0
-      }
+
     RoleMenuResp struct {
-        RoleData []int64 `json:"roleData"`
-        AllData []*ListtMenuData `json:"allData"`
-        Code string `json:"code"`
+        Data []int64 `json:"data"`
+        Code int64 `json:"code"`
         Message string `json:"message"`
     }
      //------------------------------------------------

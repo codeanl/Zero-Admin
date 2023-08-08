@@ -1,11 +1,10 @@
 package role
 
 import (
-	"context"
-
 	"SimplePick-Mall-Server/api/internal/svc"
 	"SimplePick-Mall-Server/api/internal/types"
-
+	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
+	"context"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -23,8 +22,20 @@ func NewQueryMenuByRoleIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 	}
 }
 
-func (l *QueryMenuByRoleIdLogic) QueryMenuByRoleId(req *types.RoleMenuReq) (resp *types.RoleMenuResp, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+func (l *QueryMenuByRoleIdLogic) QueryMenuByRoleId(req *types.RoleMenuReq) (*types.RoleMenuResp, error) {
+	resp, _ := l.svcCtx.Sys.MenuList(l.ctx, &sysclient.MenuListReq{})
+	var listIds []int64
+	for _, i := range resp.MenuList {
+		listIds = append(listIds, i.ID)
+	}
+	//如果角色不是admin则根据roleId查询菜单
+	if req.Id != 1 {
+		ids, _ := l.svcCtx.Sys.QueryMenuByRoleId(l.ctx, &sysclient.QueryMenuByRoleIdReq{Id: req.Id})
+		listIds = ids.Ids
+	}
+	return &types.RoleMenuResp{
+		Data:    listIds,
+		Code:    200,
+		Message: "根据角色id查询菜单成功",
+	}, nil
 }

@@ -51,11 +51,11 @@ type(
      //角色------------------------------------------------
      //列表------------------------------------------------
     ListPlaceReq struct {
-        Current int64 `json:"current,default=1"`
-        PageSize int64 `json:"pageSize,default=20"`
-        Name string `json:"name,optional "`
-        Place string `json:"place,optional"`
-        Phone string `json:"phone,optional"`
+        Current int64 `form:"current,default=1"`
+        PageSize int64 `form:"pageSize,default=20"`
+        Name string `form:"name,optional "`
+        Place string `form:"place,optional"`
+        Phone string `form:"phone,optional"`
     }
     ListPlaceData struct {
         Id int64 `json:"id"`
@@ -93,6 +93,6 @@ service api {
     post /delete (DeletePlaceReq) returns (DeletePlaceResp)
 
     @handler PlaceList
-    post /list (ListPlaceReq) returns (ListPlaceResp)
+    get /list (ListPlaceReq) returns (ListPlaceResp)
 
 }
