@@ -8,6 +8,7 @@ import (
 	sysmenu "SimplePick-Mall-Server/api/internal/handler/sys/menu"
 	sysplace "SimplePick-Mall-Server/api/internal/handler/sys/place"
 	sysrole "SimplePick-Mall-Server/api/internal/handler/sys/role"
+	syssystemLog "SimplePick-Mall-Server/api/internal/handler/sys/systemLog"
 	sysuser "SimplePick-Mall-Server/api/internal/handler/sys/user"
 	"SimplePick-Mall-Server/api/internal/svc"
 
@@ -178,5 +179,22 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/sys/menu"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: syssystemLog.SystemLogListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: syssystemLog.SystemLogDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/sys/systemLog"),
 	)
 }

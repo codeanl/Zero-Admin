@@ -383,3 +383,40 @@ type DeleteMenuResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
 }
+
+type ListSysLogReq struct {
+	PageNum  int64  `form:"pageNum,default=1"`
+	PageSize int64  `form:"pageSize,default=20"`
+	Method   string `form:"method,optional"` // 请求方法
+}
+
+type ListSysLogData struct {
+	Id         int64  `json:"id"`        // 编号
+	UserId     int64  `json:"userId"`    // 编号
+	Operation  string `json:"operation"` // 用户操作
+	Method     string `json:"method"`    // 请求方法
+	Params     string `json:"params"`    // 请求参数
+	Time       int64  `json:"time"`      // 执行时长(毫秒)
+	Ip         string `json:"ip"`        // IP地址
+	Avatar     string `json:"avatar"`
+	CreateTime string `json:"createTime"` // 创建时间
+	Username   string `json:"username"`   // 创建时间
+}
+
+type ListSysLogResp struct {
+	Code     int64             `json:"code"`
+	Message  string            `json:"message"`
+	PageNum  int64             `json:"pageNum,default=1"`
+	Data     []*ListSysLogData `json:"data"`
+	PageSize int64             `json:"pageSize,default=20"`
+	Total    int64             `json:"total"`
+}
+
+type DeleteSysLogReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteSysLogResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}

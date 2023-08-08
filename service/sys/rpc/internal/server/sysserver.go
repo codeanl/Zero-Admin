@@ -171,3 +171,21 @@ func (s *SysServer) MenuDelete(ctx context.Context, in *sys.MenuDeleteReq) (*sys
 	l := logic.NewMenuDeleteLogic(ctx, s.svcCtx)
 	return l.MenuDelete(in)
 }
+
+// 添加日志
+func (s *SysServer) SysLogAdd(ctx context.Context, in *sys.LogAddReq) (*sys.LogAddResp, error) {
+	l := logic.NewSysLogAddLogic(ctx, s.svcCtx)
+	return l.SysLogAdd(in)
+}
+
+// 日志列表
+func (s *SysServer) SysLogList(ctx context.Context, in *sys.SysLogListReq) (*sys.SysLogListResp, error) {
+	l := logic.NewSysLogListLogic(ctx, s.svcCtx)
+	return l.SysLogList(in)
+}
+
+// 删除日志
+func (s *SysServer) SysLogDelete(ctx context.Context, in *sys.SysLogDeleteReq) (*sys.SysLogDeleteResp, error) {
+	l := logic.NewSysLogDeleteLogic(ctx, s.svcCtx)
+	return l.SysLogDelete(in)
+}

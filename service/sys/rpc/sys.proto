@@ -335,6 +335,50 @@ message QueryMenuByRoleIdReq {
 message QueryMenuByRoleIdResp {
   repeated int64 ids = 1;
 }
+// 添加日志
+message LogAddReq {
+  int64 UserId = 1;
+//  string Username = 1;
+  string operation = 2;
+  string method = 3;
+  string params = 4;
+  int64 time = 5;
+  string ip = 6;
+}
+message LogAddResp {
+  string pong = 1;
+}
+// 日志列表
+message SysLogListReq {
+  int64 current = 1;
+  int64 pageSize = 2;
+  string method = 4;
+}
+
+message SysLogListData {
+  int64 id = 1;
+  int64 UserId = 2;
+  string operation = 3;
+  string method = 4;
+  string params = 5;
+  int64 time = 6;
+  string ip = 7;
+  string create_time = 9;
+  string username=11;
+  string avatar =10;
+}
+
+message SysLogListResp{
+  int64 total = 1;
+  repeated  SysLogListData list = 2;
+}
+// 删除日志
+message SysLogDeleteReq {
+  repeated int64 ids = 1;
+}
+message SysLogDeleteResp {
+  string pong = 1;
+}
 
 service Sys{
   //用户登录
@@ -392,4 +436,11 @@ service Sys{
   rpc MenuUpdate(MenuUpdateReq) returns(MenuUpdateResp);
   //删除菜单
   rpc MenuDelete(MenuDeleteReq) returns(MenuDeleteResp);
+
+  // 添加日志
+  rpc SysLogAdd(LogAddReq) returns(LogAddResp);
+  // 日志列表
+  rpc SysLogList(SysLogListReq) returns(SysLogListResp);
+  // 删除日志
+  rpc SysLogDelete(SysLogDeleteReq) returns(SysLogDeleteResp);
 }

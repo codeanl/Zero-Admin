@@ -15,6 +15,8 @@ import (
 type (
 	InfoReq               = sys.InfoReq
 	InfoResp              = sys.InfoResp
+	LogAddReq             = sys.LogAddReq
+	LogAddResp            = sys.LogAddResp
 	LoginLogAddReq        = sys.LoginLogAddReq
 	LoginLogAddResp       = sys.LoginLogAddResp
 	LoginLogDeleteReq     = sys.LoginLogDeleteReq
@@ -57,6 +59,11 @@ type (
 	RoleListResp          = sys.RoleListResp
 	RoleUpdateReq         = sys.RoleUpdateReq
 	RoleUpdateResp        = sys.RoleUpdateResp
+	SysLogDeleteReq       = sys.SysLogDeleteReq
+	SysLogDeleteResp      = sys.SysLogDeleteResp
+	SysLogListData        = sys.SysLogListData
+	SysLogListReq         = sys.SysLogListReq
+	SysLogListResp        = sys.SysLogListResp
 	UpdatePasswordReq     = sys.UpdatePasswordReq
 	UpdatePasswordResp    = sys.UpdatePasswordResp
 	UserAddReq            = sys.UserAddReq
@@ -121,6 +128,12 @@ type (
 		MenuUpdate(ctx context.Context, in *MenuUpdateReq, opts ...grpc.CallOption) (*MenuUpdateResp, error)
 		// 删除菜单
 		MenuDelete(ctx context.Context, in *MenuDeleteReq, opts ...grpc.CallOption) (*MenuDeleteResp, error)
+		// 添加日志
+		SysLogAdd(ctx context.Context, in *LogAddReq, opts ...grpc.CallOption) (*LogAddResp, error)
+		// 日志列表
+		SysLogList(ctx context.Context, in *SysLogListReq, opts ...grpc.CallOption) (*SysLogListResp, error)
+		// 删除日志
+		SysLogDelete(ctx context.Context, in *SysLogDeleteReq, opts ...grpc.CallOption) (*SysLogDeleteResp, error)
 	}
 
 	defaultSys struct {
@@ -282,4 +295,22 @@ func (m *defaultSys) MenuUpdate(ctx context.Context, in *MenuUpdateReq, opts ...
 func (m *defaultSys) MenuDelete(ctx context.Context, in *MenuDeleteReq, opts ...grpc.CallOption) (*MenuDeleteResp, error) {
 	client := sys.NewSysClient(m.cli.Conn())
 	return client.MenuDelete(ctx, in, opts...)
+}
+
+// 添加日志
+func (m *defaultSys) SysLogAdd(ctx context.Context, in *LogAddReq, opts ...grpc.CallOption) (*LogAddResp, error) {
+	client := sys.NewSysClient(m.cli.Conn())
+	return client.SysLogAdd(ctx, in, opts...)
+}
+
+// 日志列表
+func (m *defaultSys) SysLogList(ctx context.Context, in *SysLogListReq, opts ...grpc.CallOption) (*SysLogListResp, error) {
+	client := sys.NewSysClient(m.cli.Conn())
+	return client.SysLogList(ctx, in, opts...)
+}
+
+// 删除日志
+func (m *defaultSys) SysLogDelete(ctx context.Context, in *SysLogDeleteReq, opts ...grpc.CallOption) (*SysLogDeleteResp, error) {
+	client := sys.NewSysClient(m.cli.Conn())
+	return client.SysLogDelete(ctx, in, opts...)
 }

@@ -44,6 +44,9 @@ const (
 	Sys_MenuList_FullMethodName          = "/sys.Sys/MenuList"
 	Sys_MenuUpdate_FullMethodName        = "/sys.Sys/MenuUpdate"
 	Sys_MenuDelete_FullMethodName        = "/sys.Sys/MenuDelete"
+	Sys_SysLogAdd_FullMethodName         = "/sys.Sys/SysLogAdd"
+	Sys_SysLogList_FullMethodName        = "/sys.Sys/SysLogList"
+	Sys_SysLogDelete_FullMethodName      = "/sys.Sys/SysLogDelete"
 )
 
 // SysClient is the client API for Sys service.
@@ -100,6 +103,12 @@ type SysClient interface {
 	MenuUpdate(ctx context.Context, in *MenuUpdateReq, opts ...grpc.CallOption) (*MenuUpdateResp, error)
 	// 删除菜单
 	MenuDelete(ctx context.Context, in *MenuDeleteReq, opts ...grpc.CallOption) (*MenuDeleteResp, error)
+	// 添加日志
+	SysLogAdd(ctx context.Context, in *LogAddReq, opts ...grpc.CallOption) (*LogAddResp, error)
+	// 日志列表
+	SysLogList(ctx context.Context, in *SysLogListReq, opts ...grpc.CallOption) (*SysLogListResp, error)
+	// 删除日志
+	SysLogDelete(ctx context.Context, in *SysLogDeleteReq, opts ...grpc.CallOption) (*SysLogDeleteResp, error)
 }
 
 type sysClient struct {
@@ -335,6 +344,33 @@ func (c *sysClient) MenuDelete(ctx context.Context, in *MenuDeleteReq, opts ...g
 	return out, nil
 }
 
+func (c *sysClient) SysLogAdd(ctx context.Context, in *LogAddReq, opts ...grpc.CallOption) (*LogAddResp, error) {
+	out := new(LogAddResp)
+	err := c.cc.Invoke(ctx, Sys_SysLogAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysClient) SysLogList(ctx context.Context, in *SysLogListReq, opts ...grpc.CallOption) (*SysLogListResp, error) {
+	out := new(SysLogListResp)
+	err := c.cc.Invoke(ctx, Sys_SysLogList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysClient) SysLogDelete(ctx context.Context, in *SysLogDeleteReq, opts ...grpc.CallOption) (*SysLogDeleteResp, error) {
+	out := new(SysLogDeleteResp)
+	err := c.cc.Invoke(ctx, Sys_SysLogDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SysServer is the server API for Sys service.
 // All implementations must embed UnimplementedSysServer
 // for forward compatibility
@@ -389,6 +425,12 @@ type SysServer interface {
 	MenuUpdate(context.Context, *MenuUpdateReq) (*MenuUpdateResp, error)
 	// 删除菜单
 	MenuDelete(context.Context, *MenuDeleteReq) (*MenuDeleteResp, error)
+	// 添加日志
+	SysLogAdd(context.Context, *LogAddReq) (*LogAddResp, error)
+	// 日志列表
+	SysLogList(context.Context, *SysLogListReq) (*SysLogListResp, error)
+	// 删除日志
+	SysLogDelete(context.Context, *SysLogDeleteReq) (*SysLogDeleteResp, error)
 	mustEmbedUnimplementedSysServer()
 }
 
@@ -470,6 +512,15 @@ func (UnimplementedSysServer) MenuUpdate(context.Context, *MenuUpdateReq) (*Menu
 }
 func (UnimplementedSysServer) MenuDelete(context.Context, *MenuDeleteReq) (*MenuDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MenuDelete not implemented")
+}
+func (UnimplementedSysServer) SysLogAdd(context.Context, *LogAddReq) (*LogAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SysLogAdd not implemented")
+}
+func (UnimplementedSysServer) SysLogList(context.Context, *SysLogListReq) (*SysLogListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SysLogList not implemented")
+}
+func (UnimplementedSysServer) SysLogDelete(context.Context, *SysLogDeleteReq) (*SysLogDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SysLogDelete not implemented")
 }
 func (UnimplementedSysServer) mustEmbedUnimplementedSysServer() {}
 
@@ -934,6 +985,60 @@ func _Sys_MenuDelete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Sys_SysLogAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LogAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).SysLogAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sys_SysLogAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).SysLogAdd(ctx, req.(*LogAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sys_SysLogList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SysLogListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).SysLogList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sys_SysLogList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).SysLogList(ctx, req.(*SysLogListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sys_SysLogDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SysLogDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).SysLogDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sys_SysLogDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).SysLogDelete(ctx, req.(*SysLogDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Sys_ServiceDesc is the grpc.ServiceDesc for Sys service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1040,6 +1145,18 @@ var Sys_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MenuDelete",
 			Handler:    _Sys_MenuDelete_Handler,
+		},
+		{
+			MethodName: "SysLogAdd",
+			Handler:    _Sys_SysLogAdd_Handler,
+		},
+		{
+			MethodName: "SysLogList",
+			Handler:    _Sys_SysLogList_Handler,
+		},
+		{
+			MethodName: "SysLogDelete",
+			Handler:    _Sys_SysLogDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
