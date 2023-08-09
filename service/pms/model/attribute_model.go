@@ -8,10 +8,10 @@ import (
 
 type (
 	AttributeModel interface {
-		AddAttribute(role *Attribute) (err error)
+		AddAttribute(attribute *Attribute) (*Attribute, error)
 		UpdateAttribute(id int64, role *Attribute) error
 		DeleteAttributeByIds(ids []int64) error
-		GetAttributeList(in *pms.AttributeListReq) ([]*Attribute, int64, error)
+		GetAttributeList(in *pms.AttributeListReq) ([]Attribute, int64, error)
 	}
 
 	defaultAttributeModel struct {
@@ -32,8 +32,9 @@ func NewAttributeModel(conn *gorm.DB) AttributeModel {
 		conn: conn,
 	}
 }
-func (m *defaultAttributeModel) AddAttribute(role *Attribute) (err error) {
-	return m.conn.Model(&Attribute{}).Create(role).Error
+func (m *defaultAttributeModel) AddAttribute(attribute *Attribute) (*Attribute, error) {
+	err := m.conn.Model(&Attribute{}).Create(attribute).Error
+	return attribute, err
 }
 
 //UpdateRole 修改角色
@@ -52,8 +53,8 @@ func (m *defaultAttributeModel) DeleteAttributeByIds(ids []int64) error {
 }
 
 //GetUserList 获取用户列表
-func (m *defaultAttributeModel) GetAttributeList(in *pms.AttributeListReq) ([]*Attribute, int64, error) {
-	var list []*Attribute
+func (m *defaultAttributeModel) GetAttributeList(in *pms.AttributeListReq) ([]Attribute, int64, error) {
+	var list []Attribute
 	db := m.conn.Model(&Attribute{}).Order("created_at DESC")
 	if in.Name != "" {
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))
@@ -61,8 +62,8 @@ func (m *defaultAttributeModel) GetAttributeList(in *pms.AttributeListReq) ([]*A
 	if in.Type != "" {
 		db = db.Where("type LIKE ?", fmt.Sprintf("%%%s%%", in.Type))
 	}
-	if in.ProductAttributeCategoryId != 0 {
-		db = db.Where("product_attribute_category_id = ?", fmt.Sprintf("%%%s%%", in.ProductAttributeCategoryId))
+	if in.CategoryID != 0 {
+		db = db.Where("attribute_category_id = ?", fmt.Sprintf("%%%s%%", in.CategoryID))
 	}
 	var total int64
 	err := db.Count(&total).Error

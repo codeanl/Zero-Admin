@@ -4,7 +4,9 @@ package handler
 import (
 	"net/http"
 
+	pmsattribute "SimplePick-Mall-Server/api/internal/handler/pms/attribute"
 	pmscategory "SimplePick-Mall-Server/api/internal/handler/pms/category"
+	pmsproduct "SimplePick-Mall-Server/api/internal/handler/pms/product"
 	sysloginLog "SimplePick-Mall-Server/api/internal/handler/sys/loginLog"
 	sysmenu "SimplePick-Mall-Server/api/internal/handler/sys/menu"
 	sysplace "SimplePick-Mall-Server/api/internal/handler/sys/place"
@@ -236,5 +238,59 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/pms/category"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: pmsattribute.AttributeAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/list",
+				Handler: pmsattribute.AttributeListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: pmsattribute.AttributeUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: pmsattribute.AttributeDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/pms/attribute"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: pmsproduct.ProductAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/list",
+				Handler: pmsproduct.ProductListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: pmsproduct.ProductUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: pmsproduct.ProductDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/pms/product"),
 	)
 }

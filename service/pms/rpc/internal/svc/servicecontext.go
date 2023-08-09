@@ -7,12 +7,12 @@ import (
 )
 
 type ServiceContext struct {
-	Config config.Config
-	//ProductModel           model.ProductModel
-	//BrandModel             model.BrandModel
+	Config              config.Config
+	ProductModel        model.ProductModel
 	CategoryModel       model.CategoryModel
 	AttributeModel      model.AttributeModel
 	AttributeValueModel model.AttributeValueModel
+	SpuAttributeModel   model.SpuAttributeModel
 	//AttributeCategoryModel model.AttributeCategoryModel
 }
 
@@ -20,12 +20,11 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	mysql := c.Mysql
 	conn := db.InitMysql(mysql.DataSource)
 	return &ServiceContext{
-		Config: c,
-		//ProductModel:           model.NewProductModel(conn),
-		//BrandModel:             model.NewBrandModel(conn),
+		Config:              c,
+		ProductModel:        model.NewProductModel(conn),
 		CategoryModel:       model.NewCategoryModel(conn),
 		AttributeModel:      model.NewAttributeModel(conn),
 		AttributeValueModel: model.NewAttributeValueModel(conn),
-		//AttributeCategoryModel: model.NewAttributeCategoryModel(conn),
+		SpuAttributeModel:   model.NewSpuAttributeModel(conn),
 	}
 }

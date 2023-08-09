@@ -1,10 +1,11 @@
 package logic
 
 import (
-	"context"
-
+	"SimplePick-Mall-Server/service/pms/model"
 	"SimplePick-Mall-Server/service/pms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/pms/rpc/pms"
+	"context"
+	"errors"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +26,20 @@ func NewAttributeAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Attr
 
 // 添加属性
 func (l *AttributeAddLogic) AttributeAdd(in *pms.AttributeAddReq) (*pms.AttributeAddResp, error) {
-	// todo: add your logic here and delete this line
-
+	info := &model.Attribute{
+		Name:       in.Name,
+		CategoryID: in.CategoryID,
+		Type:       in.Type,
+	}
+	attribute, err := l.svcCtx.AttributeModel.AddAttribute(info)
+	if err != nil {
+		return nil, errors.New("添加失败")
+	}
+	for _, i := range in.Value {
+		_ = l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
+			Name:        i,
+			AttributeID: int64(attribute.ID),
+		})
+	}
 	return &pms.AttributeAddResp{}, nil
 }

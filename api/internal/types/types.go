@@ -492,3 +492,148 @@ type DeleteCategoryResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
 }
+
+type AddAttributeReq struct {
+	CategoryId int64    `json:"CategoryId"` // 属性分类id
+	Name       string   `json:"name"`
+	Type       string   `json:"type"`
+	Value      []string `json:"value"`
+}
+
+type AddAttributeResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListAttributeReq struct {
+	Current    int64  `json:"current,default=1"`
+	PageSize   int64  `json:"pageSize,default=20"`
+	Name       string `json:"name,optional"`
+	Type       string `json:"type,default=2"`
+	CategoryId int64  `json:"categoryId,default=0"`
+}
+
+type ListAttributeData struct {
+	Id             int64            `json:"id"`
+	CategoryId     int64            `json:"categoryId"`
+	Name           string           `json:"name"`
+	Type           string           `json:"type"`
+	AttributeValue []AttributeValue `json:"attributeValue"`
+}
+
+type AttributeValue struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	AttributeID int64  `json:"attributeID"`
+}
+
+type ListAttributeResp struct {
+	Code    int64               `json:"code"`
+	Message string              `json:"message"`
+	Data    []ListAttributeData `json:"data"`
+	Total   int64               `json:"total"`
+}
+
+type UpdateAttributeReq struct {
+	Id          int64         `json:"id"`
+	CategoryId  int64         `json:"CategoryId"`
+	Name        string        `json:"name"`
+	Type        string        `json:"type"`
+	UpdateValue []UpdateValue `json:"updateValue"`
+}
+
+type UpdateValue struct {
+	Id    int64  `json:"id"`
+	Value string `json:"value"`
+}
+
+type UpdateAttributeResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteAttributeReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteAttributeResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type AddProductReq struct {
+	CategoryID    int64   `json:"categoryId"`
+	Name          string  `json:"name"`
+	Pic           string  `json:"pic,optional"`
+	ProductSn     string  `json:"productSn"`
+	SubTitle      string  `json:"subTitle,optional"`
+	Description   string  `json:"description,optional"`
+	OriginalPrice float64 `json:"originalPrice,optional"`
+	Stock         int64   `json:"stock,optional"`
+	Unit          string  `json:"unit,optional"`
+	Sale          int64   `json:"sale,optional"`
+	Price         float64 `json:"price,optional"`
+	AttributeID   []int64 `json:"attributeID,optional"`
+}
+
+type AddProductResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListProductReq struct {
+	Current  int64 `json:"current,default=1"`
+	PageSize int64 `json:"pageSize,default=20"`
+}
+
+type ListProductData struct {
+	Id            int64   `json:"id"`
+	CategoryID    int64   `json:"categoryId"`
+	Name          string  `json:"name"`
+	Pic           string  `json:"pic,optional"`
+	ProductSn     string  `json:"productSn"`
+	SubTitle      string  `json:"subTitle,optional"`
+	Description   string  `json:"description,optional"`
+	OriginalPrice float64 `json:"originalPrice,optional"`
+	Stock         int64   `json:"stock,optional"`
+	Unit          string  `json:"unit,optional"`
+	Sale          int64   `json:"sale,optional,default=0"`
+	Price         float64 `json:"price,optional"`
+}
+
+type ListProductResp struct {
+	Code    int64             `json:"code"`
+	Message string            `json:"message"`
+	Data    []ListProductData `json:"data"`
+	Total   int64             `json:"total"`
+}
+
+type UpdateProductReq struct {
+	Id            int64   `json:"id"`
+	CategoryID    int64   `json:"categoryId"`
+	Name          string  `json:"name"`
+	Pic           string  `json:"pic,optional"`
+	ProductSn     string  `json:"productSn"`
+	SubTitle      string  `json:"subTitle,optional"`
+	Description   string  `json:"description,optional"`
+	OriginalPrice float64 `json:"originalPrice,optional"`
+	Stock         int64   `json:"stock,optional"`
+	Unit          string  `json:"unit,optional"`
+	Sale          int64   `json:"sale,optional,default=0"`
+	Price         float64 `json:"price,optional"`
+	AttributeID   []int64 `json:"attributeID,optional"`
+}
+
+type UpdateProductResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteProductReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteProductResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}

@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"errors"
 
 	"SimplePick-Mall-Server/service/pms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/pms/rpc/pms"
@@ -25,7 +26,9 @@ func NewAttributeDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *A
 
 // 删除属性
 func (l *AttributeDeleteLogic) AttributeDelete(in *pms.AttributeDeleteReq) (*pms.AttributeDeleteResp, error) {
-	// todo: add your logic here and delete this line
-
+	err := l.svcCtx.AttributeModel.DeleteAttributeByIds(in.Ids)
+	if err != nil {
+		return nil, errors.New("删除用户失败")
+	}
 	return &pms.AttributeDeleteResp{}, nil
 }

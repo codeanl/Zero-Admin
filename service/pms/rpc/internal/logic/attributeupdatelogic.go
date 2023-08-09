@@ -1,10 +1,11 @@
 package logic
 
 import (
-	"context"
-
+	"SimplePick-Mall-Server/service/pms/model"
 	"SimplePick-Mall-Server/service/pms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/pms/rpc/pms"
+	"context"
+	"errors"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +26,18 @@ func NewAttributeUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *A
 
 // 更新属性
 func (l *AttributeUpdateLogic) AttributeUpdate(in *pms.AttributeUpdateReq) (*pms.AttributeUpdateResp, error) {
-	// todo: add your logic here and delete this line
-
+	err := l.svcCtx.AttributeModel.UpdateAttribute(in.Id, &model.Attribute{
+		Name:       in.Name,
+		CategoryID: in.CategoryID,
+		Type:       in.Type,
+	})
+	for _, i := range in.UpdateValue {
+		_ = l.svcCtx.AttributeValueModel.UpdateAttributeValue(i.Id, &model.AttributeValue{
+			Name: i.Value,
+		})
+	}
+	if err != nil {
+		return nil, errors.New("更新失败")
+	}
 	return &pms.AttributeUpdateResp{}, nil
 }

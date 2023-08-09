@@ -69,3 +69,27 @@ func (s *PmsServer) AttributeDelete(ctx context.Context, in *pms.AttributeDelete
 	l := logic.NewAttributeDeleteLogic(ctx, s.svcCtx)
 	return l.AttributeDelete(in)
 }
+
+// 添加商品
+func (s *PmsServer) ProductAdd(ctx context.Context, in *pms.ProductAddReq) (*pms.ProductAddResp, error) {
+	l := logic.NewProductAddLogic(ctx, s.svcCtx)
+	return l.ProductAdd(in)
+}
+
+// 商品列表
+func (s *PmsServer) ProductList(ctx context.Context, in *pms.ProductListReq) (*pms.ProductListResp, error) {
+	l := logic.NewProductListLogic(ctx, s.svcCtx)
+	return l.ProductList(in)
+}
+
+// 更新商品
+func (s *PmsServer) ProductUpdate(ctx context.Context, in *pms.ProductUpdateReq) (*pms.ProductUpdateResp, error) {
+	l := logic.NewProductUpdateLogic(ctx, s.svcCtx)
+	return l.ProductUpdate(in)
+}
+
+// 删除商品
+func (s *PmsServer) ProductDelete(ctx context.Context, in *pms.ProductDeleteReq) (*pms.ProductDeleteResp, error) {
+	l := logic.NewProductDeleteLogic(ctx, s.svcCtx)
+	return l.ProductDelete(in)
+}

@@ -32,6 +32,16 @@ type (
 	CategoryListResp    = pms.CategoryListResp
 	CategoryUpdateReq   = pms.CategoryUpdateReq
 	CategoryUpdateResp  = pms.CategoryUpdateResp
+	ProductAddReq       = pms.ProductAddReq
+	ProductAddResp      = pms.ProductAddResp
+	ProductDeleteReq    = pms.ProductDeleteReq
+	ProductDeleteResp   = pms.ProductDeleteResp
+	ProductListData     = pms.ProductListData
+	ProductListReq      = pms.ProductListReq
+	ProductListResp     = pms.ProductListResp
+	ProductUpdateReq    = pms.ProductUpdateReq
+	ProductUpdateResp   = pms.ProductUpdateResp
+	UpdateValue         = pms.UpdateValue
 
 	Pms interface {
 		// 添加分类
@@ -50,6 +60,14 @@ type (
 		AttributeUpdate(ctx context.Context, in *AttributeUpdateReq, opts ...grpc.CallOption) (*AttributeUpdateResp, error)
 		// 删除属性
 		AttributeDelete(ctx context.Context, in *AttributeDeleteReq, opts ...grpc.CallOption) (*AttributeDeleteResp, error)
+		// 添加商品
+		ProductAdd(ctx context.Context, in *ProductAddReq, opts ...grpc.CallOption) (*ProductAddResp, error)
+		// 商品列表
+		ProductList(ctx context.Context, in *ProductListReq, opts ...grpc.CallOption) (*ProductListResp, error)
+		// 更新商品
+		ProductUpdate(ctx context.Context, in *ProductUpdateReq, opts ...grpc.CallOption) (*ProductUpdateResp, error)
+		// 删除商品
+		ProductDelete(ctx context.Context, in *ProductDeleteReq, opts ...grpc.CallOption) (*ProductDeleteResp, error)
 	}
 
 	defaultPms struct {
@@ -109,4 +127,28 @@ func (m *defaultPms) AttributeUpdate(ctx context.Context, in *AttributeUpdateReq
 func (m *defaultPms) AttributeDelete(ctx context.Context, in *AttributeDeleteReq, opts ...grpc.CallOption) (*AttributeDeleteResp, error) {
 	client := pms.NewPmsClient(m.cli.Conn())
 	return client.AttributeDelete(ctx, in, opts...)
+}
+
+// 添加商品
+func (m *defaultPms) ProductAdd(ctx context.Context, in *ProductAddReq, opts ...grpc.CallOption) (*ProductAddResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.ProductAdd(ctx, in, opts...)
+}
+
+// 商品列表
+func (m *defaultPms) ProductList(ctx context.Context, in *ProductListReq, opts ...grpc.CallOption) (*ProductListResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.ProductList(ctx, in, opts...)
+}
+
+// 更新商品
+func (m *defaultPms) ProductUpdate(ctx context.Context, in *ProductUpdateReq, opts ...grpc.CallOption) (*ProductUpdateResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.ProductUpdate(ctx, in, opts...)
+}
+
+// 删除商品
+func (m *defaultPms) ProductDelete(ctx context.Context, in *ProductDeleteReq, opts ...grpc.CallOption) (*ProductDeleteResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.ProductDelete(ctx, in, opts...)
 }
