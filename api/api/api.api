@@ -6,6 +6,8 @@ import "sys/menu.api"
 import "sys/systemLog.api"
 import "sys/upload.api"
 
+import "pms/category.api"
+
 info(
 	title: "type title here"
 	desc: "type desc here"
