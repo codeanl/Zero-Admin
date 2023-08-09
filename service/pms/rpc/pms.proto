@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package pms;
+
+option go_package = "./pms";
+
+//添加分类
+message CategoryAddReq {
+  int64    ParentId = 2;
+  string  Name = 3;
+  string    Level = 4;
+  int64    ProductCount = 5;
+  string  ProductUnit = 6;
+  string    NavStatus = 7;
+  string    ShowStatus = 8;
+  int64    Sort = 9;
+  string  Icon = 10;
+  string  Keywords = 11;
+  string  Description = 12;
+}
+message CategoryAddResp {
+  string pong = 1;
+}
+//更新分类
+message CategoryUpdateReq {
+  int64    Id = 1;
+  int64    ParentId = 2;
+  string  Name = 3;
+  string    Level = 4;
+  int64    ProductCount = 5;
+  string   ProductUnit = 6;
+  string    NavStatus = 7;
+  string    ShowStatus = 8;
+  int64    Sort = 9;
+  string  Icon = 10;
+  string  Keywords = 11;
+  string  Description = 12;
+}
+message CategoryUpdateResp {
+  string pong = 1;
+}
+//删除分类
+message CategoryDeleteReq {
+  repeated int64 ids = 1;
+}
+message CategoryDeleteResp {
+  string pong = 1;
+}
+//分类列表
+message CategoryListReq {
+
+}
+message CategoryListData{
+  int64    Id = 1;
+  int64    ParentId = 2;
+  string  Name = 3;
+  string    Level = 4;
+  int64    ProductCount = 5;
+  string  ProductUnit = 6;
+  string    NavStatus = 7;
+  string    ShowStatus = 8;
+  int64    Sort = 9;
+  string  Icon = 10;
+  string  Keywords = 11;
+  string  Description = 12;
+}
+message CategoryListResp {
+  int64 total = 1;
+  repeated  CategoryListData list = 2;
+}
+//添加属性
+message AttributeAddReq {
+  int64    CategoryID = 2;
+  string  Name = 3;
+  string    Type = 12;
+}
+message AttributeAddResp {
+  string pong = 1;
+}
+//更新属性
+message AttributeUpdateReq {
+  int64    Id = 1;
+  int64    CategoryID = 2;
+  string  Name = 3;
+  string    Type = 12;
+}
+message AttributeUpdateResp {
+  string pong = 1;
+}
+//删除属性
+message AttributeDeleteReq {
+  repeated int64 ids = 1;
+}
+message AttributeDeleteResp {
+  string pong = 1;
+}
+//属性列表
+message AttributeListReq {
+  int64 current = 1;
+  int64 pageSize = 2;
+  string  Name = 3;
+  string   Type = 4;
+  int64    CategoryID = 5;
+   AttributeValue AttributeValue=6;
+}
+message AttributeListData{
+  int64    Id = 1;
+  int64    CategoryID = 2;
+  string  Name = 3;
+  string   Type = 12;
+}
+message AttributeListResp {
+  int64 total = 1;
+  repeated  AttributeListData list = 2;
+}
+message AttributeValue{
+  int64    Id = 1;
+  int64    Name = 2;
+  string  AttributeID = 3;
+}
+
+
+service Pms {
+  //添加分类
+  rpc CategoryAdd(CategoryAddReq) returns(CategoryAddResp);
+  //分类列表
+  rpc CategoryList(CategoryListReq) returns(CategoryListResp);
+  //更新分类
+  rpc CategoryUpdate(CategoryUpdateReq) returns(CategoryUpdateResp);
+  //删除分类
+  rpc CategoryDelete(CategoryDeleteReq) returns(CategoryDeleteResp);
+
+//添加属性
+  rpc AttributeAdd(AttributeAddReq) returns(AttributeAddResp);
+  //属性列表
+  rpc AttributeList(AttributeListReq) returns(AttributeListResp);
+  //更新属性
+  rpc AttributeUpdate(AttributeUpdateReq) returns(AttributeUpdateResp);
+  //删除属性
+  rpc AttributeDelete(AttributeDeleteReq) returns(AttributeDeleteResp);
+
+}
