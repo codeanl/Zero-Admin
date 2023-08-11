@@ -73,7 +73,10 @@ message AttributeAddReq {
   int64    CategoryID = 2;
   string  Name = 3;
   string    Type = 12;
-  repeated string Value=4;
+  repeated AddValue AddValue=4;
+}
+message AddValue{
+  string    name = 2;
 }
 message AttributeAddResp {
   string pong = 1;
@@ -137,7 +140,18 @@ message ProductAddReq {
   int64       Stock = 24;
   string      Unit = 26;
   int64       Sale = 15;
-  repeated int64 AttributeID=20;
+  repeated int64 AttributeValueID=20;
+  repeated Size Size=30;
+}
+message Size{
+  int64 ID =4;
+  string name=1;
+  int64 ProductID=2;
+  repeated SizeValue SizeValue=3;
+}
+message SizeValueList{
+  int64 SizeID=1;
+  string Value=2;
 }
 message ProductAddResp {
   string pong = 1;
@@ -156,7 +170,8 @@ message ProductUpdateReq {
   int64       Stock = 24;
   string      Unit = 26;
   int64       Sale = 15;
-  repeated int64 AttributeID=20;
+  repeated int64 AttributeValueID=20;
+  repeated Size Size=30;
 }
 message ProductUpdateResp {
   string pong = 1;
@@ -181,6 +196,19 @@ message ProductListData{
   int64       Stock = 24;
   string      Unit = 26;
   int64       Sale = 15;
+  repeated SizeList SizeList=30;
+  repeated int64 AttributeValueID=31;
+}
+message SizeList{
+  int64 ID =10;
+  int64 ProductID=1;
+  string    Name=2;
+  repeated SizeValue SizeValue=3;
+}
+message SizeValue{
+  int64 ID =10;
+  int64 SizeID=1;
+  string Value=2;
 }
 message ProductListResp {
   int64 total = 1;
@@ -190,10 +218,71 @@ message ProductListResp {
 message ProductDeleteReq {
   repeated int64 ids = 1;
 }
-
 message ProductDeleteResp {
   string pong = 1;
 }
+//添加Sku
+message SkuAddReq {
+  int64       ProductID = 3;
+  string      Name = 6;
+  string      Pic = 7;
+  string      SkuSn = 8;
+  string      Description = 21;
+  double      Price = 22;
+  int64     Stock = 16;
+  string Tag=14;
+  repeated int64 AttributeValueID=20;
+  repeated int64 AttributeShopValueID=24;
+}
+message SkuAddResp {
+  string pong = 1;
+}
+//Sku列表
+message SkuListReq {
+  int64 ProductID = 1;
+  string Name = 3;
+}
+
+message SkuListData{
+  int64       ID=1;
+  int64       ProductID = 3;
+  string      Name = 6;
+  string      Pic = 7;
+  string      SkuSn = 8;
+  string      Description = 21;
+  double      Price = 22;
+  int64       Stock = 16;
+  string      Tag=14;
+}
+message SkuListResp {
+  int64 total = 1;
+  repeated  SkuListData list = 2;
+}
+//更新Sku
+message SkuUpdateReq {
+  int64      ID=1;
+  int64       ProductID = 3;
+  string      Name = 6;
+  string      Pic = 7;
+  string      SkuSn = 8;
+  string      Description = 21;
+  double      Price = 22;
+  int64     Stock = 16;
+  string Tag=14;
+  repeated int64 AttributeValueID=20;
+  repeated int64 AttributeShopValueID=24;
+}
+message SkuUpdateResp {
+  string pong = 1;
+}
+//删除Sku
+message SkuDeleteReq {
+  repeated int64 ids = 1;
+}
+message SkuDeleteResp {
+  string pong = 1;
+}
+
 
 service Pms {
   //添加分类
@@ -222,4 +311,13 @@ service Pms {
   rpc ProductUpdate(ProductUpdateReq) returns(ProductUpdateResp);
   //删除商品
   rpc ProductDelete(ProductDeleteReq) returns(ProductDeleteResp);
+
+  //添加Sku
+  rpc SkuAdd(SkuAddReq) returns(SkuAddResp);
+  //Sku列表
+  rpc SkuList(SkuListReq) returns(SkuListResp);
+  //更新Sku
+  rpc SkuUpdate(SkuUpdateReq) returns(SkuUpdateResp);
+  //删除Sku
+  rpc SkuDelete(SkuDeleteReq) returns(SkuDeleteResp);
 }

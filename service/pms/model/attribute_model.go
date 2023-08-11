@@ -12,6 +12,7 @@ type (
 		UpdateAttribute(id int64, role *Attribute) error
 		DeleteAttributeByIds(ids []int64) error
 		GetAttributeList(in *pms.AttributeListReq) ([]Attribute, int64, error)
+		GetAttributeByID(id int64) (info Attribute, err error)
 	}
 
 	defaultAttributeModel struct {
@@ -35,6 +36,10 @@ func NewAttributeModel(conn *gorm.DB) AttributeModel {
 func (m *defaultAttributeModel) AddAttribute(attribute *Attribute) (*Attribute, error) {
 	err := m.conn.Model(&Attribute{}).Create(attribute).Error
 	return attribute, err
+}
+func (m *defaultAttributeModel) GetAttributeByID(id int64) (info Attribute, err error) {
+	err = m.conn.Model(&Attribute{}).Where("id=?", id).Find(&info).Error
+	return info, err
 }
 
 //UpdateRole 修改角色
@@ -60,10 +65,10 @@ func (m *defaultAttributeModel) GetAttributeList(in *pms.AttributeListReq) ([]At
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))
 	}
 	if in.Type != "" {
-		db = db.Where("type LIKE ?", fmt.Sprintf("%%%s%%", in.Type))
+		db = db.Where("type = ?", in.Type)
 	}
 	if in.CategoryID != 0 {
-		db = db.Where("attribute_category_id = ?", fmt.Sprintf("%%%s%%", in.CategoryID))
+		db = db.Where("category_id = ?", in.CategoryID)
 	}
 	var total int64
 	err := db.Count(&total).Error

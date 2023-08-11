@@ -32,13 +32,14 @@ func (l *AttributeAddLogic) AttributeAdd(in *pms.AttributeAddReq) (*pms.Attribut
 		Type:       in.Type,
 	}
 	attribute, err := l.svcCtx.AttributeModel.AddAttribute(info)
+
 	if err != nil {
 		return nil, errors.New("添加失败")
 	}
-	for _, i := range in.Value {
+	for _, i := range in.AddValue {
 		_ = l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
-			Name:        i,
 			AttributeID: int64(attribute.ID),
+			Name:        i.Name,
 		})
 	}
 	return &pms.AttributeAddResp{}, nil

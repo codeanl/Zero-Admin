@@ -13,6 +13,7 @@ import (
 )
 
 type (
+	AddValue            = pms.AddValue
 	AttributeAddReq     = pms.AttributeAddReq
 	AttributeAddResp    = pms.AttributeAddResp
 	AttributeDeleteReq  = pms.AttributeDeleteReq
@@ -41,6 +42,19 @@ type (
 	ProductListResp     = pms.ProductListResp
 	ProductUpdateReq    = pms.ProductUpdateReq
 	ProductUpdateResp   = pms.ProductUpdateResp
+	Size                = pms.Size
+	SizeList            = pms.SizeList
+	SizeValue           = pms.SizeValue
+	SizeValueList       = pms.SizeValueList
+	SkuAddReq           = pms.SkuAddReq
+	SkuAddResp          = pms.SkuAddResp
+	SkuDeleteReq        = pms.SkuDeleteReq
+	SkuDeleteResp       = pms.SkuDeleteResp
+	SkuListData         = pms.SkuListData
+	SkuListReq          = pms.SkuListReq
+	SkuListResp         = pms.SkuListResp
+	SkuUpdateReq        = pms.SkuUpdateReq
+	SkuUpdateResp       = pms.SkuUpdateResp
 	UpdateValue         = pms.UpdateValue
 
 	Pms interface {
@@ -68,6 +82,14 @@ type (
 		ProductUpdate(ctx context.Context, in *ProductUpdateReq, opts ...grpc.CallOption) (*ProductUpdateResp, error)
 		// 删除商品
 		ProductDelete(ctx context.Context, in *ProductDeleteReq, opts ...grpc.CallOption) (*ProductDeleteResp, error)
+		// 添加Sku
+		SkuAdd(ctx context.Context, in *SkuAddReq, opts ...grpc.CallOption) (*SkuAddResp, error)
+		// Sku列表
+		SkuList(ctx context.Context, in *SkuListReq, opts ...grpc.CallOption) (*SkuListResp, error)
+		// 更新Sku
+		SkuUpdate(ctx context.Context, in *SkuUpdateReq, opts ...grpc.CallOption) (*SkuUpdateResp, error)
+		// 删除Sku
+		SkuDelete(ctx context.Context, in *SkuDeleteReq, opts ...grpc.CallOption) (*SkuDeleteResp, error)
 	}
 
 	defaultPms struct {
@@ -151,4 +173,28 @@ func (m *defaultPms) ProductUpdate(ctx context.Context, in *ProductUpdateReq, op
 func (m *defaultPms) ProductDelete(ctx context.Context, in *ProductDeleteReq, opts ...grpc.CallOption) (*ProductDeleteResp, error) {
 	client := pms.NewPmsClient(m.cli.Conn())
 	return client.ProductDelete(ctx, in, opts...)
+}
+
+// 添加Sku
+func (m *defaultPms) SkuAdd(ctx context.Context, in *SkuAddReq, opts ...grpc.CallOption) (*SkuAddResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.SkuAdd(ctx, in, opts...)
+}
+
+// Sku列表
+func (m *defaultPms) SkuList(ctx context.Context, in *SkuListReq, opts ...grpc.CallOption) (*SkuListResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.SkuList(ctx, in, opts...)
+}
+
+// 更新Sku
+func (m *defaultPms) SkuUpdate(ctx context.Context, in *SkuUpdateReq, opts ...grpc.CallOption) (*SkuUpdateResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.SkuUpdate(ctx, in, opts...)
+}
+
+// 删除Sku
+func (m *defaultPms) SkuDelete(ctx context.Context, in *SkuDeleteReq, opts ...grpc.CallOption) (*SkuDeleteResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.SkuDelete(ctx, in, opts...)
 }

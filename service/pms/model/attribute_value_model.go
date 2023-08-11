@@ -7,6 +7,8 @@ type (
 		GetValueByID(id int64) (info []AttributeValue, err error)
 		AddAttributeValue(info *AttributeValue) (err error)
 		UpdateAttributeValue(id int64, role *AttributeValue) error
+		GetAttributeValueByID(id int64) (info AttributeValue, err error)
+		DeleteAttributeValueByAttributeID(id int64) (err error)
 	}
 
 	defaultAttributeValueModel struct {
@@ -31,10 +33,18 @@ func (m *defaultAttributeValueModel) GetValueByID(id int64) (info []AttributeVal
 	err = m.conn.Model(&AttributeValue{}).Where("attribute_id=?", id).Find(&info).Error
 	return info, err
 }
+func (m *defaultAttributeValueModel) GetAttributeValueByID(id int64) (info AttributeValue, err error) {
+	err = m.conn.Model(&AttributeValue{}).Where("id=?", id).Find(&info).Error
+	return info, err
+}
 func (m *defaultAttributeValueModel) AddAttributeValue(info *AttributeValue) (err error) {
 	return m.conn.Model(&AttributeValue{}).Create(info).Error
 }
 func (m *defaultAttributeValueModel) UpdateAttributeValue(id int64, role *AttributeValue) error {
 	err := m.conn.Model(&AttributeValue{}).Where("id=?", id).Updates(role).Error
 	return err
+}
+func (m *defaultAttributeValueModel) DeleteAttributeValueByAttributeID(id int64) (err error) {
+	var info *AttributeValue
+	return m.conn.Model(&AttributeValue{}).Where("attribute_id=?", id).Delete(&info).Error
 }

@@ -93,3 +93,27 @@ func (s *PmsServer) ProductDelete(ctx context.Context, in *pms.ProductDeleteReq)
 	l := logic.NewProductDeleteLogic(ctx, s.svcCtx)
 	return l.ProductDelete(in)
 }
+
+// 添加Sku
+func (s *PmsServer) SkuAdd(ctx context.Context, in *pms.SkuAddReq) (*pms.SkuAddResp, error) {
+	l := logic.NewSkuAddLogic(ctx, s.svcCtx)
+	return l.SkuAdd(in)
+}
+
+// Sku列表
+func (s *PmsServer) SkuList(ctx context.Context, in *pms.SkuListReq) (*pms.SkuListResp, error) {
+	l := logic.NewSkuListLogic(ctx, s.svcCtx)
+	return l.SkuList(in)
+}
+
+// 更新Sku
+func (s *PmsServer) SkuUpdate(ctx context.Context, in *pms.SkuUpdateReq) (*pms.SkuUpdateResp, error) {
+	l := logic.NewSkuUpdateLogic(ctx, s.svcCtx)
+	return l.SkuUpdate(in)
+}
+
+// 删除Sku
+func (s *PmsServer) SkuDelete(ctx context.Context, in *pms.SkuDeleteReq) (*pms.SkuDeleteResp, error) {
+	l := logic.NewSkuDeleteLogic(ctx, s.svcCtx)
+	return l.SkuDelete(in)
+}

@@ -13,6 +13,10 @@ type ServiceContext struct {
 	AttributeModel      model.AttributeModel
 	AttributeValueModel model.AttributeValueModel
 	SpuAttributeModel   model.SpuAttributeModel
+	SkuAttributeModel   model.SkuAttributeModel
+	SkuModel            model.SkuModel
+	SpuSizeModel        model.SpuSizeModel
+	SpuSizeValueModel   model.SpuSizeValueModel
 	//AttributeCategoryModel model.AttributeCategoryModel
 }
 
@@ -26,5 +30,9 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		AttributeModel:      model.NewAttributeModel(conn),
 		AttributeValueModel: model.NewAttributeValueModel(conn),
 		SpuAttributeModel:   model.NewSpuAttributeModel(conn),
+		SkuAttributeModel:   model.NewSkuAttributeModel(conn),
+		SkuModel:            model.NewSkuModel(conn),
+		SpuSizeModel:        model.NewSpuSizeModel(conn),
+		SpuSizeValueModel:   model.NewSpuSizeValueModel(conn),
 	}
 }

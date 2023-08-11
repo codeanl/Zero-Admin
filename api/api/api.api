@@ -9,6 +9,7 @@ import "sys/upload.api"
 import "pms/category.api"
 import "pms/attribute.api"
 import "pms/product.api"
+import "pms/sku.api"
 
 info(
 	title: "type title here"

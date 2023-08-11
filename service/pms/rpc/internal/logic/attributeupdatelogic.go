@@ -31,9 +31,11 @@ func (l *AttributeUpdateLogic) AttributeUpdate(in *pms.AttributeUpdateReq) (*pms
 		CategoryID: in.CategoryID,
 		Type:       in.Type,
 	})
+	_ = l.svcCtx.AttributeValueModel.DeleteAttributeValueByAttributeID(in.Id)
 	for _, i := range in.UpdateValue {
-		_ = l.svcCtx.AttributeValueModel.UpdateAttributeValue(i.Id, &model.AttributeValue{
-			Name: i.Value,
+		_ = l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
+			AttributeID: in.Id,
+			Name:        i.Value,
 		})
 	}
 	if err != nil {
