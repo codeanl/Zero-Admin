@@ -1,0 +1,95 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+
+type(
+      addSkuReq struct {
+            ProductID int64 `json:"productId"`
+            Name string `json:"name"`
+            Pic string `json:"pic,optional"`
+            SkuSn string `json:"skuSn"`
+            Description string `json:"description,optional"`
+            Stock int64 `json:"stock,optional"`
+            Price float64 `json:"price,optional"`
+            TAG string `json:"tag,optional"`
+            AttributeShopValueID []int64 `json:"AttributeShopValueID,optional"`
+        }
+        addSkuResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+        }
+
+     updateSkuReq struct {
+                ID int64 `json:"id"`
+                 ProductID int64 `json:"productId,optional"`
+                 Name string `json:"name"`
+                 Pic string `json:"pic,optional"`
+                 SkuSn string `json:"skuSn,optional"`
+                 Description string `json:"description,optional"`
+                 Stock int64 `json:"stock,optional"`
+                 Price float64 `json:"price,optional"`
+                 TAG string `json:"tag,optional"`
+                 AttributeShopValueID []int64 `json:"AttributeShopValueID,optional"`
+             }
+             updateSkuResp struct {
+                 Code int64 `json:"code"`
+                 Message string `json:"message"`
+             }
+
+            deleteSkuReq struct{
+                IDs []int64 `json:"ids"`
+            }
+
+            deleteSkuResp struct {
+                Code int64 `json:"code"`
+                Message string `json:"message"`
+             }
+
+        ListSkuReq struct{
+             ProductID int64 `json:"productID,optional"`
+        }
+        ListSkuResp struct{
+                Code int64 `json:"code"`
+                Message string `json:"message"`
+                Data []ListSkuData `json:"data"`
+        }
+
+        ListSkuData struct{
+            ID int64 `json:"id"`
+            ProductID int64 `json:"productId"`
+            Name string `json:"name"`
+            Pic string `json:"pic"`
+            SkuSn string `json:"skuSn"`
+            Description string `json:"description"`
+            Price float64 `json:"price"`
+            Stock int64 `json:"stock"`
+            Tag string `json:"tag"`
+        }
+)
+
+
+
+
+
+@server(
+    jwt: Auth
+    group: pms/sku
+    prefix: /api/pms/sku
+)
+service api {
+    @handler SkuAdd
+    post /add (addSkuReq) returns (addSkuResp)
+    @handler SkuUpdate
+    post /update (updateSkuReq) returns (updateSkuResp)
+    @handler SkuDelete
+    post /delete (deleteSkuReq) returns (deleteSkuResp)
+    @handler SkuList
+    post /list (ListSkuReq) returns (ListSkuResp)
+}

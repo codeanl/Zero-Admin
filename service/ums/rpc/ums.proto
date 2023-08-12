@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package ums;
+
+option go_package = "./ums";
+
+//添加会员
+message MemberAddReq {
+  string      Username = 1;
+  string      Password = 2;
+  string      Phone = 3;
+  string      Nickname = 4;
+}
+message MemberAddResp {
+  string pong = 1;
+}
+//会员登录
+//会员列表
+message MemberListReq {
+  int64 current = 1;
+  int64 pageSize = 2;
+  string Username = 3;
+  string Phone = 4;
+  string  Status = 5;
+}
+message MemberListData{
+  int64       Id = 1;
+  string      Username = 3;
+  string      Password = 4;
+  string      Nickname = 5;
+  string      Phone = 6;
+  string       Status = 7;
+  string      Avatar = 9;
+  string       Gender = 10;
+  string      Email = 12;
+  string      City = 13;
+  string      Job = 14;
+  string       Signature = 15;
+  string  CreateTime=20;
+}
+message MemberListResp {
+  int64 total = 1;
+  repeated  MemberListData list = 2;
+}
+//会员更新
+message MemberUpdateReq {
+  int64       Id = 1;
+  string      Username = 3;
+  string      Password = 4;
+  string      Nickname = 5;
+  string      Phone = 6;
+  string       Status = 7;
+  string      Avatar = 9;
+  string       Gender = 10;
+  string      Email = 12;
+  string      City = 13;
+  string      Job = 14;
+  string       Signature = 15;
+}
+message MemberUpdateResp {
+  string pong = 1;
+}
+//会员删除
+message MemberDeleteReq {
+  repeated int64 ids = 1;
+}
+
+message MemberDeleteResp {
+  string pong = 1;
+}
+//会员详情
+message MemberInfoReq {
+  int64  Id= 1;
+}
+message MemberInfoResp {
+  int64       Id = 1;
+  string      Username = 3;
+  string      Password = 4;
+  string      Nickname = 5;
+  string      Phone = 6;
+  string       Status = 7;
+  string      Avatar = 9;
+  string       Gender = 10;
+  string      Email = 12;
+  string      City = 13;
+  string      Job = 14;
+  string       Signature = 15;
+}
+
+
+service Ums {
+  //添加会员
+  rpc MemberAdd(MemberAddReq) returns(MemberAddResp);
+  //会员登录
+//  rpc MemberLogin(MemberLoginReq) returns(MemberLoginResp);
+  //会员列表
+  rpc MemberList(MemberListReq) returns(MemberListResp);
+  //会员更新
+  rpc MemberUpdate(MemberUpdateReq) returns(MemberUpdateResp);
+  //会员删除
+  rpc MemberDelete(MemberDeleteReq) returns(MemberDeleteResp);
+  //会员详情
+  rpc MemberInfo(MemberInfoReq) returns(MemberInfoResp);
+}
