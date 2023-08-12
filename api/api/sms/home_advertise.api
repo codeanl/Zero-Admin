@@ -1,0 +1,78 @@
+info(
+    desc: "优惠券"
+    author: "koobe"
+    email: "1002219331@qq.com"
+)
+
+type (
+    addHomeAdvertiseReq struct {
+        Name string `json:"name"`            // 名称
+        Pic string `json:"pic,optional"`              // 图片地址
+        Status string `json:"status"`         // 上下线状态：0->下线；1->上线
+        Url string `json:"url"`              // 链接地址
+        Note string `json:"note,optional"`            // 备注
+    }
+    addHomeAdvertiseResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+    ListHomeAdvertiseReq struct {
+        Current int64 `form:"current,default=1"`
+        PageSize int64 `form:"pageSize,default=20"`
+        Name string `form:"name,optional"`            // 名称
+        Status string `form:"status,optional"`        // 上下线状态：0->下线；1->上线
+    }
+    ListHomeAdvertiseData struct {
+        Id int64 `json:"id"`
+        Name string `json:"name"`            // 名称
+        Pic string `json:"pic"`              // 图片地址
+        Status string `json:"status"`         // 上下线状态：0->下线；1->上线
+        ClickCount int64 `json:"clickCount"` // 点击数
+        Url string `json:"url"`              // 链接地址
+        Note string `json:"note"`            // 备注
+    }
+    ListHomeAdvertiseResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Data []*ListHomeAdvertiseData `json:"data"`
+        Total int64 `json:"total"`
+    }
+    UpdateHomeAdvertiseReq struct {
+        Id int64 `json:"id"`
+        Name string `json:"name"`            // 名称
+        Pic string `json:"pic,optional"`      // 图片地址
+        Status string `json:"status"`         // 上下线状态：0->下线；1->上线
+        Url string `json:"url"`               // 链接地址
+        Note string `json:"note,optional"`    // 备注
+    }
+    UpdateHomeAdvertiseResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+    DeleteHomeAdvertiseReq struct {
+        Ids []int64 `json:"ids"`
+    }
+    DeleteHomeAdvertiseResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: sms/homeAdvertise
+    prefix: /api/sms/homeAdvertise
+)
+service api {
+    @handler HomeAdvertiseAdd
+    post /add (addHomeAdvertiseReq) returns (addHomeAdvertiseResp)
+
+    @handler HomeAdvertiseList
+    get /list (ListHomeAdvertiseReq) returns (ListHomeAdvertiseResp)
+
+    @handler HomeAdvertiseUpdate
+    post /update (UpdateHomeAdvertiseReq) returns (UpdateHomeAdvertiseResp)
+
+    @handler HomeAdvertiseDelete
+    post /delete (DeleteHomeAdvertiseReq) returns (DeleteHomeAdvertiseResp)
+}

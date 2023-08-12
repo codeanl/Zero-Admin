@@ -14,6 +14,7 @@ import "pms/sku.api"
 import "ums/member.api"
 
 import "sms/home_advertise.api"
+import "sms/coupon.api"
 
 info(
 	title: "type title here"

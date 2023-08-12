@@ -8,6 +8,7 @@ import (
 	pmscategory "SimplePick-Mall-Server/api/internal/handler/pms/category"
 	pmsproduct "SimplePick-Mall-Server/api/internal/handler/pms/product"
 	pmssku "SimplePick-Mall-Server/api/internal/handler/pms/sku"
+	smscoupon "SimplePick-Mall-Server/api/internal/handler/sms/coupon"
 	smshomeAdvertise "SimplePick-Mall-Server/api/internal/handler/sms/homeAdvertise"
 	sysloginLog "SimplePick-Mall-Server/api/internal/handler/sys/loginLog"
 	sysmenu "SimplePick-Mall-Server/api/internal/handler/sys/menu"
@@ -376,5 +377,32 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/sms/homeAdvertise"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: smscoupon.CouponAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: smscoupon.CouponUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: smscoupon.CouponDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: smscoupon.CouponListHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/sms/coupon"),
 	)
 }
