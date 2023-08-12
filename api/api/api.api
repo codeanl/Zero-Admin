@@ -13,6 +13,8 @@ import "pms/sku.api"
 
 import "ums/member.api"
 
+import "sms/home_advertise.api"
+
 info(
 	title: "type title here"
 	desc: "type desc here"

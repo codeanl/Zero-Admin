@@ -8,6 +8,7 @@ import (
 	pmscategory "SimplePick-Mall-Server/api/internal/handler/pms/category"
 	pmsproduct "SimplePick-Mall-Server/api/internal/handler/pms/product"
 	pmssku "SimplePick-Mall-Server/api/internal/handler/pms/sku"
+	smshomeAdvertise "SimplePick-Mall-Server/api/internal/handler/sms/homeAdvertise"
 	sysloginLog "SimplePick-Mall-Server/api/internal/handler/sys/loginLog"
 	sysmenu "SimplePick-Mall-Server/api/internal/handler/sys/menu"
 	sysplace "SimplePick-Mall-Server/api/internal/handler/sys/place"
@@ -348,5 +349,32 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/ums/member"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: smshomeAdvertise.HomeAdvertiseAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: smshomeAdvertise.HomeAdvertiseListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: smshomeAdvertise.HomeAdvertiseUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: smshomeAdvertise.HomeAdvertiseDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/sms/homeAdvertise"),
 	)
 }

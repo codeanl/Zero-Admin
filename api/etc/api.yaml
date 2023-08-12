@@ -19,6 +19,13 @@ UmsRpc:
     Hosts:
       - localhost:2379
     Key: ums.rpc
+    
+SmsRpc:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: sms.rpc
+
 # redis 配置
 Redis:
   Address: 127.0.0.1:6379

@@ -803,3 +803,63 @@ type DeleteMemberResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
 }
+
+type AddHomeAdvertiseReq struct {
+	Name   string `json:"name"`          // 名称
+	Pic    string `json:"pic,optional"`  // 图片地址
+	Status string `json:"status"`        // 上下线状态：0->下线；1->上线
+	Url    string `json:"url"`           // 链接地址
+	Note   string `json:"note,optional"` // 备注
+}
+
+type AddHomeAdvertiseResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListHomeAdvertiseReq struct {
+	Current  int64  `form:"current,default=1"`
+	PageSize int64  `form:"pageSize,default=20"`
+	Name     string `form:"name,optional"`   // 名称
+	Status   string `form:"status,optional"` // 上下线状态：0->下线；1->上线
+}
+
+type ListHomeAdvertiseData struct {
+	Id         int64  `json:"id"`
+	Name       string `json:"name"`       // 名称
+	Pic        string `json:"pic"`        // 图片地址
+	Status     string `json:"status"`     // 上下线状态：0->下线；1->上线
+	ClickCount int64  `json:"clickCount"` // 点击数
+	Url        string `json:"url"`        // 链接地址
+	Note       string `json:"note"`       // 备注
+}
+
+type ListHomeAdvertiseResp struct {
+	Code    int64                    `json:"code"`
+	Message string                   `json:"message"`
+	Data    []*ListHomeAdvertiseData `json:"data"`
+	Total   int64                    `json:"total"`
+}
+
+type UpdateHomeAdvertiseReq struct {
+	Id     int64  `json:"id"`
+	Name   string `json:"name"`          // 名称
+	Pic    string `json:"pic,optional"`  // 图片地址
+	Status string `json:"status"`        // 上下线状态：0->下线；1->上线
+	Url    string `json:"url"`           // 链接地址
+	Note   string `json:"note,optional"` // 备注
+}
+
+type UpdateHomeAdvertiseResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteHomeAdvertiseReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteHomeAdvertiseResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
