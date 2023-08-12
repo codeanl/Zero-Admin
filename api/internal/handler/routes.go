@@ -15,6 +15,7 @@ import (
 	syssystemLog "SimplePick-Mall-Server/api/internal/handler/sys/systemLog"
 	sysupload "SimplePick-Mall-Server/api/internal/handler/sys/upload"
 	sysuser "SimplePick-Mall-Server/api/internal/handler/sys/user"
+	umsmember "SimplePick-Mall-Server/api/internal/handler/ums/member"
 	"SimplePick-Mall-Server/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -320,5 +321,32 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/pms/sku"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: umsmember.MemberAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: umsmember.MemberListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: umsmember.MemberUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: umsmember.MemberDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/ums/member"),
 	)
 }

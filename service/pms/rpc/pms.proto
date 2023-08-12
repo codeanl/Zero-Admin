@@ -231,7 +231,6 @@ message SkuAddReq {
   double      Price = 22;
   int64     Stock = 16;
   string Tag=14;
-  repeated int64 AttributeValueID=20;
   repeated int64 AttributeShopValueID=24;
 }
 message SkuAddResp {
@@ -269,7 +268,6 @@ message SkuUpdateReq {
   double      Price = 22;
   int64     Stock = 16;
   string Tag=14;
-  repeated int64 AttributeValueID=20;
   repeated int64 AttributeShopValueID=24;
 }
 message SkuUpdateResp {

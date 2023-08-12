@@ -617,14 +617,14 @@ type ListProductData struct {
 
 type SizeList struct {
 	ID            int64           `json:"id"`
-	ProductID     int64           `json:"id"`
+	ProductID     int64           `json:"productId"`
 	Name          string          `json:"name"`
 	SizeValueList []SizeValueList `json:"sizeValueList"`
 }
 
 type SizeValueList struct {
 	ID     int64  `json:"id"`
-	SizeID int64  `json:"id"`
+	SizeID int64  `json:"sizeId"`
 	Value  string `json:"name"`
 }
 
@@ -670,13 +670,11 @@ type AddSkuReq struct {
 	ProductID            int64   `json:"productId"`
 	Name                 string  `json:"name"`
 	Pic                  string  `json:"pic,optional"`
-	SkuSn                string  `json:"SkuSn"`
-	SubTitle             string  `json:"subTitle,optional"`
+	SkuSn                string  `json:"skuSn"`
 	Description          string  `json:"description,optional"`
 	Stock                int64   `json:"stock,optional"`
 	Price                float64 `json:"price,optional"`
 	TAG                  string  `json:"tag,optional"`
-	AttributeValueID     []int64 `json:"AttributeValueID,optional"`
 	AttributeShopValueID []int64 `json:"AttributeShopValueID,optional"`
 }
 
@@ -687,16 +685,14 @@ type AddSkuResp struct {
 
 type UpdateSkuReq struct {
 	ID                   int64   `json:"id"`
-	ProductID            int64   `json:"productId"`
+	ProductID            int64   `json:"productId,optional"`
 	Name                 string  `json:"name"`
 	Pic                  string  `json:"pic,optional"`
-	SkuSn                string  `json:"SkuSn"`
-	SubTitle             string  `json:"subTitle,optional"`
+	SkuSn                string  `json:"skuSn,optional"`
 	Description          string  `json:"description,optional"`
 	Stock                int64   `json:"stock,optional"`
 	Price                float64 `json:"price,optional"`
 	TAG                  string  `json:"tag,optional"`
-	AttributeValueID     []int64 `json:"AttributeValueID,optional"`
 	AttributeShopValueID []int64 `json:"AttributeShopValueID,optional"`
 }
 
@@ -734,4 +730,76 @@ type ListSkuData struct {
 	Price       float64 `json:"price"`
 	Stock       int64   `json:"stock"`
 	Tag         string  `json:"tag"`
+}
+
+type AddMemberReq struct {
+	Username string `json:"username"` // 用户名
+	Password string `json:"password"` // 密码
+	Nickname string `json:"nickname"` // 昵称
+	Phone    string `json:"phone"`    // 手机号码
+}
+
+type AddMemberResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListMemberReq struct {
+	Current  int64  `form:"current,default=1"`
+	PageSize int64  `form:"pageSize,default=20"`
+	Username string `form:"username,optional"` // 用户名
+	Phone    string `form:"phone,optional"`    // 手机号码
+	Status   string `form:"status,optional"`   // 帐号启用状态:0->禁用；1->启用
+}
+
+type ListMemberData struct {
+	Id        int64  `json:"id"`
+	Username  string `json:"username"`  // 用户名
+	Password  string `json:"password"`  // 密码
+	Nickname  string `json:"nickname"`  // 昵称
+	Phone     string `json:"phone"`     // 手机号码
+	Status    string `json:"status"`    // 帐号启用状态:0->禁用；1->启用
+	Avatar    string `json:"avatar"`    // 头像
+	Gender    string `json:"gender"`    // 性别：0->未知；1->男；2->女
+	Email     string `json:"email"`     //
+	City      string `json:"city"`      // 所做城市
+	Job       string `json:"job"`       // 职业
+	Signature string `json:"signature"` // 个性签名
+	CreatTIme string `json:"creatTIme"` //
+}
+
+type ListMemberResp struct {
+	Code    int64             `json:"code"`
+	Message string            `json:"message"`
+	Data    []*ListMemberData `json:"data"`
+	Total   int64             `json:"total"`
+}
+
+type UpdateMemberReq struct {
+	Id        int64  `json:"id"`
+	Username  string `json:"username"`  // 用户名
+	Password  string `json:"password"`  // 密码
+	Nickname  string `json:"nickname"`  // 昵称
+	Phone     string `json:"phone"`     // 手机号码
+	Status    string `json:"status"`    // 帐号启用状态:0->禁用；1->启用
+	Avatar    string `json:"avatar"`    // 头像
+	Gender    string `json:"gender"`    // 性别：0->未知；1->男；2->女
+	Email     string `json:"email"`     //
+	City      string `json:"city"`      // 所做城市
+	Job       string `json:"job"`       // 职业
+	Signature string `json:"signature"` // 个性签名
+}
+
+type UpdateMemberResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteMemberReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteMemberResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
 }

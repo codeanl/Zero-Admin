@@ -11,6 +11,8 @@ import "pms/attribute.api"
 import "pms/product.api"
 import "pms/sku.api"
 
+import "ums/member.api"
+
 info(
 	title: "type title here"
 	desc: "type desc here"

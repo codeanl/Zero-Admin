@@ -9,6 +9,7 @@ type Config struct {
 	rest.RestConf
 	SysRpc zrpc.RpcClientConf
 	PmsRpc zrpc.RpcClientConf
+	UmsRpc zrpc.RpcClientConf
 	Auth   struct {
 		AccessSecret string
 		AccessExpire int64
