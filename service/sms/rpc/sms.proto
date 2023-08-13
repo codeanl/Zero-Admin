@@ -136,7 +136,45 @@ message CouponListResp {
   int64 total = 1;
   repeated  CouponListData list = 2;
 }
-
+//添加推荐
+message HotRecommendAddReq {
+  repeated int64 ProductId = 1; //
+}
+message HotRecommendAddResp {
+  string pong = 1;
+}
+//推荐列表
+message HotRecommendListReq {
+  int64 Current = 1;
+  int64 pageSize = 2;
+    string Status =3;
+}
+message HotRecommendListResp {
+  int64 total=1;
+  repeated HotRecommendList List=2;
+}
+message HotRecommendList{
+  int64 ID =1;
+  int64 ProductId =4;
+  string Status=2;
+  int64 Sort=3;
+}
+//更新推荐
+message HotRecommendUpdateReq {
+  int64 ID =1;
+  string Status=2;
+  int64 Sort=3;
+}
+message HotRecommendUpdateResp {
+  string pong = 1;
+}
+//删除推荐
+message HotRecommendDeleteReq {
+  repeated int64 ids = 1;
+}
+message HotRecommendDeleteResp {
+  string pong = 1;
+}
 
 service Sms {
   //添加广告
@@ -156,4 +194,13 @@ service Sms {
   rpc CouponDelete(CouponDeleteReq) returns(CouponDeleteResp);
   //优惠券列表
   rpc CouponList(CouponListReq) returns(CouponListResp);
+
+//添加推荐
+  rpc HotRecommendAdd(HotRecommendAddReq) returns(HotRecommendAddResp);
+  //推荐列表
+  rpc HotRecommendList(HotRecommendListReq) returns(HotRecommendListResp);
+   //更新推荐
+  rpc HotRecommendUpdate(HotRecommendUpdateReq) returns(HotRecommendUpdateResp);
+  //删除推荐
+  rpc HotRecommendDelete(HotRecommendDeleteReq) returns(HotRecommendDeleteResp);
 }

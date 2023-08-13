@@ -181,6 +181,7 @@ message ProductListReq {
   int64 pageNum = 1;
   int64 pageSize = 2;
   string Name = 3;
+    int64 ID=4;
 }
 
 message ProductListData{

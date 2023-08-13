@@ -1,0 +1,129 @@
+syntax = "proto3";
+
+package oms;
+
+option go_package = "./oms";
+//添加订单
+message OrderAddReq {
+  int64       PlaceId = 45;
+  int64       MemberId = 2;
+  int64       CouponId = 3;
+  string      OrderSn = 4;
+  string      MemberUsername = 6;
+  double     TotalAmount = 7;
+  double     PayAmount = 8;
+  double     FreightAmount = 9;
+  double     CouponAmount = 12;
+  double     DiscountAmount = 13;
+  string       PayType = 14;
+  string       Status = 16;
+  string       OrderType = 17;
+  int64       AutoConfirmDay = 20;
+  string      ReceiverProvince = 32;
+  string      ReceiverCity = 33;
+  string      ReceiverRegion = 34;
+  string      ReceiverDetailAddress = 35;
+  string      Note = 36;
+  string       ConfirmStatus = 37;
+  string       DeleteStatus = 38;
+  string   PaymentTime = 40;
+  string   DeliveryTime = 41;
+  string   ReceiveTime = 42;
+  string   CommentTime = 43;
+}
+message OrderAddResp {
+  string pong = 1;
+}
+//订单更新
+message OrderUpdateReq{
+  int64       ID = 1;
+  int64       PlaceId = 45;
+  int64       MemberId = 2;
+  int64       CouponId = 3;
+  string      OrderSn = 4;
+  string      MemberUsername = 6;
+  double     TotalAmount = 7;
+  double     PayAmount = 8;
+  double     FreightAmount = 9;
+  double     CouponAmount = 12;
+  double     DiscountAmount = 13;
+  string       PayType = 14;
+  string       Status = 16;
+  string       OrderType = 17;
+  int64       AutoConfirmDay = 20;
+  string      ReceiverProvince = 32;
+  string      ReceiverCity = 33;
+  string      ReceiverRegion = 34;
+  string      ReceiverDetailAddress = 35;
+  string      Note = 36;
+  string       ConfirmStatus = 37;
+  string       DeleteStatus = 38;
+  string   PaymentTime = 40;
+  string   DeliveryTime = 41;
+  string   ReceiveTime = 42;
+  string   CommentTime = 43;
+}
+message OrderUpdateResp{
+  string pong = 1;
+}
+//订单订单列表
+message OrderListReq {
+  int64    current = 1;
+  int64   pageSize = 2;
+  string    OrderSn = 3;
+  string     MemberUsername = 4;
+  string       PayType = 5;
+  string       Status = 7;
+  string       OrderType = 8;
+}
+
+message OrderListData{
+  int64       ID = 1;
+  int64       PlaceId = 45;
+  int64       MemberId = 2;
+  int64       CouponId = 3;
+  string      OrderSn = 4;
+  string      MemberUsername = 6;
+  double     TotalAmount = 7;
+  double     PayAmount = 8;
+  double     FreightAmount = 9;
+  double     CouponAmount = 12;
+  double     DiscountAmount = 13;
+  string       PayType = 14;
+  string       Status = 16;
+  string       OrderType = 17;
+  int64       AutoConfirmDay = 20;
+  string      ReceiverProvince = 32;
+  string      ReceiverCity = 33;
+  string      ReceiverRegion = 34;
+  string      ReceiverDetailAddress = 35;
+  string      Note = 36;
+  string       ConfirmStatus = 37;
+  string       DeleteStatus = 38;
+  string   PaymentTime = 40;
+  string   DeliveryTime = 41;
+  string   ReceiveTime = 42;
+  string   CommentTime = 43;
+}
+message OrderListResp {
+  int64 total = 1;
+  repeated  OrderListData list = 2;
+}
+
+//删除订单
+message OrderDeleteReq {
+  repeated int64 ids = 1;
+}
+message OrderDeleteResp {
+  string pong = 1;
+}
+service Oms {
+  //添加订单
+  rpc OrderAdd(OrderAddReq) returns(OrderAddResp);
+  //订单列表
+  rpc OrderList(OrderListReq) returns(OrderListResp);
+  //更新订单
+  rpc OrderUpdate(OrderUpdateReq) returns(OrderUpdateResp);
+  //删除订单
+  rpc OrderDelete(OrderDeleteReq) returns(OrderDeleteResp);
+}

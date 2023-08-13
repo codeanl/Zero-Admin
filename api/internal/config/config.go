@@ -11,6 +11,7 @@ type Config struct {
 	PmsRpc zrpc.RpcClientConf
 	UmsRpc zrpc.RpcClientConf
 	SmsRpc zrpc.RpcClientConf
+	OmsRpc zrpc.RpcClientConf
 	Auth   struct {
 		AccessSecret string
 		AccessExpire int64

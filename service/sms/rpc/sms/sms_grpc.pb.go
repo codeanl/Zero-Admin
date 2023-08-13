@@ -27,6 +27,10 @@ const (
 	Sms_CouponUpdate_FullMethodName        = "/sms.Sms/CouponUpdate"
 	Sms_CouponDelete_FullMethodName        = "/sms.Sms/CouponDelete"
 	Sms_CouponList_FullMethodName          = "/sms.Sms/CouponList"
+	Sms_HotRecommendAdd_FullMethodName     = "/sms.Sms/HotRecommendAdd"
+	Sms_HotRecommendList_FullMethodName    = "/sms.Sms/HotRecommendList"
+	Sms_HotRecommendUpdate_FullMethodName  = "/sms.Sms/HotRecommendUpdate"
+	Sms_HotRecommendDelete_FullMethodName  = "/sms.Sms/HotRecommendDelete"
 )
 
 // SmsClient is the client API for Sms service.
@@ -49,6 +53,14 @@ type SmsClient interface {
 	CouponDelete(ctx context.Context, in *CouponDeleteReq, opts ...grpc.CallOption) (*CouponDeleteResp, error)
 	// 优惠券列表
 	CouponList(ctx context.Context, in *CouponListReq, opts ...grpc.CallOption) (*CouponListResp, error)
+	// 添加推荐
+	HotRecommendAdd(ctx context.Context, in *HotRecommendAddReq, opts ...grpc.CallOption) (*HotRecommendAddResp, error)
+	// 推荐列表
+	HotRecommendList(ctx context.Context, in *HotRecommendListReq, opts ...grpc.CallOption) (*HotRecommendListResp, error)
+	// 更新推荐
+	HotRecommendUpdate(ctx context.Context, in *HotRecommendUpdateReq, opts ...grpc.CallOption) (*HotRecommendUpdateResp, error)
+	// 删除推荐
+	HotRecommendDelete(ctx context.Context, in *HotRecommendDeleteReq, opts ...grpc.CallOption) (*HotRecommendDeleteResp, error)
 }
 
 type smsClient struct {
@@ -131,6 +143,42 @@ func (c *smsClient) CouponList(ctx context.Context, in *CouponListReq, opts ...g
 	return out, nil
 }
 
+func (c *smsClient) HotRecommendAdd(ctx context.Context, in *HotRecommendAddReq, opts ...grpc.CallOption) (*HotRecommendAddResp, error) {
+	out := new(HotRecommendAddResp)
+	err := c.cc.Invoke(ctx, Sms_HotRecommendAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) HotRecommendList(ctx context.Context, in *HotRecommendListReq, opts ...grpc.CallOption) (*HotRecommendListResp, error) {
+	out := new(HotRecommendListResp)
+	err := c.cc.Invoke(ctx, Sms_HotRecommendList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) HotRecommendUpdate(ctx context.Context, in *HotRecommendUpdateReq, opts ...grpc.CallOption) (*HotRecommendUpdateResp, error) {
+	out := new(HotRecommendUpdateResp)
+	err := c.cc.Invoke(ctx, Sms_HotRecommendUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) HotRecommendDelete(ctx context.Context, in *HotRecommendDeleteReq, opts ...grpc.CallOption) (*HotRecommendDeleteResp, error) {
+	out := new(HotRecommendDeleteResp)
+	err := c.cc.Invoke(ctx, Sms_HotRecommendDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SmsServer is the server API for Sms service.
 // All implementations must embed UnimplementedSmsServer
 // for forward compatibility
@@ -151,6 +199,14 @@ type SmsServer interface {
 	CouponDelete(context.Context, *CouponDeleteReq) (*CouponDeleteResp, error)
 	// 优惠券列表
 	CouponList(context.Context, *CouponListReq) (*CouponListResp, error)
+	// 添加推荐
+	HotRecommendAdd(context.Context, *HotRecommendAddReq) (*HotRecommendAddResp, error)
+	// 推荐列表
+	HotRecommendList(context.Context, *HotRecommendListReq) (*HotRecommendListResp, error)
+	// 更新推荐
+	HotRecommendUpdate(context.Context, *HotRecommendUpdateReq) (*HotRecommendUpdateResp, error)
+	// 删除推荐
+	HotRecommendDelete(context.Context, *HotRecommendDeleteReq) (*HotRecommendDeleteResp, error)
 	mustEmbedUnimplementedSmsServer()
 }
 
@@ -181,6 +237,18 @@ func (UnimplementedSmsServer) CouponDelete(context.Context, *CouponDeleteReq) (*
 }
 func (UnimplementedSmsServer) CouponList(context.Context, *CouponListReq) (*CouponListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CouponList not implemented")
+}
+func (UnimplementedSmsServer) HotRecommendAdd(context.Context, *HotRecommendAddReq) (*HotRecommendAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HotRecommendAdd not implemented")
+}
+func (UnimplementedSmsServer) HotRecommendList(context.Context, *HotRecommendListReq) (*HotRecommendListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HotRecommendList not implemented")
+}
+func (UnimplementedSmsServer) HotRecommendUpdate(context.Context, *HotRecommendUpdateReq) (*HotRecommendUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HotRecommendUpdate not implemented")
+}
+func (UnimplementedSmsServer) HotRecommendDelete(context.Context, *HotRecommendDeleteReq) (*HotRecommendDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HotRecommendDelete not implemented")
 }
 func (UnimplementedSmsServer) mustEmbedUnimplementedSmsServer() {}
 
@@ -339,6 +407,78 @@ func _Sms_CouponList_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Sms_HotRecommendAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HotRecommendAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).HotRecommendAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_HotRecommendAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).HotRecommendAdd(ctx, req.(*HotRecommendAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_HotRecommendList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HotRecommendListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).HotRecommendList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_HotRecommendList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).HotRecommendList(ctx, req.(*HotRecommendListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_HotRecommendUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HotRecommendUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).HotRecommendUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_HotRecommendUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).HotRecommendUpdate(ctx, req.(*HotRecommendUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_HotRecommendDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HotRecommendDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).HotRecommendDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_HotRecommendDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).HotRecommendDelete(ctx, req.(*HotRecommendDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Sms_ServiceDesc is the grpc.ServiceDesc for Sms service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -377,6 +517,22 @@ var Sms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CouponList",
 			Handler:    _Sms_CouponList_Handler,
+		},
+		{
+			MethodName: "HotRecommendAdd",
+			Handler:    _Sms_HotRecommendAdd_Handler,
+		},
+		{
+			MethodName: "HotRecommendList",
+			Handler:    _Sms_HotRecommendList_Handler,
+		},
+		{
+			MethodName: "HotRecommendUpdate",
+			Handler:    _Sms_HotRecommendUpdate_Handler,
+		},
+		{
+			MethodName: "HotRecommendDelete",
+			Handler:    _Sms_HotRecommendDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

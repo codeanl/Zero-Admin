@@ -15,6 +15,9 @@ import "ums/member.api"
 
 import "sms/home_advertise.api"
 import "sms/coupon.api"
+import "sms/hot_recommend.api"
+
+import "oms/order.api"
 
 info(
 	title: "type title here"

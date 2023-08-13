@@ -3,6 +3,7 @@ package svc
 import (
 	"SimplePick-Mall-Server/api/internal/config"
 	"SimplePick-Mall-Server/api/middleware"
+	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
@@ -18,6 +19,7 @@ type ServiceContext struct {
 	Pms          pmsclient.Pms
 	Ums          umsclient.Ums
 	Sms          smsclient.Sms
+	Oms          omsclient.Oms
 	Redis        *redis.Redis
 	AddSystemLog rest.Middleware
 }
@@ -28,12 +30,14 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	newPms := pmsclient.NewPms(zrpc.MustNewClient(c.PmsRpc))
 	newUms := umsclient.NewUms(zrpc.MustNewClient(c.UmsRpc))
 	newSms := smsclient.NewSms(zrpc.MustNewClient(c.SmsRpc))
+	newOms := omsclient.NewOms(zrpc.MustNewClient(c.OmsRpc))
 	return &ServiceContext{
 		Config:       c,
 		Sys:          newSys,
 		Pms:          newPms,
 		Ums:          newUms,
 		Sms:          newSms,
+		Oms:          newOms,
 		Redis:        newRedis,
 		AddSystemLog: middleware.NewAddLogMiddleware(newSys).Handle,
 	}

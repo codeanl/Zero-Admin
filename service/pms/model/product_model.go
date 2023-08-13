@@ -67,7 +67,9 @@ func (m *defaultProductModel) DeleteProductByIds(ids []int64) error {
 func (m *defaultProductModel) GetProductList(in *pms.ProductListReq) ([]*Product, int64, error) {
 	var list []*Product
 	db := m.conn.Model(&Product{}).Order("created_at DESC")
-
+	if in.ID != 0 {
+		db = db.Where("id = ?", in.ID)
+	}
 	var total int64
 	err := db.Count(&total).Error
 	if err != nil {

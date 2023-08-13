@@ -27,6 +27,7 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 	resp, err := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
 		PageNum:  req.Current,
 		PageSize: req.PageSize,
+		ID:       req.ID,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")

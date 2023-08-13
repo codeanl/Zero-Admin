@@ -31,6 +31,15 @@ type (
 	HomeAdvertiseListResp   = sms.HomeAdvertiseListResp
 	HomeAdvertiseUpdateReq  = sms.HomeAdvertiseUpdateReq
 	HomeAdvertiseUpdateResp = sms.HomeAdvertiseUpdateResp
+	HotRecommendAddReq      = sms.HotRecommendAddReq
+	HotRecommendAddResp     = sms.HotRecommendAddResp
+	HotRecommendDeleteReq   = sms.HotRecommendDeleteReq
+	HotRecommendDeleteResp  = sms.HotRecommendDeleteResp
+	HotRecommendList        = sms.HotRecommendList
+	HotRecommendListReq     = sms.HotRecommendListReq
+	HotRecommendListResp    = sms.HotRecommendListResp
+	HotRecommendUpdateReq   = sms.HotRecommendUpdateReq
+	HotRecommendUpdateResp  = sms.HotRecommendUpdateResp
 
 	Sms interface {
 		// 添加广告
@@ -49,6 +58,14 @@ type (
 		CouponDelete(ctx context.Context, in *CouponDeleteReq, opts ...grpc.CallOption) (*CouponDeleteResp, error)
 		// 优惠券列表
 		CouponList(ctx context.Context, in *CouponListReq, opts ...grpc.CallOption) (*CouponListResp, error)
+		// 添加推荐
+		HotRecommendAdd(ctx context.Context, in *HotRecommendAddReq, opts ...grpc.CallOption) (*HotRecommendAddResp, error)
+		// 推荐列表
+		HotRecommendList(ctx context.Context, in *HotRecommendListReq, opts ...grpc.CallOption) (*HotRecommendListResp, error)
+		// 更新推荐
+		HotRecommendUpdate(ctx context.Context, in *HotRecommendUpdateReq, opts ...grpc.CallOption) (*HotRecommendUpdateResp, error)
+		// 删除推荐
+		HotRecommendDelete(ctx context.Context, in *HotRecommendDeleteReq, opts ...grpc.CallOption) (*HotRecommendDeleteResp, error)
 	}
 
 	defaultSms struct {
@@ -108,4 +125,28 @@ func (m *defaultSms) CouponDelete(ctx context.Context, in *CouponDeleteReq, opts
 func (m *defaultSms) CouponList(ctx context.Context, in *CouponListReq, opts ...grpc.CallOption) (*CouponListResp, error) {
 	client := sms.NewSmsClient(m.cli.Conn())
 	return client.CouponList(ctx, in, opts...)
+}
+
+// 添加推荐
+func (m *defaultSms) HotRecommendAdd(ctx context.Context, in *HotRecommendAddReq, opts ...grpc.CallOption) (*HotRecommendAddResp, error) {
+	client := sms.NewSmsClient(m.cli.Conn())
+	return client.HotRecommendAdd(ctx, in, opts...)
+}
+
+// 推荐列表
+func (m *defaultSms) HotRecommendList(ctx context.Context, in *HotRecommendListReq, opts ...grpc.CallOption) (*HotRecommendListResp, error) {
+	client := sms.NewSmsClient(m.cli.Conn())
+	return client.HotRecommendList(ctx, in, opts...)
+}
+
+// 更新推荐
+func (m *defaultSms) HotRecommendUpdate(ctx context.Context, in *HotRecommendUpdateReq, opts ...grpc.CallOption) (*HotRecommendUpdateResp, error) {
+	client := sms.NewSmsClient(m.cli.Conn())
+	return client.HotRecommendUpdate(ctx, in, opts...)
+}
+
+// 删除推荐
+func (m *defaultSms) HotRecommendDelete(ctx context.Context, in *HotRecommendDeleteReq, opts ...grpc.CallOption) (*HotRecommendDeleteResp, error) {
+	client := sms.NewSmsClient(m.cli.Conn())
+	return client.HotRecommendDelete(ctx, in, opts...)
 }

@@ -69,3 +69,27 @@ func (s *SmsServer) CouponList(ctx context.Context, in *sms.CouponListReq) (*sms
 	l := logic.NewCouponListLogic(ctx, s.svcCtx)
 	return l.CouponList(in)
 }
+
+// 添加推荐
+func (s *SmsServer) HotRecommendAdd(ctx context.Context, in *sms.HotRecommendAddReq) (*sms.HotRecommendAddResp, error) {
+	l := logic.NewHotRecommendAddLogic(ctx, s.svcCtx)
+	return l.HotRecommendAdd(in)
+}
+
+// 推荐列表
+func (s *SmsServer) HotRecommendList(ctx context.Context, in *sms.HotRecommendListReq) (*sms.HotRecommendListResp, error) {
+	l := logic.NewHotRecommendListLogic(ctx, s.svcCtx)
+	return l.HotRecommendList(in)
+}
+
+// 更新推荐
+func (s *SmsServer) HotRecommendUpdate(ctx context.Context, in *sms.HotRecommendUpdateReq) (*sms.HotRecommendUpdateResp, error) {
+	l := logic.NewHotRecommendUpdateLogic(ctx, s.svcCtx)
+	return l.HotRecommendUpdate(in)
+}
+
+// 删除推荐
+func (s *SmsServer) HotRecommendDelete(ctx context.Context, in *sms.HotRecommendDeleteReq) (*sms.HotRecommendDeleteResp, error) {
+	l := logic.NewHotRecommendDeleteLogic(ctx, s.svcCtx)
+	return l.HotRecommendDelete(in)
+}

@@ -35,23 +35,24 @@ type (
         Message string `json:"message"`
     }
     ListProductReq struct {
-        Current int64 `form:"current,default=1"`
-        PageSize int64 `form:"pageSize,default=20"`
+        Current int64 `form:"current,optional"`
+        PageSize int64 `form:"pageSize,optional"`
+        ID int64 `form:"id,optional"`
     }
     ListProductData struct {
         Id int64 `json:"id"`
         CategoryID int64 `json:"categoryId"`
-               Name string `json:"name"`
-               Pic string `json:"pic,optional"`
-               ProductSn string `json:"productSn"`
-               SubTitle string `json:"subTitle,optional"`
-               Description string `json:"description,optional"`
-               OriginalPrice float64 `json:"originalPrice,optional"`
-               Stock int64 `json:"stock,optional"`
-               Unit string `json:"unit,optional"`
-               Sale int64 `json:"sale,optional,default=0"`
-               Price float64 `json:"price,optional"`
-               SizeList []SizeList `json:"sizeList,optional"`
+         Name string `json:"name"`
+         Pic string `json:"pic,optional"`
+         ProductSn string `json:"productSn"`
+         SubTitle string `json:"subTitle,optional"`
+         Description string `json:"description,optional"`
+        OriginalPrice float64 `json:"originalPrice,optional"`
+        Stock int64 `json:"stock,optional"`
+         Unit string `json:"unit,optional"`
+         Sale int64 `json:"sale,optional,default=0"`
+          Price float64 `json:"price,optional"`
+         SizeList []SizeList `json:"sizeList,optional"`
           AttrValueIDs []int64 `json:"attrValueIds"`
     }
     SizeList struct{

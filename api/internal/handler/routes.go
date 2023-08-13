@@ -4,10 +4,12 @@ package handler
 import (
 	"net/http"
 
+	omsorder "SimplePick-Mall-Server/api/internal/handler/oms/order"
 	pmsattribute "SimplePick-Mall-Server/api/internal/handler/pms/attribute"
 	pmscategory "SimplePick-Mall-Server/api/internal/handler/pms/category"
 	pmsproduct "SimplePick-Mall-Server/api/internal/handler/pms/product"
 	pmssku "SimplePick-Mall-Server/api/internal/handler/pms/sku"
+	smsHotRecommend "SimplePick-Mall-Server/api/internal/handler/sms/HotRecommend"
 	smscoupon "SimplePick-Mall-Server/api/internal/handler/sms/coupon"
 	smshomeAdvertise "SimplePick-Mall-Server/api/internal/handler/sms/homeAdvertise"
 	sysloginLog "SimplePick-Mall-Server/api/internal/handler/sys/loginLog"
@@ -404,5 +406,59 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/sms/coupon"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: smsHotRecommend.HotRecommendAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: smsHotRecommend.HotRecommendListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: smsHotRecommend.HotRecommendUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: smsHotRecommend.HotRecommendDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/sms/hotRecommend"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: omsorder.OrderAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/list",
+				Handler: omsorder.OrderListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: omsorder.OrderUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: omsorder.OrderDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/oms/order"),
 	)
 }
