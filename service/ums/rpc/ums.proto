@@ -87,12 +87,22 @@ message MemberInfoResp {
   string       Signature = 15;
 }
 
+//会员登录
+message MemberLoginReq {
+  string      Username = 1;
+  string      Password = 2;
+}
+message MemberLoginResp {
+  string Token = 2;
+  MemberListData  Member = 3;
+}
+
 
 service Ums {
   //添加会员
   rpc MemberAdd(MemberAddReq) returns(MemberAddResp);
   //会员登录
-//  rpc MemberLogin(MemberLoginReq) returns(MemberLoginResp);
+  rpc MemberLogin(MemberLoginReq) returns(MemberLoginResp);
   //会员列表
   rpc MemberList(MemberListReq) returns(MemberListResp);
   //会员更新

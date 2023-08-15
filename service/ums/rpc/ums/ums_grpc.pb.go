@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Ums_MemberAdd_FullMethodName    = "/ums.Ums/MemberAdd"
+	Ums_MemberLogin_FullMethodName  = "/ums.Ums/MemberLogin"
 	Ums_MemberList_FullMethodName   = "/ums.Ums/MemberList"
 	Ums_MemberUpdate_FullMethodName = "/ums.Ums/MemberUpdate"
 	Ums_MemberDelete_FullMethodName = "/ums.Ums/MemberDelete"
@@ -33,9 +34,7 @@ type UmsClient interface {
 	// 添加会员
 	MemberAdd(ctx context.Context, in *MemberAddReq, opts ...grpc.CallOption) (*MemberAddResp, error)
 	// 会员登录
-	//
-	//	rpc MemberLogin(MemberLoginReq) returns(MemberLoginResp);
-	//
+	MemberLogin(ctx context.Context, in *MemberLoginReq, opts ...grpc.CallOption) (*MemberLoginResp, error)
 	// 会员列表
 	MemberList(ctx context.Context, in *MemberListReq, opts ...grpc.CallOption) (*MemberListResp, error)
 	// 会员更新
@@ -57,6 +56,15 @@ func NewUmsClient(cc grpc.ClientConnInterface) UmsClient {
 func (c *umsClient) MemberAdd(ctx context.Context, in *MemberAddReq, opts ...grpc.CallOption) (*MemberAddResp, error) {
 	out := new(MemberAddResp)
 	err := c.cc.Invoke(ctx, Ums_MemberAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *umsClient) MemberLogin(ctx context.Context, in *MemberLoginReq, opts ...grpc.CallOption) (*MemberLoginResp, error) {
+	out := new(MemberLoginResp)
+	err := c.cc.Invoke(ctx, Ums_MemberLogin_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -106,9 +114,7 @@ type UmsServer interface {
 	// 添加会员
 	MemberAdd(context.Context, *MemberAddReq) (*MemberAddResp, error)
 	// 会员登录
-	//
-	//	rpc MemberLogin(MemberLoginReq) returns(MemberLoginResp);
-	//
+	MemberLogin(context.Context, *MemberLoginReq) (*MemberLoginResp, error)
 	// 会员列表
 	MemberList(context.Context, *MemberListReq) (*MemberListResp, error)
 	// 会员更新
@@ -126,6 +132,9 @@ type UnimplementedUmsServer struct {
 
 func (UnimplementedUmsServer) MemberAdd(context.Context, *MemberAddReq) (*MemberAddResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MemberAdd not implemented")
+}
+func (UnimplementedUmsServer) MemberLogin(context.Context, *MemberLoginReq) (*MemberLoginResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberLogin not implemented")
 }
 func (UnimplementedUmsServer) MemberList(context.Context, *MemberListReq) (*MemberListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MemberList not implemented")
@@ -166,6 +175,24 @@ func _Ums_MemberAdd_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UmsServer).MemberAdd(ctx, req.(*MemberAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ums_MemberLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MemberLoginReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UmsServer).MemberLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ums_MemberLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UmsServer).MemberLogin(ctx, req.(*MemberLoginReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -252,6 +279,10 @@ var Ums_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MemberAdd",
 			Handler:    _Ums_MemberAdd_Handler,
+		},
+		{
+			MethodName: "MemberLogin",
+			Handler:    _Ums_MemberLogin_Handler,
 		},
 		{
 			MethodName: "MemberList",

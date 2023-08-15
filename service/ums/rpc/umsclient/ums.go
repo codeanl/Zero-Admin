@@ -22,6 +22,8 @@ type (
 	MemberListData   = ums.MemberListData
 	MemberListReq    = ums.MemberListReq
 	MemberListResp   = ums.MemberListResp
+	MemberLoginReq   = ums.MemberLoginReq
+	MemberLoginResp  = ums.MemberLoginResp
 	MemberUpdateReq  = ums.MemberUpdateReq
 	MemberUpdateResp = ums.MemberUpdateResp
 
@@ -29,6 +31,8 @@ type (
 		// 添加会员
 		MemberAdd(ctx context.Context, in *MemberAddReq, opts ...grpc.CallOption) (*MemberAddResp, error)
 		// 会员登录
+		MemberLogin(ctx context.Context, in *MemberLoginReq, opts ...grpc.CallOption) (*MemberLoginResp, error)
+		// 会员列表
 		MemberList(ctx context.Context, in *MemberListReq, opts ...grpc.CallOption) (*MemberListResp, error)
 		// 会员更新
 		MemberUpdate(ctx context.Context, in *MemberUpdateReq, opts ...grpc.CallOption) (*MemberUpdateResp, error)
@@ -56,6 +60,12 @@ func (m *defaultUms) MemberAdd(ctx context.Context, in *MemberAddReq, opts ...gr
 }
 
 // 会员登录
+func (m *defaultUms) MemberLogin(ctx context.Context, in *MemberLoginReq, opts ...grpc.CallOption) (*MemberLoginResp, error) {
+	client := ums.NewUmsClient(m.cli.Conn())
+	return client.MemberLogin(ctx, in, opts...)
+}
+
+// 会员列表
 func (m *defaultUms) MemberList(ctx context.Context, in *MemberListReq, opts ...grpc.CallOption) (*MemberListResp, error) {
 	client := ums.NewUmsClient(m.cli.Conn())
 	return client.MemberList(ctx, in, opts...)
