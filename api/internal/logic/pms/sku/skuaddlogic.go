@@ -26,15 +26,15 @@ func NewSkuAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SkuAddLogi
 
 func (l *SkuAddLogic) SkuAdd(req *types.AddSkuReq) (resp *types.AddSkuResp, err error) {
 	_, err = l.svcCtx.Pms.SkuAdd(l.ctx, &pmsclient.SkuAddReq{
-		ProductID:            req.ProductID,
-		Name:                 req.Name,
-		Pic:                  req.Pic,
-		Price:                req.Price,
-		SkuSn:                req.SkuSn,
-		Description:          req.Description,
-		Stock:                req.Stock,
-		Tag:                  req.TAG,
-		AttributeShopValueID: req.AttributeShopValueID,
+		ProductID:   req.ProductID,
+		Name:        req.Name,
+		Pic:         req.Pic,
+		Price:       req.Price,
+		SkuSn:       req.SkuSn,
+		Description: req.Description,
+		Stock:       req.Stock,
+		Tag:         req.TAG,
+		SizeValueID: req.SizeValueID,
 	})
 	if err != nil {
 		return nil, err

@@ -25,18 +25,11 @@ func NewAttributeUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *A
 }
 
 func (l *AttributeUpdateLogic) AttributeUpdate(req *types.UpdateAttributeReq) (resp *types.UpdateAttributeResp, err error) {
-	var updateValue []*pmsclient.UpdateValue
-	for _, i := range req.UpdateValue {
-		updateValue = append(updateValue, &pmsclient.UpdateValue{
-			Value: i.Name,
-		})
-	}
 	_, err = l.svcCtx.Pms.AttributeUpdate(l.ctx, &pmsclient.AttributeUpdateReq{
-		Id:          req.Id,
-		Name:        req.Name,
-		Type:        req.Type,
-		CategoryID:  req.CategoryId,
-		UpdateValue: updateValue,
+		Id:            req.Id,
+		Name:          req.Name,
+		CategoryID:    req.CategoryId,
+		AttributeName: req.AttributeName,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("更新用户失败")

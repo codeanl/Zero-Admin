@@ -31,14 +31,12 @@ func (l *ProductAddLogic) ProductAdd(in *pms.ProductAddReq) (*pms.ProductAddResp
 		Name:          in.Name,
 		Pic:           in.Pic,
 		ProductSn:     in.ProductSn,
-		SubTitle:      in.SubTitle,
-		Description:   in.Description,
+		Desc:          in.Desc,
 		OriginalPrice: in.OriginalPrice,
-		Stock:         in.Stock,
-		Unit:          in.Unit,
-		Sale:          in.Sale,
 		Price:         in.Price,
+		Unit:          in.Unit,
 	}
+	//add
 	spu, err := l.svcCtx.ProductModel.AddProduct(&info)
 	//存平台属性 （SpuID,AttributeValueID）spu对应许多个平台属性
 	for _, i := range in.AttributeValueID {
@@ -53,13 +51,19 @@ func (l *ProductAddLogic) ProductAdd(in *pms.ProductAddReq) (*pms.ProductAddResp
 			ProductID: int64(spu.ID),
 			Name:      i.Name,
 		})
-		for _, j := range i.SizeValue {
+		for _, j := range i.SizeValueName {
 			l.svcCtx.SpuSizeValueModel.AddSpuSizeValue(&model.SpuSizeValue{
 				SizeID: int64(size.ID),
-				Value:  j.Value,
+				Value:  j,
 			},
 			)
 		}
+	}
+	for _, i := range in.ImgUrl {
+		l.svcCtx.ProductImgModel.AddProductImg(&model.ProductImg{
+			ProductID: int64(spu.ID),
+			Url:       i,
+		})
 	}
 	if err != nil {
 		return nil, errors.New("添加用户失败")

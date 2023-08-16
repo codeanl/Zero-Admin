@@ -45,7 +45,23 @@ type (
            Message string `json:"message"`
            Data Info `json:"data"`
     }
-
+   UpdateMemberReq struct {
+        Id int64 `json:"id"`
+        Username string `json:"username,optional"`                           // 用户名
+        Nickname string `json:"nickname,optional"`                           // 昵称
+        Phone string `json:"phone,optional"`                                 // 手机号码
+        Status string `json:"status,optional"`                                // 帐号启用状态:0->禁用；1->启用
+        Avatar string `json:"avatar,optional"`                               // 头像
+        Gender string `json:"gender,optional"`                                // 性别：0->未知；1->男；2->女
+        Email string `json:"email,optional"`                                  //
+        City string `json:"city,optional"`                                    // 所做城市
+        Job string `json:"job,optional"`                                      // 职业
+        Signature string `json:"signature,optional"` // 个性签名
+    }
+    UpdateMemberResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
 )
 
 @server(
@@ -57,6 +73,8 @@ service api {
     post /login (MemberLoginReq) returns (MemberLoginResp)
     @handler Info
     post /info (InfoReq)returns (InfoResp)
+    @handler MemberUpdate
+   post /update (UpdateMemberReq) returns (UpdateMemberResp)
 }
 
 

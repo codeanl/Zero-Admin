@@ -94,6 +94,12 @@ func (s *PmsServer) ProductDelete(ctx context.Context, in *pms.ProductDeleteReq)
 	return l.ProductDelete(in)
 }
 
+// 查询商品详情
+func (s *PmsServer) ProductInfo(ctx context.Context, in *pms.ProductInfoReq) (*pms.ProductInfoResp, error) {
+	l := logic.NewProductInfoLogic(ctx, s.svcCtx)
+	return l.ProductInfo(in)
+}
+
 // 添加Sku
 func (s *PmsServer) SkuAdd(ctx context.Context, in *pms.SkuAddReq) (*pms.SkuAddResp, error) {
 	l := logic.NewSkuAddLogic(ctx, s.svcCtx)

@@ -72,11 +72,7 @@ message CategoryListResp {
 message AttributeAddReq {
   int64    CategoryID = 2;
   string  Name = 3;
-  string    Type = 12;
-  repeated AddValue AddValue=4;
-}
-message AddValue{
-  string    name = 2;
+  repeated string AttributeName=4;
 }
 message AttributeAddResp {
   string pong = 1;
@@ -86,12 +82,7 @@ message AttributeUpdateReq {
   int64    Id = 1;
   int64    CategoryID = 2;
   string  Name = 3;
-  string    Type = 12;
-  repeated UpdateValue UpdateValue=4;
-}
-message UpdateValue{
-  int64    Id = 1;
-  string    Value = 2;
+  repeated string AttributeName=4;
 }
 message AttributeUpdateResp {
   string pong = 1;
@@ -108,14 +99,12 @@ message AttributeListReq {
   int64 current = 1;
   int64 pageSize = 2;
   string  Name = 3;
-  string   Type = 4;
   int64    CategoryID = 5;
 }
 message AttributeListData{
   int64    Id = 1;
   int64    CategoryID = 2;
   string  Name = 3;
-  string   Type = 12;
   repeated AttributeValue AttributeValue=6;
 }
 message AttributeListResp {
@@ -124,8 +113,8 @@ message AttributeListResp {
 }
 message AttributeValue{
   int64    Id = 1;
-  string    Name = 2;
   int64  AttributeID = 3;
+  string    Name = 2;
 }
 //添加商品
 message ProductAddReq {
@@ -133,26 +122,26 @@ message ProductAddReq {
   string      Name = 6;
   string      Pic = 7;
   string      ProductSn = 8;
-  string      SubTitle = 21;
-  string      Description = 22;
+  string      Desc = 21;
   double     Price = 16;
   double     OriginalPrice = 23;
-  int64       Stock = 24;
   string      Unit = 26;
-  int64       Sale = 15;
-  repeated int64 AttributeValueID=20;
-  repeated Size Size=30;
+  repeated int64 AttributeValueID=20; //属性值的id
+  repeated Size Size=30; //规格
+  repeated string ImgUrl =31;
 }
+//销售属性
 message Size{
   int64 ID =4;
-  string name=1;
   int64 ProductID=2;
-  repeated SizeValue SizeValue=3;
+  string Name=1;
+  repeated string SizeValueName=3;
 }
-message SizeValueList{
-  int64 SizeID=1;
-  string Value=2;
-}
+//message SizeValue{
+//  int64 SizeID=1;
+//  string Value=2;
+//    int64 ID =3;
+//}
 message ProductAddResp {
   string pong = 1;
 }
@@ -163,15 +152,13 @@ message ProductUpdateReq {
   string      Name = 6;
   string      Pic = 7;
   string      ProductSn = 8;
-  string      SubTitle = 21;
-  string      Description = 22;
-  double     Price = 16;
-  double     OriginalPrice = 23;
-  int64       Stock = 24;
+  string      Desc = 21;
+  double      Price = 16;
+  double      OriginalPrice = 23;
   string      Unit = 26;
-  int64       Sale = 15;
   repeated int64 AttributeValueID=20;
   repeated Size Size=30;
+  repeated string ImgUrl =31;
 }
 message ProductUpdateResp {
   string pong = 1;
@@ -181,7 +168,7 @@ message ProductListReq {
   int64 pageNum = 1;
   int64 pageSize = 2;
   string Name = 3;
-    int64 ID=4;
+  int64 CategoryID=5; //分类
 }
 
 message ProductListData{
@@ -190,31 +177,31 @@ message ProductListData{
   string      Name = 6;
   string      Pic = 7;
   string      ProductSn = 8;
-  string      SubTitle = 21;
-  string      Description = 22;
+  string      Desc = 21;
   double     Price = 16;
   double     OriginalPrice = 23;
-  int64       Stock = 24;
   string      Unit = 26;
-  int64       Sale = 15;
-  repeated SizeList SizeList=30;
-  repeated int64 AttributeValueID=31;
-}
-message SizeList{
-  int64 ID =10;
-  int64 ProductID=1;
-  string    Name=2;
-  repeated SizeValue SizeValue=3;
-}
-message SizeValue{
-  int64 ID =10;
-  int64 SizeID=1;
-  string Value=2;
+
+
 }
 message ProductListResp {
   int64 total = 1;
   repeated  ProductListData list = 2;
 }
+
+//message SizeList{
+//  int64 ID =10;
+//  int64 ProductID=1;
+//  string    Name=2;
+//  repeated SizeValue SizeValue=3;
+//}
+//message SizeValue{
+//  int64 ID =10;
+//  int64 SizeID=1;
+//  string Value=2;
+//}
+
+
 //删除商品
 message ProductDeleteReq {
   repeated int64 ids = 1;
@@ -231,8 +218,8 @@ message SkuAddReq {
   string      Description = 21;
   double      Price = 22;
   int64     Stock = 16;
-  string Tag=14;
-  repeated int64 AttributeShopValueID=24;
+  string    Tag=14;
+  repeated int64 SizeValueID=24;
 }
 message SkuAddResp {
   string pong = 1;
@@ -240,9 +227,7 @@ message SkuAddResp {
 //Sku列表
 message SkuListReq {
   int64 ProductID = 1;
-  string Name = 3;
 }
-
 message SkuListData{
   int64       ID=1;
   int64       ProductID = 3;
@@ -252,6 +237,7 @@ message SkuListData{
   string      Description = 21;
   double      Price = 22;
   int64       Stock = 16;
+  int64       Sale = 17;
   string      Tag=14;
 }
 message SkuListResp {
@@ -268,8 +254,9 @@ message SkuUpdateReq {
   string      Description = 21;
   double      Price = 22;
   int64     Stock = 16;
+  int64     Sale = 17;
   string Tag=14;
-  repeated int64 AttributeShopValueID=24;
+  repeated int64 SizeValueID=24;
 }
 message SkuUpdateResp {
   string pong = 1;
@@ -281,8 +268,28 @@ message SkuDeleteReq {
 message SkuDeleteResp {
   string pong = 1;
 }
-
-
+//查询商品详情
+message ProductInfoReq{
+  int64 ID =1;
+}
+message ProductInfoResp{
+    ProductListData ProductInfo=1;
+    repeated string ImgUrl =2;
+    repeated SkuListData SkuList =3;
+    repeated SizeList SizeList=30;
+    repeated string AttributeValue=4;
+}
+message SizeList{
+  int64 ID =4;
+  int64 ProductID=2;
+  string Name=1;
+  repeated SizeValue SizeValue=3;
+}
+message SizeValue{
+  int64 SizeID=1;
+  string Value=2;
+    int64 ID =3;
+}
 service Pms {
   //添加分类
   rpc CategoryAdd(CategoryAddReq) returns(CategoryAddResp);
@@ -310,6 +317,8 @@ service Pms {
   rpc ProductUpdate(ProductUpdateReq) returns(ProductUpdateResp);
   //删除商品
   rpc ProductDelete(ProductDeleteReq) returns(ProductDeleteResp);
+  //查询商品详情
+  rpc ProductInfo(ProductInfoReq) returns(ProductInfoResp);
 
   //添加Sku
   rpc SkuAdd(SkuAddReq) returns(SkuAddResp);

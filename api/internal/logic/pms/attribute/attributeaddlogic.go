@@ -25,17 +25,10 @@ func NewAttributeAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Attr
 }
 
 func (l *AttributeAddLogic) AttributeAdd(req *types.AddAttributeReq) (resp *types.AddAttributeResp, err error) {
-	var updateValue []*pmsclient.AddValue
-	for _, i := range req.AddValue {
-		updateValue = append(updateValue, &pmsclient.AddValue{
-			Name: i.Name,
-		})
-	}
 	_, err = l.svcCtx.Pms.AttributeAdd(l.ctx, &pmsclient.AttributeAddReq{
-		Name:       req.Name,
-		CategoryID: req.CategoryId,
-		Type:       req.Type,
-		AddValue:   updateValue,
+		Name:          req.Name,
+		CategoryID:    req.CategoryId,
+		AttributeName: req.AttributeName,
 	})
 	if err != nil {
 		return nil, err

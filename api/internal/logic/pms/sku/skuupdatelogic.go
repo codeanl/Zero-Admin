@@ -26,16 +26,16 @@ func NewSkuUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SkuUpda
 
 func (l *SkuUpdateLogic) SkuUpdate(req *types.UpdateSkuReq) (resp *types.UpdateSkuResp, err error) {
 	_, err = l.svcCtx.Pms.SkuUpdate(l.ctx, &pmsclient.SkuUpdateReq{
-		ID:                   req.ID,
-		ProductID:            req.ProductID,
-		Name:                 req.Name,
-		Pic:                  req.Pic,
-		Price:                req.Price,
-		SkuSn:                req.SkuSn,
-		Description:          req.Description,
-		Stock:                req.Stock,
-		Tag:                  req.TAG,
-		AttributeShopValueID: req.AttributeShopValueID,
+		ID:          req.ID,
+		ProductID:   req.ProductID,
+		Name:        req.Name,
+		Pic:         req.Pic,
+		Price:       req.Price,
+		SkuSn:       req.SkuSn,
+		Description: req.Description,
+		Stock:       req.Stock,
+		Tag:         req.TAG,
+		SizeValueID: req.SizeValueID,
 	})
 	if err != nil {
 		return nil, err

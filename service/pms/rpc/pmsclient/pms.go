@@ -13,7 +13,6 @@ import (
 )
 
 type (
-	AddValue            = pms.AddValue
 	AttributeAddReq     = pms.AttributeAddReq
 	AttributeAddResp    = pms.AttributeAddResp
 	AttributeDeleteReq  = pms.AttributeDeleteReq
@@ -37,6 +36,8 @@ type (
 	ProductAddResp      = pms.ProductAddResp
 	ProductDeleteReq    = pms.ProductDeleteReq
 	ProductDeleteResp   = pms.ProductDeleteResp
+	ProductInfoReq      = pms.ProductInfoReq
+	ProductInfoResp     = pms.ProductInfoResp
 	ProductListData     = pms.ProductListData
 	ProductListReq      = pms.ProductListReq
 	ProductListResp     = pms.ProductListResp
@@ -45,7 +46,6 @@ type (
 	Size                = pms.Size
 	SizeList            = pms.SizeList
 	SizeValue           = pms.SizeValue
-	SizeValueList       = pms.SizeValueList
 	SkuAddReq           = pms.SkuAddReq
 	SkuAddResp          = pms.SkuAddResp
 	SkuDeleteReq        = pms.SkuDeleteReq
@@ -55,7 +55,6 @@ type (
 	SkuListResp         = pms.SkuListResp
 	SkuUpdateReq        = pms.SkuUpdateReq
 	SkuUpdateResp       = pms.SkuUpdateResp
-	UpdateValue         = pms.UpdateValue
 
 	Pms interface {
 		// 添加分类
@@ -82,6 +81,8 @@ type (
 		ProductUpdate(ctx context.Context, in *ProductUpdateReq, opts ...grpc.CallOption) (*ProductUpdateResp, error)
 		// 删除商品
 		ProductDelete(ctx context.Context, in *ProductDeleteReq, opts ...grpc.CallOption) (*ProductDeleteResp, error)
+		// 查询商品详情
+		ProductInfo(ctx context.Context, in *ProductInfoReq, opts ...grpc.CallOption) (*ProductInfoResp, error)
 		// 添加Sku
 		SkuAdd(ctx context.Context, in *SkuAddReq, opts ...grpc.CallOption) (*SkuAddResp, error)
 		// Sku列表
@@ -173,6 +174,12 @@ func (m *defaultPms) ProductUpdate(ctx context.Context, in *ProductUpdateReq, op
 func (m *defaultPms) ProductDelete(ctx context.Context, in *ProductDeleteReq, opts ...grpc.CallOption) (*ProductDeleteResp, error) {
 	client := pms.NewPmsClient(m.cli.Conn())
 	return client.ProductDelete(ctx, in, opts...)
+}
+
+// 查询商品详情
+func (m *defaultPms) ProductInfo(ctx context.Context, in *ProductInfoReq, opts ...grpc.CallOption) (*ProductInfoResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.ProductInfo(ctx, in, opts...)
 }
 
 // 添加Sku

@@ -24,6 +24,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/info",
 				Handler: auth.InfoHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: auth.MemberUpdateHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/api/auth"),
 	)
@@ -39,6 +44,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/categoryList",
 				Handler: index.CategoryListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/productList",
+				Handler: index.ProductListHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/api/index"),

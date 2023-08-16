@@ -30,7 +30,6 @@ func (l *AttributeListLogic) AttributeList(req *types.ListAttributeReq) (*types.
 		Current:    req.Current,
 		PageSize:   req.PageSize,
 		Name:       req.Name,
-		Type:       req.Type,
 		CategoryID: req.CategoryId,
 	})
 	if err != nil {
@@ -50,7 +49,6 @@ func (l *AttributeListLogic) AttributeList(req *types.ListAttributeReq) (*types.
 			Id:             item.Id,
 			CategoryId:     item.CategoryID,
 			Name:           item.Name,
-			Type:           item.Type,
 			AttributeValue: AttributeValue,
 		}
 		list = append(list, listUserData)

@@ -26,6 +26,7 @@ type (
 		Description string  `json:"description" gorm:"type:varchar(191);comment:商品描述;not null"` //商品描述
 		Price       float64 `json:"price" gorm:"type: decimal(10, 2);comment:价格;not null"`      //价格
 		Stock       int64   `json:"stock" gorm:"type:bigint;comment:库存;not null;default:0"`     //库存
+		Sale        int64   `json:"sale" gorm:"type:bigint;comment:销量;not null;default:0"`      //销量
 		Tag         string  `json:"tag" gorm:"type:varchar(191);comment:tag;not null"`
 	}
 )

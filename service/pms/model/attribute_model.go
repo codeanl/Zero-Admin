@@ -20,9 +20,9 @@ type (
 	}
 	Attribute struct {
 		gorm.Model
-		Name       string `json:"name" gorm:"type:varchar(191);comment:名称;not null"`      //名称
+		//一个分类下有很多属性
 		CategoryID int64  `json:"category_id" gorm:"type:bigint;comment:属性分类id;not null"` //分类id
-		Type       string `json:"type" gorm:"type:varchar(191);comment:属性的类型;not null"`   //属性的类型；1->基本属性；2->销售属性'
+		Name       string `json:"name" gorm:"type:varchar(191);comment:名称;not null"`      //名称
 	}
 )
 
@@ -64,9 +64,7 @@ func (m *defaultAttributeModel) GetAttributeList(in *pms.AttributeListReq) ([]At
 	if in.Name != "" {
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))
 	}
-	if in.Type != "" {
-		db = db.Where("type = ?", in.Type)
-	}
+
 	if in.CategoryID != 0 {
 		db = db.Where("category_id = ?", in.CategoryID)
 	}

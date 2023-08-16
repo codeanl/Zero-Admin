@@ -295,6 +295,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/delete",
 				Handler: pmsproduct.ProductDeleteHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/info",
+				Handler: pmsproduct.ProductInfoHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/pms/product"),

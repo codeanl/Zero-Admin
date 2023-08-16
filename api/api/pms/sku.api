@@ -19,14 +19,14 @@ type(
             Stock int64 `json:"stock,optional"`
             Price float64 `json:"price,optional"`
             TAG string `json:"tag,optional"`
-            AttributeShopValueID []int64 `json:"AttributeShopValueID,optional"`
+            SizeValueID []int64 `json:"sizeValueID,optional"`
         }
         addSkuResp struct {
             Code int64 `json:"code"`
             Message string `json:"message"`
         }
 
-     updateSkuReq struct {
+            updateSkuReq struct {
                 ID int64 `json:"id"`
                  ProductID int64 `json:"productId,optional"`
                  Name string `json:"name"`
@@ -36,17 +36,15 @@ type(
                  Stock int64 `json:"stock,optional"`
                  Price float64 `json:"price,optional"`
                  TAG string `json:"tag,optional"`
-                 AttributeShopValueID []int64 `json:"AttributeShopValueID,optional"`
+                SizeValueID []int64 `json:"sizeValueID,optional"`
              }
              updateSkuResp struct {
                  Code int64 `json:"code"`
                  Message string `json:"message"`
              }
-
             deleteSkuReq struct{
                 IDs []int64 `json:"ids"`
             }
-
             deleteSkuResp struct {
                 Code int64 `json:"code"`
                 Message string `json:"message"`

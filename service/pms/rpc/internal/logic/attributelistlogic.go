@@ -42,7 +42,6 @@ func (l *AttributeListLogic) AttributeList(in *pms.AttributeListReq) (*pms.Attri
 			Id:             int64(i.ID),
 			CategoryID:     i.CategoryID,
 			Name:           i.Name,
-			Type:           i.Type,
 			AttributeValue: value1,
 		})
 	}

@@ -32,12 +32,9 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 		Name:          in.Name,
 		Pic:           in.Pic,
 		ProductSn:     in.ProductSn,
-		SubTitle:      in.SubTitle,
-		Description:   in.Description,
+		Desc:          in.Desc,
 		OriginalPrice: in.OriginalPrice,
-		Stock:         in.Stock,
 		Unit:          in.Unit,
-		Sale:          in.Sale,
 		Price:         in.Price,
 	})
 	//属性
@@ -55,16 +52,23 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 			Name:      i.Name,
 		})
 		_ = l.svcCtx.SpuSizeValueModel.DeleteSpuSizeValueBySizeID(i.ID)
-		for _, j := range i.SizeValue {
+		for _, j := range i.SizeValueName {
 			l.svcCtx.SpuSizeValueModel.AddSpuSizeValue(&model.SpuSizeValue{
 				SizeID: int64(size.ID),
-				Value:  j.Value,
+				Value:  j,
 			},
 			)
 		}
 	}
 	if err != nil {
 		return nil, errors.New("更新用户失败")
+	}
+	l.svcCtx.ProductImgModel.DeleteProductImgBySpuID(in.Id)
+	for _, i := range in.ImgUrl {
+		l.svcCtx.ProductImgModel.AddProductImg(&model.ProductImg{
+			ProductID: in.Id,
+			Url:       i,
+		})
 	}
 	return &pms.ProductUpdateResp{}, nil
 }

@@ -8,8 +8,7 @@ type (
     addAttributeReq struct {
         CategoryId    int64  `json:"categoryId"` // 属性分类id
         Name           string `json:"name"`
-        Type           string  `json:"type"`
-       AddValue []UpdateValue   `json:"attributeValue"`
+        AttributeName []string  `json:"attributeName"`
     }
     addAttributeResp struct {
         Code int64 `json:"code"`
@@ -19,7 +18,6 @@ type (
         Current int64 `form:"current,default=1"`
         PageSize int64 `form:"pageSize,default=20"`
         Name   string `form:"name,optional"`
-        Type  string  `form:"type,optional"`
        CategoryId int64  `form:"categoryId,optional"`
     }
     ListAttributeData struct {
@@ -29,7 +27,6 @@ type (
         Type        string  `json:"type"`
         AttributeValue []AttributeValue   `json:"attributeValue"`
     }
-
     AttributeValue struct{
         Id int64 `json:"id"`
         Name string `json:"name"`
@@ -46,10 +43,7 @@ type (
         CategoryId    int64  `json:"categoryId"`
         Name           string `json:"name"`
         Type           string  `json:"type"`
-        UpdateValue []UpdateValue `json:"attributeValue"`
-    }
-    UpdateValue  struct{
-            name    string  `json:"name"`
+       AttributeName []string  `json:"attributeName"`
     }
     UpdateAttributeResp struct {
         Code int64 `json:"code"`

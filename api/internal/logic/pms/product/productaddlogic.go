@@ -27,15 +27,9 @@ func NewProductAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produc
 func (l *ProductAddLogic) ProductAdd(req *types.AddProductReq) (resp *types.AddProductResp, err error) {
 	var size []*pmsclient.Size
 	for _, i := range req.Size {
-		var sizeValue []*pmsclient.SizeValue
-		for _, u := range i.SizeValue {
-			sizeValue = append(sizeValue, &pmsclient.SizeValue{
-				Value: u.Value,
-			})
-		}
 		size = append(size, &pmsclient.Size{
-			Name:      i.Name,
-			SizeValue: sizeValue,
+			Name:          i.Name,
+			SizeValueName: i.SizeValue,
 		})
 	}
 	_, err = l.svcCtx.Pms.ProductAdd(l.ctx, &pmsclient.ProductAddReq{
@@ -43,15 +37,13 @@ func (l *ProductAddLogic) ProductAdd(req *types.AddProductReq) (resp *types.AddP
 		Name:             req.Name,
 		Pic:              req.Pic,
 		ProductSn:        req.ProductSn,
-		Sale:             req.Sale,
 		Price:            req.Price,
-		SubTitle:         req.SubTitle,
-		Description:      req.Description,
+		Desc:             req.Desc,
 		OriginalPrice:    req.OriginalPrice,
-		Stock:            req.Stock,
 		Unit:             req.Unit,
 		AttributeValueID: req.AttributeValueID,
 		Size:             size,
+		ImgUrl:           req.ImgUrl,
 	})
 	if err != nil {
 		return nil, err

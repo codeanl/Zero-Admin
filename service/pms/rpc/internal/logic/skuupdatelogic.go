@@ -29,6 +29,15 @@ func NewSkuUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SkuUpda
 
 // 更新Sku
 func (l *SkuUpdateLogic) SkuUpdate(in *pms.SkuUpdateReq) (*pms.SkuUpdateResp, error) {
+	//sku标识
+	var data []string
+	for _, i := range in.SizeValueID {
+		info1, _ := l.svcCtx.SpuSizeValueModel.GetSizeValueByID(i)
+		info2, _ := l.svcCtx.SpuSizeModel.GetSizeByID(info1.SizeID)
+		nn := fmt.Sprintf(`{"%s": "%s"}`, info2.Name, info1.Value)
+		data = append(data, nn)
+	}
+	tag := strings.Join(data, ", ")
 	err := l.svcCtx.SkuModel.UpdateSku(in.ID, &model.Sku{
 		ProductID:   in.ProductID,
 		Name:        in.Name,
@@ -36,23 +45,9 @@ func (l *SkuUpdateLogic) SkuUpdate(in *pms.SkuUpdateReq) (*pms.SkuUpdateResp, er
 		Description: in.Description,
 		Stock:       in.Stock,
 		Price:       in.Price,
-		Tag:         in.Tag,
+		Tag:         tag,
 		SkuSn:       in.SkuSn,
-	})
-	var data []string
-	_ = l.svcCtx.SkuAttributeModel.DeleteSkuAttributeBySpuID(in.ID)
-	for _, i := range in.AttributeShopValueID {
-		//
-		_, _ = l.svcCtx.SkuAttributeModel.AddSkuAttribute(&model.SkuAttribute{SkuID: in.ID, SkuSizeValueID: i})
-		//
-		info1, _ := l.svcCtx.SpuSizeValueModel.GetSizeValueByID(i)
-		info2, _ := l.svcCtx.SpuSizeModel.GetSizeByID(info1.SizeID)
-		nn := fmt.Sprintf(`{"%s": "%s"}`, info2.Name, info1.Value)
-		data = append(data, nn)
-	}
-	combined := strings.Join(data, ", ")
-	_ = l.svcCtx.SkuModel.UpdateSku(in.ID, &model.Sku{
-		Tag: combined,
+		Sale:        in.Sale,
 	})
 	if err != nil {
 		return nil, errors.New("更新用户失败")

@@ -2,6 +2,7 @@ package model
 
 import (
 	"SimplePick-Mall-Server/service/pms/rpc/pms"
+	"fmt"
 	"gorm.io/gorm"
 )
 
@@ -21,15 +22,12 @@ type (
 		gorm.Model
 		CategoryID    int64   `json:"category_id" gorm:"type:bigint;comment:商品分类id;not null"`         //商品分类id
 		Name          string  `json:"name" gorm:"type:varchar(191);comment:商品名称;not null"`            //商品名称
-		Pic           string  `json:"pic" gorm:"type:varchar(191);comment:图片;not null"`               //图片
+		Pic           string  `json:"pic" gorm:"type:varchar(191);comment:封面图片;not null"`             //图片
 		ProductSn     string  `json:"product_sn" gorm:"type:varchar(191);comment:货号;not null"`        //货号
-		SubTitle      string  `json:"sub_title" gorm:"type:varchar(191);comment:副标题;not null"`        //副标题
-		Description   string  `json:"description" gorm:"type:varchar(191);comment:商品描述;not null"`     //商品描述
+		Desc          string  `json:"sub_title" gorm:"type:varchar(191);comment:商品描述;not null"`       //副标题
 		Price         float64 `json:"price" gorm:"type: decimal(10, 2);comment:价格;not null"`          //价格
 		OriginalPrice float64 `json:"original_price" gorm:"type:decimal(10, 2);comment:市场价;not null"` //市场价
-		Stock         int64   `json:"stock" gorm:"type:bigint;comment:库存;not null;default:0"`         //库存
 		Unit          string  `json:"unit" gorm:"type:varchar(191);comment:单位;not null"`              //单位
-		Sale          int64   `json:"sale" gorm:"type:bigint;comment:销量;not null"`                    //销量
 	}
 )
 
@@ -63,12 +61,14 @@ func (m *defaultProductModel) DeleteProductByIds(ids []int64) error {
 	return err
 }
 
-//GetUserList 获取用户列表
 func (m *defaultProductModel) GetProductList(in *pms.ProductListReq) ([]*Product, int64, error) {
 	var list []*Product
 	db := m.conn.Model(&Product{}).Order("created_at DESC")
-	if in.ID != 0 {
-		db = db.Where("id = ?", in.ID)
+	if in.CategoryID != 0 {
+		db = db.Where("category_id = ?", in.CategoryID)
+	}
+	if in.Name != "" {
+		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))
 	}
 	var total int64
 	err := db.Count(&total).Error

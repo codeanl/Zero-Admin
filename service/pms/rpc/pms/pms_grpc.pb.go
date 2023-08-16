@@ -31,6 +31,7 @@ const (
 	Pms_ProductList_FullMethodName     = "/pms.Pms/ProductList"
 	Pms_ProductUpdate_FullMethodName   = "/pms.Pms/ProductUpdate"
 	Pms_ProductDelete_FullMethodName   = "/pms.Pms/ProductDelete"
+	Pms_ProductInfo_FullMethodName     = "/pms.Pms/ProductInfo"
 	Pms_SkuAdd_FullMethodName          = "/pms.Pms/SkuAdd"
 	Pms_SkuList_FullMethodName         = "/pms.Pms/SkuList"
 	Pms_SkuUpdate_FullMethodName       = "/pms.Pms/SkuUpdate"
@@ -65,6 +66,8 @@ type PmsClient interface {
 	ProductUpdate(ctx context.Context, in *ProductUpdateReq, opts ...grpc.CallOption) (*ProductUpdateResp, error)
 	// 删除商品
 	ProductDelete(ctx context.Context, in *ProductDeleteReq, opts ...grpc.CallOption) (*ProductDeleteResp, error)
+	// 查询商品详情
+	ProductInfo(ctx context.Context, in *ProductInfoReq, opts ...grpc.CallOption) (*ProductInfoResp, error)
 	// 添加Sku
 	SkuAdd(ctx context.Context, in *SkuAddReq, opts ...grpc.CallOption) (*SkuAddResp, error)
 	// Sku列表
@@ -191,6 +194,15 @@ func (c *pmsClient) ProductDelete(ctx context.Context, in *ProductDeleteReq, opt
 	return out, nil
 }
 
+func (c *pmsClient) ProductInfo(ctx context.Context, in *ProductInfoReq, opts ...grpc.CallOption) (*ProductInfoResp, error) {
+	out := new(ProductInfoResp)
+	err := c.cc.Invoke(ctx, Pms_ProductInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *pmsClient) SkuAdd(ctx context.Context, in *SkuAddReq, opts ...grpc.CallOption) (*SkuAddResp, error) {
 	out := new(SkuAddResp)
 	err := c.cc.Invoke(ctx, Pms_SkuAdd_FullMethodName, in, out, opts...)
@@ -255,6 +267,8 @@ type PmsServer interface {
 	ProductUpdate(context.Context, *ProductUpdateReq) (*ProductUpdateResp, error)
 	// 删除商品
 	ProductDelete(context.Context, *ProductDeleteReq) (*ProductDeleteResp, error)
+	// 查询商品详情
+	ProductInfo(context.Context, *ProductInfoReq) (*ProductInfoResp, error)
 	// 添加Sku
 	SkuAdd(context.Context, *SkuAddReq) (*SkuAddResp, error)
 	// Sku列表
@@ -305,6 +319,9 @@ func (UnimplementedPmsServer) ProductUpdate(context.Context, *ProductUpdateReq) 
 }
 func (UnimplementedPmsServer) ProductDelete(context.Context, *ProductDeleteReq) (*ProductDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProductDelete not implemented")
+}
+func (UnimplementedPmsServer) ProductInfo(context.Context, *ProductInfoReq) (*ProductInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProductInfo not implemented")
 }
 func (UnimplementedPmsServer) SkuAdd(context.Context, *SkuAddReq) (*SkuAddResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SkuAdd not implemented")
@@ -547,6 +564,24 @@ func _Pms_ProductDelete_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pms_ProductInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).ProductInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_ProductInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).ProductInfo(ctx, req.(*ProductInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Pms_SkuAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SkuAddReq)
 	if err := dec(in); err != nil {
@@ -673,6 +708,10 @@ var Pms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProductDelete",
 			Handler:    _Pms_ProductDelete_Handler,
+		},
+		{
+			MethodName: "ProductInfo",
+			Handler:    _Pms_ProductInfo_Handler,
 		},
 		{
 			MethodName: "SkuAdd",

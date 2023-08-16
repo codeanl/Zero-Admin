@@ -1,11 +1,9 @@
 package logic
 
 import (
-	"context"
-	"log"
-
 	"SimplePick-Mall-Server/service/pms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/pms/rpc/pms"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -44,7 +42,6 @@ func (l *SkuListLogic) SkuList(in *pms.SkuListReq) (*pms.SkuListResp, error) {
 			Tag:         role.Tag,
 		})
 	}
-	log.Print(all)
 	return &pms.SkuListResp{
 		Total: total,
 		List:  list,
