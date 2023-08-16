@@ -30,15 +30,16 @@ func (l *MemberInfoLogic) MemberInfo(in *ums.MemberInfoReq) (*ums.MemberInfoResp
 		return nil, err
 	}
 	return &ums.MemberInfoResp{
-		Id:       int64(userInfo.ID),
-		Username: userInfo.Username,
-		Nickname: userInfo.Nickname,
-		Phone:    userInfo.Phone,
-		Status:   userInfo.Status,
-		Avatar:   userInfo.Avatar,
-		Gender:   userInfo.Gender,
-		Email:    userInfo.Email,
-		City:     userInfo.City,
-		Job:      userInfo.Job,
+		Id:        int64(userInfo.ID),
+		Username:  userInfo.Username,
+		Nickname:  userInfo.Nickname,
+		Phone:     userInfo.Phone,
+		Status:    userInfo.Status,
+		Avatar:    userInfo.Avatar,
+		Gender:    userInfo.Gender,
+		Email:     userInfo.Email,
+		City:      userInfo.City,
+		Job:       userInfo.Job,
+		Signature: userInfo.Signature,
 	}, nil
 }

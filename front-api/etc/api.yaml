@@ -1,0 +1,22 @@
+Name: api
+Host: 0.0.0.0
+Port: 8089
+
+
+UmsRpc:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: ums.rpc
+
+SmsRpc:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: sms.rpc
+
+PmsRpc:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: pms.rpc
