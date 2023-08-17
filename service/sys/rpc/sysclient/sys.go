@@ -39,6 +39,8 @@ type (
 	PlaceAddResp          = sys.PlaceAddResp
 	PlaceDeleteReq        = sys.PlaceDeleteReq
 	PlaceDeleteResp       = sys.PlaceDeleteResp
+	PlaceInfoReq          = sys.PlaceInfoReq
+	PlaceInfoResp         = sys.PlaceInfoResp
 	PlaceListData         = sys.PlaceListData
 	PlaceListReq          = sys.PlaceListReq
 	PlaceListResp         = sys.PlaceListResp
@@ -110,6 +112,8 @@ type (
 		PlaceUpdate(ctx context.Context, in *PlaceUpdateReq, opts ...grpc.CallOption) (*PlaceUpdateResp, error)
 		// 删除自提点
 		PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ...grpc.CallOption) (*PlaceDeleteResp, error)
+		// 自提点详情
+		PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error)
 		// 添加角色
 		RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error)
 		// 更新角色
@@ -239,6 +243,12 @@ func (m *defaultSys) PlaceUpdate(ctx context.Context, in *PlaceUpdateReq, opts .
 func (m *defaultSys) PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ...grpc.CallOption) (*PlaceDeleteResp, error) {
 	client := sys.NewSysClient(m.cli.Conn())
 	return client.PlaceDelete(ctx, in, opts...)
+}
+
+// 自提点详情
+func (m *defaultSys) PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error) {
+	client := sys.NewSysClient(m.cli.Conn())
+	return client.PlaceInfo(ctx, in, opts...)
 }
 
 // 添加角色

@@ -8,7 +8,7 @@ import (
 
 type (
 	OrderModel interface {
-		AddOrder(order *Order) (err error)
+		AddOrder(order *Order) (*Order, error)
 		UpdateOrder(id int64, order *Order) error
 		DeleteOrderByIds(ids []int64) error
 		GetOrderList(in *oms.OrderListReq) ([]*Order, int64, error)
@@ -41,10 +41,10 @@ type (
 		Note                  string  `json:"note" gorm:"type:varchar(191);comment:订单备注;not null"`                    //订单备注
 		ConfirmStatus         string  `json:"confirm_status" gorm:"type:varchar(191);comment:确认收货状态;not null"`        //确认收货状态：0->未确认；1->已确认,
 		DeleteStatus          string  `json:"delete_status" gorm:"type:varchar(191);comment:删除状态;not null"`           //删除状态：0->未删除；1->已删除
-		PaymentTime           string  `json:"payment_time" gorm:"type:datetime;comment:支付时间;not null"`                //支付时间
-		DeliveryTime          string  `json:"delivery_time" gorm:"type:datetime;comment:发货时间;not null"`               //发货时间
-		ReceiveTime           string  `json:"receive_time" gorm:"type:datetime;comment:确认收货时间;not null"`              //确认收货时间
-		CommentTime           string  `json:"comment_time" gorm:"type:datetime;comment:评价时间;not null"`                //评价时间
+		PaymentTime           string  `json:"payment_time" gorm:"type:datetime;comment:支付时间;default:null"`            //支付时间
+		DeliveryTime          string  `json:"delivery_time" gorm:"type:datetime;comment:发货时间;default:null"`           //发货时间
+		ReceiveTime           string  `json:"receive_time" gorm:"type:datetime;comment:确认收货时间;default:null"`          //确认收货时间
+		CommentTime           string  `json:"comment_time" gorm:"type:datetime;comment:评价时间;default:null"`            //评价时间
 	}
 )
 
@@ -55,8 +55,9 @@ func NewOrderModel(conn *gorm.DB) OrderModel {
 		conn: conn,
 	}
 }
-func (m *defaultOrderModel) AddOrder(order *Order) (err error) {
-	return m.conn.Model(&Order{}).Create(order).Error
+func (m *defaultOrderModel) AddOrder(order *Order) (*Order, error) {
+	err := m.conn.Model(&Order{}).Create(&order).Error
+	return order, err
 }
 
 //UpdateOrder 修改角色
@@ -65,7 +66,7 @@ func (m *defaultOrderModel) UpdateOrder(id int64, order *Order) error {
 	return err
 }
 func (m *defaultOrderModel) GetOrderById(id int64) (order *Order, err error) {
-	err = m.conn.Model(&Order{}).Where("id=?", id).Find(order).Error
+	err = m.conn.Model(&Order{}).Where("id=?", id).Find(&order).Error
 	return order, err
 }
 

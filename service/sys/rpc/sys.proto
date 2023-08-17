@@ -217,6 +217,14 @@ message PlaceDeleteReq {
 message PlaceDeleteResp {
   string pong = 1;
 }
+//自提点详情
+message PlaceInfoReq {
+   int64 id = 1;
+}
+message PlaceInfoResp {
+  PlaceListData PlaceInfo = 1;
+}
+
 //添加角色
 message RoleAddReq {
   string Name = 1;
@@ -422,6 +430,8 @@ service Sys{
   rpc PlaceUpdate(PlaceUpdateReq) returns(PlaceUpdateResp);
   //删除自提点
   rpc PlaceDelete(PlaceDeleteReq) returns(PlaceDeleteResp);
+  //自提点详情
+  rpc PlaceInfo(PlaceInfoReq) returns(PlaceInfoResp);
 
   //添加角色
   rpc RoleAdd(RoleAddReq) returns(RoleAddResp);

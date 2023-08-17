@@ -123,3 +123,9 @@ func (s *PmsServer) SkuDelete(ctx context.Context, in *pms.SkuDeleteReq) (*pms.S
 	l := logic.NewSkuDeleteLogic(ctx, s.svcCtx)
 	return l.SkuDelete(in)
 }
+
+// sku详情
+func (s *PmsServer) SkuInfo(ctx context.Context, in *pms.SkuInfoReq) (*pms.SkuInfoResp, error) {
+	l := logic.NewSkuInfoLogic(ctx, s.svcCtx)
+	return l.SkuInfo(in)
+}

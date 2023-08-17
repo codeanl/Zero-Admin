@@ -45,3 +45,9 @@ func (s *OmsServer) OrderDelete(ctx context.Context, in *oms.OrderDeleteReq) (*o
 	l := logic.NewOrderDeleteLogic(ctx, s.svcCtx)
 	return l.OrderDelete(in)
 }
+
+// 订单详情
+func (s *OmsServer) OrderInfo(ctx context.Context, in *oms.OrderInfoReq) (*oms.OrderInfoResp, error) {
+	l := logic.NewOrderInfoLogic(ctx, s.svcCtx)
+	return l.OrderInfo(in)
+}

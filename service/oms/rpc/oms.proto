@@ -14,11 +14,11 @@ message OrderAddReq {
   double     PayAmount = 8;
   double     FreightAmount = 9;
   double     CouponAmount = 12;
-  double     DiscountAmount = 13;
   string       PayType = 14;
   string       Status = 16;
   string       OrderType = 17;
-  int64       AutoConfirmDay = 20;
+  string      ReceiverName = 31;
+  string      ReceiverPhone = 30;
   string      ReceiverProvince = 32;
   string      ReceiverCity = 33;
   string      ReceiverRegion = 34;
@@ -30,6 +30,7 @@ message OrderAddReq {
   string   DeliveryTime = 41;
   string   ReceiveTime = 42;
   string   CommentTime = 43;
+  repeated  int64 SkuIDs=44;
 }
 message OrderAddResp {
   string pong = 1;
@@ -46,11 +47,11 @@ message OrderUpdateReq{
   double     PayAmount = 8;
   double     FreightAmount = 9;
   double     CouponAmount = 12;
-  double     DiscountAmount = 13;
   string       PayType = 14;
   string       Status = 16;
   string       OrderType = 17;
-  int64       AutoConfirmDay = 20;
+  string      ReceiverName = 31;
+  string      ReceiverPhone = 30;
   string      ReceiverProvince = 32;
   string      ReceiverCity = 33;
   string      ReceiverRegion = 34;
@@ -88,11 +89,11 @@ message OrderListData{
   double     PayAmount = 8;
   double     FreightAmount = 9;
   double     CouponAmount = 12;
-  double     DiscountAmount = 13;
   string       PayType = 14;
   string       Status = 16;
   string       OrderType = 17;
-  int64       AutoConfirmDay = 20;
+  string      ReceiverName = 31;
+  string      ReceiverPhone = 30;
   string      ReceiverProvince = 32;
   string      ReceiverCity = 33;
   string      ReceiverRegion = 34;
@@ -117,6 +118,14 @@ message OrderDeleteReq {
 message OrderDeleteResp {
   string pong = 1;
 }
+//订单详情
+message OrderInfoReq {
+   int64 id = 1;
+}
+message OrderInfoResp {
+  OrderListData OrderInfo=1;
+  repeated int64 SkuIDs=2;
+}
 service Oms {
   //添加订单
   rpc OrderAdd(OrderAddReq) returns(OrderAddResp);
@@ -126,4 +135,6 @@ service Oms {
   rpc OrderUpdate(OrderUpdateReq) returns(OrderUpdateResp);
   //删除订单
   rpc OrderDelete(OrderDeleteReq) returns(OrderDeleteResp);
+  //订单详情
+  rpc OrderInfo(OrderInfoReq) returns(OrderInfoResp);
 }

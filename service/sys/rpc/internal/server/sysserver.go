@@ -112,6 +112,12 @@ func (s *SysServer) PlaceDelete(ctx context.Context, in *sys.PlaceDeleteReq) (*s
 	return l.PlaceDelete(in)
 }
 
+// 自提点详情
+func (s *SysServer) PlaceInfo(ctx context.Context, in *sys.PlaceInfoReq) (*sys.PlaceInfoResp, error) {
+	l := logic.NewPlaceInfoLogic(ctx, s.svcCtx)
+	return l.PlaceInfo(in)
+}
+
 // 添加角色
 func (s *SysServer) RoleAdd(ctx context.Context, in *sys.RoleAddReq) (*sys.RoleAddResp, error) {
 	l := logic.NewRoleAddLogic(ctx, s.svcCtx)

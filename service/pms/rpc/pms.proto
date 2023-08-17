@@ -290,6 +290,15 @@ message SizeValue{
   string Value=2;
     int64 ID =3;
 }
+
+//sku详情
+message SkuInfoReq{
+  int64 ID =3;
+}
+message SkuInfoResp{
+    SkuListData SkuInfo=1;
+}
+
 service Pms {
   //添加分类
   rpc CategoryAdd(CategoryAddReq) returns(CategoryAddResp);
@@ -328,4 +337,6 @@ service Pms {
   rpc SkuUpdate(SkuUpdateReq) returns(SkuUpdateResp);
   //删除Sku
   rpc SkuDelete(SkuDeleteReq) returns(SkuDeleteResp);
+  //sku详情
+  rpc SkuInfo(SkuInfoReq) returns(SkuInfoResp);
 }

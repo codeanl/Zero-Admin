@@ -17,6 +17,8 @@ type (
 	OrderAddResp    = oms.OrderAddResp
 	OrderDeleteReq  = oms.OrderDeleteReq
 	OrderDeleteResp = oms.OrderDeleteResp
+	OrderInfoReq    = oms.OrderInfoReq
+	OrderInfoResp   = oms.OrderInfoResp
 	OrderListData   = oms.OrderListData
 	OrderListReq    = oms.OrderListReq
 	OrderListResp   = oms.OrderListResp
@@ -32,6 +34,8 @@ type (
 		OrderUpdate(ctx context.Context, in *OrderUpdateReq, opts ...grpc.CallOption) (*OrderUpdateResp, error)
 		// 删除订单
 		OrderDelete(ctx context.Context, in *OrderDeleteReq, opts ...grpc.CallOption) (*OrderDeleteResp, error)
+		// 订单详情
+		OrderInfo(ctx context.Context, in *OrderInfoReq, opts ...grpc.CallOption) (*OrderInfoResp, error)
 	}
 
 	defaultOms struct {
@@ -67,4 +71,10 @@ func (m *defaultOms) OrderUpdate(ctx context.Context, in *OrderUpdateReq, opts .
 func (m *defaultOms) OrderDelete(ctx context.Context, in *OrderDeleteReq, opts ...grpc.CallOption) (*OrderDeleteResp, error) {
 	client := oms.NewOmsClient(m.cli.Conn())
 	return client.OrderDelete(ctx, in, opts...)
+}
+
+// 订单详情
+func (m *defaultOms) OrderInfo(ctx context.Context, in *OrderInfoReq, opts ...grpc.CallOption) (*OrderInfoResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.OrderInfo(ctx, in, opts...)
 }

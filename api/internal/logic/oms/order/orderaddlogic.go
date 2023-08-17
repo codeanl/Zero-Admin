@@ -34,18 +34,20 @@ func (l *OrderAddLogic) OrderAdd(req *types.AddOrderReq) (resp *types.AddOrderRe
 		PayAmount:             req.PayAmount,
 		FreightAmount:         req.FreightAmount,
 		CouponAmount:          req.CouponAmount,
-		DiscountAmount:        req.DiscountAmount,
 		PayType:               req.PayType,
 		Status:                req.Status,
 		OrderType:             req.OrderType,
-		AutoConfirmDay:        req.AutoConfirmDay,
+		ReceiverName:          req.ReceiverName,
+		ReceiverPhone:         req.ReceiverPhone,
 		ReceiverProvince:      req.ReceiverProvince,
 		ReceiverCity:          req.ReceiverCity,
 		ReceiverRegion:        req.ReceiverRegion,
 		ReceiverDetailAddress: req.ReceiverDetailAddress,
 		Note:                  req.Note,
-		ConfirmStatus:         req.ConfirmStatus,
-		DeleteStatus:          req.DeleteStatus,
+		ConfirmStatus:         "0", //确认收货状态：0->未确认
+		DeleteStatus:          "0", // 删除状态：0->未删除
+		PaymentTime:           req.PaymentTime,
+		SkuIDs:                req.SkuIDs,
 	})
 	if err != nil {
 		return nil, err

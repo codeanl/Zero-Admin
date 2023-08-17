@@ -1034,19 +1034,21 @@ type AddOrderReq struct {
 	PayAmount             float64 `json:"payAmount"`             // 应付金额（实际支付金额）
 	FreightAmount         float64 `json:"freightAmount"`         // 运费金额
 	CouponAmount          float64 `json:"couponAmount"`          // 优惠券抵扣金额
-	DiscountAmount        float64 `json:"discountAmount"`        // 管理员后台调整订单使用的折扣金额
 	PayType               string  `json:"payType"`               // 支付方式：0->未支付；1->支付宝；2->微信
 	Status                string  `json:"status"`                // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
 	OrderType             string  `json:"orderType"`             // 订单类型：0->正常订单；1->秒杀订单
-	AutoConfirmDay        int64   `json:"autoConfirmDay"`        // 自动确认时间（天）
 	ReceiverProvince      string  `json:"receiverProvince"`      // 省份/直辖市
+	ReceiverName          string  `json:"receiverName"`          //
+	ReceiverPhone         string  `json:"receiverPhone"`         //
 	ReceiverCity          string  `json:"receiverCity"`          // 城市
 	ReceiverRegion        string  `json:"receiverRegion"`        // 区
 	ReceiverDetailAddress string  `json:"receiverDetailAddress"` // 详细地址
 	Note                  string  `json:"note"`                  // 订单备注
-	ConfirmStatus         string  `json:"confirmStatus"`         // 确认收货状态：0->未确认；1->已确认
-	DeleteStatus          string  `json:"deleteStatus"`          // 删除状态：0->未删除；1->已删除
-	PaymentTime           string  `json:"paymentTime,optional"`
+	PaymentTime           string  `json:"paymentTime,optional"`  // 支付时间
+	DeliveryTime          string  `json:"deliveryTime,optional"` // 发货时间
+	ReceiveTime           string  `json:"receiveTime,optional"`  // 确认收货时间
+	CommentTime           string  `json:"commentTime,optional"`  // 修改时间
+	SkuIDs                []int64 `json:"skuIds"`
 }
 
 type AddOrderResp struct {
@@ -1066,9 +1068,9 @@ type ListOrderReq struct {
 }
 
 type ListOrderData struct {
-	Id                    int64   `json:"id"` // 订单id
+	ID                    int64   `json:"id"`
 	MemberId              int64   `json:"memberId"`
-	PlaceId               int64   `json:"PlaceId"`
+	PlaceId               int64   `json:"placeId"`
 	CouponId              int64   `json:"couponId"`
 	OrderSn               string  `json:"orderSn"`               // 订单编号
 	MemberUsername        string  `json:"memberUserName"`        // 用户帐号
@@ -1076,18 +1078,18 @@ type ListOrderData struct {
 	PayAmount             float64 `json:"payAmount"`             // 应付金额（实际支付金额）
 	FreightAmount         float64 `json:"freightAmount"`         // 运费金额
 	CouponAmount          float64 `json:"couponAmount"`          // 优惠券抵扣金额
-	DiscountAmount        float64 `json:"discountAmount"`        // 管理员后台调整订单使用的折扣金额
 	PayType               string  `json:"payType"`               // 支付方式：0->未支付；1->支付宝；2->微信
 	Status                string  `json:"status"`                // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
 	OrderType             string  `json:"orderType"`             // 订单类型：0->正常订单；1->秒杀订单
-	AutoConfirmDay        int64   `json:"autoConfirmDay"`        // 自动确认时间（天）
 	ReceiverProvince      string  `json:"receiverProvince"`      // 省份/直辖市
+	ReceiverName          string  `json:"receiverName"`          //
+	ReceiverPhone         string  `json:"receiverPhone"`         //
 	ReceiverCity          string  `json:"receiverCity"`          // 城市
 	ReceiverRegion        string  `json:"receiverRegion"`        // 区
 	ReceiverDetailAddress string  `json:"receiverDetailAddress"` // 详细地址
 	Note                  string  `json:"note"`                  // 订单备注
 	ConfirmStatus         string  `json:"confirmStatus"`         // 确认收货状态：0->未确认；1->已确认
-	DeleteStatus          string  `json:"deleteStatus"`          // 删除状态：0->未删除；1->已删除              // 确认收货状态：0->未确认；1->已确认
+	DeleteStatus          string  `json:"deleteStatus"`          // 删除状态：0->未删除；1->已删除
 	PaymentTime           string  `json:"paymentTime,optional"`  // 支付时间
 	DeliveryTime          string  `json:"deliveryTime,optional"` // 发货时间
 	ReceiveTime           string  `json:"receiveTime,optional"`  // 确认收货时间
@@ -1095,16 +1097,16 @@ type ListOrderData struct {
 }
 
 type ListOrderResp struct {
-	Code    int64            `json:"code"`
-	Message string           `json:"message"`
-	Data    []*ListOrderData `json:"data"`
-	Total   int64            `json:"total"`
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Data    []ListOrderData `json:"data"`
+	Total   int64           `json:"total"`
 }
 
 type UpdateOrderReq struct {
-	Id                    int64   `json:"id"` // 订单id
+	ID                    int64   `json:"id"`
 	MemberId              int64   `json:"memberId"`
-	PlaceId               int64   `json:"PlaceId"`
+	PlaceId               int64   `json:"placeId"`
 	CouponId              int64   `json:"couponId"`
 	OrderSn               string  `json:"orderSn"`               // 订单编号
 	MemberUsername        string  `json:"memberUserName"`        // 用户帐号
@@ -1112,18 +1114,18 @@ type UpdateOrderReq struct {
 	PayAmount             float64 `json:"payAmount"`             // 应付金额（实际支付金额）
 	FreightAmount         float64 `json:"freightAmount"`         // 运费金额
 	CouponAmount          float64 `json:"couponAmount"`          // 优惠券抵扣金额
-	DiscountAmount        float64 `json:"discountAmount"`        // 管理员后台调整订单使用的折扣金额
 	PayType               string  `json:"payType"`               // 支付方式：0->未支付；1->支付宝；2->微信
 	Status                string  `json:"status"`                // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
 	OrderType             string  `json:"orderType"`             // 订单类型：0->正常订单；1->秒杀订单
-	AutoConfirmDay        int64   `json:"autoConfirmDay"`        // 自动确认时间（天）
 	ReceiverProvince      string  `json:"receiverProvince"`      // 省份/直辖市
+	ReceiverName          string  `json:"receiverName"`          //
+	ReceiverPhone         string  `json:"receiverPhone"`         //
 	ReceiverCity          string  `json:"receiverCity"`          // 城市
 	ReceiverRegion        string  `json:"receiverRegion"`        // 区
 	ReceiverDetailAddress string  `json:"receiverDetailAddress"` // 详细地址
 	Note                  string  `json:"note"`                  // 订单备注
 	ConfirmStatus         string  `json:"confirmStatus"`         // 确认收货状态：0->未确认；1->已确认
-	DeleteStatus          string  `json:"deleteStatus"`          // 删除状态：0->未删除；1->已删除              // 确认收货状态：0->未确认；1->已确认
+	DeleteStatus          string  `json:"deleteStatus"`          // 删除状态：0->未删除；1->已删除
 	PaymentTime           string  `json:"paymentTime,optional"`  // 支付时间
 	DeliveryTime          string  `json:"deliveryTime,optional"` // 发货时间
 	ReceiveTime           string  `json:"receiveTime,optional"`  // 确认收货时间
@@ -1142,4 +1144,43 @@ type DeleteOrderReq struct {
 type DeleteOrderResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
+}
+
+type OrderInfoReq struct {
+	ID int64 `json:"id"`
+}
+
+type SkuListData struct {
+	ID          int64   `json:"id"`
+	ProductID   int64   `json:"productId"`
+	ProductName string  `json:"productName"`
+	Name        string  `json:"name"`
+	Pic         string  `json:"pic"`
+	SkuSn       string  `json:"skuSn"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
+	Stock       int64   `json:"stock"`
+	Tag         string  `json:"tag"`
+}
+
+type OrderInfo struct {
+	OrderInfo ListOrderData  `json:"orderInfo"`
+	SkuList   []*SkuListData `json:"skuList"`
+	PlaceInfo PlaceInfoData  `json:"placeInfo"`
+}
+
+type OrderInfoResp struct {
+	Code    int64     `json:"code"`
+	Message string    `json:"message"`
+	Data    OrderInfo `json:"data"`
+}
+
+type PlaceInfoData struct {
+	Id        int64  `json:"id"`
+	Name      string `json:"name"`
+	Place     string `json:"place"`
+	Status    string `json:"status"`
+	Pic       string `json:"pic"`
+	Phone     string `json:"phone"`
+	Principal string `json:"principal"`
 }

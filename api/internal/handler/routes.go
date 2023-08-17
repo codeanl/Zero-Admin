@@ -462,6 +462,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/delete",
 				Handler: omsorder.OrderDeleteHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/info",
+				Handler: omsorder.OrderInfoHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/oms/order"),

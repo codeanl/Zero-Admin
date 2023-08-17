@@ -23,6 +23,7 @@ const (
 	Oms_OrderList_FullMethodName   = "/oms.Oms/OrderList"
 	Oms_OrderUpdate_FullMethodName = "/oms.Oms/OrderUpdate"
 	Oms_OrderDelete_FullMethodName = "/oms.Oms/OrderDelete"
+	Oms_OrderInfo_FullMethodName   = "/oms.Oms/OrderInfo"
 )
 
 // OmsClient is the client API for Oms service.
@@ -37,6 +38,8 @@ type OmsClient interface {
 	OrderUpdate(ctx context.Context, in *OrderUpdateReq, opts ...grpc.CallOption) (*OrderUpdateResp, error)
 	// 删除订单
 	OrderDelete(ctx context.Context, in *OrderDeleteReq, opts ...grpc.CallOption) (*OrderDeleteResp, error)
+	// 订单详情
+	OrderInfo(ctx context.Context, in *OrderInfoReq, opts ...grpc.CallOption) (*OrderInfoResp, error)
 }
 
 type omsClient struct {
@@ -83,6 +86,15 @@ func (c *omsClient) OrderDelete(ctx context.Context, in *OrderDeleteReq, opts ..
 	return out, nil
 }
 
+func (c *omsClient) OrderInfo(ctx context.Context, in *OrderInfoReq, opts ...grpc.CallOption) (*OrderInfoResp, error) {
+	out := new(OrderInfoResp)
+	err := c.cc.Invoke(ctx, Oms_OrderInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OmsServer is the server API for Oms service.
 // All implementations must embed UnimplementedOmsServer
 // for forward compatibility
@@ -95,6 +107,8 @@ type OmsServer interface {
 	OrderUpdate(context.Context, *OrderUpdateReq) (*OrderUpdateResp, error)
 	// 删除订单
 	OrderDelete(context.Context, *OrderDeleteReq) (*OrderDeleteResp, error)
+	// 订单详情
+	OrderInfo(context.Context, *OrderInfoReq) (*OrderInfoResp, error)
 	mustEmbedUnimplementedOmsServer()
 }
 
@@ -113,6 +127,9 @@ func (UnimplementedOmsServer) OrderUpdate(context.Context, *OrderUpdateReq) (*Or
 }
 func (UnimplementedOmsServer) OrderDelete(context.Context, *OrderDeleteReq) (*OrderDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OrderDelete not implemented")
+}
+func (UnimplementedOmsServer) OrderInfo(context.Context, *OrderInfoReq) (*OrderInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OrderInfo not implemented")
 }
 func (UnimplementedOmsServer) mustEmbedUnimplementedOmsServer() {}
 
@@ -199,6 +216,24 @@ func _Oms_OrderDelete_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Oms_OrderInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).OrderInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_OrderInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).OrderInfo(ctx, req.(*OrderInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Oms_ServiceDesc is the grpc.ServiceDesc for Oms service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -221,6 +256,10 @@ var Oms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "OrderDelete",
 			Handler:    _Oms_OrderDelete_Handler,
+		},
+		{
+			MethodName: "OrderInfo",
+			Handler:    _Oms_OrderInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

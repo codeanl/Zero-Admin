@@ -27,7 +27,7 @@ func NewOrderUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Order
 
 func (l *OrderUpdateLogic) OrderUpdate(req *types.UpdateOrderReq) (resp *types.UpdateOrderResp, err error) {
 	_, err = l.svcCtx.Oms.OrderUpdate(l.ctx, &omsclient.OrderUpdateReq{
-		ID:                    req.Id,
+		ID:                    req.ID,
 		PlaceId:               req.PlaceId,
 		MemberId:              req.MemberId,
 		OrderSn:               req.OrderSn,
@@ -36,11 +36,11 @@ func (l *OrderUpdateLogic) OrderUpdate(req *types.UpdateOrderReq) (resp *types.U
 		PayAmount:             req.PayAmount,
 		FreightAmount:         req.FreightAmount,
 		CouponAmount:          req.CouponAmount,
-		DiscountAmount:        req.DiscountAmount,
 		PayType:               req.PayType,
 		Status:                req.Status,
 		OrderType:             req.OrderType,
-		AutoConfirmDay:        req.AutoConfirmDay,
+		ReceiverName:          req.ReceiverName,
+		ReceiverPhone:         req.ReceiverPhone,
 		ReceiverProvince:      req.ReceiverProvince,
 		ReceiverCity:          req.ReceiverCity,
 		ReceiverRegion:        req.ReceiverRegion,

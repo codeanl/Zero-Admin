@@ -2,11 +2,9 @@ package logic
 
 import (
 	"SimplePick-Mall-Server/service/oms/model"
-	"context"
-	"errors"
-
 	"SimplePick-Mall-Server/service/oms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/oms/rpc/oms"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -36,11 +34,11 @@ func (l *OrderAddLogic) OrderAdd(in *oms.OrderAddReq) (*oms.OrderAddResp, error)
 		PayAmount:             in.PayAmount,
 		FreightAmount:         in.FreightAmount,
 		CouponAmount:          in.CouponAmount,
-		DiscountAmount:        in.DiscountAmount,
 		PayType:               in.PayType,
 		Status:                in.Status,
 		OrderType:             in.OrderType,
-		AutoConfirmDay:        in.AutoConfirmDay,
+		ReceiverName:          in.ReceiverName,
+		ReceiverPhone:         in.ReceiverPhone,
 		ReceiverProvince:      in.ReceiverProvince,
 		ReceiverCity:          in.ReceiverCity,
 		ReceiverRegion:        in.ReceiverRegion,
@@ -49,15 +47,17 @@ func (l *OrderAddLogic) OrderAdd(in *oms.OrderAddReq) (*oms.OrderAddResp, error)
 		ConfirmStatus:         in.ConfirmStatus,
 		DeleteStatus:          in.DeleteStatus,
 		PaymentTime:           in.PaymentTime,
-		DeliveryTime:          in.DeliveryTime,
-		ReceiveTime:           in.ReceiveTime,
-		CommentTime:           in.CommentTime,
 	}
-	err := l.svcCtx.OrderModel.AddOrder(role)
+	order, err := l.svcCtx.OrderModel.AddOrder(role)
 	if err != nil {
-		return nil, errors.New("添加用户失败")
+		//return nil, errors.New("添加失败")
+		return nil, err
 	}
-
+	for _, i := range in.SkuIDs {
+		l.svcCtx.OrderSkuModel.AddOrderSku(&model.OrderSku{
+			OrderID: int64(order.ID),
+			SkuID:   i,
+		})
+	}
 	return &oms.OrderAddResp{}, nil
-
 }

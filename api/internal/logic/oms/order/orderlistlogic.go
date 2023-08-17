@@ -33,10 +33,10 @@ func (l *OrderListLogic) OrderList(req *types.ListOrderReq) (*types.ListOrderRes
 		//return nil, errorx.NewDefaultError("查询失败")
 		return nil, err
 	}
-	var list []*types.ListOrderData
+	var list []types.ListOrderData
 	for _, item := range resp.List {
 		listUserData := types.ListOrderData{
-			Id:                    item.ID,
+			ID:                    item.ID,
 			PlaceId:               item.PlaceId,
 			MemberId:              item.MemberId,
 			OrderSn:               item.OrderSn,
@@ -45,11 +45,11 @@ func (l *OrderListLogic) OrderList(req *types.ListOrderReq) (*types.ListOrderRes
 			PayAmount:             item.PayAmount,
 			FreightAmount:         item.FreightAmount,
 			CouponAmount:          item.CouponAmount,
-			DiscountAmount:        item.DiscountAmount,
 			PayType:               item.PayType,
 			Status:                item.Status,
 			OrderType:             item.OrderType,
-			AutoConfirmDay:        item.AutoConfirmDay,
+			ReceiverName:          item.ReceiverName,
+			ReceiverPhone:         item.ReceiverPhone,
 			ReceiverProvince:      item.ReceiverProvince,
 			ReceiverCity:          item.ReceiverCity,
 			ReceiverRegion:        item.ReceiverRegion,
@@ -61,7 +61,7 @@ func (l *OrderListLogic) OrderList(req *types.ListOrderReq) (*types.ListOrderRes
 			ReceiveTime:           item.ReceiveTime,
 			CommentTime:           item.CommentTime,
 		}
-		list = append(list, &listUserData)
+		list = append(list, listUserData)
 	}
 	return &types.ListOrderResp{
 		Code:    200,

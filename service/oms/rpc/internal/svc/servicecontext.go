@@ -7,15 +7,17 @@ import (
 )
 
 type ServiceContext struct {
-	Config     config.Config
-	OrderModel model.OrderModel
+	Config        config.Config
+	OrderModel    model.OrderModel
+	OrderSkuModel model.OrderSkuModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	mysql := c.Mysql
 	conn := db.InitMysql(mysql.DataSource)
 	return &ServiceContext{
-		Config:     c,
-		OrderModel: model.NewOrderModel(conn),
+		Config:        c,
+		OrderModel:    model.NewOrderModel(conn),
+		OrderSkuModel: model.NewOrderSkuModel(conn),
 	}
 }

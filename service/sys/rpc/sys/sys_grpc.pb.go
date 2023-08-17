@@ -34,6 +34,7 @@ const (
 	Sys_PlaceList_FullMethodName         = "/sys.Sys/PlaceList"
 	Sys_PlaceUpdate_FullMethodName       = "/sys.Sys/PlaceUpdate"
 	Sys_PlaceDelete_FullMethodName       = "/sys.Sys/PlaceDelete"
+	Sys_PlaceInfo_FullMethodName         = "/sys.Sys/PlaceInfo"
 	Sys_RoleAdd_FullMethodName           = "/sys.Sys/RoleAdd"
 	Sys_RoleUpdate_FullMethodName        = "/sys.Sys/RoleUpdate"
 	Sys_RoleDelete_FullMethodName        = "/sys.Sys/RoleDelete"
@@ -84,6 +85,8 @@ type SysClient interface {
 	PlaceUpdate(ctx context.Context, in *PlaceUpdateReq, opts ...grpc.CallOption) (*PlaceUpdateResp, error)
 	// 删除自提点
 	PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ...grpc.CallOption) (*PlaceDeleteResp, error)
+	// 自提点详情
+	PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error)
 	// 添加角色
 	RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error)
 	// 更新角色
@@ -257,6 +260,15 @@ func (c *sysClient) PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ..
 	return out, nil
 }
 
+func (c *sysClient) PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error) {
+	out := new(PlaceInfoResp)
+	err := c.cc.Invoke(ctx, Sys_PlaceInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *sysClient) RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error) {
 	out := new(RoleAddResp)
 	err := c.cc.Invoke(ctx, Sys_RoleAdd_FullMethodName, in, out, opts...)
@@ -417,6 +429,8 @@ type SysServer interface {
 	PlaceUpdate(context.Context, *PlaceUpdateReq) (*PlaceUpdateResp, error)
 	// 删除自提点
 	PlaceDelete(context.Context, *PlaceDeleteReq) (*PlaceDeleteResp, error)
+	// 自提点详情
+	PlaceInfo(context.Context, *PlaceInfoReq) (*PlaceInfoResp, error)
 	// 添加角色
 	RoleAdd(context.Context, *RoleAddReq) (*RoleAddResp, error)
 	// 更新角色
@@ -496,6 +510,9 @@ func (UnimplementedSysServer) PlaceUpdate(context.Context, *PlaceUpdateReq) (*Pl
 }
 func (UnimplementedSysServer) PlaceDelete(context.Context, *PlaceDeleteReq) (*PlaceDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PlaceDelete not implemented")
+}
+func (UnimplementedSysServer) PlaceInfo(context.Context, *PlaceInfoReq) (*PlaceInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlaceInfo not implemented")
 }
 func (UnimplementedSysServer) RoleAdd(context.Context, *RoleAddReq) (*RoleAddResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RoleAdd not implemented")
@@ -822,6 +839,24 @@ func _Sys_PlaceDelete_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Sys_PlaceInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlaceInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).PlaceInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sys_PlaceInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).PlaceInfo(ctx, req.(*PlaceInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Sys_RoleAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RoleAddReq)
 	if err := dec(in); err != nil {
@@ -1140,6 +1175,10 @@ var Sys_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PlaceDelete",
 			Handler:    _Sys_PlaceDelete_Handler,
+		},
+		{
+			MethodName: "PlaceInfo",
+			Handler:    _Sys_PlaceInfo_Handler,
 		},
 		{
 			MethodName: "RoleAdd",

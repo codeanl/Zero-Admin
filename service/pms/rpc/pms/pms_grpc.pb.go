@@ -36,6 +36,7 @@ const (
 	Pms_SkuList_FullMethodName         = "/pms.Pms/SkuList"
 	Pms_SkuUpdate_FullMethodName       = "/pms.Pms/SkuUpdate"
 	Pms_SkuDelete_FullMethodName       = "/pms.Pms/SkuDelete"
+	Pms_SkuInfo_FullMethodName         = "/pms.Pms/SkuInfo"
 )
 
 // PmsClient is the client API for Pms service.
@@ -76,6 +77,8 @@ type PmsClient interface {
 	SkuUpdate(ctx context.Context, in *SkuUpdateReq, opts ...grpc.CallOption) (*SkuUpdateResp, error)
 	// 删除Sku
 	SkuDelete(ctx context.Context, in *SkuDeleteReq, opts ...grpc.CallOption) (*SkuDeleteResp, error)
+	// sku详情
+	SkuInfo(ctx context.Context, in *SkuInfoReq, opts ...grpc.CallOption) (*SkuInfoResp, error)
 }
 
 type pmsClient struct {
@@ -239,6 +242,15 @@ func (c *pmsClient) SkuDelete(ctx context.Context, in *SkuDeleteReq, opts ...grp
 	return out, nil
 }
 
+func (c *pmsClient) SkuInfo(ctx context.Context, in *SkuInfoReq, opts ...grpc.CallOption) (*SkuInfoResp, error) {
+	out := new(SkuInfoResp)
+	err := c.cc.Invoke(ctx, Pms_SkuInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PmsServer is the server API for Pms service.
 // All implementations must embed UnimplementedPmsServer
 // for forward compatibility
@@ -277,6 +289,8 @@ type PmsServer interface {
 	SkuUpdate(context.Context, *SkuUpdateReq) (*SkuUpdateResp, error)
 	// 删除Sku
 	SkuDelete(context.Context, *SkuDeleteReq) (*SkuDeleteResp, error)
+	// sku详情
+	SkuInfo(context.Context, *SkuInfoReq) (*SkuInfoResp, error)
 	mustEmbedUnimplementedPmsServer()
 }
 
@@ -334,6 +348,9 @@ func (UnimplementedPmsServer) SkuUpdate(context.Context, *SkuUpdateReq) (*SkuUpd
 }
 func (UnimplementedPmsServer) SkuDelete(context.Context, *SkuDeleteReq) (*SkuDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SkuDelete not implemented")
+}
+func (UnimplementedPmsServer) SkuInfo(context.Context, *SkuInfoReq) (*SkuInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SkuInfo not implemented")
 }
 func (UnimplementedPmsServer) mustEmbedUnimplementedPmsServer() {}
 
@@ -654,6 +671,24 @@ func _Pms_SkuDelete_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pms_SkuInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SkuInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).SkuInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_SkuInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).SkuInfo(ctx, req.(*SkuInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pms_ServiceDesc is the grpc.ServiceDesc for Pms service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -728,6 +763,10 @@ var Pms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SkuDelete",
 			Handler:    _Pms_SkuDelete_Handler,
+		},
+		{
+			MethodName: "SkuInfo",
+			Handler:    _Pms_SkuInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

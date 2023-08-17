@@ -50,6 +50,8 @@ type (
 	SkuAddResp          = pms.SkuAddResp
 	SkuDeleteReq        = pms.SkuDeleteReq
 	SkuDeleteResp       = pms.SkuDeleteResp
+	SkuInfoReq          = pms.SkuInfoReq
+	SkuInfoResp         = pms.SkuInfoResp
 	SkuListData         = pms.SkuListData
 	SkuListReq          = pms.SkuListReq
 	SkuListResp         = pms.SkuListResp
@@ -91,6 +93,8 @@ type (
 		SkuUpdate(ctx context.Context, in *SkuUpdateReq, opts ...grpc.CallOption) (*SkuUpdateResp, error)
 		// 删除Sku
 		SkuDelete(ctx context.Context, in *SkuDeleteReq, opts ...grpc.CallOption) (*SkuDeleteResp, error)
+		// sku详情
+		SkuInfo(ctx context.Context, in *SkuInfoReq, opts ...grpc.CallOption) (*SkuInfoResp, error)
 	}
 
 	defaultPms struct {
@@ -204,4 +208,10 @@ func (m *defaultPms) SkuUpdate(ctx context.Context, in *SkuUpdateReq, opts ...gr
 func (m *defaultPms) SkuDelete(ctx context.Context, in *SkuDeleteReq, opts ...grpc.CallOption) (*SkuDeleteResp, error) {
 	client := pms.NewPmsClient(m.cli.Conn())
 	return client.SkuDelete(ctx, in, opts...)
+}
+
+// sku详情
+func (m *defaultPms) SkuInfo(ctx context.Context, in *SkuInfoReq, opts ...grpc.CallOption) (*SkuInfoResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.SkuInfo(ctx, in, opts...)
 }
