@@ -515,7 +515,6 @@ type ListAttributeData struct {
 	Id             int64            `json:"id"`
 	CategoryId     int64            `json:"categoryId"`
 	Name           string           `json:"name"`
-	Type           string           `json:"type"`
 	AttributeValue []AttributeValue `json:"attributeValue"`
 }
 
@@ -536,7 +535,6 @@ type UpdateAttributeReq struct {
 	Id            int64    `json:"id"`
 	CategoryId    int64    `json:"categoryId"`
 	Name          string   `json:"name"`
-	Type          string   `json:"type"`
 	AttributeName []string `json:"attributeName"`
 }
 
@@ -1024,6 +1022,131 @@ type DeleteHotRecommendResp struct {
 	Message string `json:"message"`
 }
 
+type AddSubjectReq struct {
+	Name   string `json:"name"`
+	Pic    string `json:"pic"`
+	Status string `json:"status"`
+	Sort   int64  `json:"sort"`
+}
+
+type AddSubjectResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateSubjectReq struct {
+	ID     int64  `json:"id"`
+	Name   string `json:"name"`
+	Pic    string `json:"pic"`
+	Status string `json:"status"`
+	Sort   int64  `json:"sort"`
+}
+
+type UpdateSubjectResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteSubjectReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteSubjectResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListSubjectReq struct {
+	Current  int64  `form:"current,optional"`
+	PageSize int64  `form:"pageSize,optional"`
+	Name     string `form:"name,optional "`
+	Status   string `form:"status,optional"`
+}
+
+type ListSubjectData struct {
+	ID     int64  `json:"id"`
+	Name   string `json:"name"`
+	Pic    string `json:"pic"`
+	Status string `json:"status"`
+	Sort   int64  `json:"sort"`
+}
+
+type ListSubjectResp struct {
+	Code    int64             `json:"code"`
+	Message string            `json:"message"`
+	Total   int64             `json:"total"`
+	Data    []ListSubjectData `json:"data"`
+}
+
+type AddSubjectProductReq struct {
+	SubjectID int64  `json:"subject_id"`
+	ProductID int64  `json:"product_id"`
+	Status    string `json:"status"`
+	Sort      int64  `json:"sort"`
+}
+
+type AddSubjectProductResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListSubjectProductReq struct {
+	Current   int64  `form:"current,default=1"`
+	PageSize  int64  `form:"pageSize,default=20"`
+	SubjectID int64  `form:"subjectId"`
+	Status    string `form:"status,optional"`
+}
+
+type ListSubjectProductData struct {
+	Id          int64           `json:"id"`
+	SubjectID   int64           `json:"subject_id"`
+	ProductID   int64           `json:"product_id"`
+	Status      string          `json:"status"`
+	Sort        int64           `json:"sort"`
+	ProductInfo ProductInfoData `json:"productInfo"`
+}
+
+type ProductInfoData struct {
+	Id            int64   `json:"id"`
+	CategoryID    int64   `json:"categoryId"`
+	Name          string  `json:"name"`
+	Pic           string  `json:"pic,optional"`
+	ProductSn     string  `json:"productSn"`
+	Desc          string  `json:"desc,optional"`
+	OriginalPrice float64 `json:"originalPrice,optional"`
+	Unit          string  `json:"unit,optional"`
+	Price         float64 `json:"price,optional"`
+}
+
+type ListSubjectProductResp struct {
+	Code    int64                    `json:"code"`
+	Message string                   `json:"message"`
+	Data    []ListSubjectProductData `json:"data"`
+	Total   int64                    `json:"total"`
+}
+
+type UpdateSubjectProductReq struct {
+	ID        int64  `json:"id"`
+	SubjectID int64  `json:"subject_id"`
+	ProductID int64  `json:"product_id"`
+	Status    string `json:"status"`
+	Sort      int64  `json:"sort"`
+}
+
+type UpdateSubjectProductResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteSubjectProductReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteSubjectProductResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
 type AddOrderReq struct {
 	MemberId              int64   `json:"memberId"`
 	PlaceId               int64   `json:"placeId"`
@@ -1057,14 +1180,14 @@ type AddOrderResp struct {
 }
 
 type ListOrderReq struct {
-	Current        int64  `json:"current,default=1"`
-	PageSize       int64  `json:"pageSize,default=20"`
-	OrderSn        string `json:"orderSn,optional"`        // 订单编号
-	MemberUsername string `json:"memberUserName,optional"` // 用户帐号
-	PayType        int64  `json:"payType,default=3"`       // 支付方式：0->未支付；1->支付宝；2->微信
-	SourceType     int64  `json:"sourceType,default=2"`    // 订单来源：0->PC订单；1->app订单
-	Status         int64  `json:"status,default=6"`        // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
-	OrderType      int64  `json:"orderType,default=2"`     // 订单类型：0->正常订单；1->秒杀订单
+	Current        int64  `form:"current,default=1"`
+	PageSize       int64  `form:"pageSize,default=20"`
+	OrderSn        string `form:"orderSn,optional"`        // 订单编号
+	MemberUsername string `form:"memberUserName,optional"` // 用户帐号
+	PayType        int64  `form:"payType,default=3"`       // 支付方式：0->未支付；1->支付宝；2->微信
+	SourceType     int64  `form:"sourceType,default=2"`    // 订单来源：0->PC订单；1->app订单
+	Status         int64  `form:"status,default=6"`        // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
+	OrderType      int64  `form:"orderType,default=2"`     // 订单类型：0->正常订单；1->秒杀订单
 }
 
 type ListOrderData struct {

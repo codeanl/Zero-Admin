@@ -93,3 +93,51 @@ func (s *SmsServer) HotRecommendDelete(ctx context.Context, in *sms.HotRecommend
 	l := logic.NewHotRecommendDeleteLogic(ctx, s.svcCtx)
 	return l.HotRecommendDelete(in)
 }
+
+// 添加专题
+func (s *SmsServer) SubjectAdd(ctx context.Context, in *sms.SubjectAddReq) (*sms.SubjectAddResp, error) {
+	l := logic.NewSubjectAddLogic(ctx, s.svcCtx)
+	return l.SubjectAdd(in)
+}
+
+// 更新专题
+func (s *SmsServer) SubjectUpdate(ctx context.Context, in *sms.SubjectUpdateReq) (*sms.SubjectUpdateResp, error) {
+	l := logic.NewSubjectUpdateLogic(ctx, s.svcCtx)
+	return l.SubjectUpdate(in)
+}
+
+// 删除专题
+func (s *SmsServer) SubjectDelete(ctx context.Context, in *sms.SubjectDeleteAddReq) (*sms.SubjectDeleteResp, error) {
+	l := logic.NewSubjectDeleteLogic(ctx, s.svcCtx)
+	return l.SubjectDelete(in)
+}
+
+// 专题列表
+func (s *SmsServer) SubjectList(ctx context.Context, in *sms.SubjectListReq) (*sms.SubjectListResp, error) {
+	l := logic.NewSubjectListLogic(ctx, s.svcCtx)
+	return l.SubjectList(in)
+}
+
+// 添加专题商品
+func (s *SmsServer) SubjectProductAdd(ctx context.Context, in *sms.SubjectProductAddReq) (*sms.SubjectProductAddResp, error) {
+	l := logic.NewSubjectProductAddLogic(ctx, s.svcCtx)
+	return l.SubjectProductAdd(in)
+}
+
+// 更新专题商品
+func (s *SmsServer) SubjectProductUpdate(ctx context.Context, in *sms.SubjectProductUpdateReq) (*sms.SubjectProductUpdateResp, error) {
+	l := logic.NewSubjectProductUpdateLogic(ctx, s.svcCtx)
+	return l.SubjectProductUpdate(in)
+}
+
+// 删除专题商品
+func (s *SmsServer) SubjectProductDelete(ctx context.Context, in *sms.SubjectProductDeleteAddReq) (*sms.SubjectProductDeleteResp, error) {
+	l := logic.NewSubjectProductDeleteLogic(ctx, s.svcCtx)
+	return l.SubjectProductDelete(in)
+}
+
+// 专题列表商品
+func (s *SmsServer) SubjectProductList(ctx context.Context, in *sms.SubjectProductListReq) (*sms.SubjectProductListResp, error) {
+	l := logic.NewSubjectProductListLogic(ctx, s.svcCtx)
+	return l.SubjectProductList(in)
+}

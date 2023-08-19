@@ -24,7 +24,6 @@ type (
         Id         int64  `json:"id"`
         CategoryId int64  `json:"categoryId"`
         Name        string `json:"name"`
-        Type        string  `json:"type"`
         AttributeValue []AttributeValue   `json:"attributeValue"`
     }
     AttributeValue struct{
@@ -42,7 +41,6 @@ type (
         Id        int64  `json:"id"`
         CategoryId    int64  `json:"categoryId"`
         Name           string `json:"name"`
-        Type           string  `json:"type"`
        AttributeName []string  `json:"attributeName"`
     }
     UpdateAttributeResp struct {

@@ -19,18 +19,26 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Sms_HomeAdvertiseAdd_FullMethodName    = "/sms.Sms/HomeAdvertiseAdd"
-	Sms_HomeAdvertiseList_FullMethodName   = "/sms.Sms/HomeAdvertiseList"
-	Sms_HomeAdvertiseUpdate_FullMethodName = "/sms.Sms/HomeAdvertiseUpdate"
-	Sms_HomeAdvertiseDelete_FullMethodName = "/sms.Sms/HomeAdvertiseDelete"
-	Sms_CouponAdd_FullMethodName           = "/sms.Sms/CouponAdd"
-	Sms_CouponUpdate_FullMethodName        = "/sms.Sms/CouponUpdate"
-	Sms_CouponDelete_FullMethodName        = "/sms.Sms/CouponDelete"
-	Sms_CouponList_FullMethodName          = "/sms.Sms/CouponList"
-	Sms_HotRecommendAdd_FullMethodName     = "/sms.Sms/HotRecommendAdd"
-	Sms_HotRecommendList_FullMethodName    = "/sms.Sms/HotRecommendList"
-	Sms_HotRecommendUpdate_FullMethodName  = "/sms.Sms/HotRecommendUpdate"
-	Sms_HotRecommendDelete_FullMethodName  = "/sms.Sms/HotRecommendDelete"
+	Sms_HomeAdvertiseAdd_FullMethodName     = "/sms.Sms/HomeAdvertiseAdd"
+	Sms_HomeAdvertiseList_FullMethodName    = "/sms.Sms/HomeAdvertiseList"
+	Sms_HomeAdvertiseUpdate_FullMethodName  = "/sms.Sms/HomeAdvertiseUpdate"
+	Sms_HomeAdvertiseDelete_FullMethodName  = "/sms.Sms/HomeAdvertiseDelete"
+	Sms_CouponAdd_FullMethodName            = "/sms.Sms/CouponAdd"
+	Sms_CouponUpdate_FullMethodName         = "/sms.Sms/CouponUpdate"
+	Sms_CouponDelete_FullMethodName         = "/sms.Sms/CouponDelete"
+	Sms_CouponList_FullMethodName           = "/sms.Sms/CouponList"
+	Sms_HotRecommendAdd_FullMethodName      = "/sms.Sms/HotRecommendAdd"
+	Sms_HotRecommendList_FullMethodName     = "/sms.Sms/HotRecommendList"
+	Sms_HotRecommendUpdate_FullMethodName   = "/sms.Sms/HotRecommendUpdate"
+	Sms_HotRecommendDelete_FullMethodName   = "/sms.Sms/HotRecommendDelete"
+	Sms_SubjectAdd_FullMethodName           = "/sms.Sms/SubjectAdd"
+	Sms_SubjectUpdate_FullMethodName        = "/sms.Sms/SubjectUpdate"
+	Sms_SubjectDelete_FullMethodName        = "/sms.Sms/SubjectDelete"
+	Sms_SubjectList_FullMethodName          = "/sms.Sms/SubjectList"
+	Sms_SubjectProductAdd_FullMethodName    = "/sms.Sms/SubjectProductAdd"
+	Sms_SubjectProductUpdate_FullMethodName = "/sms.Sms/SubjectProductUpdate"
+	Sms_SubjectProductDelete_FullMethodName = "/sms.Sms/SubjectProductDelete"
+	Sms_SubjectProductList_FullMethodName   = "/sms.Sms/SubjectProductList"
 )
 
 // SmsClient is the client API for Sms service.
@@ -61,6 +69,22 @@ type SmsClient interface {
 	HotRecommendUpdate(ctx context.Context, in *HotRecommendUpdateReq, opts ...grpc.CallOption) (*HotRecommendUpdateResp, error)
 	// 删除推荐
 	HotRecommendDelete(ctx context.Context, in *HotRecommendDeleteReq, opts ...grpc.CallOption) (*HotRecommendDeleteResp, error)
+	// 添加专题
+	SubjectAdd(ctx context.Context, in *SubjectAddReq, opts ...grpc.CallOption) (*SubjectAddResp, error)
+	// 更新专题
+	SubjectUpdate(ctx context.Context, in *SubjectUpdateReq, opts ...grpc.CallOption) (*SubjectUpdateResp, error)
+	// 删除专题
+	SubjectDelete(ctx context.Context, in *SubjectDeleteAddReq, opts ...grpc.CallOption) (*SubjectDeleteResp, error)
+	// 专题列表
+	SubjectList(ctx context.Context, in *SubjectListReq, opts ...grpc.CallOption) (*SubjectListResp, error)
+	// 添加专题商品
+	SubjectProductAdd(ctx context.Context, in *SubjectProductAddReq, opts ...grpc.CallOption) (*SubjectProductAddResp, error)
+	// 更新专题商品
+	SubjectProductUpdate(ctx context.Context, in *SubjectProductUpdateReq, opts ...grpc.CallOption) (*SubjectProductUpdateResp, error)
+	// 删除专题商品
+	SubjectProductDelete(ctx context.Context, in *SubjectProductDeleteAddReq, opts ...grpc.CallOption) (*SubjectProductDeleteResp, error)
+	// 专题列表商品
+	SubjectProductList(ctx context.Context, in *SubjectProductListReq, opts ...grpc.CallOption) (*SubjectProductListResp, error)
 }
 
 type smsClient struct {
@@ -179,6 +203,78 @@ func (c *smsClient) HotRecommendDelete(ctx context.Context, in *HotRecommendDele
 	return out, nil
 }
 
+func (c *smsClient) SubjectAdd(ctx context.Context, in *SubjectAddReq, opts ...grpc.CallOption) (*SubjectAddResp, error) {
+	out := new(SubjectAddResp)
+	err := c.cc.Invoke(ctx, Sms_SubjectAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) SubjectUpdate(ctx context.Context, in *SubjectUpdateReq, opts ...grpc.CallOption) (*SubjectUpdateResp, error) {
+	out := new(SubjectUpdateResp)
+	err := c.cc.Invoke(ctx, Sms_SubjectUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) SubjectDelete(ctx context.Context, in *SubjectDeleteAddReq, opts ...grpc.CallOption) (*SubjectDeleteResp, error) {
+	out := new(SubjectDeleteResp)
+	err := c.cc.Invoke(ctx, Sms_SubjectDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) SubjectList(ctx context.Context, in *SubjectListReq, opts ...grpc.CallOption) (*SubjectListResp, error) {
+	out := new(SubjectListResp)
+	err := c.cc.Invoke(ctx, Sms_SubjectList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) SubjectProductAdd(ctx context.Context, in *SubjectProductAddReq, opts ...grpc.CallOption) (*SubjectProductAddResp, error) {
+	out := new(SubjectProductAddResp)
+	err := c.cc.Invoke(ctx, Sms_SubjectProductAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) SubjectProductUpdate(ctx context.Context, in *SubjectProductUpdateReq, opts ...grpc.CallOption) (*SubjectProductUpdateResp, error) {
+	out := new(SubjectProductUpdateResp)
+	err := c.cc.Invoke(ctx, Sms_SubjectProductUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) SubjectProductDelete(ctx context.Context, in *SubjectProductDeleteAddReq, opts ...grpc.CallOption) (*SubjectProductDeleteResp, error) {
+	out := new(SubjectProductDeleteResp)
+	err := c.cc.Invoke(ctx, Sms_SubjectProductDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *smsClient) SubjectProductList(ctx context.Context, in *SubjectProductListReq, opts ...grpc.CallOption) (*SubjectProductListResp, error) {
+	out := new(SubjectProductListResp)
+	err := c.cc.Invoke(ctx, Sms_SubjectProductList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SmsServer is the server API for Sms service.
 // All implementations must embed UnimplementedSmsServer
 // for forward compatibility
@@ -207,6 +303,22 @@ type SmsServer interface {
 	HotRecommendUpdate(context.Context, *HotRecommendUpdateReq) (*HotRecommendUpdateResp, error)
 	// 删除推荐
 	HotRecommendDelete(context.Context, *HotRecommendDeleteReq) (*HotRecommendDeleteResp, error)
+	// 添加专题
+	SubjectAdd(context.Context, *SubjectAddReq) (*SubjectAddResp, error)
+	// 更新专题
+	SubjectUpdate(context.Context, *SubjectUpdateReq) (*SubjectUpdateResp, error)
+	// 删除专题
+	SubjectDelete(context.Context, *SubjectDeleteAddReq) (*SubjectDeleteResp, error)
+	// 专题列表
+	SubjectList(context.Context, *SubjectListReq) (*SubjectListResp, error)
+	// 添加专题商品
+	SubjectProductAdd(context.Context, *SubjectProductAddReq) (*SubjectProductAddResp, error)
+	// 更新专题商品
+	SubjectProductUpdate(context.Context, *SubjectProductUpdateReq) (*SubjectProductUpdateResp, error)
+	// 删除专题商品
+	SubjectProductDelete(context.Context, *SubjectProductDeleteAddReq) (*SubjectProductDeleteResp, error)
+	// 专题列表商品
+	SubjectProductList(context.Context, *SubjectProductListReq) (*SubjectProductListResp, error)
 	mustEmbedUnimplementedSmsServer()
 }
 
@@ -249,6 +361,30 @@ func (UnimplementedSmsServer) HotRecommendUpdate(context.Context, *HotRecommendU
 }
 func (UnimplementedSmsServer) HotRecommendDelete(context.Context, *HotRecommendDeleteReq) (*HotRecommendDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HotRecommendDelete not implemented")
+}
+func (UnimplementedSmsServer) SubjectAdd(context.Context, *SubjectAddReq) (*SubjectAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubjectAdd not implemented")
+}
+func (UnimplementedSmsServer) SubjectUpdate(context.Context, *SubjectUpdateReq) (*SubjectUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubjectUpdate not implemented")
+}
+func (UnimplementedSmsServer) SubjectDelete(context.Context, *SubjectDeleteAddReq) (*SubjectDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubjectDelete not implemented")
+}
+func (UnimplementedSmsServer) SubjectList(context.Context, *SubjectListReq) (*SubjectListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubjectList not implemented")
+}
+func (UnimplementedSmsServer) SubjectProductAdd(context.Context, *SubjectProductAddReq) (*SubjectProductAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubjectProductAdd not implemented")
+}
+func (UnimplementedSmsServer) SubjectProductUpdate(context.Context, *SubjectProductUpdateReq) (*SubjectProductUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubjectProductUpdate not implemented")
+}
+func (UnimplementedSmsServer) SubjectProductDelete(context.Context, *SubjectProductDeleteAddReq) (*SubjectProductDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubjectProductDelete not implemented")
+}
+func (UnimplementedSmsServer) SubjectProductList(context.Context, *SubjectProductListReq) (*SubjectProductListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubjectProductList not implemented")
 }
 func (UnimplementedSmsServer) mustEmbedUnimplementedSmsServer() {}
 
@@ -479,6 +615,150 @@ func _Sms_HotRecommendDelete_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Sms_SubjectAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).SubjectAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_SubjectAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).SubjectAdd(ctx, req.(*SubjectAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_SubjectUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).SubjectUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_SubjectUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).SubjectUpdate(ctx, req.(*SubjectUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_SubjectDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectDeleteAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).SubjectDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_SubjectDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).SubjectDelete(ctx, req.(*SubjectDeleteAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_SubjectList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).SubjectList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_SubjectList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).SubjectList(ctx, req.(*SubjectListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_SubjectProductAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectProductAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).SubjectProductAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_SubjectProductAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).SubjectProductAdd(ctx, req.(*SubjectProductAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_SubjectProductUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectProductUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).SubjectProductUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_SubjectProductUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).SubjectProductUpdate(ctx, req.(*SubjectProductUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_SubjectProductDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectProductDeleteAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).SubjectProductDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_SubjectProductDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).SubjectProductDelete(ctx, req.(*SubjectProductDeleteAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sms_SubjectProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectProductListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsServer).SubjectProductList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sms_SubjectProductList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsServer).SubjectProductList(ctx, req.(*SubjectProductListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Sms_ServiceDesc is the grpc.ServiceDesc for Sms service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -533,6 +813,38 @@ var Sms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HotRecommendDelete",
 			Handler:    _Sms_HotRecommendDelete_Handler,
+		},
+		{
+			MethodName: "SubjectAdd",
+			Handler:    _Sms_SubjectAdd_Handler,
+		},
+		{
+			MethodName: "SubjectUpdate",
+			Handler:    _Sms_SubjectUpdate_Handler,
+		},
+		{
+			MethodName: "SubjectDelete",
+			Handler:    _Sms_SubjectDelete_Handler,
+		},
+		{
+			MethodName: "SubjectList",
+			Handler:    _Sms_SubjectList_Handler,
+		},
+		{
+			MethodName: "SubjectProductAdd",
+			Handler:    _Sms_SubjectProductAdd_Handler,
+		},
+		{
+			MethodName: "SubjectProductUpdate",
+			Handler:    _Sms_SubjectProductUpdate_Handler,
+		},
+		{
+			MethodName: "SubjectProductDelete",
+			Handler:    _Sms_SubjectProductDelete_Handler,
+		},
+		{
+			MethodName: "SubjectProductList",
+			Handler:    _Sms_SubjectProductList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -10,8 +10,10 @@ import (
 	pmsproduct "SimplePick-Mall-Server/api/internal/handler/pms/product"
 	pmssku "SimplePick-Mall-Server/api/internal/handler/pms/sku"
 	smsHotRecommend "SimplePick-Mall-Server/api/internal/handler/sms/HotRecommend"
+	smsSubjectProduct "SimplePick-Mall-Server/api/internal/handler/sms/SubjectProduct"
 	smscoupon "SimplePick-Mall-Server/api/internal/handler/sms/coupon"
 	smshomeAdvertise "SimplePick-Mall-Server/api/internal/handler/sms/homeAdvertise"
+	smssubject "SimplePick-Mall-Server/api/internal/handler/sms/subject"
 	sysloginLog "SimplePick-Mall-Server/api/internal/handler/sys/loginLog"
 	sysmenu "SimplePick-Mall-Server/api/internal/handler/sys/menu"
 	sysplace "SimplePick-Mall-Server/api/internal/handler/sys/place"
@@ -445,10 +447,64 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/add",
-				Handler: omsorder.OrderAddHandler(serverCtx),
+				Handler: smssubject.SubjectAddHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: smssubject.SubjectUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: smssubject.SubjectDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: smssubject.SubjectListHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/sms/subject"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: smsSubjectProduct.SubjectProductAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: smsSubjectProduct.SubjectProductListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: smsSubjectProduct.SubjectProductUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: smsSubjectProduct.SubjectProductDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/sms/subjectProduct"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: omsorder.OrderAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
 				Path:    "/list",
 				Handler: omsorder.OrderListHandler(serverCtx),
 			},

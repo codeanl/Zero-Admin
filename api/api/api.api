@@ -16,6 +16,8 @@ import "ums/member.api"
 import "sms/home_advertise.api"
 import "sms/coupon.api"
 import "sms/hot_recommend.api"
+import "sms/subject.api"
+import "sms/subject_product.api"
 
 import "oms/order.api"
 

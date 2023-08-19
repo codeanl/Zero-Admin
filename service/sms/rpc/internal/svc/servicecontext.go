@@ -7,19 +7,23 @@ import (
 )
 
 type ServiceContext struct {
-	Config             config.Config
-	HomeAdvertiseModel model.HomeAdvertiseModel
-	CouponModel        model.CouponModel
-	HotRecommendModel  model.HotRecommendModel
+	Config              config.Config
+	HomeAdvertiseModel  model.HomeAdvertiseModel
+	CouponModel         model.CouponModel
+	HotRecommendModel   model.HotRecommendModel
+	SubjectModel        model.SubjectModel
+	SubjectProductModel model.SubjectProductModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	mysql := c.Mysql
 	conn := db.InitMysql(mysql.DataSource)
 	return &ServiceContext{
-		Config:             c,
-		HomeAdvertiseModel: model.NewHomeAdvertiseModel(conn),
-		CouponModel:        model.NewCouponModel(conn),
-		HotRecommendModel:  model.NewHotRecommendModel(conn),
+		Config:              c,
+		HomeAdvertiseModel:  model.NewHomeAdvertiseModel(conn),
+		CouponModel:         model.NewCouponModel(conn),
+		HotRecommendModel:   model.NewHotRecommendModel(conn),
+		SubjectModel:        model.NewSubjectModel(conn),
+		SubjectProductModel: model.NewSubjectProductModel(conn),
 	}
 }
