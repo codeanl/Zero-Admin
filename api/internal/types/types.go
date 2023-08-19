@@ -1079,10 +1079,10 @@ type ListSubjectResp struct {
 }
 
 type AddSubjectProductReq struct {
-	SubjectID int64  `json:"subject_id"`
-	ProductID int64  `json:"product_id"`
-	Status    string `json:"status"`
-	Sort      int64  `json:"sort"`
+	SubjectID int64   `json:"subject_id"`
+	ProductID []int64 `json:"product_id"`
+	Status    string  `json:"status"`
+	Sort      int64   `json:"sort"`
 }
 
 type AddSubjectProductResp struct {

@@ -96,6 +96,7 @@ type ListCategoryData struct {
 	Icon         string             `json:"icon"` // 图标
 	Keywords     string             `json:"keywords"`
 	Description  string             `json:"description"` // 描述
+	ProductList  []ListProductData  `json:"productList"`
 	Children     []ListCategoryData `json:"children"`
 }
 
@@ -107,39 +108,22 @@ type ListCategoryResp struct {
 }
 
 type ListProductReq struct {
-	Current  int64 `json:"current,optional"`
-	PageSize int64 `json:"pageSize,optional"`
-	ID       int64 `form:"id,optional"`
+	Current    int64  `form:"current,optional"`
+	PageSize   int64  `form:"pageSize,optional"`
+	Name       string `form:"name,optional"`
+	CategoryId int64  `form:"categoryId,optional"`
 }
 
 type ListProductData struct {
-	Id            int64      `json:"id"`
-	CategoryID    int64      `json:"categoryId"`
-	Name          string     `json:"name"`
-	Pic           string     `json:"pic,optional"`
-	ProductSn     string     `json:"productSn"`
-	SubTitle      string     `json:"subTitle,optional"`
-	Description   string     `json:"description,optional"`
-	OriginalPrice float64    `json:"originalPrice,optional"`
-	Stock         int64      `json:"stock,optional"`
-	Unit          string     `json:"unit,optional"`
-	Sale          int64      `json:"sale,optional,default=0"`
-	Price         float64    `json:"price,optional"`
-	SizeList      []SizeList `json:"sizeList,optional"`
-	AttrValueIDs  []int64    `json:"attrValueIds"`
-}
-
-type SizeList struct {
-	ID            int64           `json:"id"`
-	ProductID     int64           `json:"productId"`
-	Name          string          `json:"name"`
-	SizeValueList []SizeValueList `json:"sizeValueList"`
-}
-
-type SizeValueList struct {
-	ID     int64  `json:"id"`
-	SizeID int64  `json:"sizeId"`
-	Value  string `json:"name"`
+	Id            int64   `json:"id"`
+	CategoryID    int64   `json:"categoryId"`
+	Name          string  `json:"name"`
+	Pic           string  `json:"pic,optional"`
+	ProductSn     string  `json:"productSn"`
+	Desc          string  `json:"desc,optional"`
+	OriginalPrice float64 `json:"originalPrice,optional"`
+	Unit          string  `json:"unit,optional"`
+	Price         float64 `json:"price,optional"`
 }
 
 type ListProductResp struct {
@@ -147,4 +131,26 @@ type ListProductResp struct {
 	Message string            `json:"message"`
 	Data    []ListProductData `json:"data"`
 	Total   int64             `json:"total"`
+}
+
+type ListSubjectReq struct {
+	Current  int64  `form:"current,optional"`
+	PageSize int64  `form:"pageSize,optional"`
+	Name     string `form:"name,optional "`
+	Status   string `form:"status,optional"`
+}
+
+type ListSubjectData struct {
+	ID     int64  `json:"id"`
+	Name   string `json:"name"`
+	Pic    string `json:"pic"`
+	Status string `json:"status"`
+	Sort   int64  `json:"sort"`
+}
+
+type ListSubjectResp struct {
+	Code    int64             `json:"code"`
+	Message string            `json:"message"`
+	Total   int64             `json:"total"`
+	Data    []ListSubjectData `json:"data"`
 }

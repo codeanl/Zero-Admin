@@ -32,7 +32,26 @@ func (l *CategoryListLogic) CategoryList(req *types.ListCategoryReq) (*types.Lis
 	}
 	list := make([]types.ListCategoryData, 0)
 	for _, item := range resp.List {
-		listUserData := types.ListCategoryData{
+		productList, _ := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
+			CategoryID: item.Id,
+			PageNum:    1,
+			PageSize:   3,
+		})
+		var ProductList []types.ListProductData
+		for _, i := range productList.List {
+			ProductList = append(ProductList, types.ListProductData{
+				Id:            i.Id,
+				CategoryID:    i.CategoryID,
+				Name:          i.Name,
+				Pic:           i.Pic,
+				ProductSn:     i.ProductSn,
+				Desc:          i.Desc,
+				OriginalPrice: i.OriginalPrice,
+				Unit:          i.Unit,
+				Price:         i.Price,
+			})
+		}
+		listData := types.ListCategoryData{
 			Id:           item.Id,
 			ParentId:     item.ParentId,
 			Name:         item.Name,
@@ -45,8 +64,9 @@ func (l *CategoryListLogic) CategoryList(req *types.ListCategoryReq) (*types.Lis
 			Icon:         item.Icon,
 			Keywords:     item.Keywords,
 			Description:  item.Description,
+			ProductList:  ProductList,
 		}
-		list = append(list, listUserData)
+		list = append(list, listData)
 	}
 	list = buildTree(list, 0)
 

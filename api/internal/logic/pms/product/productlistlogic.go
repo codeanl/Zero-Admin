@@ -25,8 +25,9 @@ func NewProductListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produ
 
 func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListProductResp, error) {
 	resp, err := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
-		PageNum:  req.Current,
-		PageSize: req.PageSize,
+		PageNum:    req.Current,
+		PageSize:   req.PageSize,
+		CategoryID: req.CategoryId,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")

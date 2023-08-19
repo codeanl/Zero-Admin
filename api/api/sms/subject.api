@@ -1,0 +1,79 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+type(
+       addSubjectReq struct {
+            Name string `json:"name"`
+            Pic string `json:"pic"`
+            Status string `json:"status"`
+            Sort int64 `json:"sort"`
+        }
+        addSubjectResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+        }
+    UpdateSubjectReq struct {
+            ID int64 `json:"id"`
+            Name string `json:"name"`
+            Pic string `json:"pic"`
+            Status string `json:"status"`
+            Sort int64 `json:"sort"`
+        }
+        UpdateSubjectResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+        }
+    DeleteSubjectReq struct {
+          Ids []int64 `json:"ids"`
+      }
+      DeleteSubjectResp struct {
+          Code int64 `json:"code"`
+          Message string `json:"message"`
+      }
+
+    ListSubjectReq struct {
+          Current int64 `form:"current,optional"`
+          PageSize int64 `form:"pageSize,optional"`
+          Name string `form:"name,optional "`
+          Status string `form:"status,optional"`
+      }
+      ListSubjectData struct {
+            ID int64 `json:"id"`
+            Name string `json:"name"`
+            Pic string `json:"pic"`
+            Status string `json:"status"`
+            Sort int64 `json:"sort"`
+      }
+      ListSubjectResp struct {
+          Code int64 `json:"code"`
+          Message string `json:"message"`
+          Total int64 `json:"total"`
+          Data []ListSubjectData `json:"data"`
+      }
+)
+
+
+@server(
+    jwt: Auth
+    group: sms/subject
+    prefix: /api/sms/subject
+)
+service api {
+    @handler SubjectAdd
+    post /add (addSubjectReq) returns (addSubjectResp)
+
+    @handler SubjectUpdate
+    post /update (UpdateSubjectReq) returns (UpdateSubjectResp)
+
+    @handler SubjectDelete
+    post /delete (DeleteSubjectReq) returns (DeleteSubjectResp)
+
+    @handler SubjectList
+    get /list (ListSubjectReq) returns (ListSubjectResp)
+}

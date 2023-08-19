@@ -226,8 +226,8 @@ message SubjectListResp{
 
 //添加专题商品
 message  SubjectProductAddReq{
-  int64 SubjectID=1;
-  int64 ProductID=2;
+   int64 SubjectID=1;
+  repeated int64 ProductID=2;
   string Status=3;
   int64 Sort=4;
 }

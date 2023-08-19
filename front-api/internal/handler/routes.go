@@ -50,6 +50,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/productList",
 				Handler: index.ProductListHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/subjectList",
+				Handler: index.SubjectListHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/api/index"),
 	)
