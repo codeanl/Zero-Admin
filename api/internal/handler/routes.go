@@ -4,6 +4,8 @@ package handler
 import (
 	"net/http"
 
+	omsReturnApply "SimplePick-Mall-Server/api/internal/handler/oms/ReturnApply"
+	omsReturnReason "SimplePick-Mall-Server/api/internal/handler/oms/ReturnReason"
 	omsorder "SimplePick-Mall-Server/api/internal/handler/oms/order"
 	pmsattribute "SimplePick-Mall-Server/api/internal/handler/pms/attribute"
 	pmscategory "SimplePick-Mall-Server/api/internal/handler/pms/category"
@@ -526,5 +528,59 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/oms/order"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: omsReturnReason.ReturnReasonAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: omsReturnReason.ReturnReasonUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: omsReturnReason.ReturnReasonDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: omsReturnReason.ReturnReasonListHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/oms/returnReason"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: omsReturnApply.ReturnApplyAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: omsReturnApply.ReturnApplyUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: omsReturnApply.ReturnApplyDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: omsReturnApply.ReturnApplyListHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/oms/ReturnApply"),
 	)
 }

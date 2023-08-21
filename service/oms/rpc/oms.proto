@@ -126,6 +126,102 @@ message OrderInfoResp {
   OrderListData OrderInfo=1;
   repeated int64 SkuIDs=2;
 }
+
+//添加退货原因
+message ReturnReasonAddReq{
+  string       Name = 45;
+  string       Status = 2;
+}
+message ReturnReasonAddResp{
+  string pong = 1;
+}
+//更新退货原因
+message ReturnReasonUpdateReq{
+  int64       ID = 1;
+  string       Name = 45;
+  string       Status = 2;
+}
+message ReturnReasonUpdateResp{
+  string pong = 1;
+}
+//退货原因列表
+message ReturnReasonListReq {
+  string    Name = 3;
+  string    Status = 4;
+  int64    current = 1;
+  int64   pageSize = 2;
+}
+
+message ReturnReasonListData{
+  int64       ID = 1;
+  string       Name = 45;
+  string       Status = 2;
+}
+message ReturnReasonListResp {
+  int64 total = 1;
+  repeated ReturnReasonListData list = 2;
+}
+//删除退货原因
+message ReturnReasonDeleteReq {
+  repeated int64 ids = 1;
+}
+message ReturnReasonDeleteResp {
+  string pong = 1;
+}
+//添加退货
+message ReturnApplyAddReq{
+  int64 UserID= 2;
+  int64 OrderID= 3;
+  int64 SkuID= 4;
+  string Status= 5;
+  string Description= 6;
+  string ProofPics= 7;
+  double ReturnAmount= 8;
+}
+message ReturnApplyAddResp{
+  string pong = 1;
+}
+//更新退货
+message ReturnApplyUpdateReq{
+  int64 ID= 1;
+  int64 UserID= 2;
+  int64 OrderID= 3;
+  int64 SkuID= 4;
+  string Status= 5;
+  string Description= 6;
+  string ProofPics= 7;
+  double ReturnAmount= 8;
+}
+message ReturnApplyUpdateResp{
+  string pong = 1;
+}
+//退货列表
+message ReturnApplyListReq {
+  string    Status = 4;
+  int64    current = 1;
+  int64   pageSize = 2;
+}
+message ReturnApplyListData{
+  int64 ID= 1;
+  int64 UserID= 2;
+  int64 OrderID= 3;
+  int64 SkuID= 4;
+  string Status= 5;
+  string Description= 6;
+  string ProofPics= 7;
+  double ReturnAmount= 8;
+}
+message ReturnApplyListResp {
+  int64 total = 1;
+  repeated ReturnApplyListData list = 2;
+}
+//删除退货
+message ReturnApplyDeleteReq {
+  repeated int64 ids = 1;
+}
+message ReturnApplyDeleteResp {
+  string pong = 1;
+}
 service Oms {
   //添加订单
   rpc OrderAdd(OrderAddReq) returns(OrderAddResp);
@@ -137,4 +233,23 @@ service Oms {
   rpc OrderDelete(OrderDeleteReq) returns(OrderDeleteResp);
   //订单详情
   rpc OrderInfo(OrderInfoReq) returns(OrderInfoResp);
+
+  //添加退货原因
+  rpc ReturnReasonAdd(ReturnReasonAddReq) returns(ReturnReasonAddResp);
+  //更新退货原因
+  rpc ReturnReasonUpdate(ReturnReasonUpdateReq) returns(ReturnReasonUpdateResp);
+  //退货原因列表
+  rpc ReturnReasonList(ReturnReasonListReq) returns(ReturnReasonListResp);
+  //删除退货原因
+  rpc ReturnReasonDelete (ReturnReasonDeleteReq) returns(ReturnReasonDeleteResp);
+
+  //添加退货
+  rpc ReturnApplyAdd(ReturnApplyAddReq) returns(ReturnApplyAddResp);
+  //更新退货
+  rpc ReturnApplyUpdate(ReturnApplyUpdateReq) returns(ReturnApplyUpdateResp);
+  //退货列表
+  rpc ReturnApplyList(ReturnApplyListReq) returns(ReturnApplyListResp);
+  //删除退货
+  rpc ReturnApplyDelete (ReturnApplyDeleteReq) returns(ReturnApplyDeleteResp);
+
 }

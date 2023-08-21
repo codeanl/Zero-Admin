@@ -138,4 +138,6 @@ service api {
 
     @handler ProductInfo
     post /info (ProductInfoReq) returns (ProductInfoResp)
+
+
 }

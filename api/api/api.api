@@ -20,6 +20,8 @@ import "sms/subject.api"
 import "sms/subject_product.api"
 
 import "oms/order.api"
+import "oms/returnReason.api"
+import "oms/returnApply.api"
 
 info(
 	title: "type title here"

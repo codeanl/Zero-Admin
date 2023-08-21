@@ -51,3 +51,51 @@ func (s *OmsServer) OrderInfo(ctx context.Context, in *oms.OrderInfoReq) (*oms.O
 	l := logic.NewOrderInfoLogic(ctx, s.svcCtx)
 	return l.OrderInfo(in)
 }
+
+// 添加退货原因
+func (s *OmsServer) ReturnReasonAdd(ctx context.Context, in *oms.ReturnReasonAddReq) (*oms.ReturnReasonAddResp, error) {
+	l := logic.NewReturnReasonAddLogic(ctx, s.svcCtx)
+	return l.ReturnReasonAdd(in)
+}
+
+// 更新退货原因
+func (s *OmsServer) ReturnReasonUpdate(ctx context.Context, in *oms.ReturnReasonUpdateReq) (*oms.ReturnReasonUpdateResp, error) {
+	l := logic.NewReturnReasonUpdateLogic(ctx, s.svcCtx)
+	return l.ReturnReasonUpdate(in)
+}
+
+// 退货原因列表
+func (s *OmsServer) ReturnReasonList(ctx context.Context, in *oms.ReturnReasonListReq) (*oms.ReturnReasonListResp, error) {
+	l := logic.NewReturnReasonListLogic(ctx, s.svcCtx)
+	return l.ReturnReasonList(in)
+}
+
+// 删除退货原因
+func (s *OmsServer) ReturnReasonDelete(ctx context.Context, in *oms.ReturnReasonDeleteReq) (*oms.ReturnReasonDeleteResp, error) {
+	l := logic.NewReturnReasonDeleteLogic(ctx, s.svcCtx)
+	return l.ReturnReasonDelete(in)
+}
+
+// 添加退货
+func (s *OmsServer) ReturnApplyAdd(ctx context.Context, in *oms.ReturnApplyAddReq) (*oms.ReturnApplyAddResp, error) {
+	l := logic.NewReturnApplyAddLogic(ctx, s.svcCtx)
+	return l.ReturnApplyAdd(in)
+}
+
+// 更新退货
+func (s *OmsServer) ReturnApplyUpdate(ctx context.Context, in *oms.ReturnApplyUpdateReq) (*oms.ReturnApplyUpdateResp, error) {
+	l := logic.NewReturnApplyUpdateLogic(ctx, s.svcCtx)
+	return l.ReturnApplyUpdate(in)
+}
+
+// 退货列表
+func (s *OmsServer) ReturnApplyList(ctx context.Context, in *oms.ReturnApplyListReq) (*oms.ReturnApplyListResp, error) {
+	l := logic.NewReturnApplyListLogic(ctx, s.svcCtx)
+	return l.ReturnApplyList(in)
+}
+
+// 删除退货
+func (s *OmsServer) ReturnApplyDelete(ctx context.Context, in *oms.ReturnApplyDeleteReq) (*oms.ReturnApplyDeleteResp, error) {
+	l := logic.NewReturnApplyDeleteLogic(ctx, s.svcCtx)
+	return l.ReturnApplyDelete(in)
+}

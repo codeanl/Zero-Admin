@@ -19,11 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Oms_OrderAdd_FullMethodName    = "/oms.Oms/OrderAdd"
-	Oms_OrderList_FullMethodName   = "/oms.Oms/OrderList"
-	Oms_OrderUpdate_FullMethodName = "/oms.Oms/OrderUpdate"
-	Oms_OrderDelete_FullMethodName = "/oms.Oms/OrderDelete"
-	Oms_OrderInfo_FullMethodName   = "/oms.Oms/OrderInfo"
+	Oms_OrderAdd_FullMethodName           = "/oms.Oms/OrderAdd"
+	Oms_OrderList_FullMethodName          = "/oms.Oms/OrderList"
+	Oms_OrderUpdate_FullMethodName        = "/oms.Oms/OrderUpdate"
+	Oms_OrderDelete_FullMethodName        = "/oms.Oms/OrderDelete"
+	Oms_OrderInfo_FullMethodName          = "/oms.Oms/OrderInfo"
+	Oms_ReturnReasonAdd_FullMethodName    = "/oms.Oms/ReturnReasonAdd"
+	Oms_ReturnReasonUpdate_FullMethodName = "/oms.Oms/ReturnReasonUpdate"
+	Oms_ReturnReasonList_FullMethodName   = "/oms.Oms/ReturnReasonList"
+	Oms_ReturnReasonDelete_FullMethodName = "/oms.Oms/ReturnReasonDelete"
+	Oms_ReturnApplyAdd_FullMethodName     = "/oms.Oms/ReturnApplyAdd"
+	Oms_ReturnApplyUpdate_FullMethodName  = "/oms.Oms/ReturnApplyUpdate"
+	Oms_ReturnApplyList_FullMethodName    = "/oms.Oms/ReturnApplyList"
+	Oms_ReturnApplyDelete_FullMethodName  = "/oms.Oms/ReturnApplyDelete"
 )
 
 // OmsClient is the client API for Oms service.
@@ -40,6 +48,22 @@ type OmsClient interface {
 	OrderDelete(ctx context.Context, in *OrderDeleteReq, opts ...grpc.CallOption) (*OrderDeleteResp, error)
 	// 订单详情
 	OrderInfo(ctx context.Context, in *OrderInfoReq, opts ...grpc.CallOption) (*OrderInfoResp, error)
+	// 添加退货原因
+	ReturnReasonAdd(ctx context.Context, in *ReturnReasonAddReq, opts ...grpc.CallOption) (*ReturnReasonAddResp, error)
+	// 更新退货原因
+	ReturnReasonUpdate(ctx context.Context, in *ReturnReasonUpdateReq, opts ...grpc.CallOption) (*ReturnReasonUpdateResp, error)
+	// 退货原因列表
+	ReturnReasonList(ctx context.Context, in *ReturnReasonListReq, opts ...grpc.CallOption) (*ReturnReasonListResp, error)
+	// 删除退货原因
+	ReturnReasonDelete(ctx context.Context, in *ReturnReasonDeleteReq, opts ...grpc.CallOption) (*ReturnReasonDeleteResp, error)
+	// 添加退货
+	ReturnApplyAdd(ctx context.Context, in *ReturnApplyAddReq, opts ...grpc.CallOption) (*ReturnApplyAddResp, error)
+	// 更新退货
+	ReturnApplyUpdate(ctx context.Context, in *ReturnApplyUpdateReq, opts ...grpc.CallOption) (*ReturnApplyUpdateResp, error)
+	// 退货列表
+	ReturnApplyList(ctx context.Context, in *ReturnApplyListReq, opts ...grpc.CallOption) (*ReturnApplyListResp, error)
+	// 删除退货
+	ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error)
 }
 
 type omsClient struct {
@@ -95,6 +119,78 @@ func (c *omsClient) OrderInfo(ctx context.Context, in *OrderInfoReq, opts ...grp
 	return out, nil
 }
 
+func (c *omsClient) ReturnReasonAdd(ctx context.Context, in *ReturnReasonAddReq, opts ...grpc.CallOption) (*ReturnReasonAddResp, error) {
+	out := new(ReturnReasonAddResp)
+	err := c.cc.Invoke(ctx, Oms_ReturnReasonAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) ReturnReasonUpdate(ctx context.Context, in *ReturnReasonUpdateReq, opts ...grpc.CallOption) (*ReturnReasonUpdateResp, error) {
+	out := new(ReturnReasonUpdateResp)
+	err := c.cc.Invoke(ctx, Oms_ReturnReasonUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) ReturnReasonList(ctx context.Context, in *ReturnReasonListReq, opts ...grpc.CallOption) (*ReturnReasonListResp, error) {
+	out := new(ReturnReasonListResp)
+	err := c.cc.Invoke(ctx, Oms_ReturnReasonList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) ReturnReasonDelete(ctx context.Context, in *ReturnReasonDeleteReq, opts ...grpc.CallOption) (*ReturnReasonDeleteResp, error) {
+	out := new(ReturnReasonDeleteResp)
+	err := c.cc.Invoke(ctx, Oms_ReturnReasonDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) ReturnApplyAdd(ctx context.Context, in *ReturnApplyAddReq, opts ...grpc.CallOption) (*ReturnApplyAddResp, error) {
+	out := new(ReturnApplyAddResp)
+	err := c.cc.Invoke(ctx, Oms_ReturnApplyAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) ReturnApplyUpdate(ctx context.Context, in *ReturnApplyUpdateReq, opts ...grpc.CallOption) (*ReturnApplyUpdateResp, error) {
+	out := new(ReturnApplyUpdateResp)
+	err := c.cc.Invoke(ctx, Oms_ReturnApplyUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) ReturnApplyList(ctx context.Context, in *ReturnApplyListReq, opts ...grpc.CallOption) (*ReturnApplyListResp, error) {
+	out := new(ReturnApplyListResp)
+	err := c.cc.Invoke(ctx, Oms_ReturnApplyList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error) {
+	out := new(ReturnApplyDeleteResp)
+	err := c.cc.Invoke(ctx, Oms_ReturnApplyDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OmsServer is the server API for Oms service.
 // All implementations must embed UnimplementedOmsServer
 // for forward compatibility
@@ -109,6 +205,22 @@ type OmsServer interface {
 	OrderDelete(context.Context, *OrderDeleteReq) (*OrderDeleteResp, error)
 	// 订单详情
 	OrderInfo(context.Context, *OrderInfoReq) (*OrderInfoResp, error)
+	// 添加退货原因
+	ReturnReasonAdd(context.Context, *ReturnReasonAddReq) (*ReturnReasonAddResp, error)
+	// 更新退货原因
+	ReturnReasonUpdate(context.Context, *ReturnReasonUpdateReq) (*ReturnReasonUpdateResp, error)
+	// 退货原因列表
+	ReturnReasonList(context.Context, *ReturnReasonListReq) (*ReturnReasonListResp, error)
+	// 删除退货原因
+	ReturnReasonDelete(context.Context, *ReturnReasonDeleteReq) (*ReturnReasonDeleteResp, error)
+	// 添加退货
+	ReturnApplyAdd(context.Context, *ReturnApplyAddReq) (*ReturnApplyAddResp, error)
+	// 更新退货
+	ReturnApplyUpdate(context.Context, *ReturnApplyUpdateReq) (*ReturnApplyUpdateResp, error)
+	// 退货列表
+	ReturnApplyList(context.Context, *ReturnApplyListReq) (*ReturnApplyListResp, error)
+	// 删除退货
+	ReturnApplyDelete(context.Context, *ReturnApplyDeleteReq) (*ReturnApplyDeleteResp, error)
 	mustEmbedUnimplementedOmsServer()
 }
 
@@ -130,6 +242,30 @@ func (UnimplementedOmsServer) OrderDelete(context.Context, *OrderDeleteReq) (*Or
 }
 func (UnimplementedOmsServer) OrderInfo(context.Context, *OrderInfoReq) (*OrderInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OrderInfo not implemented")
+}
+func (UnimplementedOmsServer) ReturnReasonAdd(context.Context, *ReturnReasonAddReq) (*ReturnReasonAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnReasonAdd not implemented")
+}
+func (UnimplementedOmsServer) ReturnReasonUpdate(context.Context, *ReturnReasonUpdateReq) (*ReturnReasonUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnReasonUpdate not implemented")
+}
+func (UnimplementedOmsServer) ReturnReasonList(context.Context, *ReturnReasonListReq) (*ReturnReasonListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnReasonList not implemented")
+}
+func (UnimplementedOmsServer) ReturnReasonDelete(context.Context, *ReturnReasonDeleteReq) (*ReturnReasonDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnReasonDelete not implemented")
+}
+func (UnimplementedOmsServer) ReturnApplyAdd(context.Context, *ReturnApplyAddReq) (*ReturnApplyAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnApplyAdd not implemented")
+}
+func (UnimplementedOmsServer) ReturnApplyUpdate(context.Context, *ReturnApplyUpdateReq) (*ReturnApplyUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnApplyUpdate not implemented")
+}
+func (UnimplementedOmsServer) ReturnApplyList(context.Context, *ReturnApplyListReq) (*ReturnApplyListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnApplyList not implemented")
+}
+func (UnimplementedOmsServer) ReturnApplyDelete(context.Context, *ReturnApplyDeleteReq) (*ReturnApplyDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnApplyDelete not implemented")
 }
 func (UnimplementedOmsServer) mustEmbedUnimplementedOmsServer() {}
 
@@ -234,6 +370,150 @@ func _Oms_OrderInfo_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Oms_ReturnReasonAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReturnReasonAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).ReturnReasonAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_ReturnReasonAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).ReturnReasonAdd(ctx, req.(*ReturnReasonAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_ReturnReasonUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReturnReasonUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).ReturnReasonUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_ReturnReasonUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).ReturnReasonUpdate(ctx, req.(*ReturnReasonUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_ReturnReasonList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReturnReasonListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).ReturnReasonList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_ReturnReasonList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).ReturnReasonList(ctx, req.(*ReturnReasonListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_ReturnReasonDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReturnReasonDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).ReturnReasonDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_ReturnReasonDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).ReturnReasonDelete(ctx, req.(*ReturnReasonDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_ReturnApplyAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReturnApplyAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).ReturnApplyAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_ReturnApplyAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).ReturnApplyAdd(ctx, req.(*ReturnApplyAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_ReturnApplyUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReturnApplyUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).ReturnApplyUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_ReturnApplyUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).ReturnApplyUpdate(ctx, req.(*ReturnApplyUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_ReturnApplyList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReturnApplyListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).ReturnApplyList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_ReturnApplyList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).ReturnApplyList(ctx, req.(*ReturnApplyListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_ReturnApplyDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReturnApplyDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).ReturnApplyDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_ReturnApplyDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).ReturnApplyDelete(ctx, req.(*ReturnApplyDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Oms_ServiceDesc is the grpc.ServiceDesc for Oms service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -260,6 +540,38 @@ var Oms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "OrderInfo",
 			Handler:    _Oms_OrderInfo_Handler,
+		},
+		{
+			MethodName: "ReturnReasonAdd",
+			Handler:    _Oms_ReturnReasonAdd_Handler,
+		},
+		{
+			MethodName: "ReturnReasonUpdate",
+			Handler:    _Oms_ReturnReasonUpdate_Handler,
+		},
+		{
+			MethodName: "ReturnReasonList",
+			Handler:    _Oms_ReturnReasonList_Handler,
+		},
+		{
+			MethodName: "ReturnReasonDelete",
+			Handler:    _Oms_ReturnReasonDelete_Handler,
+		},
+		{
+			MethodName: "ReturnApplyAdd",
+			Handler:    _Oms_ReturnApplyAdd_Handler,
+		},
+		{
+			MethodName: "ReturnApplyUpdate",
+			Handler:    _Oms_ReturnApplyUpdate_Handler,
+		},
+		{
+			MethodName: "ReturnApplyList",
+			Handler:    _Oms_ReturnApplyList_Handler,
+		},
+		{
+			MethodName: "ReturnApplyDelete",
+			Handler:    _Oms_ReturnApplyDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

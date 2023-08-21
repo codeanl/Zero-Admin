@@ -13,17 +13,35 @@ import (
 )
 
 type (
-	OrderAddReq     = oms.OrderAddReq
-	OrderAddResp    = oms.OrderAddResp
-	OrderDeleteReq  = oms.OrderDeleteReq
-	OrderDeleteResp = oms.OrderDeleteResp
-	OrderInfoReq    = oms.OrderInfoReq
-	OrderInfoResp   = oms.OrderInfoResp
-	OrderListData   = oms.OrderListData
-	OrderListReq    = oms.OrderListReq
-	OrderListResp   = oms.OrderListResp
-	OrderUpdateReq  = oms.OrderUpdateReq
-	OrderUpdateResp = oms.OrderUpdateResp
+	OrderAddReq            = oms.OrderAddReq
+	OrderAddResp           = oms.OrderAddResp
+	OrderDeleteReq         = oms.OrderDeleteReq
+	OrderDeleteResp        = oms.OrderDeleteResp
+	OrderInfoReq           = oms.OrderInfoReq
+	OrderInfoResp          = oms.OrderInfoResp
+	OrderListData          = oms.OrderListData
+	OrderListReq           = oms.OrderListReq
+	OrderListResp          = oms.OrderListResp
+	OrderUpdateReq         = oms.OrderUpdateReq
+	OrderUpdateResp        = oms.OrderUpdateResp
+	ReturnApplyAddReq      = oms.ReturnApplyAddReq
+	ReturnApplyAddResp     = oms.ReturnApplyAddResp
+	ReturnApplyDeleteReq   = oms.ReturnApplyDeleteReq
+	ReturnApplyDeleteResp  = oms.ReturnApplyDeleteResp
+	ReturnApplyListData    = oms.ReturnApplyListData
+	ReturnApplyListReq     = oms.ReturnApplyListReq
+	ReturnApplyListResp    = oms.ReturnApplyListResp
+	ReturnApplyUpdateReq   = oms.ReturnApplyUpdateReq
+	ReturnApplyUpdateResp  = oms.ReturnApplyUpdateResp
+	ReturnReasonAddReq     = oms.ReturnReasonAddReq
+	ReturnReasonAddResp    = oms.ReturnReasonAddResp
+	ReturnReasonDeleteReq  = oms.ReturnReasonDeleteReq
+	ReturnReasonDeleteResp = oms.ReturnReasonDeleteResp
+	ReturnReasonListData   = oms.ReturnReasonListData
+	ReturnReasonListReq    = oms.ReturnReasonListReq
+	ReturnReasonListResp   = oms.ReturnReasonListResp
+	ReturnReasonUpdateReq  = oms.ReturnReasonUpdateReq
+	ReturnReasonUpdateResp = oms.ReturnReasonUpdateResp
 
 	Oms interface {
 		// 添加订单
@@ -36,6 +54,22 @@ type (
 		OrderDelete(ctx context.Context, in *OrderDeleteReq, opts ...grpc.CallOption) (*OrderDeleteResp, error)
 		// 订单详情
 		OrderInfo(ctx context.Context, in *OrderInfoReq, opts ...grpc.CallOption) (*OrderInfoResp, error)
+		// 添加退货原因
+		ReturnReasonAdd(ctx context.Context, in *ReturnReasonAddReq, opts ...grpc.CallOption) (*ReturnReasonAddResp, error)
+		// 更新退货原因
+		ReturnReasonUpdate(ctx context.Context, in *ReturnReasonUpdateReq, opts ...grpc.CallOption) (*ReturnReasonUpdateResp, error)
+		// 退货原因列表
+		ReturnReasonList(ctx context.Context, in *ReturnReasonListReq, opts ...grpc.CallOption) (*ReturnReasonListResp, error)
+		// 删除退货原因
+		ReturnReasonDelete(ctx context.Context, in *ReturnReasonDeleteReq, opts ...grpc.CallOption) (*ReturnReasonDeleteResp, error)
+		// 添加退货
+		ReturnApplyAdd(ctx context.Context, in *ReturnApplyAddReq, opts ...grpc.CallOption) (*ReturnApplyAddResp, error)
+		// 更新退货
+		ReturnApplyUpdate(ctx context.Context, in *ReturnApplyUpdateReq, opts ...grpc.CallOption) (*ReturnApplyUpdateResp, error)
+		// 退货列表
+		ReturnApplyList(ctx context.Context, in *ReturnApplyListReq, opts ...grpc.CallOption) (*ReturnApplyListResp, error)
+		// 删除退货
+		ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error)
 	}
 
 	defaultOms struct {
@@ -77,4 +111,52 @@ func (m *defaultOms) OrderDelete(ctx context.Context, in *OrderDeleteReq, opts .
 func (m *defaultOms) OrderInfo(ctx context.Context, in *OrderInfoReq, opts ...grpc.CallOption) (*OrderInfoResp, error) {
 	client := oms.NewOmsClient(m.cli.Conn())
 	return client.OrderInfo(ctx, in, opts...)
+}
+
+// 添加退货原因
+func (m *defaultOms) ReturnReasonAdd(ctx context.Context, in *ReturnReasonAddReq, opts ...grpc.CallOption) (*ReturnReasonAddResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.ReturnReasonAdd(ctx, in, opts...)
+}
+
+// 更新退货原因
+func (m *defaultOms) ReturnReasonUpdate(ctx context.Context, in *ReturnReasonUpdateReq, opts ...grpc.CallOption) (*ReturnReasonUpdateResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.ReturnReasonUpdate(ctx, in, opts...)
+}
+
+// 退货原因列表
+func (m *defaultOms) ReturnReasonList(ctx context.Context, in *ReturnReasonListReq, opts ...grpc.CallOption) (*ReturnReasonListResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.ReturnReasonList(ctx, in, opts...)
+}
+
+// 删除退货原因
+func (m *defaultOms) ReturnReasonDelete(ctx context.Context, in *ReturnReasonDeleteReq, opts ...grpc.CallOption) (*ReturnReasonDeleteResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.ReturnReasonDelete(ctx, in, opts...)
+}
+
+// 添加退货
+func (m *defaultOms) ReturnApplyAdd(ctx context.Context, in *ReturnApplyAddReq, opts ...grpc.CallOption) (*ReturnApplyAddResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.ReturnApplyAdd(ctx, in, opts...)
+}
+
+// 更新退货
+func (m *defaultOms) ReturnApplyUpdate(ctx context.Context, in *ReturnApplyUpdateReq, opts ...grpc.CallOption) (*ReturnApplyUpdateResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.ReturnApplyUpdate(ctx, in, opts...)
+}
+
+// 退货列表
+func (m *defaultOms) ReturnApplyList(ctx context.Context, in *ReturnApplyListReq, opts ...grpc.CallOption) (*ReturnApplyListResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.ReturnApplyList(ctx, in, opts...)
+}
+
+// 删除退货
+func (m *defaultOms) ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.ReturnApplyDelete(ctx, in, opts...)
 }

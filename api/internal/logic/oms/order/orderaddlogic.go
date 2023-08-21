@@ -56,5 +56,4 @@ func (l *OrderAddLogic) OrderAdd(req *types.AddOrderReq) (resp *types.AddOrderRe
 		Code:    200,
 		Message: "添加成功",
 	}, nil
-	return
 }
