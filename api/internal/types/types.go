@@ -1359,13 +1359,13 @@ type ListReturnReasonResp struct {
 }
 
 type AddReturnApplyReq struct {
-	UserID       int64   `json:"userID"`
-	OrderID      int64   `json:"orderID"`
-	SkuID        int64   `json:"skuID"`
-	Status       string  `json:"status"`
-	Description  string  `json:"description"`
-	ProofPics    string  `json:"proofPics"`
-	ReturnAmount float64 `json:"returnAmount"`
+	UserID         int64   `json:"userID"`
+	OrderID        int64   `json:"orderID"`
+	ReturnReasonID int64   `json:"returnReasonID"`
+	Status         string  `json:"status"`
+	Description    string  `json:"description"`
+	ProofPics      string  `json:"proofPics"`
+	ReturnAmount   float64 `json:"returnAmount"`
 }
 
 type AddReturnApplyResp struct {
@@ -1374,14 +1374,14 @@ type AddReturnApplyResp struct {
 }
 
 type UpdateReturnApplyReq struct {
-	ID           int64   `json:"id"`
-	UserID       int64   `json:"userID"`
-	OrderID      int64   `json:"orderID"`
-	SkuID        int64   `json:"skuID"`
-	Status       string  `json:"status"`
-	Description  string  `json:"description"`
-	ProofPics    string  `json:"proofPics"`
-	ReturnAmount float64 `json:"returnAmount"`
+	ID             int64   `json:"id"`
+	UserID         int64   `json:"userID"`
+	OrderID        int64   `json:"orderID"`
+	ReturnReasonID int64   `json:"returnReasonID"`
+	Status         string  `json:"status"`
+	Description    string  `json:"description"`
+	ProofPics      string  `json:"proofPics"`
+	ReturnAmount   float64 `json:"returnAmount"`
 }
 
 type UpdateReturnApplyResp struct {
@@ -1405,17 +1405,17 @@ type ListReturnApplyReq struct {
 }
 
 type ListReturnApplyData struct {
-	ID           int64     `json:"id"`
-	UserID       int64     `json:"userID"`
-	OrderID      int64     `json:"orderID"`
-	SkuID        int64     `json:"skuID"`
-	Status       string    `json:"status"`
-	Description  string    `json:"description"`
-	ProofPics    string    `json:"proofPics"`
-	ReturnAmount float64   `json:"returnAmount"`
-	Order        OrderData `json:"order"`
-	User         UserData  `json:"user"`
-	Sku          SkuData   `json:"sku"`
+	ID               int64    `json:"id"`
+	UserID           int64    `json:"userID"`
+	OrderID          int64    `json:"orderID"`
+	ReturnReasonID   int64    `json:"returnReasonID"`
+	ReturnReasonName string   `json:"returnReasonName"`
+	Status           string   `json:"status"`
+	Description      string   `json:"description"`
+	ProofPics        string   `json:"proofPics"`
+	ReturnAmount     float64  `json:"returnAmount"`
+	Order            Order    `json:"order"`
+	User             UserData `json:"user"`
 }
 
 type ListReturnApplyResp struct {
@@ -1480,4 +1480,9 @@ type SkuData struct {
 	Price       float64 `json:"price"`
 	Stock       int64   `json:"stock"`
 	Tag         string  `json:"tag"`
+}
+
+type Order struct {
+	OrderInfo OrderData `json:"orderInfo"`
+	SkuList   []SkuData `json:"skuList"`
 }

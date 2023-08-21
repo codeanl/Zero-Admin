@@ -172,7 +172,7 @@ message ReturnReasonDeleteResp {
 message ReturnApplyAddReq{
   int64 UserID= 2;
   int64 OrderID= 3;
-  int64 SkuID= 4;
+  int64 ReturnReasonID=4;
   string Status= 5;
   string Description= 6;
   string ProofPics= 7;
@@ -186,7 +186,7 @@ message ReturnApplyUpdateReq{
   int64 ID= 1;
   int64 UserID= 2;
   int64 OrderID= 3;
-  int64 SkuID= 4;
+  int64 ReturnReasonID=4;
   string Status= 5;
   string Description= 6;
   string ProofPics= 7;
@@ -205,7 +205,8 @@ message ReturnApplyListData{
   int64 ID= 1;
   int64 UserID= 2;
   int64 OrderID= 3;
-  int64 SkuID= 4;
+  int64 ReturnReasonID=4;
+  string ReturnReasonName=9;
   string Status= 5;
   string Description= 6;
   string ProofPics= 7;
