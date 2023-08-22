@@ -34,6 +34,7 @@ func (l *UserUpdateLogic) UserUpdate(in *sys.UserUpdateReq) (*sys.UserUpdateResp
 		Gender:   in.Gender,
 		Email:    in.Email,
 		Status:   in.Status,
+		Avatar:   in.Avatar,
 		UpdateBy: in.UpdateBy,
 	})
 	if err != nil {
@@ -41,19 +42,21 @@ func (l *UserUpdateLogic) UserUpdate(in *sys.UserUpdateReq) (*sys.UserUpdateResp
 	}
 	//把原有信息删除 添加新数据
 	//todo 后期获取原有数据 过滤添加删除
-	//删除
-	err = l.svcCtx.UserRoleModel.DeleteByUserID(in.ID)
-	//添加
-	for _, r := range in.RoleID {
-		if r != 0 {
-			err := l.svcCtx.UserRoleModel.AddUserRole(&model.UserRole{
-				UserID:   in.ID,
-				RoleID:   r,
-				CreateBy: in.UpdateBy,
-			})
-			if err != nil {
-				// 处理错误，例如返回错误或进行日志记录
-				return nil, errors.New("修改用户角色失败")
+	if in.RoleID != nil {
+		//删除
+		err = l.svcCtx.UserRoleModel.DeleteByUserID(in.ID)
+		//添加
+		for _, r := range in.RoleID {
+			if r != 0 {
+				err := l.svcCtx.UserRoleModel.AddUserRole(&model.UserRole{
+					UserID:   in.ID,
+					RoleID:   r,
+					CreateBy: in.UpdateBy,
+				})
+				if err != nil {
+					// 处理错误，例如返回错误或进行日志记录
+					return nil, errors.New("修改用户角色失败")
+				}
 			}
 		}
 	}

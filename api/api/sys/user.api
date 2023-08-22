@@ -68,6 +68,7 @@ type(
                  Status string `json:"status,optional"`
                  Email string `json:"email,optional"`
                 RoleID []int64 `json:"roleId,optional"`
+                Avatar string `json:"avatar,optional"`
              }
              updateUserResp struct {
                  Code int64 `json:"code"`

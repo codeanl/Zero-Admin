@@ -64,6 +64,7 @@ type UpdateUserReq struct {
 	Status   string  `json:"status,optional"`
 	Email    string  `json:"email,optional"`
 	RoleID   []int64 `json:"roleId,optional"`
+	Avatar   string  `json:"avatar,optional"`
 }
 
 type UpdateUserResp struct {
