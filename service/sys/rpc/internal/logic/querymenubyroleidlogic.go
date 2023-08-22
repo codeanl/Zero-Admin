@@ -1,11 +1,9 @@
 package logic
 
 import (
-	"context"
-	"log"
-
 	"SimplePick-Mall-Server/service/sys/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/sys/rpc/sys"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -34,7 +32,6 @@ func (l *QueryMenuByRoleIdLogic) QueryMenuByRoleId(in *sys.QueryMenuByRoleIdReq)
 	for _, i := range all {
 		ids = append(ids, i.MenuID)
 	}
-	log.Print(ids)
 	return &sys.QueryMenuByRoleIdResp{
 		Ids: ids,
 	}, nil

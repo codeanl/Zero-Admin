@@ -25,6 +25,7 @@ func NewRoleListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RoleList
 
 // 角色列表
 func (l *RoleListLogic) RoleList(in *sys.RoleListReq) (*sys.RoleListResp, error) {
+	//获取角色列表
 	all, total, err := l.svcCtx.RoleModel.GetRoleList(in)
 	if err != nil {
 		return nil, err

@@ -35,6 +35,10 @@
 ## 简介
 > zero-admin 是一个后台管理模板，前端基于vue3.2,ts和element-plus，后端基于go-zero和gorm。
 
+## TODO
+-[x] pms模块属性、sku重构
+-[x] 通知模块考虑添加
+
 ## 主要功能
 
 ## 项目截图

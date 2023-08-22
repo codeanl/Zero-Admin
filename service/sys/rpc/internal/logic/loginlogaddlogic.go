@@ -37,5 +37,4 @@ func (l *LoginLogAddLogic) LoginLogAdd(in *sys.LoginLogAddReq) (*sys.LoginLogAdd
 		return nil, errors.New("添加失败")
 	}
 	return &sys.LoginLogAddResp{}, nil
-	return &sys.LoginLogAddResp{}, nil
 }

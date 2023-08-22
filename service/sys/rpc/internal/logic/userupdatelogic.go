@@ -40,6 +40,7 @@ func (l *UserUpdateLogic) UserUpdate(in *sys.UserUpdateReq) (*sys.UserUpdateResp
 	if err != nil {
 		return nil, errors.New("更新用户失败")
 	}
+	//todo
 	//把原有信息删除 添加新数据
 	if in.RoleID != nil {
 		//删除
@@ -53,7 +54,6 @@ func (l *UserUpdateLogic) UserUpdate(in *sys.UserUpdateReq) (*sys.UserUpdateResp
 					CreateBy: in.UpdateBy,
 				})
 				if err != nil {
-					// 处理错误，例如返回错误或进行日志记录
 					return nil, errors.New("修改用户角色失败")
 				}
 			}

@@ -28,11 +28,13 @@ func NewUpdatePasswordLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 
 // 更新密码
 func (l *UpdatePasswordLogic) UpdatePassword(in *sys.UpdatePasswordReq) (*sys.UpdatePasswordResp, error) {
+	//获取信息得到密码
 	my, _ := l.svcCtx.UserModel.GetUserByID(in.ID)
 	yes := MD5.CheckPassword(my.Password, in.OldPassword)
 	if !yes {
 		return nil, errors.New("旧密码不正确")
 	}
+	//更新
 	err := l.svcCtx.UserModel.UpdateUser(in.ID, &model.User{
 		Password: MD5.SetPassword(in.NewPassword),
 	})

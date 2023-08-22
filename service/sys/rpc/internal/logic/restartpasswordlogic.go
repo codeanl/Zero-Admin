@@ -28,6 +28,7 @@ func NewRestartPasswordLogic(ctx context.Context, svcCtx *svc.ServiceContext) *R
 
 // 重置密码
 func (l *RestartPasswordLogic) RestartPassword(in *sys.RestartPasswordReq) (*sys.RestartPasswordResp, error) {
+	//默认密码为123456
 	err := l.svcCtx.UserModel.UpdateUser(in.ID, &model.User{
 		Password: MD5.SetPassword("123456"),
 	})

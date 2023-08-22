@@ -26,8 +26,10 @@ func NewUpdateMenuRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 
 // 更新角色拥有菜单
 func (l *UpdateMenuRoleLogic) UpdateMenuRole(in *sys.UpdateMenuRoleReq) (*sys.UpdateMenuRoleResp, error) {
+	//删除当前角色拥有的菜单 重新添加
 	_ = l.svcCtx.RoleMenuModel.DeleteByRoleId(in.RoleId)
 	for _, menuId := range in.MenuIds {
+		//重新添加
 		_ = l.svcCtx.RoleMenuModel.AddRoleMenu(&model.RoleMenu{
 			RoleID:   in.RoleId,
 			MenuID:   menuId,
