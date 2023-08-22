@@ -33,8 +33,8 @@ func NewUploadLogic(r *http.Request, ctx context.Context, svcCtx *svc.ServiceCon
 func (l *UploadLogic) Upload() (resp *types.UploadResp, err error) {
 	var AccessKey = "dXjfJ47I2-qY5SCiQ2KvWENU8BXsTXKiNpvocA9I"
 	var SerectKey = "VnWaBZkO9_AUcsEjr7iZd8-XqYn7nEUlKLMx0fFO"
-	var Bucket = "mallupload"
-	var ImgUrl = "rz9o6lxu1.hd-bkt.clouddn.com"
+	var Bucket = "mallupload"                   //仓库名
+	var ImgUrl = "rz9o6lxu1.hd-bkt.clouddn.com" //域名
 
 	file, handler, _ := l.r.FormFile("file")
 	if err != nil {

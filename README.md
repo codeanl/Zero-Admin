@@ -4,7 +4,7 @@
 </a>
 </p>
 <p align="center">
-    <h1 align="center" style="margin:0 0 10px 0; font-weight: bold;">Zero-Admin</h1>
+    <h1 align="center" style="margin:0 0 10px 0; font-weight: bold;">Zero-Admin（开发中）</h1>
     <h4 align="center">基于go-zero+Vue3前后端分离的开发框架</h4>
 </p>
 <p align="center">
@@ -37,7 +37,8 @@
 
 ## TODO
 -[x] pms模块属性、sku重构
--[x] 通知模块考虑添加
+-[x] 通知模块添加
+-[x] pms模块品牌添加
 
 ## 主要功能
 
