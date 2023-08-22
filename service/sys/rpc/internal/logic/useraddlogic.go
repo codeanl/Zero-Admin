@@ -28,10 +28,12 @@ func NewUserAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserAddLo
 
 // 添加用户
 func (l *UserAddLogic) UserAdd(in *sys.UserAddReq) (*sys.UserAddResp, error) {
+	//查询用户是否存在
 	_, exist, _ := l.svcCtx.UserModel.GetUserByUsername(in.Username)
 	if exist {
 		return nil, errors.New("账户已存在")
 	}
+	//不存在-->添加新用户
 	admin := &model.User{
 		Username: in.Username,
 		Phone:    in.Phone,
@@ -47,17 +49,17 @@ func (l *UserAddLogic) UserAdd(in *sys.UserAddReq) (*sys.UserAddResp, error) {
 	if err != nil {
 		return nil, errors.New("添加失败")
 	}
-	for _, r := range in.RoleID {
-		if r != 0 {
-			err := l.svcCtx.UserRoleModel.AddUserRole(&model.UserRole{
-				UserID:   int64(admin.ID),
-				RoleID:   r,
-				CreateBy: in.CreateBy,
-			})
-			if err != nil {
-				// 处理错误，例如返回错误或进行日志记录
-			}
-		}
-	}
+	//添加用户角色
+	//for _, r := range in.RoleID {
+	//	if r != 0 {
+	//		err := l.svcCtx.UserRoleModel.AddUserRole(&model.UserRole{
+	//			UserID:   int64(admin.ID),
+	//			RoleID:   r,
+	//			CreateBy: in.CreateBy,
+	//		})
+	//		if err != nil {
+	//		}
+	//	}
+	//}
 	return &sys.UserAddResp{}, nil
 }

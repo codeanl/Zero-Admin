@@ -26,9 +26,10 @@ func NewUserDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserDe
 
 // 删除用户
 func (l *UserDeleteLogic) UserDelete(in *sys.UserDeleteReq) (*sys.UserDeleteResp, error) {
+	//输入id删除[1,2]
 	err := l.svcCtx.UserModel.DeleteByIds(in.Ids)
 	if err != nil {
-		return nil, errors.New("删除用户失败")
+		return nil, errors.New("删除失败")
 	}
 	return &sys.UserDeleteResp{}, nil
 }

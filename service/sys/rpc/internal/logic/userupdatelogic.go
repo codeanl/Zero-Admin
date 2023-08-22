@@ -41,7 +41,6 @@ func (l *UserUpdateLogic) UserUpdate(in *sys.UserUpdateReq) (*sys.UserUpdateResp
 		return nil, errors.New("更新用户失败")
 	}
 	//把原有信息删除 添加新数据
-	//todo 后期获取原有数据 过滤添加删除
 	if in.RoleID != nil {
 		//删除
 		err = l.svcCtx.UserRoleModel.DeleteByUserID(in.ID)

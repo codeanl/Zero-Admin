@@ -29,6 +29,7 @@ func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLog
 
 // 用户登录
 func (l *UserLoginLogic) UserLogin(in *sys.LoginReq) (*sys.LoginResp, error) {
+	//查询用户是否存在
 	user, exist, _ := l.svcCtx.UserModel.GetUserByUsername(in.Username)
 	if !exist {
 		return nil, errors.New("用户不存在")
@@ -38,6 +39,7 @@ func (l *UserLoginLogic) UserLogin(in *sys.LoginReq) (*sys.LoginResp, error) {
 	if !yes {
 		return nil, errors.New("用户密码不正确")
 	}
+	//生成token
 	now := time.Now().Unix()
 	accessExpire := l.svcCtx.Config.JWT.AccessExpire
 	accessSecret := l.svcCtx.Config.JWT.AccessSecret

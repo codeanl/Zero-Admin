@@ -25,6 +25,7 @@ func NewUserListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserList
 
 // 用户列表
 func (l *UserListLogic) UserList(in *sys.UserListReq) (*sys.UserListResp, error) {
+	//查询所有的用户
 	all, total, err := l.svcCtx.UserModel.GetUserList(in)
 	if err != nil {
 		return nil, err

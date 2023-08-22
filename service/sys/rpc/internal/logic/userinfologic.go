@@ -24,8 +24,6 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 
 // 用户信息
 func (l *UserInfoLogic) UserInfo(in *sys.InfoReq) (*sys.InfoResp, error) {
-	//todo 设置假数据 后期修改
-
 	//查询用户信息
 	user, _ := l.svcCtx.UserModel.GetUserByID(in.ID)
 	userInfo := &sys.UserInfo{
@@ -43,7 +41,6 @@ func (l *UserInfoLogic) UserInfo(in *sys.InfoReq) (*sys.InfoResp, error) {
 		CreateAt: user.CreateBy,
 		UpdateAt: user.UpdateBy,
 	}
-
 	//获取用户的所有角色名字
 	role, err := l.svcCtx.RoleModel.GetRoleByUserID(in.ID)
 	if err != nil {
@@ -53,7 +50,7 @@ func (l *UserInfoLogic) UserInfo(in *sys.InfoReq) (*sys.InfoResp, error) {
 	for _, item := range role {
 		Roles = append(Roles, item.Name)
 	}
-	//是否含有超级管理员这个角色
+	//是否含有超级管理员这个角色 超级管理员原有所有的菜单权限
 	targetRole := "超级管理员"
 	contains := false
 	for _, i := range Roles {
@@ -64,17 +61,18 @@ func (l *UserInfoLogic) UserInfo(in *sys.InfoReq) (*sys.InfoResp, error) {
 	}
 	var Routes []string
 	var Buttons []string
-	//is
+	//超级管理员 获取所有得到菜单
 	if contains {
 		menus, _, _ := l.svcCtx.MenuModel.GetMenuList()
 		for _, i := range menus {
-			if i.Type != "3" {
+			if i.Type != "3" { //type=3 -->按钮
 				Routes = append(Routes, i.TAG)
 			} else {
 				Buttons = append(Buttons, i.TAG)
 			}
 		}
-	} else { //no
+	} else {
+		//其他角色  通过用户id-->查询角色-->查询角色原拥有菜单
 		menus, _ := l.svcCtx.MenuModel.GetMenusByUserID(in.ID)
 		for _, i := range menus {
 			if i.Type != "3" {
@@ -84,7 +82,6 @@ func (l *UserInfoLogic) UserInfo(in *sys.InfoReq) (*sys.InfoResp, error) {
 			}
 		}
 	}
-
 	return &sys.InfoResp{
 		UserInfo: userInfo,
 		Routes:   Routes,
