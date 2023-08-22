@@ -59,7 +59,9 @@ Modern browsers and Internet Explorer 10+.
 | IE10, IE11, Edge                                             | last 2 versions                                              | last 2 versions                                              | last 2 versions
 
 ## 联系方式
-![IMG_6932_20230823-032237_.JPG](https://s2.loli.net/2023/08/23/L3DNvsJprYtyHeo.jpg)
+<a href="https://sm.ms/image/L3DNvsJprYtyHeo" target="_blank">
+    <img src="https://s2.loli.net/2023/08/23/L3DNvsJprYtyHeo.jpg" style="width:250px">
+</a>
 
 ## 更新日志
 
