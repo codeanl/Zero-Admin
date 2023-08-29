@@ -8,6 +8,7 @@ import (
 	omsReturnReason "SimplePick-Mall-Server/api/internal/handler/oms/ReturnReason"
 	omsorder "SimplePick-Mall-Server/api/internal/handler/oms/order"
 	pmsattribute "SimplePick-Mall-Server/api/internal/handler/pms/attribute"
+	pmsattributeCategory "SimplePick-Mall-Server/api/internal/handler/pms/attributeCategory"
 	pmscategory "SimplePick-Mall-Server/api/internal/handler/pms/category"
 	pmsproduct "SimplePick-Mall-Server/api/internal/handler/pms/product"
 	pmssku "SimplePick-Mall-Server/api/internal/handler/pms/sku"
@@ -334,6 +335,33 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/pms/sku"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: pmsattributeCategory.AttributeCategoryAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: pmsattributeCategory.AttributeCategoryListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: pmsattributeCategory.AttributeCategoryUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: pmsattributeCategory.AttributeCategoryDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/pms/attributeCategory"),
 	)
 
 	server.AddRoutes(

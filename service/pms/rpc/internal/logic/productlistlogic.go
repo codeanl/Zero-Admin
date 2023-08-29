@@ -4,7 +4,6 @@ import (
 	"SimplePick-Mall-Server/service/pms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/pms/rpc/pms"
 	"context"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -31,19 +30,26 @@ func (l *ProductListLogic) ProductList(in *pms.ProductListReq) (*pms.ProductList
 	var list []*pms.ProductListData
 	for _, i := range all {
 		list = append(list, &pms.ProductListData{
-			Id:            int64(i.ID),
-			CategoryID:    i.CategoryID,
-			Name:          i.Name,
-			Pic:           i.Pic,
-			ProductSn:     i.ProductSn,
-			Desc:          i.Desc,
-			OriginalPrice: i.OriginalPrice,
-			Unit:          i.Unit,
-			Price:         i.Price,
+			Id:                  int64(i.ID),
+			CategoryID:          i.CategoryID,
+			Name:                i.Name,
+			Pic:                 i.Pic,
+			ProductSn:           i.ProductSn,
+			Desc:                i.Desc,
+			OriginalPrice:       i.OriginalPrice,
+			Unit:                i.Unit,
+			Price:               i.Price,
+			AttributeCategoryID: i.AttributeCategoryID,
 		})
 	}
+
 	return &pms.ProductListResp{
 		Total: total,
 		List:  list,
 	}, nil
+}
+
+type AttributeValue struct {
+	AttributeID int      `json:"attributeID"`
+	Value       []string `json:"value"`
 }

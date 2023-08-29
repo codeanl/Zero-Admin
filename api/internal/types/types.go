@@ -495,9 +495,11 @@ type DeleteCategoryResp struct {
 }
 
 type AddAttributeReq struct {
-	CategoryId    int64    `json:"categoryId"` // 属性分类id
-	Name          string   `json:"name"`
-	AttributeName []string `json:"attributeName"`
+	AttributeCategoryID int64  `json:"attributeCategoryID"`
+	Name                string `json:"name"`
+	Type                string `json:"type"`
+	Value               string `json:"value"`
+	Sort                int64  `json:"sort"`
 }
 
 type AddAttributeResp struct {
@@ -506,23 +508,26 @@ type AddAttributeResp struct {
 }
 
 type ListAttributeReq struct {
-	Current    int64  `form:"current,default=1"`
-	PageSize   int64  `form:"pageSize,default=20"`
-	Name       string `form:"name,optional"`
-	CategoryId int64  `form:"categoryId,optional"`
+	Current             int64  `form:"current,default=1"`
+	PageSize            int64  `form:"pageSize,default=20"`
+	Name                string `form:"name,optional"`
+	Type                string `form:"type,optional"`
+	AttributeCategoryID int64  `form:"attributeCategoryID,optional"`
 }
 
 type ListAttributeData struct {
-	Id             int64            `json:"id"`
-	CategoryId     int64            `json:"categoryId"`
-	Name           string           `json:"name"`
-	AttributeValue []AttributeValue `json:"attributeValue"`
+	Id                  int64  `json:"id"`
+	AttributeCategoryID int64  `json:"attributeCategoryID"`
+	Name                string `json:"name"`
+	Type                string `json:"type"`
+	Value               string `json:"value"`
+	Sort                int64  `json:"sort"`
 }
 
 type AttributeValue struct {
-	Id          int64  `json:"id"`
-	Name        string `json:"name"`
-	AttributeID int64  `json:"attributeID"`
+	Id                  int64  `json:"id"`
+	Name                string `json:"name"`
+	AttributeCategoryID int64  `json:"attributeCategoryID"`
 }
 
 type ListAttributeResp struct {
@@ -533,10 +538,12 @@ type ListAttributeResp struct {
 }
 
 type UpdateAttributeReq struct {
-	Id            int64    `json:"id"`
-	CategoryId    int64    `json:"categoryId"`
-	Name          string   `json:"name"`
-	AttributeName []string `json:"attributeName"`
+	Id                  int64  `json:"id"`
+	AttributeCategoryID int64  `json:"attributeCategoryID"`
+	Name                string `json:"name"`
+	Type                string `json:"type"`
+	Value               string `json:"value"`
+	Sort                int64  `json:"sort"`
 }
 
 type UpdateAttributeResp struct {
@@ -554,17 +561,22 @@ type DeleteAttributeResp struct {
 }
 
 type AddProductReq struct {
-	CategoryID       int64    `json:"categoryId"`
-	Name             string   `json:"name"`
-	Pic              string   `json:"pic,optional"`
-	ProductSn        string   `json:"productSn"`
-	Desc             string   `json:"desc,optional"`
-	OriginalPrice    float64  `json:"originalPrice"`
-	Unit             string   `json:"unit,optional"`
-	Price            float64  `json:"price,optional,default=0"`
-	AttributeValueID []int64  `json:"attributeValueID,optional"`
-	Size             []Size   `json:"size"`
-	ImgUrl           []string `json:"imgUrl"`
+	CategoryID          int64                `json:"categoryId"`
+	AttributeCategoryID int64                `json:"attributeCategoryID"`
+	Name                string               `json:"name"`
+	Pic                 string               `json:"pic,optional"`
+	ProductSn           string               `json:"productSn"`
+	Desc                string               `json:"desc,optional"`
+	OriginalPrice       float64              `json:"originalPrice"`
+	Unit                string               `json:"unit,optional"`
+	Price               float64              `json:"price,optional,default=0"`
+	AttributeValueList  []AttributeValueList `json:"attributeValueList"`
+	ImgUrl              []string             `json:"imgUrl"`
+}
+
+type AttributeValueList struct {
+	AttributeID int64    `json:"attributeID,optional"`
+	Value       []string `json:"value,optional"`
 }
 
 type Size struct {
@@ -587,15 +599,16 @@ type ListProductReq struct {
 }
 
 type ListProductData struct {
-	Id            int64   `json:"id"`
-	CategoryID    int64   `json:"categoryId"`
-	Name          string  `json:"name"`
-	Pic           string  `json:"pic,optional"`
-	ProductSn     string  `json:"productSn"`
-	Desc          string  `json:"desc,optional"`
-	OriginalPrice float64 `json:"originalPrice,optional"`
-	Unit          string  `json:"unit,optional"`
-	Price         float64 `json:"price,optional"`
+	Id                  int64   `json:"id"`
+	CategoryID          int64   `json:"categoryId"`
+	Name                string  `json:"name"`
+	Pic                 string  `json:"pic,optional"`
+	ProductSn           string  `json:"productSn"`
+	Desc                string  `json:"desc,optional"`
+	OriginalPrice       float64 `json:"originalPrice,optional"`
+	Unit                string  `json:"unit,optional"`
+	Price               float64 `json:"price,optional"`
+	AttributeCategoryID int64   `json:"attributeCategoryID"`
 }
 
 type ListProductResp struct {
@@ -606,18 +619,18 @@ type ListProductResp struct {
 }
 
 type UpdateProductReq struct {
-	Id               int64    `json:"id"`
-	CategoryID       int64    `json:"categoryId"`
-	Name             string   `json:"name"`
-	Pic              string   `json:"pic,optional"`
-	ProductSn        string   `json:"productSn"`
-	Desc             string   `json:"desc,optional"`
-	OriginalPrice    float64  `json:"originalPrice,optional"`
-	Unit             string   `json:"unit,optional"`
-	Price            float64  `json:"price,optional"`
-	AttributeValueID []int64  `json:"attributeValueID,optional"`
-	Size             []Size   `json:"size"`
-	ImgUrl           []string `json:"imgUrl"`
+	Id                  int64                `json:"id"`
+	AttributeCategoryID int64                `json:"attributeCategoryID"`
+	CategoryID          int64                `json:"categoryId"`
+	Name                string               `json:"name"`
+	Pic                 string               `json:"pic,optional"`
+	ProductSn           string               `json:"productSn"`
+	Desc                string               `json:"desc,optional"`
+	OriginalPrice       float64              `json:"originalPrice,optional"`
+	Unit                string               `json:"unit,optional"`
+	Price               float64              `json:"price,optional"`
+	AttributeValueList  []AttributeValueList `json:"attributeValueList,optional"`
+	ImgUrl              []string             `json:"imgUrl"`
 }
 
 type UpdateProductResp struct {
@@ -639,17 +652,21 @@ type ProductInfoReq struct {
 }
 
 type InfoData struct {
-	ProductInfo    ListProductData `json:"productInfo"`
-	SkuList        []SkuList       `json:"skuList"`
-	SizeList       []SizeList      `json:"sizeList"`
-	AttributeValue []string        `json:"attributeValue"`
-	ImgUrl         []string        `json:"imgUrl"`
+	ProductInfo ListProductData `json:"productInfo"`
+	SkuList     []SkuList       `json:"skuList"`
+	Attribute   Attribute       `json:"attributeValue"`
+	ImgUrl      []string        `json:"imgUrl"`
 }
 
 type ProductInfoResp struct {
 	Code    int64    `json:"code"`
 	Message string   `json:"message"`
 	Data    InfoData `json:"data"`
+}
+
+type Attribute struct {
+	AttributeType1 []AttributeList `json:"attributeType1"`
+	AttributeType2 []AttributeList `json:"attributeType2"`
 }
 
 type SkuList struct {
@@ -664,17 +681,16 @@ type SkuList struct {
 	Tag         string  `json:"tag"`
 }
 
-type SizeList struct {
-	ID        int64       `json:"id,optional"`
-	Name      string      `json:"name"`
-	ProductID int64       `json:"productId,optional"`
-	SizeValue []SizeValue `json:"sizeValue"`
+type AttributeList struct {
+	ID                  int64        `json:"id,optional"`
+	AttributeCategoryID int64        `json:"attributeCategoryID,optional"`
+	Name                string       `json:"name"`
+	Type                string       `json:"type"`
+	Values              []ValuesList `json:"values"`
 }
 
-type SizeValue struct {
-	ID     int64  `json:"id,optional"`
-	SizeID int64  `json:"sizeID,optional"`
-	Name   string `json:"name"`
+type ValuesList struct {
+	Value string `json:"value"`
 }
 
 type AddSkuReq struct {
@@ -741,6 +757,53 @@ type ListSkuData struct {
 	Price       float64 `json:"price"`
 	Stock       int64   `json:"stock"`
 	Tag         string  `json:"tag"`
+}
+
+type AddAttributeCategoryReq struct {
+	Name     string `json:"name"`
+	ParentID int64  `json:"parentID"`
+}
+
+type AddAttributeCategoryResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListAttributeCategoryReq struct {
+}
+
+type ListAttributeCategoryData struct {
+	Id       int64                       `json:"id"`
+	Name     string                      `json:"name"`
+	ParentID int64                       `json:"parentID"`
+	Children []ListAttributeCategoryData `json:"children"`
+}
+
+type ListAttributeCategoryResp struct {
+	Code    int64                       `json:"code"`
+	Message string                      `json:"message"`
+	Data    []ListAttributeCategoryData `json:"data"`
+	Total   int64                       `json:"total"`
+}
+
+type UpdateAttributeCategoryReq struct {
+	Id       int64  `json:"id"`
+	Name     string `json:"name"`
+	ParentID int64  `json:"parentID"`
+}
+
+type UpdateAttributeCategoryResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteAttributeCategoryReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteAttributeCategoryResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
 }
 
 type AddMemberReq struct {

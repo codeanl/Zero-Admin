@@ -25,28 +25,26 @@ func NewProductUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Pro
 }
 
 func (l *ProductUpdateLogic) ProductUpdate(req *types.UpdateProductReq) (resp *types.UpdateProductResp, err error) {
-	var size []*pmsclient.Size
-	for _, i := range req.Size {
-		size = append(size, &pmsclient.Size{
-			ID:            i.ID,
-			ProductID:     i.ProductID,
-			Name:          i.Name,
-			SizeValueName: i.SizeValue,
+	var AttributeValueList []*pmsclient.AttributeValueList
+	for _, i := range req.AttributeValueList {
+		AttributeValueList = append(AttributeValueList, &pmsclient.AttributeValueList{
+			AttributeID: i.AttributeID,
+			Value:       i.Value,
 		})
 	}
 	_, err = l.svcCtx.Pms.ProductUpdate(l.ctx, &pmsclient.ProductUpdateReq{
-		Id:               req.Id,
-		CategoryID:       req.CategoryID,
-		Name:             req.Name,
-		Pic:              req.Pic,
-		ProductSn:        req.ProductSn,
-		Price:            req.Price,
-		Desc:             req.Desc,
-		OriginalPrice:    req.OriginalPrice,
-		Unit:             req.Unit,
-		AttributeValueID: req.AttributeValueID,
-		Size:             size,
-		ImgUrl:           req.ImgUrl,
+		Id:                  req.Id,
+		AttributeCategoryID: req.AttributeCategoryID,
+		CategoryID:          req.CategoryID,
+		Name:                req.Name,
+		Pic:                 req.Pic,
+		ProductSn:           req.ProductSn,
+		Price:               req.Price,
+		Desc:                req.Desc,
+		OriginalPrice:       req.OriginalPrice,
+		Unit:                req.Unit,
+		AttributeValueList:  AttributeValueList,
+		ImgUrl:              req.ImgUrl,
 	})
 	if err != nil {
 		return nil, err

@@ -271,6 +271,9 @@ message SubjectProductListResp{
   repeated  SubjectProductListData list = 2;
 }
 
+
+
+
 service Sms {
   //添加广告
   rpc HomeAdvertiseAdd(HomeAdvertiseAddReq) returns(HomeAdvertiseAddResp);
@@ -316,4 +319,7 @@ service Sms {
     rpc SubjectProductDelete(SubjectProductDeleteAddReq) returns(SubjectProductDeleteResp);
   //专题列表商品
   rpc SubjectProductList(SubjectProductListReq) returns(SubjectProductListResp);
+
+
+
 }

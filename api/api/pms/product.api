@@ -7,6 +7,7 @@ info(
 type (
     addProductReq struct {
         CategoryID int64 `json:"categoryId"`
+        AttributeCategoryID int64 `json:"attributeCategoryID"`
         Name string `json:"name"`
         Pic string `json:"pic,optional"`
         ProductSn string `json:"productSn"`
@@ -14,10 +15,14 @@ type (
         OriginalPrice float64 `json:"originalPrice"`
         Unit string `json:"unit,optional"`
         Price float64 `json:"price,optional,default=0"`
-        AttributeValueID []int64 `json:"attributeValueID,optional"`
-        Size []Size `json:"size"`
+        AttributeValueList []AttributeValueList  `json:"attributeValueList"`
         ImgUrl []string `json:"imgUrl"`
     }
+    AttributeValueList struct{
+        AttributeID int64 `json:"attributeID,optional"`
+       Value []string `json:"value,optional"`
+       }
+
     Size struct{
         ID int64 `json:"id,optional"`
         Name string `json:"name"`
@@ -44,7 +49,8 @@ type (
          Desc string `json:"desc,optional"`
         OriginalPrice float64 `json:"originalPrice,optional"`
          Unit string `json:"unit,optional"`
-          Price float64 `json:"price,optional"`
+        Price float64 `json:"price,optional"`
+        AttributeCategoryID int64 `json:"attributeCategoryID"`
     }
 
     ListProductResp struct {
@@ -55,6 +61,7 @@ type (
     }
     UpdateProductReq struct {
        Id int64 `json:"id"`
+       AttributeCategoryID int64 `json:"attributeCategoryID"`
        CategoryID int64 `json:"categoryId"`
        Name string `json:"name"`
        Pic string `json:"pic,optional"`
@@ -63,8 +70,7 @@ type (
        OriginalPrice float64 `json:"originalPrice,optional"`
        Unit string `json:"unit,optional"`
        Price float64 `json:"price,optional"`
-      AttributeValueID []int64 `json:"attributeValueID,optional"`
-      Size []Size `json:"size"`
+       AttributeValueList []AttributeValueList  `json:"attributeValueList,optional"`
       ImgUrl []string `json:"imgUrl"`
     }
     UpdateProductResp struct {
@@ -85,14 +91,17 @@ type (
      InfoData struct {
         ProductInfo ListProductData  `json:"productInfo"`
         SkuList []SkuList `json:"skuList"`
-        SizeList []SizeList `json:"sizeList"`
-        AttributeValue []string `json:"attributeValue"`
+        Attribute Attribute `json:"attributeValue"`
         ImgUrl []string `json:"imgUrl"`
     }
     ProductInfoResp struct {
         Code int64 `json:"code"`
         Message string `json:"message"`
         Data InfoData `json:"data"`
+    }
+    Attribute struct {
+        AttributeType1 []AttributeList `json:"attributeType1"`
+        AttributeType2 []AttributeList `json:"attributeType2"`
     }
      SkuList struct{
           ID int64 `json:"id"`
@@ -105,16 +114,15 @@ type (
           Stock int64 `json:"stock"`
           Tag string `json:"tag"`
      }
-      SizeList struct{
+      AttributeList struct{
              ID int64 `json:"id,optional"`
+             AttributeCategoryID int64 `json:"attributeCategoryID,optional"`
              Name string `json:"name"`
-             ProductID int64 `json:"productId,optional"`
-             SizeValue []SizeValue `json:"sizeValue"`
+             Type string `json:"type"`
+             Values []ValuesList `json:"values"`
          }
-       SizeValue struct{
-             ID int64 `json:"id,optional"`
-             SizeID int64  `json:"sizeID,optional"`
-             Name string `json:"name"`
+       ValuesList struct{
+             Value string `json:"value"`
       }
 )
 
@@ -138,6 +146,5 @@ service api {
 
     @handler ProductInfo
     post /info (ProductInfoReq) returns (ProductInfoResp)
-
 
 }

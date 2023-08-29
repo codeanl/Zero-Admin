@@ -129,3 +129,27 @@ func (s *PmsServer) SkuInfo(ctx context.Context, in *pms.SkuInfoReq) (*pms.SkuIn
 	l := logic.NewSkuInfoLogic(ctx, s.svcCtx)
 	return l.SkuInfo(in)
 }
+
+// 添加属性分类
+func (s *PmsServer) AttributeCategoryAdd(ctx context.Context, in *pms.AttributeCategoryAddReq) (*pms.AttributeCategoryAddResp, error) {
+	l := logic.NewAttributeCategoryAddLogic(ctx, s.svcCtx)
+	return l.AttributeCategoryAdd(in)
+}
+
+// 更新属性分类
+func (s *PmsServer) AttributeCategoryUpdate(ctx context.Context, in *pms.AttributeCategoryUpdateReq) (*pms.AttributeCategoryUpdateResp, error) {
+	l := logic.NewAttributeCategoryUpdateLogic(ctx, s.svcCtx)
+	return l.AttributeCategoryUpdate(in)
+}
+
+// 删除属性分类
+func (s *PmsServer) AttributeCategoryDelete(ctx context.Context, in *pms.AttributeCategoryDeleteAddReq) (*pms.AttributeCategoryDeleteResp, error) {
+	l := logic.NewAttributeCategoryDeleteLogic(ctx, s.svcCtx)
+	return l.AttributeCategoryDelete(in)
+}
+
+// 属性分类列表
+func (s *PmsServer) AttributeCategoryList(ctx context.Context, in *pms.AttributeCategoryListReq) (*pms.AttributeCategoryListResp, error) {
+	l := logic.NewAttributeCategoryListLogic(ctx, s.svcCtx)
+	return l.AttributeCategoryList(in)
+}

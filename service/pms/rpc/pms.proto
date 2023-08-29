@@ -70,9 +70,11 @@ message CategoryListResp {
 }
 //添加属性
 message AttributeAddReq {
-  int64    CategoryID = 2;
+  int64   AttributeCategoryID = 2;
   string  Name = 3;
-  repeated string AttributeName=4;
+  string  Type = 4;
+  string  Value = 5;
+  int64   Sort = 6;
 }
 message AttributeAddResp {
   string pong = 1;
@@ -80,9 +82,11 @@ message AttributeAddResp {
 //更新属性
 message AttributeUpdateReq {
   int64    Id = 1;
-  int64    CategoryID = 2;
+  int64   AttributeCategoryID = 2;
   string  Name = 3;
-  repeated string AttributeName=4;
+  string  Type = 4;
+  string  Value = 5;
+  int64   Sort = 6;
 }
 message AttributeUpdateResp {
   string pong = 1;
@@ -99,23 +103,22 @@ message AttributeListReq {
   int64 current = 1;
   int64 pageSize = 2;
   string  Name = 3;
-  int64    CategoryID = 5;
+  string Type = 4;
+  int64  AttributeCategoryID = 5;
 }
 message AttributeListData{
   int64    Id = 1;
-  int64    CategoryID = 2;
+  int64   AttributeCategoryID = 2;
   string  Name = 3;
-  repeated AttributeValue AttributeValue=6;
+  string  Type = 4;
+  string  Value = 5;
+  int64   Sort = 6;
 }
 message AttributeListResp {
   int64 total = 1;
   repeated  AttributeListData list = 2;
 }
-message AttributeValue{
-  int64    Id = 1;
-  int64  AttributeID = 3;
-  string    Name = 2;
-}
+
 //添加商品
 message ProductAddReq {
   int64       CategoryID = 3;
@@ -126,9 +129,13 @@ message ProductAddReq {
   double     Price = 16;
   double     OriginalPrice = 23;
   string      Unit = 26;
-  repeated int64 AttributeValueID=20; //属性值的id
-  repeated Size Size=30; //规格
+  int64       AttributeCategoryID = 13;
+  repeated AttributeValueList AttributeValueList=20;
   repeated string ImgUrl =31;
+}
+message AttributeValueList {
+  int64    AttributeID = 1;
+   repeated string  Value = 2;
 }
 //销售属性
 message Size{
@@ -137,11 +144,6 @@ message Size{
   string Name=1;
   repeated string SizeValueName=3;
 }
-//message SizeValue{
-//  int64 SizeID=1;
-//  string Value=2;
-//    int64 ID =3;
-//}
 message ProductAddResp {
   string pong = 1;
 }
@@ -156,8 +158,8 @@ message ProductUpdateReq {
   double      Price = 16;
   double      OriginalPrice = 23;
   string      Unit = 26;
-  repeated int64 AttributeValueID=20;
-  repeated Size Size=30;
+  int64       AttributeCategoryID = 13;
+  repeated AttributeValueList AttributeValueList=20;
   repeated string ImgUrl =31;
 }
 message ProductUpdateResp {
@@ -170,7 +172,6 @@ message ProductListReq {
   string Name = 3;
   int64 CategoryID=5; //分类
 }
-
 message ProductListData{
   int64       Id = 1;
   int64       CategoryID = 3;
@@ -181,25 +182,12 @@ message ProductListData{
   double     Price = 16;
   double     OriginalPrice = 23;
   string      Unit = 26;
-
-
+  int64       AttributeCategoryID = 13;
 }
 message ProductListResp {
   int64 total = 1;
   repeated  ProductListData list = 2;
 }
-
-//message SizeList{
-//  int64 ID =10;
-//  int64 ProductID=1;
-//  string    Name=2;
-//  repeated SizeValue SizeValue=3;
-//}
-//message SizeValue{
-//  int64 ID =10;
-//  int64 SizeID=1;
-//  string Value=2;
-//}
 
 
 //删除商品
@@ -276,19 +264,17 @@ message ProductInfoResp{
     ProductListData ProductInfo=1;
     repeated string ImgUrl =2;
     repeated SkuListData SkuList =3;
-    repeated SizeList SizeList=30;
-    repeated string AttributeValue=4;
+    repeated Attribute Attribute=4;
 }
-message SizeList{
+message Attribute{
   int64 ID =4;
-  int64 ProductID=2;
+  int64 AttributeCategoryID =6;
   string Name=1;
-  repeated SizeValue SizeValue=3;
+  string Type=3;
+  repeated Values Values=5;
 }
-message SizeValue{
-  int64 SizeID=1;
-  string Value=2;
-    int64 ID =3;
+message Values{
+   string Value =4;
 }
 
 //sku详情
@@ -297,6 +283,42 @@ message SkuInfoReq{
 }
 message SkuInfoResp{
     SkuListData SkuInfo=1;
+}
+//更新属性分类
+message  AttributeCategoryUpdateReq{
+  int64 ID=2;
+  string Name=1;
+  int64 ParentID=12;
+}
+message  AttributeCategoryUpdateResp{
+  string pong = 1;
+}
+//添加属性分类
+message  AttributeCategoryAddReq{
+  string Name=1;
+  int64 ParentID=12;
+}
+message  AttributeCategoryAddResp{
+  string pong = 1;
+}
+//删除属性分类
+message  AttributeCategoryDeleteAddReq{
+  repeated int64  IDs=1;
+}
+message  AttributeCategoryDeleteResp{
+  string pong = 1;
+}
+//属性分类列表
+message AttributeCategoryListReq {
+}
+message  AttributeCategoryListData {
+  int64 ID = 1;
+  string name = 2;
+  int64 ParentID=12;
+}
+message AttributeCategoryListResp{
+  int64 total = 1;
+  repeated  AttributeCategoryListData list = 2;
 }
 
 service Pms {
@@ -339,4 +361,13 @@ service Pms {
   rpc SkuDelete(SkuDeleteReq) returns(SkuDeleteResp);
   //sku详情
   rpc SkuInfo(SkuInfoReq) returns(SkuInfoResp);
+
+  //添加属性分类
+  rpc AttributeCategoryAdd(AttributeCategoryAddReq) returns(AttributeCategoryAddResp);
+  //更新属性分类
+  rpc AttributeCategoryUpdate(AttributeCategoryUpdateReq) returns(AttributeCategoryUpdateResp);
+  //删除属性分类
+  rpc AttributeCategoryDelete(AttributeCategoryDeleteAddReq) returns(AttributeCategoryDeleteResp);
+  //属性分类列表
+  rpc AttributeCategoryList(AttributeCategoryListReq) returns(AttributeCategoryListResp);
 }

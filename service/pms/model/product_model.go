@@ -20,14 +20,15 @@ type (
 	}
 	Product struct {
 		gorm.Model
-		CategoryID    int64   `json:"category_id" gorm:"type:bigint;comment:商品分类id;not null"`         //商品分类id
-		Name          string  `json:"name" gorm:"type:varchar(191);comment:商品名称;not null"`            //商品名称
-		Pic           string  `json:"pic" gorm:"type:varchar(191);comment:封面图片;not null"`             //图片
-		ProductSn     string  `json:"product_sn" gorm:"type:varchar(191);comment:货号;not null"`        //货号
-		Desc          string  `json:"sub_title" gorm:"type:varchar(191);comment:商品描述;not null"`       //副标题
-		Price         float64 `json:"price" gorm:"type: decimal(10, 2);comment:价格;not null"`          //价格
-		OriginalPrice float64 `json:"original_price" gorm:"type:decimal(10, 2);comment:市场价;not null"` //市场价
-		Unit          string  `json:"unit" gorm:"type:varchar(191);comment:单位;not null"`              //单位
+		CategoryID          int64   `json:"category_id" gorm:"type:bigint;comment:商品分类id;not null"`           //商品分类id
+		AttributeCategoryID int64   `json:"attribute_category_id" gorm:"type:bigint;comment:属性分类id;not null"` //属性分类id
+		Name                string  `json:"name" gorm:"type:varchar(191);comment:商品名称;not null"`              //商品名称
+		Pic                 string  `json:"pic" gorm:"type:varchar(191);comment:封面图片;not null"`               //图片
+		ProductSn           string  `json:"product_sn" gorm:"type:varchar(191);comment:货号;not null"`          //货号
+		Desc                string  `json:"sub_title" gorm:"type:varchar(191);comment:商品描述;not null"`         //副标题
+		Price               float64 `json:"price" gorm:"type: decimal(10, 2);comment:价格;not null"`            //价格
+		OriginalPrice       float64 `json:"original_price" gorm:"type:decimal(10, 2);comment:市场价;not null"`   //市场价
+		Unit                string  `json:"unit" gorm:"type:varchar(191);comment:单位;not null"`                //单位
 	}
 )
 

@@ -27,16 +27,12 @@ func NewAttributeUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *A
 // 更新属性
 func (l *AttributeUpdateLogic) AttributeUpdate(in *pms.AttributeUpdateReq) (*pms.AttributeUpdateResp, error) {
 	err := l.svcCtx.AttributeModel.UpdateAttribute(in.Id, &model.Attribute{
-		Name:       in.Name,
-		CategoryID: in.CategoryID,
+		AttributeCategoryID: in.AttributeCategoryID,
+		Name:                in.Name,
+		Type:                in.Type,
+		Value:               in.Value,
+		Sort:                in.Sort,
 	})
-	_ = l.svcCtx.AttributeValueModel.DeleteAttributeValueByAttributeID(in.Id)
-	for _, i := range in.AttributeName {
-		_ = l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
-			AttributeID: in.Id,
-			Name:        i,
-		})
-	}
 	if err != nil {
 		return nil, errors.New("更新失败")
 	}

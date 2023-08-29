@@ -12,6 +12,7 @@ type (
 		DeleteSkuByIds(ids []int64) error
 		GetSkuList(in *pms.SkuListReq) ([]*Sku, int64, error)
 		GetSkuById(id int64) (info *Sku, err error)
+		DeleteSkuBySpuID(id int64) error
 	}
 
 	defaultSkuModel struct {
@@ -58,6 +59,11 @@ func (m *defaultSkuModel) DeleteSkuByIds(ids []int64) error {
 		"id": ids,
 	}
 	err := m.conn.Where(id).Delete(&Sku{}).Error
+	return err
+}
+
+func (m *defaultSkuModel) DeleteSkuBySpuID(id int64) error {
+	err := m.conn.Model(&Sku{}).Where("product_id=?", id).Delete(&Sku{}).Error
 	return err
 }
 

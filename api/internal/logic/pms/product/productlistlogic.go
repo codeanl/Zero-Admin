@@ -27,6 +27,7 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 	resp, err := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
 		PageNum:    req.Current,
 		PageSize:   req.PageSize,
+		Name:       req.Name,
 		CategoryID: req.CategoryId,
 	})
 	if err != nil {
@@ -35,15 +36,16 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 	var list []types.ListProductData
 	for _, item := range resp.List {
 		list = append(list, types.ListProductData{
-			Id:            item.Id,
-			CategoryID:    item.CategoryID,
-			Name:          item.Name,
-			Pic:           item.Pic,
-			ProductSn:     item.ProductSn,
-			Price:         item.Price,
-			Desc:          item.Desc,
-			OriginalPrice: item.OriginalPrice,
-			Unit:          item.Unit,
+			Id:                  item.Id,
+			CategoryID:          item.CategoryID,
+			Name:                item.Name,
+			Pic:                 item.Pic,
+			ProductSn:           item.ProductSn,
+			Price:               item.Price,
+			Desc:                item.Desc,
+			OriginalPrice:       item.OriginalPrice,
+			Unit:                item.Unit,
+			AttributeCategoryID: item.AttributeCategoryID,
 		})
 	}
 	return &types.ListProductResp{

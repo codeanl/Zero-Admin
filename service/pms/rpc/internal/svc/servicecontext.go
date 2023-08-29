@@ -7,31 +7,33 @@ import (
 )
 
 type ServiceContext struct {
-	Config              config.Config
-	ProductModel        model.ProductModel
-	CategoryModel       model.CategoryModel
-	AttributeModel      model.AttributeModel
-	AttributeValueModel model.AttributeValueModel
-	SpuAttributeModel   model.SpuAttributeModel
-	SkuModel            model.SkuModel
-	SpuSizeModel        model.SpuSizeModel
-	SpuSizeValueModel   model.SpuSizeValueModel
-	ProductImgModel     model.ProductImgModel
+	Config                 config.Config
+	ProductModel           model.ProductModel
+	CategoryModel          model.CategoryModel
+	AttributeModel         model.AttributeModel
+	AttributeValueModel    model.AttributeValueModel
+	SpuAttributeModel      model.SpuAttributeModel
+	SkuModel               model.SkuModel
+	SpuSizeModel           model.SpuSizeModel
+	SpuSizeValueModel      model.SpuSizeValueModel
+	ProductImgModel        model.ProductImgModel
+	AttributeCategoryModel model.AttributeCategoryModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	mysql := c.Mysql
 	conn := db.InitMysql(mysql.DataSource)
 	return &ServiceContext{
-		Config:              c,
-		ProductModel:        model.NewProductModel(conn),
-		CategoryModel:       model.NewCategoryModel(conn),
-		AttributeModel:      model.NewAttributeModel(conn),
-		AttributeValueModel: model.NewAttributeValueModel(conn),
-		SpuAttributeModel:   model.NewSpuAttributeModel(conn),
-		SkuModel:            model.NewSkuModel(conn),
-		SpuSizeModel:        model.NewSpuSizeModel(conn),
-		SpuSizeValueModel:   model.NewSpuSizeValueModel(conn),
-		ProductImgModel:     model.NewProductImgModel(conn),
+		Config:                 c,
+		ProductModel:           model.NewProductModel(conn),
+		CategoryModel:          model.NewCategoryModel(conn),
+		AttributeModel:         model.NewAttributeModel(conn),
+		AttributeValueModel:    model.NewAttributeValueModel(conn),
+		SpuAttributeModel:      model.NewSpuAttributeModel(conn),
+		SkuModel:               model.NewSkuModel(conn),
+		SpuSizeModel:           model.NewSpuSizeModel(conn),
+		SpuSizeValueModel:      model.NewSpuSizeValueModel(conn),
+		ProductImgModel:        model.NewProductImgModel(conn),
+		AttributeCategoryModel: model.NewAttributeCategoryModel(conn),
 	}
 }

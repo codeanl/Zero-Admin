@@ -29,20 +29,13 @@ func (l *AttributeListLogic) AttributeList(in *pms.AttributeListReq) (*pms.Attri
 	}
 	var list []*pms.AttributeListData
 	for _, i := range all {
-		value, _ := l.svcCtx.AttributeValueModel.GetValueByID(int64(i.ID))
-		var value1 []*pms.AttributeValue
-		for _, i := range value {
-			value1 = append(value1, &pms.AttributeValue{
-				Id:          int64(i.ID),
-				Name:        i.Name,
-				AttributeID: i.AttributeID,
-			})
-		}
 		list = append(list, &pms.AttributeListData{
-			Id:             int64(i.ID),
-			CategoryID:     i.CategoryID,
-			Name:           i.Name,
-			AttributeValue: value1,
+			Id:                  int64(i.ID),
+			AttributeCategoryID: i.AttributeCategoryID,
+			Name:                i.Name,
+			Type:                i.Type,
+			Value:               i.Value,
+			Sort:                i.Sort,
 		})
 	}
 	return &pms.AttributeListResp{

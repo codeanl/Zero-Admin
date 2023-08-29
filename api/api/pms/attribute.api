@@ -6,9 +6,11 @@ info(
 
 type (
     addAttributeReq struct {
-        CategoryId    int64  `json:"categoryId"` // 属性分类id
+        AttributeCategoryID    int64  `json:"attributeCategoryID"`
         Name           string `json:"name"`
-        AttributeName []string  `json:"attributeName"`
+        Type           string `json:"type"`
+        Value           string `json:"value"`
+        Sort           int64 `json:"sort"`
     }
     addAttributeResp struct {
         Code int64 `json:"code"`
@@ -18,18 +20,21 @@ type (
         Current int64 `form:"current,default=1"`
         PageSize int64 `form:"pageSize,default=20"`
         Name   string `form:"name,optional"`
-       CategoryId int64  `form:"categoryId,optional"`
+        Type   string `form:"type,optional"`
+       AttributeCategoryID int64  `form:"attributeCategoryID,optional"`
     }
     ListAttributeData struct {
         Id         int64  `json:"id"`
-        CategoryId int64  `json:"categoryId"`
-        Name        string `json:"name"`
-        AttributeValue []AttributeValue   `json:"attributeValue"`
+         AttributeCategoryID    int64  `json:"attributeCategoryID"`
+        Name           string `json:"name"`
+        Type           string `json:"type"`
+        Value           string `json:"value"`
+        Sort           int64 `json:"sort"`
     }
     AttributeValue struct{
         Id int64 `json:"id"`
         Name string `json:"name"`
-        AttributeID int64 `json:"attributeID"`
+        AttributeCategoryID int64 `json:"attributeCategoryID"`
     }
     ListAttributeResp struct {
         Code int64 `json:"code"`
@@ -38,10 +43,12 @@ type (
         Total int64 `json:"total"`
     }
     UpdateAttributeReq struct {
-        Id        int64  `json:"id"`
-        CategoryId    int64  `json:"categoryId"`
+        Id         int64  `json:"id"`
+         AttributeCategoryID    int64  `json:"attributeCategoryID"`
         Name           string `json:"name"`
-       AttributeName []string  `json:"attributeName"`
+        Type           string `json:"type"`
+        Value           string `json:"value"`
+        Sort           int64 `json:"sort"`
     }
     UpdateAttributeResp struct {
         Code int64 `json:"code"`
@@ -54,6 +61,7 @@ type (
         Code int64 `json:"code"`
         Message string `json:"message"`
     }
+
 )
 
 @server(
@@ -67,6 +75,7 @@ service api {
 
     @handler AttributeList
     get /list (ListAttributeReq) returns (ListAttributeResp)
+
 
     @handler AttributeUpdate
     post /update (UpdateAttributeReq) returns (UpdateAttributeResp)

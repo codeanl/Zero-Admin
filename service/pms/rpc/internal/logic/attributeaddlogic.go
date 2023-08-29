@@ -27,18 +27,15 @@ func NewAttributeAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Attr
 // 添加属性
 func (l *AttributeAddLogic) AttributeAdd(in *pms.AttributeAddReq) (*pms.AttributeAddResp, error) {
 	info := &model.Attribute{
-		CategoryID: in.CategoryID,
-		Name:       in.Name,
+		AttributeCategoryID: in.AttributeCategoryID,
+		Name:                in.Name,
+		Type:                in.Type,
+		Value:               in.Value,
+		Sort:                in.Sort,
 	}
-	attribute, err := l.svcCtx.AttributeModel.AddAttribute(info)
+	_, err := l.svcCtx.AttributeModel.AddAttribute(info)
 	if err != nil {
 		return nil, errors.New("添加失败")
-	}
-	for _, i := range in.AttributeName {
-		_ = l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
-			AttributeID: int64(attribute.ID),
-			Name:        i,
-		})
 	}
 	return &pms.AttributeAddResp{}, nil
 }

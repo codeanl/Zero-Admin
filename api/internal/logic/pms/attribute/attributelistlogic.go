@@ -27,29 +27,25 @@ func NewAttributeListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Att
 
 func (l *AttributeListLogic) AttributeList(req *types.ListAttributeReq) (*types.ListAttributeResp, error) {
 	resp, err := l.svcCtx.Pms.AttributeList(l.ctx, &pmsclient.AttributeListReq{
-		Current:    req.Current,
-		PageSize:   req.PageSize,
-		Name:       req.Name,
-		CategoryID: req.CategoryId,
+		Current:             req.Current,
+		PageSize:            req.PageSize,
+		Name:                req.Name,
+		Type:                req.Type,
+		AttributeCategoryID: req.AttributeCategoryID,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")
 	}
+
 	var list []types.ListAttributeData
 	for _, item := range resp.List {
-		var AttributeValue []types.AttributeValue
-		for _, i := range item.AttributeValue {
-			AttributeValue = append(AttributeValue, types.AttributeValue{
-				Id:          i.Id,
-				Name:        i.Name,
-				AttributeID: i.AttributeID,
-			})
-		}
 		listUserData := types.ListAttributeData{
-			Id:             item.Id,
-			CategoryId:     item.CategoryID,
-			Name:           item.Name,
-			AttributeValue: AttributeValue,
+			Id:                  item.Id,
+			AttributeCategoryID: item.AttributeCategoryID,
+			Name:                item.Name,
+			Type:                item.Type,
+			Value:               item.Value,
+			Sort:                item.Sort,
 		}
 		list = append(list, listUserData)
 	}

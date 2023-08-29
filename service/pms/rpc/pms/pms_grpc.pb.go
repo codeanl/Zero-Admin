@@ -19,24 +19,28 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Pms_CategoryAdd_FullMethodName     = "/pms.Pms/CategoryAdd"
-	Pms_CategoryList_FullMethodName    = "/pms.Pms/CategoryList"
-	Pms_CategoryUpdate_FullMethodName  = "/pms.Pms/CategoryUpdate"
-	Pms_CategoryDelete_FullMethodName  = "/pms.Pms/CategoryDelete"
-	Pms_AttributeAdd_FullMethodName    = "/pms.Pms/AttributeAdd"
-	Pms_AttributeList_FullMethodName   = "/pms.Pms/AttributeList"
-	Pms_AttributeUpdate_FullMethodName = "/pms.Pms/AttributeUpdate"
-	Pms_AttributeDelete_FullMethodName = "/pms.Pms/AttributeDelete"
-	Pms_ProductAdd_FullMethodName      = "/pms.Pms/ProductAdd"
-	Pms_ProductList_FullMethodName     = "/pms.Pms/ProductList"
-	Pms_ProductUpdate_FullMethodName   = "/pms.Pms/ProductUpdate"
-	Pms_ProductDelete_FullMethodName   = "/pms.Pms/ProductDelete"
-	Pms_ProductInfo_FullMethodName     = "/pms.Pms/ProductInfo"
-	Pms_SkuAdd_FullMethodName          = "/pms.Pms/SkuAdd"
-	Pms_SkuList_FullMethodName         = "/pms.Pms/SkuList"
-	Pms_SkuUpdate_FullMethodName       = "/pms.Pms/SkuUpdate"
-	Pms_SkuDelete_FullMethodName       = "/pms.Pms/SkuDelete"
-	Pms_SkuInfo_FullMethodName         = "/pms.Pms/SkuInfo"
+	Pms_CategoryAdd_FullMethodName             = "/pms.Pms/CategoryAdd"
+	Pms_CategoryList_FullMethodName            = "/pms.Pms/CategoryList"
+	Pms_CategoryUpdate_FullMethodName          = "/pms.Pms/CategoryUpdate"
+	Pms_CategoryDelete_FullMethodName          = "/pms.Pms/CategoryDelete"
+	Pms_AttributeAdd_FullMethodName            = "/pms.Pms/AttributeAdd"
+	Pms_AttributeList_FullMethodName           = "/pms.Pms/AttributeList"
+	Pms_AttributeUpdate_FullMethodName         = "/pms.Pms/AttributeUpdate"
+	Pms_AttributeDelete_FullMethodName         = "/pms.Pms/AttributeDelete"
+	Pms_ProductAdd_FullMethodName              = "/pms.Pms/ProductAdd"
+	Pms_ProductList_FullMethodName             = "/pms.Pms/ProductList"
+	Pms_ProductUpdate_FullMethodName           = "/pms.Pms/ProductUpdate"
+	Pms_ProductDelete_FullMethodName           = "/pms.Pms/ProductDelete"
+	Pms_ProductInfo_FullMethodName             = "/pms.Pms/ProductInfo"
+	Pms_SkuAdd_FullMethodName                  = "/pms.Pms/SkuAdd"
+	Pms_SkuList_FullMethodName                 = "/pms.Pms/SkuList"
+	Pms_SkuUpdate_FullMethodName               = "/pms.Pms/SkuUpdate"
+	Pms_SkuDelete_FullMethodName               = "/pms.Pms/SkuDelete"
+	Pms_SkuInfo_FullMethodName                 = "/pms.Pms/SkuInfo"
+	Pms_AttributeCategoryAdd_FullMethodName    = "/pms.Pms/AttributeCategoryAdd"
+	Pms_AttributeCategoryUpdate_FullMethodName = "/pms.Pms/AttributeCategoryUpdate"
+	Pms_AttributeCategoryDelete_FullMethodName = "/pms.Pms/AttributeCategoryDelete"
+	Pms_AttributeCategoryList_FullMethodName   = "/pms.Pms/AttributeCategoryList"
 )
 
 // PmsClient is the client API for Pms service.
@@ -79,6 +83,14 @@ type PmsClient interface {
 	SkuDelete(ctx context.Context, in *SkuDeleteReq, opts ...grpc.CallOption) (*SkuDeleteResp, error)
 	// sku详情
 	SkuInfo(ctx context.Context, in *SkuInfoReq, opts ...grpc.CallOption) (*SkuInfoResp, error)
+	// 添加属性分类
+	AttributeCategoryAdd(ctx context.Context, in *AttributeCategoryAddReq, opts ...grpc.CallOption) (*AttributeCategoryAddResp, error)
+	// 更新属性分类
+	AttributeCategoryUpdate(ctx context.Context, in *AttributeCategoryUpdateReq, opts ...grpc.CallOption) (*AttributeCategoryUpdateResp, error)
+	// 删除属性分类
+	AttributeCategoryDelete(ctx context.Context, in *AttributeCategoryDeleteAddReq, opts ...grpc.CallOption) (*AttributeCategoryDeleteResp, error)
+	// 属性分类列表
+	AttributeCategoryList(ctx context.Context, in *AttributeCategoryListReq, opts ...grpc.CallOption) (*AttributeCategoryListResp, error)
 }
 
 type pmsClient struct {
@@ -251,6 +263,42 @@ func (c *pmsClient) SkuInfo(ctx context.Context, in *SkuInfoReq, opts ...grpc.Ca
 	return out, nil
 }
 
+func (c *pmsClient) AttributeCategoryAdd(ctx context.Context, in *AttributeCategoryAddReq, opts ...grpc.CallOption) (*AttributeCategoryAddResp, error) {
+	out := new(AttributeCategoryAddResp)
+	err := c.cc.Invoke(ctx, Pms_AttributeCategoryAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) AttributeCategoryUpdate(ctx context.Context, in *AttributeCategoryUpdateReq, opts ...grpc.CallOption) (*AttributeCategoryUpdateResp, error) {
+	out := new(AttributeCategoryUpdateResp)
+	err := c.cc.Invoke(ctx, Pms_AttributeCategoryUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) AttributeCategoryDelete(ctx context.Context, in *AttributeCategoryDeleteAddReq, opts ...grpc.CallOption) (*AttributeCategoryDeleteResp, error) {
+	out := new(AttributeCategoryDeleteResp)
+	err := c.cc.Invoke(ctx, Pms_AttributeCategoryDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) AttributeCategoryList(ctx context.Context, in *AttributeCategoryListReq, opts ...grpc.CallOption) (*AttributeCategoryListResp, error) {
+	out := new(AttributeCategoryListResp)
+	err := c.cc.Invoke(ctx, Pms_AttributeCategoryList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PmsServer is the server API for Pms service.
 // All implementations must embed UnimplementedPmsServer
 // for forward compatibility
@@ -291,6 +339,14 @@ type PmsServer interface {
 	SkuDelete(context.Context, *SkuDeleteReq) (*SkuDeleteResp, error)
 	// sku详情
 	SkuInfo(context.Context, *SkuInfoReq) (*SkuInfoResp, error)
+	// 添加属性分类
+	AttributeCategoryAdd(context.Context, *AttributeCategoryAddReq) (*AttributeCategoryAddResp, error)
+	// 更新属性分类
+	AttributeCategoryUpdate(context.Context, *AttributeCategoryUpdateReq) (*AttributeCategoryUpdateResp, error)
+	// 删除属性分类
+	AttributeCategoryDelete(context.Context, *AttributeCategoryDeleteAddReq) (*AttributeCategoryDeleteResp, error)
+	// 属性分类列表
+	AttributeCategoryList(context.Context, *AttributeCategoryListReq) (*AttributeCategoryListResp, error)
 	mustEmbedUnimplementedPmsServer()
 }
 
@@ -351,6 +407,18 @@ func (UnimplementedPmsServer) SkuDelete(context.Context, *SkuDeleteReq) (*SkuDel
 }
 func (UnimplementedPmsServer) SkuInfo(context.Context, *SkuInfoReq) (*SkuInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SkuInfo not implemented")
+}
+func (UnimplementedPmsServer) AttributeCategoryAdd(context.Context, *AttributeCategoryAddReq) (*AttributeCategoryAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AttributeCategoryAdd not implemented")
+}
+func (UnimplementedPmsServer) AttributeCategoryUpdate(context.Context, *AttributeCategoryUpdateReq) (*AttributeCategoryUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AttributeCategoryUpdate not implemented")
+}
+func (UnimplementedPmsServer) AttributeCategoryDelete(context.Context, *AttributeCategoryDeleteAddReq) (*AttributeCategoryDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AttributeCategoryDelete not implemented")
+}
+func (UnimplementedPmsServer) AttributeCategoryList(context.Context, *AttributeCategoryListReq) (*AttributeCategoryListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AttributeCategoryList not implemented")
 }
 func (UnimplementedPmsServer) mustEmbedUnimplementedPmsServer() {}
 
@@ -689,6 +757,78 @@ func _Pms_SkuInfo_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pms_AttributeCategoryAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AttributeCategoryAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).AttributeCategoryAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_AttributeCategoryAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).AttributeCategoryAdd(ctx, req.(*AttributeCategoryAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_AttributeCategoryUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AttributeCategoryUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).AttributeCategoryUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_AttributeCategoryUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).AttributeCategoryUpdate(ctx, req.(*AttributeCategoryUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_AttributeCategoryDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AttributeCategoryDeleteAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).AttributeCategoryDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_AttributeCategoryDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).AttributeCategoryDelete(ctx, req.(*AttributeCategoryDeleteAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_AttributeCategoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AttributeCategoryListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).AttributeCategoryList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_AttributeCategoryList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).AttributeCategoryList(ctx, req.(*AttributeCategoryListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pms_ServiceDesc is the grpc.ServiceDesc for Pms service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -767,6 +907,22 @@ var Pms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SkuInfo",
 			Handler:    _Pms_SkuInfo_Handler,
+		},
+		{
+			MethodName: "AttributeCategoryAdd",
+			Handler:    _Pms_AttributeCategoryAdd_Handler,
+		},
+		{
+			MethodName: "AttributeCategoryUpdate",
+			Handler:    _Pms_AttributeCategoryUpdate_Handler,
+		},
+		{
+			MethodName: "AttributeCategoryDelete",
+			Handler:    _Pms_AttributeCategoryDelete_Handler,
+		},
+		{
+			MethodName: "AttributeCategoryList",
+			Handler:    _Pms_AttributeCategoryList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

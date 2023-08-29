@@ -31,15 +31,16 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 		return nil, err
 	}
 	productInfo := types.ListProductData{
-		Id:            resp.ProductInfo.Id,
-		CategoryID:    resp.ProductInfo.CategoryID,
-		Name:          resp.ProductInfo.Name,
-		Pic:           resp.ProductInfo.Pic,
-		ProductSn:     resp.ProductInfo.ProductSn,
-		Desc:          resp.ProductInfo.Desc,
-		OriginalPrice: resp.ProductInfo.OriginalPrice,
-		Unit:          resp.ProductInfo.Unit,
-		Price:         resp.ProductInfo.Price,
+		Id:                  resp.ProductInfo.Id,
+		CategoryID:          resp.ProductInfo.CategoryID,
+		Name:                resp.ProductInfo.Name,
+		Pic:                 resp.ProductInfo.Pic,
+		ProductSn:           resp.ProductInfo.ProductSn,
+		Desc:                resp.ProductInfo.Desc,
+		OriginalPrice:       resp.ProductInfo.OriginalPrice,
+		Unit:                resp.ProductInfo.Unit,
+		Price:               resp.ProductInfo.Price,
+		AttributeCategoryID: resp.ProductInfo.AttributeCategoryID,
 	}
 	var SkuList []types.SkuList
 	for _, i := range resp.SkuList {
@@ -55,30 +56,51 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 			Tag:         i.Tag,
 		})
 	}
-	var SizeList []types.SizeList
-	for _, i := range resp.SizeList {
-		var sizeValue []types.SizeValue
-		for _, j := range i.SizeValue {
-			sizeValue = append(sizeValue, types.SizeValue{
-				ID:     j.ID,
-				SizeID: j.SizeID,
-				Name:   j.Value,
+
+	var AttributeType1 []types.AttributeList
+	var AttributeType2 []types.AttributeList
+	for _, i := range resp.Attribute {
+		if i.Type == "1" {
+			var values []types.ValuesList
+			for _, j := range i.Values {
+				values = append(values, types.ValuesList{
+					Value: j.Value,
+				})
+			}
+			AttributeType1 = append(AttributeType1, types.AttributeList{
+				ID:                  i.ID,
+				AttributeCategoryID: i.AttributeCategoryID,
+				Name:                i.Name,
+				Type:                i.Type,
+				Values:              values,
 			})
 		}
-		SizeList = append(SizeList, types.SizeList{
-			ID:        i.ID,
-			Name:      i.Name,
-			ProductID: i.ProductID,
-			SizeValue: sizeValue,
-		})
-	}
+		if i.Type == "2" {
+			var values []types.ValuesList
+			for _, j := range i.Values {
+				values = append(values, types.ValuesList{
+					Value: j.Value,
+				})
+			}
+			AttributeType2 = append(AttributeType2, types.AttributeList{
+				ID:                  i.ID,
+				AttributeCategoryID: i.AttributeCategoryID,
+				Name:                i.Name,
+				Type:                i.Type,
+				Values:              values,
+			})
+		}
 
+	}
+	Attribute := types.Attribute{
+		AttributeType1: AttributeType1,
+		AttributeType2: AttributeType2,
+	}
 	data := types.InfoData{
-		ProductInfo:    productInfo,
-		SkuList:        SkuList,
-		ImgUrl:         resp.ImgUrl,
-		AttributeValue: resp.AttributeValue,
-		SizeList:       SizeList,
+		ProductInfo: productInfo,
+		SkuList:     SkuList,
+		ImgUrl:      resp.ImgUrl,
+		Attribute:   Attribute,
 	}
 	return &types.ProductInfoResp{
 		Code:    200,

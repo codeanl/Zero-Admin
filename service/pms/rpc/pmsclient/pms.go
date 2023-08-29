@@ -13,50 +13,59 @@ import (
 )
 
 type (
-	AttributeAddReq     = pms.AttributeAddReq
-	AttributeAddResp    = pms.AttributeAddResp
-	AttributeDeleteReq  = pms.AttributeDeleteReq
-	AttributeDeleteResp = pms.AttributeDeleteResp
-	AttributeListData   = pms.AttributeListData
-	AttributeListReq    = pms.AttributeListReq
-	AttributeListResp   = pms.AttributeListResp
-	AttributeUpdateReq  = pms.AttributeUpdateReq
-	AttributeUpdateResp = pms.AttributeUpdateResp
-	AttributeValue      = pms.AttributeValue
-	CategoryAddReq      = pms.CategoryAddReq
-	CategoryAddResp     = pms.CategoryAddResp
-	CategoryDeleteReq   = pms.CategoryDeleteReq
-	CategoryDeleteResp  = pms.CategoryDeleteResp
-	CategoryListData    = pms.CategoryListData
-	CategoryListReq     = pms.CategoryListReq
-	CategoryListResp    = pms.CategoryListResp
-	CategoryUpdateReq   = pms.CategoryUpdateReq
-	CategoryUpdateResp  = pms.CategoryUpdateResp
-	ProductAddReq       = pms.ProductAddReq
-	ProductAddResp      = pms.ProductAddResp
-	ProductDeleteReq    = pms.ProductDeleteReq
-	ProductDeleteResp   = pms.ProductDeleteResp
-	ProductInfoReq      = pms.ProductInfoReq
-	ProductInfoResp     = pms.ProductInfoResp
-	ProductListData     = pms.ProductListData
-	ProductListReq      = pms.ProductListReq
-	ProductListResp     = pms.ProductListResp
-	ProductUpdateReq    = pms.ProductUpdateReq
-	ProductUpdateResp   = pms.ProductUpdateResp
-	Size                = pms.Size
-	SizeList            = pms.SizeList
-	SizeValue           = pms.SizeValue
-	SkuAddReq           = pms.SkuAddReq
-	SkuAddResp          = pms.SkuAddResp
-	SkuDeleteReq        = pms.SkuDeleteReq
-	SkuDeleteResp       = pms.SkuDeleteResp
-	SkuInfoReq          = pms.SkuInfoReq
-	SkuInfoResp         = pms.SkuInfoResp
-	SkuListData         = pms.SkuListData
-	SkuListReq          = pms.SkuListReq
-	SkuListResp         = pms.SkuListResp
-	SkuUpdateReq        = pms.SkuUpdateReq
-	SkuUpdateResp       = pms.SkuUpdateResp
+	Attribute                     = pms.Attribute
+	AttributeAddReq               = pms.AttributeAddReq
+	AttributeAddResp              = pms.AttributeAddResp
+	AttributeCategoryAddReq       = pms.AttributeCategoryAddReq
+	AttributeCategoryAddResp      = pms.AttributeCategoryAddResp
+	AttributeCategoryDeleteAddReq = pms.AttributeCategoryDeleteAddReq
+	AttributeCategoryDeleteResp   = pms.AttributeCategoryDeleteResp
+	AttributeCategoryListData     = pms.AttributeCategoryListData
+	AttributeCategoryListReq      = pms.AttributeCategoryListReq
+	AttributeCategoryListResp     = pms.AttributeCategoryListResp
+	AttributeCategoryUpdateReq    = pms.AttributeCategoryUpdateReq
+	AttributeCategoryUpdateResp   = pms.AttributeCategoryUpdateResp
+	AttributeDeleteReq            = pms.AttributeDeleteReq
+	AttributeDeleteResp           = pms.AttributeDeleteResp
+	AttributeListData             = pms.AttributeListData
+	AttributeListReq              = pms.AttributeListReq
+	AttributeListResp             = pms.AttributeListResp
+	AttributeUpdateReq            = pms.AttributeUpdateReq
+	AttributeUpdateResp           = pms.AttributeUpdateResp
+	AttributeValueList            = pms.AttributeValueList
+	CategoryAddReq                = pms.CategoryAddReq
+	CategoryAddResp               = pms.CategoryAddResp
+	CategoryDeleteReq             = pms.CategoryDeleteReq
+	CategoryDeleteResp            = pms.CategoryDeleteResp
+	CategoryListData              = pms.CategoryListData
+	CategoryListReq               = pms.CategoryListReq
+	CategoryListResp              = pms.CategoryListResp
+	CategoryUpdateReq             = pms.CategoryUpdateReq
+	CategoryUpdateResp            = pms.CategoryUpdateResp
+	ProductAddReq                 = pms.ProductAddReq
+	ProductAddResp                = pms.ProductAddResp
+	ProductDeleteReq              = pms.ProductDeleteReq
+	ProductDeleteResp             = pms.ProductDeleteResp
+	ProductInfoReq                = pms.ProductInfoReq
+	ProductInfoResp               = pms.ProductInfoResp
+	ProductListData               = pms.ProductListData
+	ProductListReq                = pms.ProductListReq
+	ProductListResp               = pms.ProductListResp
+	ProductUpdateReq              = pms.ProductUpdateReq
+	ProductUpdateResp             = pms.ProductUpdateResp
+	Size                          = pms.Size
+	SkuAddReq                     = pms.SkuAddReq
+	SkuAddResp                    = pms.SkuAddResp
+	SkuDeleteReq                  = pms.SkuDeleteReq
+	SkuDeleteResp                 = pms.SkuDeleteResp
+	SkuInfoReq                    = pms.SkuInfoReq
+	SkuInfoResp                   = pms.SkuInfoResp
+	SkuListData                   = pms.SkuListData
+	SkuListReq                    = pms.SkuListReq
+	SkuListResp                   = pms.SkuListResp
+	SkuUpdateReq                  = pms.SkuUpdateReq
+	SkuUpdateResp                 = pms.SkuUpdateResp
+	Values                        = pms.Values
 
 	Pms interface {
 		// 添加分类
@@ -95,6 +104,14 @@ type (
 		SkuDelete(ctx context.Context, in *SkuDeleteReq, opts ...grpc.CallOption) (*SkuDeleteResp, error)
 		// sku详情
 		SkuInfo(ctx context.Context, in *SkuInfoReq, opts ...grpc.CallOption) (*SkuInfoResp, error)
+		// 添加属性分类
+		AttributeCategoryAdd(ctx context.Context, in *AttributeCategoryAddReq, opts ...grpc.CallOption) (*AttributeCategoryAddResp, error)
+		// 更新属性分类
+		AttributeCategoryUpdate(ctx context.Context, in *AttributeCategoryUpdateReq, opts ...grpc.CallOption) (*AttributeCategoryUpdateResp, error)
+		// 删除属性分类
+		AttributeCategoryDelete(ctx context.Context, in *AttributeCategoryDeleteAddReq, opts ...grpc.CallOption) (*AttributeCategoryDeleteResp, error)
+		// 属性分类列表
+		AttributeCategoryList(ctx context.Context, in *AttributeCategoryListReq, opts ...grpc.CallOption) (*AttributeCategoryListResp, error)
 	}
 
 	defaultPms struct {
@@ -214,4 +231,28 @@ func (m *defaultPms) SkuDelete(ctx context.Context, in *SkuDeleteReq, opts ...gr
 func (m *defaultPms) SkuInfo(ctx context.Context, in *SkuInfoReq, opts ...grpc.CallOption) (*SkuInfoResp, error) {
 	client := pms.NewPmsClient(m.cli.Conn())
 	return client.SkuInfo(ctx, in, opts...)
+}
+
+// 添加属性分类
+func (m *defaultPms) AttributeCategoryAdd(ctx context.Context, in *AttributeCategoryAddReq, opts ...grpc.CallOption) (*AttributeCategoryAddResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.AttributeCategoryAdd(ctx, in, opts...)
+}
+
+// 更新属性分类
+func (m *defaultPms) AttributeCategoryUpdate(ctx context.Context, in *AttributeCategoryUpdateReq, opts ...grpc.CallOption) (*AttributeCategoryUpdateResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.AttributeCategoryUpdate(ctx, in, opts...)
+}
+
+// 删除属性分类
+func (m *defaultPms) AttributeCategoryDelete(ctx context.Context, in *AttributeCategoryDeleteAddReq, opts ...grpc.CallOption) (*AttributeCategoryDeleteResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.AttributeCategoryDelete(ctx, in, opts...)
+}
+
+// 属性分类列表
+func (m *defaultPms) AttributeCategoryList(ctx context.Context, in *AttributeCategoryListReq, opts ...grpc.CallOption) (*AttributeCategoryListResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.AttributeCategoryList(ctx, in, opts...)
 }

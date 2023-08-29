@@ -40,7 +40,6 @@ func (l *UserUpdateLogic) UserUpdate(in *sys.UserUpdateReq) (*sys.UserUpdateResp
 	if err != nil {
 		return nil, errors.New("更新用户失败")
 	}
-	//todo
 	//把原有信息删除 添加新数据
 	if in.RoleID != nil {
 		//删除

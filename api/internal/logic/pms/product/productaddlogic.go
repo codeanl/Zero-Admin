@@ -25,25 +25,26 @@ func NewProductAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produc
 }
 
 func (l *ProductAddLogic) ProductAdd(req *types.AddProductReq) (resp *types.AddProductResp, err error) {
-	var size []*pmsclient.Size
-	for _, i := range req.Size {
-		size = append(size, &pmsclient.Size{
-			Name:          i.Name,
-			SizeValueName: i.SizeValue,
+	var AttributeValueList []*pmsclient.AttributeValueList
+	for _, i := range req.AttributeValueList {
+
+		AttributeValueList = append(AttributeValueList, &pmsclient.AttributeValueList{
+			AttributeID: i.AttributeID,
+			Value:       i.Value,
 		})
 	}
 	_, err = l.svcCtx.Pms.ProductAdd(l.ctx, &pmsclient.ProductAddReq{
-		CategoryID:       req.CategoryID,
-		Name:             req.Name,
-		Pic:              req.Pic,
-		ProductSn:        req.ProductSn,
-		Price:            req.Price,
-		Desc:             req.Desc,
-		OriginalPrice:    req.OriginalPrice,
-		Unit:             req.Unit,
-		AttributeValueID: req.AttributeValueID,
-		Size:             size,
-		ImgUrl:           req.ImgUrl,
+		CategoryID:          req.CategoryID,
+		AttributeCategoryID: req.AttributeCategoryID,
+		Name:                req.Name,
+		Pic:                 req.Pic,
+		ProductSn:           req.ProductSn,
+		Price:               req.Price,
+		Desc:                req.Desc,
+		OriginalPrice:       req.OriginalPrice,
+		Unit:                req.Unit,
+		AttributeValueList:  AttributeValueList,
+		ImgUrl:              req.ImgUrl,
 	})
 	if err != nil {
 		return nil, err

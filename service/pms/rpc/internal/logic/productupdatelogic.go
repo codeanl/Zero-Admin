@@ -2,11 +2,11 @@ package logic
 
 import (
 	"SimplePick-Mall-Server/service/pms/model"
-	"context"
-	"errors"
-
 	"SimplePick-Mall-Server/service/pms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/pms/rpc/pms"
+	"context"
+	"fmt"
+	"strings"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -28,46 +28,73 @@ func NewProductUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Pro
 // 更新商品
 func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.ProductUpdateResp, error) {
 	err := l.svcCtx.ProductModel.UpdateProduct(in.Id, &model.Product{
-		CategoryID:    in.CategoryID,
-		Name:          in.Name,
-		Pic:           in.Pic,
-		ProductSn:     in.ProductSn,
-		Desc:          in.Desc,
-		OriginalPrice: in.OriginalPrice,
-		Unit:          in.Unit,
-		Price:         in.Price,
+		CategoryID:          in.CategoryID,
+		Name:                in.Name,
+		Pic:                 in.Pic,
+		ProductSn:           in.ProductSn,
+		Desc:                in.Desc,
+		OriginalPrice:       in.OriginalPrice,
+		Unit:                in.Unit,
+		Price:               in.Price,
+		AttributeCategoryID: in.AttributeCategoryID,
 	})
-	//属性
-	_ = l.svcCtx.SpuAttributeModel.DeleteSpuAttributeBySpuID(in.Id)
-	for _, i := range in.AttributeValueID {
-		_, _ = l.svcCtx.SpuAttributeModel.AddSpuAttribute(&model.SpuAttribute{
-			ProductID:        in.Id,
-			AttributeValueID: i,
-		})
-	}
-	_ = l.svcCtx.SpuSizeModel.DeleteSpuSizeBySpuID(in.Id)
-	for _, i := range in.Size {
-		size, _ := l.svcCtx.SpuSizeModel.AddSpuSize(&model.SpuSize{
-			ProductID: in.Id,
-			Name:      i.Name,
-		})
-		_ = l.svcCtx.SpuSizeValueModel.DeleteSpuSizeValueBySizeID(i.ID)
-		for _, j := range i.SizeValueName {
-			l.svcCtx.SpuSizeValueModel.AddSpuSizeValue(&model.SpuSizeValue{
-				SizeID: int64(size.ID),
-				Value:  j,
-			},
-			)
-		}
-	}
 	if err != nil {
-		return nil, errors.New("更新用户失败")
+		return nil, err
 	}
 	l.svcCtx.ProductImgModel.DeleteProductImgBySpuID(in.Id)
 	for _, i := range in.ImgUrl {
 		l.svcCtx.ProductImgModel.AddProductImg(&model.ProductImg{
 			ProductID: in.Id,
 			Url:       i,
+		})
+	}
+	//
+	spu, _ := l.svcCtx.ProductModel.GetProductById(in.Id)
+	var AttributeValueType2 []*pms.AttributeValueList
+	for _, i := range in.AttributeValueList {
+		//添加属性值表
+		for _, j := range i.Value {
+			l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
+				ProductID:   int64(spu.ID),
+				AttributeID: i.AttributeID,
+				Value:       j,
+			})
+		}
+		attr, _ := l.svcCtx.AttributeModel.GetAttributeByID(i.AttributeID)
+		if attr.Type == "2" {
+			AttributeValueType2 = append(AttributeValueType2, &pms.AttributeValueList{
+				AttributeID: i.AttributeID,
+				Value:       i.Value,
+			})
+		}
+	}
+	var result [][]string
+	temp := make([]string, len(AttributeValueType2))
+	for _, value := range AttributeValueType2[0].Value {
+		temp[0] = value
+		generateCombinations(AttributeValueType2, 1, temp, &result)
+	}
+	l.svcCtx.SkuModel.DeleteSkuBySpuID(in.Id)
+	// 输出结果
+	for _, values := range result {
+		var data []string
+		for _, i := range values {
+			attrValue, _ := l.svcCtx.AttributeValueModel.GetAttributeValueBySpuIdAndValue(int64(spu.ID), i)
+			info1, _ := l.svcCtx.AttributeModel.GetAttributeByID(attrValue.AttributeID)
+			nn := fmt.Sprintf(`{"%s": "%s"}`, info1.Name, attrValue.Value)
+			data = append(data, nn)
+		}
+		tag := strings.Join(data, ", ")
+		l.svcCtx.SkuModel.AddSku(&model.Sku{
+			ProductID:   int64(spu.ID),
+			Name:        spu.Name,
+			Pic:         spu.Pic,
+			SkuSn:       spu.ProductSn,
+			Description: spu.Desc,
+			Price:       spu.Price,
+			Stock:       0,
+			Sale:        0,
+			Tag:         tag,
 		})
 	}
 	return &pms.ProductUpdateResp{}, nil

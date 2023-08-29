@@ -27,7 +27,7 @@ type (
 		Gender   string `json:"gender" gorm:"type:varchar(255);comment:性别;"`            //性别  0--保密 1--男  2--女
 		Avatar   string `json:"avatar" gorm:"type:varchar(255);comment:用户头像"`           //头像
 		Email    string `json:"email" gorm:"type:varchar(255);comment:邮箱"`              //邮箱
-		Status   string `json:"status" gorm:"type:varchar(255);comment:状态;"`            //状态  0--正常 1--禁用 默认正常
+		Status   string `json:"status" gorm:"type:varchar(255);comment:状态;"`            //状态  1--正常 0--禁用 默认正常
 		CreateBy string `json:"create_by" gorm:"type:varchar(255);comment:创建人;"`        //创建人
 		UpdateBy string `json:"update_by" gorm:"type:varchar(255);comment:更新人;"`        //更新人
 	}

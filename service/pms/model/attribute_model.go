@@ -20,9 +20,12 @@ type (
 	}
 	Attribute struct {
 		gorm.Model
-		//一个分类下有很多属性
-		CategoryID int64  `json:"category_id" gorm:"type:bigint;comment:属性分类id;not null"` //分类id
-		Name       string `json:"name" gorm:"type:varchar(191);comment:名称;not null"`      //名称
+		AttributeCategoryID int64  `json:"attribute_category_id" gorm:"type:bigint;comment:属性分类id;not null"` //分类id
+		Name                string `json:"name" gorm:"type:varchar(191);comment:名称;not null"`                //名称
+		Type                string `json:"type" gorm:"type:varchar(191);comment:类型;not null"`                //1->商品属性 2->规格
+		Value               string `json:"value" gorm:"type:varchar(255);comment:可选值列表;not null"`            //'可选值列表，以逗号隔开'
+		Sort                int64  `json:"sort" gorm:"type:bigint;comment:排序;not null"`                      //排序
+
 	}
 )
 
@@ -65,8 +68,11 @@ func (m *defaultAttributeModel) GetAttributeList(in *pms.AttributeListReq) ([]At
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))
 	}
 
-	if in.CategoryID != 0 {
-		db = db.Where("category_id = ?", in.CategoryID)
+	if in.AttributeCategoryID != 0 {
+		db = db.Where("attribute_category_id = ?", in.AttributeCategoryID)
+	}
+	if in.Type != "" {
+		db = db.Where("type = ?", in.Type)
 	}
 	var total int64
 	err := db.Count(&total).Error

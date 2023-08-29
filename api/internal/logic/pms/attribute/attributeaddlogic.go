@@ -26,9 +26,11 @@ func NewAttributeAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Attr
 
 func (l *AttributeAddLogic) AttributeAdd(req *types.AddAttributeReq) (resp *types.AddAttributeResp, err error) {
 	_, err = l.svcCtx.Pms.AttributeAdd(l.ctx, &pmsclient.AttributeAddReq{
-		Name:          req.Name,
-		CategoryID:    req.CategoryId,
-		AttributeName: req.AttributeName,
+		AttributeCategoryID: req.AttributeCategoryID,
+		Name:                req.Name,
+		Type:                req.Type,
+		Value:               req.Value,
+		Sort:                req.Sort,
 	})
 	if err != nil {
 		return nil, err

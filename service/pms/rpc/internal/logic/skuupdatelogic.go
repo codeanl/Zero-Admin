@@ -32,8 +32,8 @@ func (l *SkuUpdateLogic) SkuUpdate(in *pms.SkuUpdateReq) (*pms.SkuUpdateResp, er
 	//sku标识
 	var data []string
 	for _, i := range in.SizeValueID {
-		info1, _ := l.svcCtx.SpuSizeValueModel.GetSizeValueByID(i)
-		info2, _ := l.svcCtx.SpuSizeModel.GetSizeByID(info1.SizeID)
+		info1, _ := l.svcCtx.AttributeValueModel.GetAttributeValueByID(i)
+		info2, _ := l.svcCtx.AttributeModel.GetAttributeByID(info1.AttributeID)
 		nn := fmt.Sprintf(`{"%s": "%s"}`, info2.Name, info1.Value)
 		data = append(data, nn)
 	}

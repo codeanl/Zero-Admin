@@ -4,9 +4,7 @@ import (
 	"SimplePick-Mall-Server/service/pms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/pms/rpc/pms"
 	"context"
-	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
-	"log"
 )
 
 type ProductInfoLogic struct {
@@ -27,55 +25,49 @@ func NewProductInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produ
 func (l *ProductInfoLogic) ProductInfo(in *pms.ProductInfoReq) (*pms.ProductInfoResp, error) {
 	resp1, _ := l.svcCtx.ProductModel.GetProductById(in.ID)
 	productInfo := &pms.ProductListData{
-		Id:            int64(resp1.ID),
-		CategoryID:    resp1.CategoryID,
-		Name:          resp1.Name,
-		Pic:           resp1.Pic,
-		ProductSn:     resp1.ProductSn,
-		Desc:          resp1.Desc,
-		Price:         resp1.Price,
-		OriginalPrice: resp1.OriginalPrice,
-		Unit:          resp1.Unit,
+		Id:                  int64(resp1.ID),
+		CategoryID:          resp1.CategoryID,
+		Name:                resp1.Name,
+		Pic:                 resp1.Pic,
+		ProductSn:           resp1.ProductSn,
+		Desc:                resp1.Desc,
+		Price:               resp1.Price,
+		OriginalPrice:       resp1.OriginalPrice,
+		Unit:                resp1.Unit,
+		AttributeCategoryID: resp1.AttributeCategoryID,
 	}
 
-	//获取商品的所有属性
-	var attrValue []string
-	attrValuelist, _ := l.svcCtx.SpuAttributeModel.GetAttributeValueByProductID(in.ID)
-	for _, i := range attrValuelist {
-		info1, _ := l.svcCtx.AttributeValueModel.GetAttributeValueByID(i.AttributeValueID)
-		info2, _ := l.svcCtx.AttributeModel.GetAttributeByID(info1.AttributeID)
-		nn := fmt.Sprintf(`{"%s": "%s"}`, info2.Name, info1.Name)
-		attrValue = append(attrValue, nn)
+	var attrIDs []int64
+	attrValue, _ := l.svcCtx.AttributeValueModel.GetAttributeValueBySPUID(in.ID)
+	for _, i := range attrValue {
+		attrIDs = append(attrIDs, i.AttributeID)
 	}
-	//tag := strings.Join(attrValue, ", ")
-
-	//获取商品下的size
-	var sizeList []*pms.SizeList
-	size, _ := l.svcCtx.SpuSizeModel.GetSizeBySpuID(in.ID)
-	for _, j := range size {
-		var sizeValue []*pms.SizeValue
-		info, _ := l.svcCtx.SpuSizeValueModel.GetSizeValueBySizeID(int64(j.ID))
-		for _, f := range info {
-			sizeValue = append(sizeValue, &pms.SizeValue{
-				ID:     int64(f.ID),
-				SizeID: f.SizeID,
-				Value:  f.Value,
+	filteredNums := FilterDuplicates(attrIDs)
+	var Attribute []*pms.Attribute
+	for _, i := range filteredNums {
+		attr, _ := l.svcCtx.AttributeModel.GetAttributeByID(i)
+		li, _ := l.svcCtx.AttributeValueModel.GetAttributeValueBySpuIdAndAttrId(in.ID, i)
+		var value []*pms.Values
+		for _, j := range li {
+			value = append(value, &pms.Values{
+				Value: j.Value,
 			})
 		}
-		sizeList = append(sizeList, &pms.SizeList{
-			ID:        int64(j.ID),
-			ProductID: j.ProductID,
-			Name:      j.Name,
-			SizeValue: sizeValue,
+		Attribute = append(Attribute, &pms.Attribute{
+			ID:                  int64(attr.ID),
+			AttributeCategoryID: attr.AttributeCategoryID,
+			Name:                attr.Name,
+			Type:                attr.Type,
+			Values:              value,
 		})
 	}
+
 	//获取商品下的图片
 	var ImgUrl []string
 	img, _ := l.svcCtx.ProductImgModel.GetImgtByProducID(in.ID)
 	for _, i := range img {
 		ImgUrl = append(ImgUrl, i.Url)
 	}
-
 	//获取sku
 	var skuList []*pms.SkuListData
 	sku, _, _ := l.svcCtx.SkuModel.GetSkuList(&pms.SkuListReq{ProductID: in.ID})
@@ -93,12 +85,21 @@ func (l *ProductInfoLogic) ProductInfo(in *pms.ProductInfoReq) (*pms.ProductInfo
 			Tag:         i.Tag,
 		})
 	}
-	log.Print(skuList)
 	return &pms.ProductInfoResp{
-		ProductInfo:    productInfo,
-		ImgUrl:         ImgUrl,
-		SkuList:        skuList,
-		SizeList:       sizeList,
-		AttributeValue: attrValue,
+		ProductInfo: productInfo,
+		ImgUrl:      ImgUrl,
+		SkuList:     skuList,
+		Attribute:   Attribute,
 	}, nil
+}
+func FilterDuplicates(nums []int64) []int64 {
+	uniqueNums := make(map[int64]bool)
+	var result []int64
+	for _, num := range nums {
+		if !uniqueNums[num] {
+			uniqueNums[num] = true
+			result = append(result, num)
+		}
+	}
+	return result
 }
