@@ -27,10 +27,16 @@ func NewMemberAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *MemberA
 
 func (l *MemberAddLogic) MemberAdd(req *types.AddMemberReq) (resp *types.AddMemberResp, err error) {
 	_, err = l.svcCtx.Ums.MemberAdd(l.ctx, &umsclient.MemberAddReq{
-		Username: req.Username,
-		Password: req.Password,
-		Nickname: req.Nickname,
-		Phone:    req.Phone,
+		Username:  req.Username,
+		Nickname:  req.Nickname,
+		Phone:     req.Phone,
+		Status:    req.Status,
+		Avatar:    req.Avatar,
+		Gender:    req.Gender,
+		Email:     req.Email,
+		City:      req.City,
+		Job:       req.Job,
+		Signature: req.Signature,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("添加失败")

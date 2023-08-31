@@ -19,12 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Ums_MemberAdd_FullMethodName    = "/ums.Ums/MemberAdd"
-	Ums_MemberLogin_FullMethodName  = "/ums.Ums/MemberLogin"
-	Ums_MemberList_FullMethodName   = "/ums.Ums/MemberList"
-	Ums_MemberUpdate_FullMethodName = "/ums.Ums/MemberUpdate"
-	Ums_MemberDelete_FullMethodName = "/ums.Ums/MemberDelete"
-	Ums_MemberInfo_FullMethodName   = "/ums.Ums/MemberInfo"
+	Ums_MemberAdd_FullMethodName            = "/ums.Ums/MemberAdd"
+	Ums_MemberLogin_FullMethodName          = "/ums.Ums/MemberLogin"
+	Ums_MemberList_FullMethodName           = "/ums.Ums/MemberList"
+	Ums_MemberUpdate_FullMethodName         = "/ums.Ums/MemberUpdate"
+	Ums_MemberDelete_FullMethodName         = "/ums.Ums/MemberDelete"
+	Ums_MemberInfo_FullMethodName           = "/ums.Ums/MemberInfo"
+	Ums_MemberLoginLogAdd_FullMethodName    = "/ums.Ums/MemberLoginLogAdd"
+	Ums_MemberLoginLogList_FullMethodName   = "/ums.Ums/MemberLoginLogList"
+	Ums_MemberLoginLogDelete_FullMethodName = "/ums.Ums/MemberLoginLogDelete"
 )
 
 // UmsClient is the client API for Ums service.
@@ -43,6 +46,12 @@ type UmsClient interface {
 	MemberDelete(ctx context.Context, in *MemberDeleteReq, opts ...grpc.CallOption) (*MemberDeleteResp, error)
 	// 会员详情
 	MemberInfo(ctx context.Context, in *MemberInfoReq, opts ...grpc.CallOption) (*MemberInfoResp, error)
+	// 添加登录日志
+	MemberLoginLogAdd(ctx context.Context, in *MemberLoginLogAddReq, opts ...grpc.CallOption) (*MemberLoginLogAddResp, error)
+	// 登录日志列表
+	MemberLoginLogList(ctx context.Context, in *MemberLoginLogListReq, opts ...grpc.CallOption) (*MemberLoginLogListResp, error)
+	// 登录日志删除
+	MemberLoginLogDelete(ctx context.Context, in *MemberLoginLogDeleteReq, opts ...grpc.CallOption) (*MemberLoginLogDeleteResp, error)
 }
 
 type umsClient struct {
@@ -107,6 +116,33 @@ func (c *umsClient) MemberInfo(ctx context.Context, in *MemberInfoReq, opts ...g
 	return out, nil
 }
 
+func (c *umsClient) MemberLoginLogAdd(ctx context.Context, in *MemberLoginLogAddReq, opts ...grpc.CallOption) (*MemberLoginLogAddResp, error) {
+	out := new(MemberLoginLogAddResp)
+	err := c.cc.Invoke(ctx, Ums_MemberLoginLogAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *umsClient) MemberLoginLogList(ctx context.Context, in *MemberLoginLogListReq, opts ...grpc.CallOption) (*MemberLoginLogListResp, error) {
+	out := new(MemberLoginLogListResp)
+	err := c.cc.Invoke(ctx, Ums_MemberLoginLogList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *umsClient) MemberLoginLogDelete(ctx context.Context, in *MemberLoginLogDeleteReq, opts ...grpc.CallOption) (*MemberLoginLogDeleteResp, error) {
+	out := new(MemberLoginLogDeleteResp)
+	err := c.cc.Invoke(ctx, Ums_MemberLoginLogDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UmsServer is the server API for Ums service.
 // All implementations must embed UnimplementedUmsServer
 // for forward compatibility
@@ -123,6 +159,12 @@ type UmsServer interface {
 	MemberDelete(context.Context, *MemberDeleteReq) (*MemberDeleteResp, error)
 	// 会员详情
 	MemberInfo(context.Context, *MemberInfoReq) (*MemberInfoResp, error)
+	// 添加登录日志
+	MemberLoginLogAdd(context.Context, *MemberLoginLogAddReq) (*MemberLoginLogAddResp, error)
+	// 登录日志列表
+	MemberLoginLogList(context.Context, *MemberLoginLogListReq) (*MemberLoginLogListResp, error)
+	// 登录日志删除
+	MemberLoginLogDelete(context.Context, *MemberLoginLogDeleteReq) (*MemberLoginLogDeleteResp, error)
 	mustEmbedUnimplementedUmsServer()
 }
 
@@ -147,6 +189,15 @@ func (UnimplementedUmsServer) MemberDelete(context.Context, *MemberDeleteReq) (*
 }
 func (UnimplementedUmsServer) MemberInfo(context.Context, *MemberInfoReq) (*MemberInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MemberInfo not implemented")
+}
+func (UnimplementedUmsServer) MemberLoginLogAdd(context.Context, *MemberLoginLogAddReq) (*MemberLoginLogAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberLoginLogAdd not implemented")
+}
+func (UnimplementedUmsServer) MemberLoginLogList(context.Context, *MemberLoginLogListReq) (*MemberLoginLogListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberLoginLogList not implemented")
+}
+func (UnimplementedUmsServer) MemberLoginLogDelete(context.Context, *MemberLoginLogDeleteReq) (*MemberLoginLogDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberLoginLogDelete not implemented")
 }
 func (UnimplementedUmsServer) mustEmbedUnimplementedUmsServer() {}
 
@@ -269,6 +320,60 @@ func _Ums_MemberInfo_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Ums_MemberLoginLogAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MemberLoginLogAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UmsServer).MemberLoginLogAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ums_MemberLoginLogAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UmsServer).MemberLoginLogAdd(ctx, req.(*MemberLoginLogAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ums_MemberLoginLogList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MemberLoginLogListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UmsServer).MemberLoginLogList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ums_MemberLoginLogList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UmsServer).MemberLoginLogList(ctx, req.(*MemberLoginLogListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ums_MemberLoginLogDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MemberLoginLogDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UmsServer).MemberLoginLogDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ums_MemberLoginLogDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UmsServer).MemberLoginLogDelete(ctx, req.(*MemberLoginLogDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Ums_ServiceDesc is the grpc.ServiceDesc for Ums service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -299,6 +404,18 @@ var Ums_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MemberInfo",
 			Handler:    _Ums_MemberInfo_Handler,
+		},
+		{
+			MethodName: "MemberLoginLogAdd",
+			Handler:    _Ums_MemberLoginLogAdd_Handler,
+		},
+		{
+			MethodName: "MemberLoginLogList",
+			Handler:    _Ums_MemberLoginLogList_Handler,
+		},
+		{
+			MethodName: "MemberLoginLogDelete",
+			Handler:    _Ums_MemberLoginLogDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

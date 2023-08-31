@@ -49,17 +49,5 @@ func (l *UserAddLogic) UserAdd(in *sys.UserAddReq) (*sys.UserAddResp, error) {
 	if err != nil {
 		return nil, errors.New("添加失败")
 	}
-	//3.添加用户角色
-	//for _, r := range in.RoleID {
-	//	if r != 0 {
-	//		err := l.svcCtx.UserRoleModel.AddUserRole(&model.UserRole{
-	//			UserID:   int64(admin.ID),
-	//			RoleID:   r,
-	//			CreateBy: in.CreateBy,
-	//		})
-	//		if err != nil {
-	//		}
-	//	}
-	//}
 	return &sys.UserAddResp{}, nil
 }

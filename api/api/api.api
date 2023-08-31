@@ -13,6 +13,7 @@ import "pms/sku.api"
 import "pms/attributeCategory.api"
 
 import "ums/member.api"
+import "ums/memberLoginLog.api"
 
 import "sms/home_advertise.api"
 import "sms/coupon.api"

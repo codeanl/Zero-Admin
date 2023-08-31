@@ -26,12 +26,12 @@ type(
      //修改------------------------------------------------
     UpdatePlaceReq struct {
         Id int64 `json:"id"`
-        Name string `json:"name"`
-        Place string `json:"place"`
-        Status string `json:"status"`
-        Pic string `json:"pic"`
-        Phone string `json:"phone"`
-        Principal string `json:"principal"`
+        Name string `json:"name,optional"`
+        Place string `json:"place,optional"`
+        Status string `json:"status,optional"`
+        Pic string `json:"pic,optional"`
+        Phone string `json:"phone,optional"`
+        Principal string `json:"principal,optional"`
     }
     UpdatePlaceResp struct {
         Code int64 `json:"code"`

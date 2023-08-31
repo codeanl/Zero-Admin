@@ -13,19 +13,26 @@ import (
 )
 
 type (
-	MemberAddReq     = ums.MemberAddReq
-	MemberAddResp    = ums.MemberAddResp
-	MemberDeleteReq  = ums.MemberDeleteReq
-	MemberDeleteResp = ums.MemberDeleteResp
-	MemberInfoReq    = ums.MemberInfoReq
-	MemberInfoResp   = ums.MemberInfoResp
-	MemberListData   = ums.MemberListData
-	MemberListReq    = ums.MemberListReq
-	MemberListResp   = ums.MemberListResp
-	MemberLoginReq   = ums.MemberLoginReq
-	MemberLoginResp  = ums.MemberLoginResp
-	MemberUpdateReq  = ums.MemberUpdateReq
-	MemberUpdateResp = ums.MemberUpdateResp
+	MemberAddReq             = ums.MemberAddReq
+	MemberAddResp            = ums.MemberAddResp
+	MemberDeleteReq          = ums.MemberDeleteReq
+	MemberDeleteResp         = ums.MemberDeleteResp
+	MemberInfoReq            = ums.MemberInfoReq
+	MemberInfoResp           = ums.MemberInfoResp
+	MemberListData           = ums.MemberListData
+	MemberListReq            = ums.MemberListReq
+	MemberListResp           = ums.MemberListResp
+	MemberLoginLogAddReq     = ums.MemberLoginLogAddReq
+	MemberLoginLogAddResp    = ums.MemberLoginLogAddResp
+	MemberLoginLogDeleteReq  = ums.MemberLoginLogDeleteReq
+	MemberLoginLogDeleteResp = ums.MemberLoginLogDeleteResp
+	MemberLoginLogListData   = ums.MemberLoginLogListData
+	MemberLoginLogListReq    = ums.MemberLoginLogListReq
+	MemberLoginLogListResp   = ums.MemberLoginLogListResp
+	MemberLoginReq           = ums.MemberLoginReq
+	MemberLoginResp          = ums.MemberLoginResp
+	MemberUpdateReq          = ums.MemberUpdateReq
+	MemberUpdateResp         = ums.MemberUpdateResp
 
 	Ums interface {
 		// 添加会员
@@ -40,6 +47,12 @@ type (
 		MemberDelete(ctx context.Context, in *MemberDeleteReq, opts ...grpc.CallOption) (*MemberDeleteResp, error)
 		// 会员详情
 		MemberInfo(ctx context.Context, in *MemberInfoReq, opts ...grpc.CallOption) (*MemberInfoResp, error)
+		// 添加登录日志
+		MemberLoginLogAdd(ctx context.Context, in *MemberLoginLogAddReq, opts ...grpc.CallOption) (*MemberLoginLogAddResp, error)
+		// 登录日志列表
+		MemberLoginLogList(ctx context.Context, in *MemberLoginLogListReq, opts ...grpc.CallOption) (*MemberLoginLogListResp, error)
+		// 登录日志删除
+		MemberLoginLogDelete(ctx context.Context, in *MemberLoginLogDeleteReq, opts ...grpc.CallOption) (*MemberLoginLogDeleteResp, error)
 	}
 
 	defaultUms struct {
@@ -87,4 +100,22 @@ func (m *defaultUms) MemberDelete(ctx context.Context, in *MemberDeleteReq, opts
 func (m *defaultUms) MemberInfo(ctx context.Context, in *MemberInfoReq, opts ...grpc.CallOption) (*MemberInfoResp, error) {
 	client := ums.NewUmsClient(m.cli.Conn())
 	return client.MemberInfo(ctx, in, opts...)
+}
+
+// 添加登录日志
+func (m *defaultUms) MemberLoginLogAdd(ctx context.Context, in *MemberLoginLogAddReq, opts ...grpc.CallOption) (*MemberLoginLogAddResp, error) {
+	client := ums.NewUmsClient(m.cli.Conn())
+	return client.MemberLoginLogAdd(ctx, in, opts...)
+}
+
+// 登录日志列表
+func (m *defaultUms) MemberLoginLogList(ctx context.Context, in *MemberLoginLogListReq, opts ...grpc.CallOption) (*MemberLoginLogListResp, error) {
+	client := ums.NewUmsClient(m.cli.Conn())
+	return client.MemberLoginLogList(ctx, in, opts...)
+}
+
+// 登录日志删除
+func (m *defaultUms) MemberLoginLogDelete(ctx context.Context, in *MemberLoginLogDeleteReq, opts ...grpc.CallOption) (*MemberLoginLogDeleteResp, error) {
+	client := ums.NewUmsClient(m.cli.Conn())
+	return client.MemberLoginLogDelete(ctx, in, opts...)
 }

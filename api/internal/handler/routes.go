@@ -24,6 +24,7 @@ import (
 	syssystemLog "SimplePick-Mall-Server/api/internal/handler/sys/systemLog"
 	sysupload "SimplePick-Mall-Server/api/internal/handler/sys/upload"
 	sysuser "SimplePick-Mall-Server/api/internal/handler/sys/user"
+	umsMemberLoginLog "SimplePick-Mall-Server/api/internal/handler/ums/MemberLoginLog"
 	umsmember "SimplePick-Mall-Server/api/internal/handler/ums/member"
 	"SimplePick-Mall-Server/api/internal/svc"
 
@@ -389,6 +390,28 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/ums/member"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: umsMemberLoginLog.MemberLoginLogAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: umsMemberLoginLog.MemberLoginLogListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: umsMemberLoginLog.MemberLoginLogDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/ums/MemberLoginLog"),
 	)
 
 	server.AddRoutes(

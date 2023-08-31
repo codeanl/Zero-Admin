@@ -182,12 +182,12 @@ type AddPlaceResp struct {
 
 type UpdatePlaceReq struct {
 	Id        int64  `json:"id"`
-	Name      string `json:"name"`
-	Place     string `json:"place"`
-	Status    string `json:"status"`
-	Pic       string `json:"pic"`
-	Phone     string `json:"phone"`
-	Principal string `json:"principal"`
+	Name      string `json:"name,optional"`
+	Place     string `json:"place,optional"`
+	Status    string `json:"status,optional"`
+	Pic       string `json:"pic,optional"`
+	Phone     string `json:"phone,optional"`
+	Principal string `json:"principal,optional"`
 }
 
 type UpdatePlaceResp struct {
@@ -807,10 +807,18 @@ type DeleteAttributeCategoryResp struct {
 }
 
 type AddMemberReq struct {
-	Username string `json:"username"` // 用户名
-	Password string `json:"password"` // 密码
-	Nickname string `json:"nickname"` // 昵称
-	Phone    string `json:"phone"`    // 手机号码
+	Id        int64  `json:"id"`
+	Username  string `json:"username,optional"`  // 用户名
+	Password  string `json:"password,optional"`  // 密码
+	Nickname  string `json:"nickname,optional"`  // 昵称
+	Phone     string `json:"phone,optional"`     // 手机号码
+	Status    string `json:"status,optional"`    // 帐号启用状态:0->禁用；1->启用
+	Avatar    string `json:"avatar,optional"`    // 头像
+	Gender    string `json:"gender,optional"`    // 性别：0->未知；1->男；2->女
+	Email     string `json:"email,optional"`     //
+	City      string `json:"city,optional"`      // 所做城市
+	Job       string `json:"job,optional"`       // 职业
+	Signature string `json:"signature,optional"` // 个性签名                              // 手机号码
 }
 
 type AddMemberResp struct {
@@ -851,17 +859,17 @@ type ListMemberResp struct {
 
 type UpdateMemberReq struct {
 	Id        int64  `json:"id"`
-	Username  string `json:"username"`  // 用户名
-	Password  string `json:"password"`  // 密码
-	Nickname  string `json:"nickname"`  // 昵称
-	Phone     string `json:"phone"`     // 手机号码
-	Status    string `json:"status"`    // 帐号启用状态:0->禁用；1->启用
-	Avatar    string `json:"avatar"`    // 头像
-	Gender    string `json:"gender"`    // 性别：0->未知；1->男；2->女
-	Email     string `json:"email"`     //
-	City      string `json:"city"`      // 所做城市
-	Job       string `json:"job"`       // 职业
-	Signature string `json:"signature"` // 个性签名
+	Username  string `json:"username,optional"`  // 用户名
+	Password  string `json:"password,optional"`  // 密码
+	Nickname  string `json:"nickname,optional"`  // 昵称
+	Phone     string `json:"phone,optional"`     // 手机号码
+	Status    string `json:"status,optional"`    // 帐号启用状态:0->禁用；1->启用
+	Avatar    string `json:"avatar,optional"`    // 头像
+	Gender    string `json:"gender,optional"`    // 性别：0->未知；1->男；2->女
+	Email     string `json:"email,optional"`     //
+	City      string `json:"city,optional"`      // 所做城市
+	Job       string `json:"job,optional"`       // 职业
+	Signature string `json:"signature,optional"` // 个性签名
 }
 
 type UpdateMemberResp struct {
@@ -874,6 +882,45 @@ type DeleteMemberReq struct {
 }
 
 type DeleteMemberResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type AddMemberLoginLogReq struct {
+	UserID int64  `json:"userId,optional"`
+	IP     string `json:"ip,optional"`
+}
+
+type AddMemberLoginLogResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListMemberLoginLogReq struct {
+	Current  int64 `form:"current,default=1"`
+	PageSize int64 `form:"pageSize,default=20"`
+	UserID   int64 `form:"userId"`
+}
+
+type ListMemberLoginLogData struct {
+	Id         int64  `json:"id"`
+	UserID     int64  `json:"userId,optional"`
+	IP         string `json:"ip,optional"`
+	CreateTime string `json:"createTime,optional"`
+}
+
+type ListMemberLoginLogResp struct {
+	Code    int64                     `json:"code"`
+	Message string                    `json:"message"`
+	Data    []*ListMemberLoginLogData `json:"data"`
+	Total   int64                     `json:"total"`
+}
+
+type DeleteMemberLoginLogReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteMemberLoginLogResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
 }

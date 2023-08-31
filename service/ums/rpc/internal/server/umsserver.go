@@ -57,3 +57,21 @@ func (s *UmsServer) MemberInfo(ctx context.Context, in *ums.MemberInfoReq) (*ums
 	l := logic.NewMemberInfoLogic(ctx, s.svcCtx)
 	return l.MemberInfo(in)
 }
+
+// 添加登录日志
+func (s *UmsServer) MemberLoginLogAdd(ctx context.Context, in *ums.MemberLoginLogAddReq) (*ums.MemberLoginLogAddResp, error) {
+	l := logic.NewMemberLoginLogAddLogic(ctx, s.svcCtx)
+	return l.MemberLoginLogAdd(in)
+}
+
+// 登录日志列表
+func (s *UmsServer) MemberLoginLogList(ctx context.Context, in *ums.MemberLoginLogListReq) (*ums.MemberLoginLogListResp, error) {
+	l := logic.NewMemberLoginLogListLogic(ctx, s.svcCtx)
+	return l.MemberLoginLogList(in)
+}
+
+// 登录日志删除
+func (s *UmsServer) MemberLoginLogDelete(ctx context.Context, in *ums.MemberLoginLogDeleteReq) (*ums.MemberLoginLogDeleteResp, error) {
+	l := logic.NewMemberLoginLogDeleteLogic(ctx, s.svcCtx)
+	return l.MemberLoginLogDelete(in)
+}

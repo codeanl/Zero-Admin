@@ -32,10 +32,17 @@ func (l *MemberAddLogic) MemberAdd(in *ums.MemberAddReq) (*ums.MemberAddResp, er
 		return nil, errors.New("账户已存在")
 	}
 	info := &model.Member{
-		Username: in.Username,
-		Phone:    in.Phone,
-		Nickname: in.Nickname,
-		Password: in.Password,
+		Username:  in.Username,
+		Password:  in.Password,
+		Nickname:  in.Nickname,
+		Phone:     in.Phone,
+		Status:    in.Status,
+		Avatar:    in.Avatar,
+		Gender:    in.Gender,
+		Email:     in.Email,
+		City:      in.City,
+		Job:       in.Job,
+		Signature: in.Signature,
 	}
 	err := l.svcCtx.MemberModel.AddMember(info)
 	if err != nil {
