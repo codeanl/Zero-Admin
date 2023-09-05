@@ -26,10 +26,9 @@ func NewMemberLoginLogDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContex
 
 // 登录日志删除
 func (l *MemberLoginLogDeleteLogic) MemberLoginLogDelete(in *ums.MemberLoginLogDeleteReq) (*ums.MemberLoginLogDeleteResp, error) {
-	err := l.svcCtx.MemberModel.DeleteByIds(in.Ids)
+	err := l.svcCtx.MemberLoginLogModel.DeleteMemberLoginLogByIds(in.Ids)
 	if err != nil {
 		return nil, errors.New("删除用户失败")
 	}
-
 	return &ums.MemberLoginLogDeleteResp{}, nil
 }

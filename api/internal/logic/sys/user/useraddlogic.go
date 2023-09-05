@@ -31,7 +31,7 @@ func (l *UserAddLogic) UserAdd(req *types.AddUserReq) (resp *types.AddUserResp, 
 		Nickname: req.Nickname,
 		Password: "123456",
 		Gender:   req.Gender,
-		Avatar:   "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+		Avatar:   "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif", //默认头像
 		Email:    req.Email,
 		Status:   req.Status,
 		CreateBy: l.ctx.Value("username").(string),

@@ -964,11 +964,11 @@ type ListHomeAdvertiseResp struct {
 
 type UpdateHomeAdvertiseReq struct {
 	Id     int64  `json:"id"`
-	Name   string `json:"name"`          // 名称
-	Pic    string `json:"pic,optional"`  // 图片地址
-	Status string `json:"status"`        // 上下线状态：0->下线；1->上线
-	Url    string `json:"url"`           // 链接地址
-	Note   string `json:"note,optional"` // 备注
+	Name   string `json:"name,optional"`   // 名称
+	Pic    string `json:"pic,optional"`    // 图片地址
+	Status string `json:"status,optional"` // 上下线状态：0->下线；1->上线
+	Url    string `json:"url,optional"`    // 链接地址
+	Note   string `json:"note,optional"`   // 备注
 }
 
 type UpdateHomeAdvertiseResp struct {

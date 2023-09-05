@@ -166,13 +166,11 @@ service api {
          @handler UserList
          get /list (ListUserReq) returns (ListUserResp)
 
-
-
-   @doc(summary: "修改密码")
-   @handler UpdatePassword
-   post /updatePassword (UpdatePasswordReq) returns (UpdatePasswordResp)
+     @doc(summary: "修改密码")
+    @handler UpdatePassword
+    post /updatePassword (UpdatePasswordReq) returns (UpdatePasswordResp)
 
       @doc(summary: "重置密码")
-        @handler RestartPassword
-        post /restartPassword (RestartPasswordReq)returns (RestartPasswordResp)
+      @handler RestartPassword
+      post /restartPassword (RestartPasswordReq)returns (RestartPasswordResp)
 }
