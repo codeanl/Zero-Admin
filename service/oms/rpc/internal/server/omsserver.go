@@ -99,3 +99,27 @@ func (s *OmsServer) ReturnApplyDelete(ctx context.Context, in *oms.ReturnApplyDe
 	l := logic.NewReturnApplyDeleteLogic(ctx, s.svcCtx)
 	return l.ReturnApplyDelete(in)
 }
+
+// 添加购物车
+func (s *OmsServer) CartAdd(ctx context.Context, in *oms.CartAddReq) (*oms.CartAddResp, error) {
+	l := logic.NewCartAddLogic(ctx, s.svcCtx)
+	return l.CartAdd(in)
+}
+
+// 更新购物车
+func (s *OmsServer) CartUpdate(ctx context.Context, in *oms.CartUpdateReq) (*oms.CartUpdateResp, error) {
+	l := logic.NewCartUpdateLogic(ctx, s.svcCtx)
+	return l.CartUpdate(in)
+}
+
+// 购物车列表
+func (s *OmsServer) CartList(ctx context.Context, in *oms.CartListReq) (*oms.CartListResp, error) {
+	l := logic.NewCartListLogic(ctx, s.svcCtx)
+	return l.CartList(in)
+}
+
+// 删除购物车
+func (s *OmsServer) CartDelete(ctx context.Context, in *oms.CartDeleteReq) (*oms.CartDeleteResp, error) {
+	l := logic.NewCartDeleteLogic(ctx, s.svcCtx)
+	return l.CartDelete(in)
+}

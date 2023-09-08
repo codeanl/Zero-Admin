@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	auth "SimplePick-Mall-Server/front-api/internal/handler/auth"
+	cart "SimplePick-Mall-Server/front-api/internal/handler/cart"
 	index "SimplePick-Mall-Server/front-api/internal/handler/index"
 	"SimplePick-Mall-Server/front-api/internal/svc"
 
@@ -67,5 +68,31 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithPrefix("/api/index"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: cart.CartAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: cart.CartUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: cart.CartDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/list",
+				Handler: cart.CartListHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/cart"),
 	)
 }

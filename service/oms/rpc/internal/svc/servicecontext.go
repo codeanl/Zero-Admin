@@ -12,6 +12,7 @@ type ServiceContext struct {
 	OrderSkuModel     model.OrderSkuModel
 	ReturnReasonModel model.ReturnReasonModel
 	ReturnApplyModel  model.ReturnApplyModel
+	CartModel         model.CartModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -23,5 +24,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		OrderSkuModel:     model.NewOrderSkuModel(conn),
 		ReturnReasonModel: model.NewReturnReasonModel(conn),
 		ReturnApplyModel:  model.NewReturnApplyModel(conn),
+		CartModel:         model.NewCartModel(conn),
 	}
 }

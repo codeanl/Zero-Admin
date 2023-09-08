@@ -32,6 +32,10 @@ const (
 	Oms_ReturnApplyUpdate_FullMethodName  = "/oms.Oms/ReturnApplyUpdate"
 	Oms_ReturnApplyList_FullMethodName    = "/oms.Oms/ReturnApplyList"
 	Oms_ReturnApplyDelete_FullMethodName  = "/oms.Oms/ReturnApplyDelete"
+	Oms_CartAdd_FullMethodName            = "/oms.Oms/CartAdd"
+	Oms_CartUpdate_FullMethodName         = "/oms.Oms/CartUpdate"
+	Oms_CartList_FullMethodName           = "/oms.Oms/CartList"
+	Oms_CartDelete_FullMethodName         = "/oms.Oms/CartDelete"
 )
 
 // OmsClient is the client API for Oms service.
@@ -64,6 +68,14 @@ type OmsClient interface {
 	ReturnApplyList(ctx context.Context, in *ReturnApplyListReq, opts ...grpc.CallOption) (*ReturnApplyListResp, error)
 	// 删除退货
 	ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error)
+	// 添加购物车
+	CartAdd(ctx context.Context, in *CartAddReq, opts ...grpc.CallOption) (*CartAddResp, error)
+	// 更新购物车
+	CartUpdate(ctx context.Context, in *CartUpdateReq, opts ...grpc.CallOption) (*CartUpdateResp, error)
+	// 购物车列表
+	CartList(ctx context.Context, in *CartListReq, opts ...grpc.CallOption) (*CartListResp, error)
+	// 删除购物车
+	CartDelete(ctx context.Context, in *CartDeleteReq, opts ...grpc.CallOption) (*CartDeleteResp, error)
 }
 
 type omsClient struct {
@@ -191,6 +203,42 @@ func (c *omsClient) ReturnApplyDelete(ctx context.Context, in *ReturnApplyDelete
 	return out, nil
 }
 
+func (c *omsClient) CartAdd(ctx context.Context, in *CartAddReq, opts ...grpc.CallOption) (*CartAddResp, error) {
+	out := new(CartAddResp)
+	err := c.cc.Invoke(ctx, Oms_CartAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) CartUpdate(ctx context.Context, in *CartUpdateReq, opts ...grpc.CallOption) (*CartUpdateResp, error) {
+	out := new(CartUpdateResp)
+	err := c.cc.Invoke(ctx, Oms_CartUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) CartList(ctx context.Context, in *CartListReq, opts ...grpc.CallOption) (*CartListResp, error) {
+	out := new(CartListResp)
+	err := c.cc.Invoke(ctx, Oms_CartList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omsClient) CartDelete(ctx context.Context, in *CartDeleteReq, opts ...grpc.CallOption) (*CartDeleteResp, error) {
+	out := new(CartDeleteResp)
+	err := c.cc.Invoke(ctx, Oms_CartDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OmsServer is the server API for Oms service.
 // All implementations must embed UnimplementedOmsServer
 // for forward compatibility
@@ -221,6 +269,14 @@ type OmsServer interface {
 	ReturnApplyList(context.Context, *ReturnApplyListReq) (*ReturnApplyListResp, error)
 	// 删除退货
 	ReturnApplyDelete(context.Context, *ReturnApplyDeleteReq) (*ReturnApplyDeleteResp, error)
+	// 添加购物车
+	CartAdd(context.Context, *CartAddReq) (*CartAddResp, error)
+	// 更新购物车
+	CartUpdate(context.Context, *CartUpdateReq) (*CartUpdateResp, error)
+	// 购物车列表
+	CartList(context.Context, *CartListReq) (*CartListResp, error)
+	// 删除购物车
+	CartDelete(context.Context, *CartDeleteReq) (*CartDeleteResp, error)
 	mustEmbedUnimplementedOmsServer()
 }
 
@@ -266,6 +322,18 @@ func (UnimplementedOmsServer) ReturnApplyList(context.Context, *ReturnApplyListR
 }
 func (UnimplementedOmsServer) ReturnApplyDelete(context.Context, *ReturnApplyDeleteReq) (*ReturnApplyDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReturnApplyDelete not implemented")
+}
+func (UnimplementedOmsServer) CartAdd(context.Context, *CartAddReq) (*CartAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CartAdd not implemented")
+}
+func (UnimplementedOmsServer) CartUpdate(context.Context, *CartUpdateReq) (*CartUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CartUpdate not implemented")
+}
+func (UnimplementedOmsServer) CartList(context.Context, *CartListReq) (*CartListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CartList not implemented")
+}
+func (UnimplementedOmsServer) CartDelete(context.Context, *CartDeleteReq) (*CartDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CartDelete not implemented")
 }
 func (UnimplementedOmsServer) mustEmbedUnimplementedOmsServer() {}
 
@@ -514,6 +582,78 @@ func _Oms_ReturnApplyDelete_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Oms_CartAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CartAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).CartAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_CartAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).CartAdd(ctx, req.(*CartAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_CartUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CartUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).CartUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_CartUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).CartUpdate(ctx, req.(*CartUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_CartList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CartListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).CartList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_CartList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).CartList(ctx, req.(*CartListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oms_CartDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CartDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).CartDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_CartDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).CartDelete(ctx, req.(*CartDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Oms_ServiceDesc is the grpc.ServiceDesc for Oms service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -572,6 +712,22 @@ var Oms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReturnApplyDelete",
 			Handler:    _Oms_ReturnApplyDelete_Handler,
+		},
+		{
+			MethodName: "CartAdd",
+			Handler:    _Oms_CartAdd_Handler,
+		},
+		{
+			MethodName: "CartUpdate",
+			Handler:    _Oms_CartUpdate_Handler,
+		},
+		{
+			MethodName: "CartList",
+			Handler:    _Oms_CartList_Handler,
+		},
+		{
+			MethodName: "CartDelete",
+			Handler:    _Oms_CartDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

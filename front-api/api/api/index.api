@@ -137,7 +137,7 @@ type(
             ProductInfo ListProductData  `json:"productInfo"`
             SkuList []SkuList `json:"skuList"`
             SizeList []SizeList `json:"sizeList"`
-            AttributeValue []string `json:"attributeValue"`
+            AttributeList []AttributeLists `json:"attributeList"`
             ImgUrl []string `json:"imgUrl"`
         }
         ProductInfoResp struct {
@@ -155,16 +155,22 @@ type(
               Price float64 `json:"price"`
               Stock int64 `json:"stock"`
               Tag string `json:"tag"`
+              Specs []Specs `json:"specs"`
          }
+         Specs struct{
+              Name string `json:"name"`
+              ValueName string `json:"valueName"`
+          }
           SizeList struct{
                  ID int64 `json:"id,optional"`
                  Name string `json:"name"`
-                 ProductID int64 `json:"productId,optional"`
-                 SizeValue []SizeValue `json:"sizeValue"`
+                 Values []Values `json:"values"`
+           }
+            AttributeLists struct{
+                     Name string `json:"name"`
+                     value string `json:"value"`
              }
-           SizeValue struct{
-                 ID int64 `json:"id,optional"`
-                 SizeID int64  `json:"sizeID,optional"`
+           Values struct{
                  Name string `json:"name"`
           }
 )
@@ -186,5 +192,6 @@ service api {
        get /subjectProductList (ListSubjectProductReq) returns (ListSubjectProductResp)
     @handler ProductInfo
     post /productInfo (ProductInfoReq) returns (ProductInfoResp)
+
 
 }

@@ -20,3 +20,9 @@ PmsRpc:
     Hosts:
       - localhost:2379
     Key: pms.rpc
+
+OmsRpc:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: oms.rpc

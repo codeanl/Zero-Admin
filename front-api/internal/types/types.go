@@ -195,11 +195,11 @@ type ProductInfoReq struct {
 }
 
 type InfoData struct {
-	ProductInfo    ListProductData `json:"productInfo"`
-	SkuList        []SkuList       `json:"skuList"`
-	SizeList       []SizeList      `json:"sizeList"`
-	AttributeValue []string        `json:"attributeValue"`
-	ImgUrl         []string        `json:"imgUrl"`
+	ProductInfo   ListProductData  `json:"productInfo"`
+	SkuList       []SkuList        `json:"skuList"`
+	SizeList      []SizeList       `json:"sizeList"`
+	AttributeList []AttributeLists `json:"attributeList"`
+	ImgUrl        []string         `json:"imgUrl"`
 }
 
 type ProductInfoResp struct {
@@ -218,17 +218,97 @@ type SkuList struct {
 	Price       float64 `json:"price"`
 	Stock       int64   `json:"stock"`
 	Tag         string  `json:"tag"`
+	Specs       []Specs `json:"specs"`
+}
+
+type Specs struct {
+	Name      string `json:"name"`
+	ValueName string `json:"valueName"`
 }
 
 type SizeList struct {
-	ID        int64       `json:"id,optional"`
-	Name      string      `json:"name"`
-	ProductID int64       `json:"productId,optional"`
-	SizeValue []SizeValue `json:"sizeValue"`
+	ID     int64    `json:"id,optional"`
+	Name   string   `json:"name"`
+	Values []Values `json:"values"`
 }
 
-type SizeValue struct {
-	ID     int64  `json:"id,optional"`
-	SizeID int64  `json:"sizeID,optional"`
-	Name   string `json:"name"`
+type AttributeLists struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+type Values struct {
+	Name string `json:"name"`
+}
+
+type AddCartReq struct {
+	UserID int64 `json:"userID"`
+	SkuID  int64 `json:"skuID"`
+	Count  int64 `json:"count"`
+}
+
+type AddCartResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateCartReq struct {
+	ID     int64 `json:"id"`
+	UserID int64 `json:"userID"`
+	SkuID  int64 `json:"skuID"`
+	Count  int64 `json:"count"`
+}
+
+type UpdateCartResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteCartReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteCartResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListCartReq struct {
+	Current  int64 `json:"current,optional"`
+	PageSize int64 `json:"pageSize,optional"`
+	UserID   int64 `json:"userID"`
+}
+
+type ListCartData struct {
+	ID          int64       `json:"id"`
+	UserID      int64       `json:"userID"`
+	SkuID       int64       `json:"skuID"`
+	Count       int64       `json:"count"`
+	ListSkuData ListSkuData `json:"listSkuData"`
+}
+
+type ListCartResp struct {
+	Code    int64          `json:"code"`
+	Message string         `json:"message"`
+	Total   int64          `json:"total"`
+	Data    []ListCartData `json:"data"`
+}
+
+type ListSkuData struct {
+	ID          int64       `json:"id"`
+	ProductID   int64       `json:"productId"`
+	Name        string      `json:"name"`
+	Pic         string      `json:"pic"`
+	SkuSn       string      `json:"skuSn"`
+	Description string      `json:"description"`
+	Price       float64     `json:"price"`
+	Stock       int64       `json:"stock"`
+	Tag         string      `json:"tag"`
+	Space       []SpaceInfo `json:"space"`
+	TagText     string      `json:"tagText"`
+}
+
+type SpaceInfo struct {
+	Name      string `json:"name"`
+	ValueName string `json:"valueName"`
 }

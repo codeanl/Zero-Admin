@@ -10,4 +10,5 @@ type Config struct {
 	UmsRpc zrpc.RpcClientConf
 	SmsRpc zrpc.RpcClientConf
 	PmsRpc zrpc.RpcClientConf
+	OmsRpc zrpc.RpcClientConf
 }

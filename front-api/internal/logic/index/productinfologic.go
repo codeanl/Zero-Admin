@@ -3,6 +3,7 @@ package index
 import (
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
+	"encoding/json"
 
 	"SimplePick-Mall-Server/front-api/internal/svc"
 	"SimplePick-Mall-Server/front-api/internal/types"
@@ -44,6 +45,17 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 	}
 	var SkuList []types.SkuList
 	for _, i := range resp.SkuList {
+		var data []map[string]string
+		json.Unmarshal([]byte("["+i.Tag+"]"), &data)
+		var space []types.Specs
+		for _, item := range data {
+			for key, value := range item {
+				space = append(space, types.Specs{
+					Name:      key,
+					ValueName: value,
+				})
+			}
+		}
 		SkuList = append(SkuList, types.SkuList{
 			ID:          i.ID,
 			ProductID:   i.ProductID,
@@ -54,32 +66,38 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 			Price:       i.Price,
 			Stock:       i.Stock,
 			Tag:         i.Tag,
+			Specs:       space,
 		})
 	}
 	var SizeList []types.SizeList
-	for _, i := range resp.SizeList {
-		var sizeValue []types.SizeValue
-		for _, j := range i.SizeValue {
-			sizeValue = append(sizeValue, types.SizeValue{
-				ID:     j.ID,
-				SizeID: j.SizeID,
-				Name:   j.Value,
+	var AttributeList []types.AttributeLists
+	for _, i := range resp.Attribute {
+		if i.Type == "1" {
+			var value string
+			value = i.Values[0].Value
+			AttributeList = append(AttributeList, types.AttributeLists{
+				Name:  i.Name,
+				Value: value,
 			})
 		}
-		SizeList = append(SizeList, types.SizeList{
-			ID:        i.ID,
-			Name:      i.Name,
-			ProductID: i.ProductID,
-			SizeValue: sizeValue,
-		})
+		if i.Type == "2" {
+			var values []types.Values
+			for _, j := range i.Values {
+				values = append(values, types.Values{Name: j.Value})
+			}
+			SizeList = append(SizeList, types.SizeList{
+				ID:     i.ID,
+				Name:   i.Name,
+				Values: values,
+			})
+		}
 	}
-
 	data := types.InfoData{
-		ProductInfo:    productInfo,
-		SkuList:        SkuList,
-		ImgUrl:         resp.ImgUrl,
-		AttributeValue: resp.AttributeValue,
-		SizeList:       SizeList,
+		ProductInfo:   productInfo,
+		SkuList:       SkuList,
+		ImgUrl:        resp.ImgUrl,
+		AttributeList: AttributeList,
+		SizeList:      SizeList,
 	}
 	return &types.ProductInfoResp{
 		Code:    200,

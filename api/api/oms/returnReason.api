@@ -18,8 +18,8 @@ type(
         }
     UpdateReturnReasonReq struct {
             ID int64 `json:"id"`
-            Name string `json:"name"`
-            Status string `json:"status"`
+            Name string `json:"name,optional"`
+            Status string `json:"status,optional"`
         }
         UpdateReturnReasonResp struct {
             Code int64 `json:"code"`

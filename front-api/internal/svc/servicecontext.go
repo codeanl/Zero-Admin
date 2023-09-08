@@ -2,6 +2,7 @@ package svc
 
 import (
 	"SimplePick-Mall-Server/front-api/internal/config"
+	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
@@ -13,6 +14,7 @@ type ServiceContext struct {
 	Ums    umsclient.Ums
 	Sms    smsclient.Sms
 	Pms    pmsclient.Pms
+	Oms    omsclient.Oms
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -21,5 +23,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Ums:    umsclient.NewUms(zrpc.MustNewClient(c.UmsRpc)),
 		Sms:    smsclient.NewSms(zrpc.MustNewClient(c.SmsRpc)),
 		Pms:    pmsclient.NewPms(zrpc.MustNewClient(c.PmsRpc)),
+		Oms:    omsclient.NewOms(zrpc.MustNewClient(c.OmsRpc)),
 	}
 }

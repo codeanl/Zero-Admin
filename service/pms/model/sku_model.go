@@ -13,6 +13,7 @@ type (
 		GetSkuList(in *pms.SkuListReq) ([]*Sku, int64, error)
 		GetSkuById(id int64) (info *Sku, err error)
 		DeleteSkuBySpuID(id int64) error
+		GetSkuByTag(tag string) (info *Sku, err error)
 	}
 
 	defaultSkuModel struct {
@@ -50,6 +51,10 @@ func (m *defaultSkuModel) UpdateSku(id int64, role *Sku) error {
 }
 func (m *defaultSkuModel) GetSkuById(id int64) (info *Sku, err error) {
 	err = m.conn.Model(&Sku{}).Where("id=?", id).Find(&info).Error
+	return info, err
+}
+func (m *defaultSkuModel) GetSkuByTag(tag string) (info *Sku, err error) {
+	err = m.conn.Model(&Sku{}).Where("tag=?", tag).Find(&info).Error
 	return info, err
 }
 

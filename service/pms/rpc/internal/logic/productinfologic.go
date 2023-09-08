@@ -61,7 +61,6 @@ func (l *ProductInfoLogic) ProductInfo(in *pms.ProductInfoReq) (*pms.ProductInfo
 			Values:              value,
 		})
 	}
-
 	//获取商品下的图片
 	var ImgUrl []string
 	img, _ := l.svcCtx.ProductImgModel.GetImgtByProducID(in.ID)

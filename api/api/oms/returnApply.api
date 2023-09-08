@@ -23,13 +23,13 @@ type(
         }
     UpdateReturnApplyReq struct {
             ID int64 `json:"id"`
-          UserID int64 `json:"userID"`
-           OrderID int64 `json:"orderID"`
-              ReturnReasonID int64 `json:"returnReasonID"`
-           Status string `json:"status"`
-           Description string `json:"description"`
-           ProofPics string `json:"proofPics"`
-           ReturnAmount float64 `json:"returnAmount"`
+          UserID int64 `json:"userID,optional"`
+           OrderID int64 `json:"orderID,optional"`
+              ReturnReasonID int64 `json:"returnReasonID,optional"`
+           Status string `json:"status,optional"`
+           Description string `json:"description,optional"`
+           ProofPics string `json:"proofPics,optional"`
+           ReturnAmount float64 `json:"returnAmount,optional"`
         }
         UpdateReturnApplyResp struct {
             Code int64 `json:"code"`

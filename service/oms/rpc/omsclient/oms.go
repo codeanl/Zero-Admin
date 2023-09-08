@@ -13,6 +13,15 @@ import (
 )
 
 type (
+	CartAddReq             = oms.CartAddReq
+	CartAddResp            = oms.CartAddResp
+	CartDeleteReq          = oms.CartDeleteReq
+	CartDeleteResp         = oms.CartDeleteResp
+	CartListData           = oms.CartListData
+	CartListReq            = oms.CartListReq
+	CartListResp           = oms.CartListResp
+	CartUpdateReq          = oms.CartUpdateReq
+	CartUpdateResp         = oms.CartUpdateResp
 	OrderAddReq            = oms.OrderAddReq
 	OrderAddResp           = oms.OrderAddResp
 	OrderDeleteReq         = oms.OrderDeleteReq
@@ -70,6 +79,14 @@ type (
 		ReturnApplyList(ctx context.Context, in *ReturnApplyListReq, opts ...grpc.CallOption) (*ReturnApplyListResp, error)
 		// 删除退货
 		ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error)
+		// 添加购物车
+		CartAdd(ctx context.Context, in *CartAddReq, opts ...grpc.CallOption) (*CartAddResp, error)
+		// 更新购物车
+		CartUpdate(ctx context.Context, in *CartUpdateReq, opts ...grpc.CallOption) (*CartUpdateResp, error)
+		// 购物车列表
+		CartList(ctx context.Context, in *CartListReq, opts ...grpc.CallOption) (*CartListResp, error)
+		// 删除购物车
+		CartDelete(ctx context.Context, in *CartDeleteReq, opts ...grpc.CallOption) (*CartDeleteResp, error)
 	}
 
 	defaultOms struct {
@@ -159,4 +176,28 @@ func (m *defaultOms) ReturnApplyList(ctx context.Context, in *ReturnApplyListReq
 func (m *defaultOms) ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error) {
 	client := oms.NewOmsClient(m.cli.Conn())
 	return client.ReturnApplyDelete(ctx, in, opts...)
+}
+
+// 添加购物车
+func (m *defaultOms) CartAdd(ctx context.Context, in *CartAddReq, opts ...grpc.CallOption) (*CartAddResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.CartAdd(ctx, in, opts...)
+}
+
+// 更新购物车
+func (m *defaultOms) CartUpdate(ctx context.Context, in *CartUpdateReq, opts ...grpc.CallOption) (*CartUpdateResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.CartUpdate(ctx, in, opts...)
+}
+
+// 购物车列表
+func (m *defaultOms) CartList(ctx context.Context, in *CartListReq, opts ...grpc.CallOption) (*CartListResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.CartList(ctx, in, opts...)
+}
+
+// 删除购物车
+func (m *defaultOms) CartDelete(ctx context.Context, in *CartDeleteReq, opts ...grpc.CallOption) (*CartDeleteResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.CartDelete(ctx, in, opts...)
 }

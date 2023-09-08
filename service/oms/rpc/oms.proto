@@ -223,6 +223,48 @@ message ReturnApplyDeleteReq {
 message ReturnApplyDeleteResp {
   string pong = 1;
 }
+//添加购物车
+message CartAddReq{
+  int64 UserID= 1;
+  int64 SkuID= 2;
+  int64 Count= 3;
+}
+message CartAddResp{
+  string pong = 1;
+}
+//更新购物车
+message CartUpdateReq{
+  int64 ID= 4;
+  int64 UserID= 1;
+  int64 SkuID= 2;
+  int64 Count= 3;
+}
+message CartUpdateResp{
+  string pong = 1;
+}
+//购物车列表
+message CartListReq {
+  int64    current = 1;
+  int64   pageSize = 2;
+  int64    UserID = 4;
+}
+message CartListData{
+  int64 ID= 4;
+  int64 UserID= 1;
+  int64 SkuID= 2;
+  int64 Count= 3;
+}
+message CartListResp {
+  int64 total = 1;
+  repeated CartListData list = 2;
+}
+//删除购物车
+message CartDeleteReq {
+  repeated int64 ids = 1;
+}
+message CartDeleteResp {
+  string pong = 1;
+}
 service Oms {
   //添加订单
   rpc OrderAdd(OrderAddReq) returns(OrderAddResp);
@@ -253,4 +295,13 @@ service Oms {
   //删除退货
   rpc ReturnApplyDelete (ReturnApplyDeleteReq) returns(ReturnApplyDeleteResp);
 
+
+  //添加购物车
+  rpc CartAdd(CartAddReq) returns(CartAddResp);
+  //更新购物车
+  rpc CartUpdate(CartUpdateReq) returns(CartUpdateResp);
+  //购物车列表
+  rpc CartList(CartListReq) returns(CartListResp);
+  //删除购物车
+  rpc CartDelete (CartDeleteReq) returns(CartDeleteResp);
 }
