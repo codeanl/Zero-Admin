@@ -1,6 +1,7 @@
 import "api/auth.api"
 import "api/index.api"
 import "api/cart.api"
+import "api/order.api"
 
 info(
 	title: "type title here"

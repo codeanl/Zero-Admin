@@ -51,6 +51,7 @@ type (
 	ReturnReasonListResp   = oms.ReturnReasonListResp
 	ReturnReasonUpdateReq  = oms.ReturnReasonUpdateReq
 	ReturnReasonUpdateResp = oms.ReturnReasonUpdateResp
+	Skus                   = oms.Skus
 
 	Oms interface {
 		// 添加订单

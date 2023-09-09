@@ -7,6 +7,7 @@ import (
 	auth "SimplePick-Mall-Server/front-api/internal/handler/auth"
 	cart "SimplePick-Mall-Server/front-api/internal/handler/cart"
 	index "SimplePick-Mall-Server/front-api/internal/handler/index"
+	order "SimplePick-Mall-Server/front-api/internal/handler/order"
 	"SimplePick-Mall-Server/front-api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -66,6 +67,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/productInfo",
 				Handler: index.ProductInfoHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/placeList",
+				Handler: index.PlaceListHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/api/index"),
 	)
@@ -94,5 +100,36 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithPrefix("/api/cart"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: order.OrderAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: order.OrderListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: order.OrderUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: order.OrderDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/info",
+				Handler: order.OrderInfoHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/order"),
 	)
 }

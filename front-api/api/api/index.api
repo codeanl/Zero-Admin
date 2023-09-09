@@ -173,6 +173,24 @@ type(
            Values struct{
                  Name string `json:"name"`
           }
+
+      ListPlaceReq struct {
+      }
+      ListPlaceData struct {
+          Id int64 `json:"id"`
+          Name string `json:"name"`
+          Place string `json:"place"`
+          Status string `json:"status"`
+          Pic string `json:"pic"`
+          Phone string `json:"phone"`
+          Principal string `json:"principal"`
+      }
+      ListPlaceResp struct {
+          Code int64 `json:"code"`
+          Message string `json:"message"`
+          Total int64 `json:"total"`
+          Data []*ListPlaceData `json:"data"`
+      }
 )
 
 @server(
@@ -193,5 +211,6 @@ service api {
     @handler ProductInfo
     post /productInfo (ProductInfoReq) returns (ProductInfoResp)
 
-
+    @handler PlaceList
+    post /placeList (ListPlaceReq) returns (ListPlaceResp)
 }

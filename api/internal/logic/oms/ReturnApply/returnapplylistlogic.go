@@ -68,8 +68,8 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 			CommentTime:           order.OrderInfo.CommentTime,
 		}
 		var skuList []types.SkuData
-		for _, i := range order.SkuIDs {
-			sku, _ := l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: i})
+		for _, i := range order.Skus {
+			sku, _ := l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: i.SkuID})
 			spu, _ := l.svcCtx.Pms.ProductInfo(l.ctx, &pmsclient.ProductInfoReq{ID: sku.SkuInfo.ProductID})
 			skuList = append(skuList, types.SkuData{
 				ID:          sku.SkuInfo.ID,

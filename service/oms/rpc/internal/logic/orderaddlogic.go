@@ -53,11 +53,14 @@ func (l *OrderAddLogic) OrderAdd(in *oms.OrderAddReq) (*oms.OrderAddResp, error)
 		//return nil, errors.New("添加失败")
 		return nil, err
 	}
-	for _, i := range in.SkuIDs {
+	for _, i := range in.Skus {
 		l.svcCtx.OrderSkuModel.AddOrderSku(&model.OrderSku{
 			OrderID: int64(order.ID),
-			SkuID:   i,
+			SkuID:   i.SkuID,
+			Count:   i.Count,
 		})
 	}
-	return &oms.OrderAddResp{}, nil
+	return &oms.OrderAddResp{
+		OrderID: int64(order.ID),
+	}, nil
 }

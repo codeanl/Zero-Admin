@@ -30,10 +30,16 @@ message OrderAddReq {
   string   DeliveryTime = 41;
   string   ReceiveTime = 42;
   string   CommentTime = 43;
-  repeated  int64 SkuIDs=44;
+  repeated  Skus Skus=44;
+}
+message Skus {
+  int64  SkuID =1;
+  int64  Count =2;
 }
 message OrderAddResp {
   string pong = 1;
+  int64  OrderID =2;
+
 }
 //订单更新
 message OrderUpdateReq{
@@ -124,9 +130,8 @@ message OrderInfoReq {
 }
 message OrderInfoResp {
   OrderListData OrderInfo=1;
-  repeated int64 SkuIDs=2;
+  repeated Skus Skus=2;
 }
-
 //添加退货原因
 message ReturnReasonAddReq{
   string       Name = 45;

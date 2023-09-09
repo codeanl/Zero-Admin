@@ -1395,6 +1395,7 @@ type SkuListData struct {
 	Price       float64 `json:"price"`
 	Stock       int64   `json:"stock"`
 	Tag         string  `json:"tag"`
+	Count       int64   `json:"count"`
 }
 
 type OrderInfo struct {

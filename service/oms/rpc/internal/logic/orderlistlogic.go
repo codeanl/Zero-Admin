@@ -63,5 +63,4 @@ func (l *OrderListLogic) OrderList(in *oms.OrderListReq) (*oms.OrderListResp, er
 		Total: total,
 		List:  list,
 	}, nil
-	return &oms.OrderListResp{}, nil
 }

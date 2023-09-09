@@ -4,9 +4,8 @@ import (
 	"SimplePick-Mall-Server/service/oms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/oms/rpc/oms"
 	"context"
-	"log"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"log"
 )
 
 type OrderInfoLogic struct {
@@ -57,17 +56,20 @@ func (l *OrderInfoLogic) OrderInfo(in *oms.OrderInfoReq) (*oms.OrderInfoResp, er
 		ReceiveTime:           order.ReceiveTime,
 		CommentTime:           order.CommentTime,
 	}
-	log.Print(info)
-	var SkuIDs []int64
+	var Skus []*oms.Skus
 	sku, err := l.svcCtx.OrderSkuModel.GetOrderSkuByOrderID(in.Id)
 	if err != nil {
 		return nil, err
 	}
 	for _, i := range sku {
-		SkuIDs = append(SkuIDs, i.SkuID)
+		Skus = append(Skus, &oms.Skus{
+			SkuID: i.SkuID,
+			Count: i.Count,
+		})
 	}
+	log.Print(Skus)
 	return &oms.OrderInfoResp{
 		OrderInfo: info,
-		SkuIDs:    SkuIDs,
+		Skus:      Skus,
 	}, nil
 }

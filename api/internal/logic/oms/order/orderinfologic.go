@@ -1,13 +1,13 @@
 package order
 
 import (
+	"SimplePick-Mall-Server/api/internal/svc"
+	"SimplePick-Mall-Server/api/internal/types"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
-
-	"SimplePick-Mall-Server/api/internal/svc"
-	"SimplePick-Mall-Server/api/internal/types"
+	"log"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -57,8 +57,10 @@ func (l *OrderInfoLogic) OrderInfo(req *types.OrderInfoReq) (*types.OrderInfoRes
 		CommentTime:           resp.OrderInfo.CommentTime,
 	}
 	var skuList []*types.SkuListData
-	for _, i := range resp.SkuIDs {
-		sku, _ := l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: i})
+	for _, i := range resp.Skus {
+		idd := i.SkuID
+		sku, _ := l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: idd})
+		log.Print(sku)
 		spu, _ := l.svcCtx.Pms.ProductInfo(l.ctx, &pmsclient.ProductInfoReq{ID: sku.SkuInfo.ProductID})
 		skuList = append(skuList, &types.SkuListData{
 			ID:          sku.SkuInfo.ID,
@@ -71,6 +73,7 @@ func (l *OrderInfoLogic) OrderInfo(req *types.OrderInfoReq) (*types.OrderInfoRes
 			Price:       sku.SkuInfo.Price,
 			Stock:       sku.SkuInfo.Stock,
 			Tag:         sku.SkuInfo.Tag,
+			Count:       i.Count,
 		})
 	}
 	place, _ := l.svcCtx.Sys.PlaceInfo(l.ctx, &sysclient.PlaceInfoReq{Id: resp.OrderInfo.PlaceId})

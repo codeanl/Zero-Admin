@@ -131,7 +131,9 @@ type (
            Description string `json:"description"`
            Price float64 `json:"price"`
            Stock int64 `json:"stock"`
-            Tag string `json:"tag"`
+           Tag string `json:"tag"`
+           Count int64 `json:"count"`
+
      }
     OrderInfo struct{
         OrderInfo ListOrderData `json:"orderInfo"`

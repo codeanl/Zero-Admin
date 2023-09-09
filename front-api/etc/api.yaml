@@ -26,3 +26,9 @@ OmsRpc:
     Hosts:
       - localhost:2379
     Key: oms.rpc
+
+SysRpc:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: sys.rpc

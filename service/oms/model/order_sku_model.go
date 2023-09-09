@@ -19,6 +19,7 @@ type (
 		gorm.Model
 		OrderID int64 `json:"order_id" gorm:"type:bigint;comment:订单id;not null"` //订单id
 		SkuID   int64 `json:"sku_id" gorm:"type:bigint;comment:skuId;not null"`  //skuId
+		Count   int64 `json:"count" gorm:"type:bigint;comment:数量;not null"`      //数量
 	}
 )
 
