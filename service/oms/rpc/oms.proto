@@ -82,6 +82,8 @@ message OrderListReq {
   string       PayType = 5;
   string       Status = 7;
   string       OrderType = 8;
+  int64   UserID = 9;
+
 }
 
 message OrderListData{
@@ -108,9 +110,11 @@ message OrderListData{
   string       ConfirmStatus = 37;
   string       DeleteStatus = 38;
   string   PaymentTime = 40;
+  string   CreateTime = 401;
   string   DeliveryTime = 41;
   string   ReceiveTime = 42;
   string   CommentTime = 43;
+  repeated  Skus Skus=44;
 }
 message OrderListResp {
   int64 total = 1;

@@ -47,6 +47,12 @@ func (l *ProductAddLogic) ProductAdd(in *pms.ProductAddReq) (*pms.ProductAddResp
 			Url:       i,
 		})
 	}
+	for _, i := range in.IntroduceImgUrl {
+		l.svcCtx.ProductIntroduceImgModel.AddProductIntroduceImg(&model.ProductIntroduceImg{
+			ProductID: int64(spu.ID),
+			Url:       i,
+		})
+	}
 	var AttributeValueType2 []*pms.AttributeValueList
 	for _, i := range in.AttributeValueList {
 		//添加属性值表

@@ -31,6 +31,14 @@ func (l *OrderListLogic) OrderList(in *oms.OrderListReq) (*oms.OrderListResp, er
 	}
 	var list []*oms.OrderListData
 	for _, role := range all {
+		var skus []*oms.Skus
+		sku, _ := l.svcCtx.OrderSkuModel.GetOrderSkuByOrderID(int64(role.ID))
+		for _, i := range sku {
+			skus = append(skus, &oms.Skus{
+				SkuID: i.SkuID,
+				Count: i.Count,
+			})
+		}
 		list = append(list, &oms.OrderListData{
 			ID:                    int64(role.ID),
 			PlaceId:               role.PlaceId,
@@ -52,11 +60,13 @@ func (l *OrderListLogic) OrderList(in *oms.OrderListReq) (*oms.OrderListResp, er
 			ReceiverDetailAddress: role.ReceiverDetailAddress,
 			Note:                  role.Note,
 			ConfirmStatus:         role.ConfirmStatus,
+			CreateTime:            role.CreatedAt.Format("2006-01-02 15:04:05"),
 			DeleteStatus:          role.DeleteStatus,
 			PaymentTime:           role.PaymentTime,
 			DeliveryTime:          role.DeliveryTime,
 			ReceiveTime:           role.ReceiveTime,
 			CommentTime:           role.CommentTime,
+			Skus:                  skus,
 		})
 	}
 	return &oms.OrderListResp{

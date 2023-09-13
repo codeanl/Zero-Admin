@@ -114,6 +114,10 @@ type ListProductReq struct {
 	CategoryId int64  `form:"categoryId,optional"`
 }
 
+type ListProductByCateIDReq struct {
+	CategoryId int64 `json:"categoryId,optional"`
+}
+
 type ListProductData struct {
 	Id            int64   `json:"id"`
 	CategoryID    int64   `json:"categoryId"`
@@ -195,11 +199,12 @@ type ProductInfoReq struct {
 }
 
 type InfoData struct {
-	ProductInfo   ListProductData  `json:"productInfo"`
-	SkuList       []SkuList        `json:"skuList"`
-	SizeList      []SizeList       `json:"sizeList"`
-	AttributeList []AttributeLists `json:"attributeList"`
-	ImgUrl        []string         `json:"imgUrl"`
+	ProductInfo     ListProductData  `json:"productInfo"`
+	SkuList         []SkuList        `json:"skuList"`
+	SizeList        []SizeList       `json:"sizeList"`
+	AttributeList   []AttributeLists `json:"attributeList"`
+	ImgUrl          []string         `json:"imgUrl"`
+	IntroduceImgUrl []string         `json:"introduceImgUrl"`
 }
 
 type ProductInfoResp struct {
@@ -239,26 +244,6 @@ type AttributeLists struct {
 
 type Values struct {
 	Name string `json:"name"`
-}
-
-type ListPlaceReq struct {
-}
-
-type ListPlaceData struct {
-	Id        int64  `json:"id"`
-	Name      string `json:"name"`
-	Place     string `json:"place"`
-	Status    string `json:"status"`
-	Pic       string `json:"pic"`
-	Phone     string `json:"phone"`
-	Principal string `json:"principal"`
-}
-
-type ListPlaceResp struct {
-	Code    int64            `json:"code"`
-	Message string           `json:"message"`
-	Total   int64            `json:"total"`
-	Data    []*ListPlaceData `json:"data"`
 }
 
 type AddCartReq struct {
@@ -376,43 +361,66 @@ type Data struct {
 }
 
 type ListOrderReq struct {
-	Current        int64  `form:"current,default=1"`
-	PageSize       int64  `form:"pageSize,default=20"`
-	OrderSn        string `form:"orderSn,optional"`        // 订单编号
-	MemberUsername string `form:"memberUserName,optional"` // 用户帐号
-	PayType        int64  `form:"payType,default=3"`       // 支付方式：0->未支付；1->支付宝；2->微信
-	SourceType     int64  `form:"sourceType,default=2"`    // 订单来源：0->PC订单；1->app订单
-	Status         int64  `form:"status,default=6"`        // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
-	OrderType      int64  `form:"orderType,default=2"`     // 订单类型：0->正常订单；1->秒杀订单
+	Current  int64  `json:"current,optional"`
+	PageSize int64  `json:"pageSize,optional"`
+	Status   string `json:"status,optional"`
+	UserID   int64  `json:"userID"`
 }
 
 type ListOrderData struct {
-	ID                    int64   `json:"id"`
-	MemberId              int64   `json:"memberId"`
-	PlaceId               int64   `json:"placeId"`
-	CouponId              int64   `json:"couponId"`
-	OrderSn               string  `json:"orderSn"`               // 订单编号
-	MemberUsername        string  `json:"memberUserName"`        // 用户帐号
-	TotalAmount           float64 `json:"totalAmount"`           // 订单总金额
-	PayAmount             float64 `json:"payAmount"`             // 应付金额（实际支付金额）
-	FreightAmount         float64 `json:"freightAmount"`         // 运费金额
-	CouponAmount          float64 `json:"couponAmount"`          // 优惠券抵扣金额
-	PayType               string  `json:"payType"`               // 支付方式：0->未支付；1->支付宝；2->微信
-	Status                string  `json:"status"`                // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
-	OrderType             string  `json:"orderType"`             // 订单类型：0->正常订单；1->秒杀订单
-	ReceiverProvince      string  `json:"receiverProvince"`      // 省份/直辖市
-	ReceiverName          string  `json:"receiverName"`          //
-	ReceiverPhone         string  `json:"receiverPhone"`         //
-	ReceiverCity          string  `json:"receiverCity"`          // 城市
-	ReceiverRegion        string  `json:"receiverRegion"`        // 区
-	ReceiverDetailAddress string  `json:"receiverDetailAddress"` // 详细地址
-	Note                  string  `json:"note"`                  // 订单备注
-	ConfirmStatus         string  `json:"confirmStatus"`         // 确认收货状态：0->未确认；1->已确认
-	DeleteStatus          string  `json:"deleteStatus"`          // 删除状态：0->未删除；1->已删除
-	PaymentTime           string  `json:"paymentTime,optional"`  // 支付时间
-	DeliveryTime          string  `json:"deliveryTime,optional"` // 发货时间
-	ReceiveTime           string  `json:"receiveTime,optional"`  // 确认收货时间
-	CommentTime           string  `json:"commentTime,optional"`  // 修改时间
+	ID                    int64         `json:"id"`
+	MemberId              int64         `json:"memberId"`
+	PlaceId               int64         `json:"placeId"`
+	CouponId              int64         `json:"couponId"`
+	OrderSn               string        `json:"orderSn"`               // 订单编号
+	MemberUsername        string        `json:"memberUserName"`        // 用户帐号
+	TotalAmount           float64       `json:"totalAmount"`           // 订单总金额
+	PayAmount             float64       `json:"payAmount"`             // 应付金额（实际支付金额）
+	FreightAmount         float64       `json:"freightAmount"`         // 运费金额
+	CouponAmount          float64       `json:"couponAmount"`          // 优惠券抵扣金额
+	PayType               string        `json:"payType"`               // 支付方式：0->未支付；1->支付宝；2->微信
+	Status                string        `json:"status"`                // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
+	OrderType             string        `json:"orderType"`             // 订单类型：0->正常订单；1->秒杀订单
+	ReceiverProvince      string        `json:"receiverProvince"`      // 省份/直辖市
+	ReceiverName          string        `json:"receiverName"`          //
+	ReceiverPhone         string        `json:"receiverPhone"`         //
+	ReceiverCity          string        `json:"receiverCity"`          // 城市
+	ReceiverRegion        string        `json:"receiverRegion"`        // 区
+	ReceiverDetailAddress string        `json:"receiverDetailAddress"` // 详细地址
+	Note                  string        `json:"note"`                  // 订单备注
+	ConfirmStatus         string        `json:"confirmStatus"`         // 确认收货状态：0->未确认；1->已确认
+	DeleteStatus          string        `json:"deleteStatus"`          // 删除状态：0->未删除；1->已删除
+	PaymentTime           string        `json:"paymentTime,optional"`  // 支付时间
+	CreateTime            string        `json:"createTime,optional"`   // 支付时间
+	DeliveryTime          string        `json:"deliveryTime,optional"` // 发货时间
+	ReceiveTime           string        `json:"receiveTime,optional"`  // 确认收货时间
+	CommentTime           string        `json:"commentTime,optional"`  // 修改时间
+	SkuList               []Sku         `json:"skuList"`
+	Place                 PlaceInfoData `json:"placeInfo"`
+}
+
+type Sku struct {
+	ID          int64   `json:"id"`
+	ProductID   int64   `json:"productId"`
+	ProductName string  `json:"productName"`
+	Name        string  `json:"name"`
+	Pic         string  `json:"pic"`
+	SkuSn       string  `json:"skuSn"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
+	Stock       int64   `json:"stock"`
+	Tag         string  `json:"tag"`
+	Count       int64   `json:"count"`
+}
+
+type PlaceInfo struct {
+	Id        int64  `json:"id"`
+	Name      string `json:"name"`
+	Place     string `json:"place"`
+	Status    string `json:"status"`
+	Pic       string `json:"pic"`
+	Phone     string `json:"phone"`
+	Principal string `json:"principal"`
 }
 
 type ListOrderResp struct {
@@ -503,4 +511,67 @@ type PlaceInfoData struct {
 	Pic       string `json:"pic"`
 	Phone     string `json:"phone"`
 	Principal string `json:"principal"`
+}
+
+type AddPlaceReq struct {
+	Name      string `json:"name"`
+	Place     string `json:"place"`
+	Status    string `json:"status"`
+	Pic       string `json:"pic"`
+	Phone     string `json:"phone"`
+	Principal string `json:"principal"`
+}
+
+type AddPlaceResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdatePlaceReq struct {
+	Id        int64  `json:"id"`
+	Name      string `json:"name,optional"`
+	Place     string `json:"place,optional"`
+	Status    string `json:"status,optional"`
+	Pic       string `json:"pic,optional"`
+	Phone     string `json:"phone,optional"`
+	Principal string `json:"principal,optional"`
+}
+
+type UpdatePlaceResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeletePlaceReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeletePlaceResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListPlaceReq struct {
+}
+
+type ListPlaceData struct {
+	Id        int64  `json:"id"`
+	Name      string `json:"name"`
+	Place     string `json:"place"`
+	Status    string `json:"status"`
+	Pic       string `json:"pic"`
+	Phone     string `json:"phone"`
+	Principal string `json:"principal"`
+}
+
+type ListPlaceResp struct {
+	Code    int64            `json:"code"`
+	Message string           `json:"message"`
+	Total   int64            `json:"total"`
+	Data    []*ListPlaceData `json:"data"`
+}
+
+type UploadResp struct {
+	Data string `json:"data"`
+	Code int64  `json:"code"`
 }

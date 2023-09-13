@@ -35,7 +35,7 @@ func (l *CategoryListLogic) CategoryList(req *types.ListCategoryReq) (*types.Lis
 		productList, _ := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
 			CategoryID: item.Id,
 			PageNum:    1,
-			PageSize:   3,
+			PageSize:   6,
 		})
 		var ProductList []types.ListProductData
 		for _, i := range productList.List {

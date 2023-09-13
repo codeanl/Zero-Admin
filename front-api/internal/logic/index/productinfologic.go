@@ -93,11 +93,12 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 		}
 	}
 	data := types.InfoData{
-		ProductInfo:   productInfo,
-		SkuList:       SkuList,
-		ImgUrl:        resp.ImgUrl,
-		AttributeList: AttributeList,
-		SizeList:      SizeList,
+		ProductInfo:     productInfo,
+		SkuList:         SkuList,
+		ImgUrl:          resp.ImgUrl,
+		IntroduceImgUrl: resp.IntroduceImgUrl,
+		AttributeList:   AttributeList,
+		SizeList:        SizeList,
 	}
 	return &types.ProductInfoResp{
 		Code:    200,

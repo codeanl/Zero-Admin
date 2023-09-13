@@ -66,7 +66,27 @@ func (m *defaultProductModel) GetProductList(in *pms.ProductListReq) ([]*Product
 	var list []*Product
 	db := m.conn.Model(&Product{}).Order("created_at DESC")
 	if in.CategoryID != 0 {
-		db = db.Where("category_id = ?", in.CategoryID)
+
+		var count int64
+		err := m.conn.Model(&Category{}).Where("parent_id = ?", in.CategoryID).Count(&count).Error
+		if err != nil {
+			return list, 0, err
+		}
+		// 检查是否有父级分类
+		if count == 0 {
+			db = db.Where("category_id = ?", in.CategoryID)
+		} else {
+			var category []Category
+			err := m.conn.Model(&Category{}).Where("parent_id = ?", in.CategoryID).Find(&category).Error
+			if err != nil {
+				return list, 0, err
+			}
+			var ids []int64
+			for _, i := range category {
+				ids = append(ids, int64(i.ID))
+			}
+			db = db.Where("category_id IN (?)", ids)
+		}
 	}
 	if in.Name != "" {
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))

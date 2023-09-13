@@ -47,6 +47,13 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 			Url:       i,
 		})
 	}
+	l.svcCtx.ProductIntroduceImgModel.DeleteProductIntroduceImgBySpuID(in.Id)
+	for _, i := range in.IntroduceImgUrl {
+		l.svcCtx.ProductIntroduceImgModel.AddProductIntroduceImg(&model.ProductIntroduceImg{
+			ProductID: in.Id,
+			Url:       i,
+		})
+	}
 	//
 	spu, _ := l.svcCtx.ProductModel.GetProductById(in.Id)
 	var AttributeValueType2 []*pms.AttributeValueList

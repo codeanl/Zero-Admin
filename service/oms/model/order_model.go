@@ -30,7 +30,7 @@ type (
 		FreightAmount         float64 `json:"freight_amount" gorm:"type:decimal(10, 2) ;comment:运费金额;not null"`   //运费金额
 		CouponAmount          float64 `json:"coupon_amount" gorm:"type:decimal(10, 2) ;comment:优惠券抵扣金额;not null"` //优惠券抵扣金额
 		PayType               string  `json:"pay_type" gorm:"type:varchar(191);comment:支付方式;not null"`            //支付方式：1->支付宝；2->微信',
-		Status                string  `json:"status" gorm:"type:varchar(191);comment:订单状态;not null"`              //订单状态： 0->待付款；1->待发货；2->已发货；3->确认收货；4->完成评价；5->无效订单',
+		Status                string  `json:"status" gorm:"type:varchar(191);comment:订单状态;not null"`              //订单状态： 0->待付款；1->待发货；2->已发货；3->确认收货；4->订单完成(完成评价)；5->无效订单',
 		OrderType             string  `json:"order_type" gorm:"type:varchar(191);comment:订单类型;not null"`          //订单类型：1->正常订单；2->秒杀订单',
 		ReceiverName          string  `json:"receiver_name" gorm:"type:varchar(191);comment:收货人姓名;not null"`      //收货人姓名
 		ReceiverPhone         string  `json:"receiver_phone" gorm:"type:varchar(191);comment:收货人电话;not null"`
@@ -89,7 +89,10 @@ func (m *defaultOrderModel) GetOrderList(in *oms.OrderListReq) ([]*Order, int64,
 		db = db.Where("order_sn LIKE ?", fmt.Sprintf("%%%s%%", in.MemberUsername))
 	}
 	if in.Status != "" {
-		db = db.Where("order_sn LIKE ?", fmt.Sprintf("%%%s%%", in.Status))
+		db = db.Where("status = ?", in.Status)
+	}
+	if in.UserID != 0 {
+		db = db.Where("member_id = ?", in.UserID)
 	}
 	var total int64
 	err := db.Count(&total).Error

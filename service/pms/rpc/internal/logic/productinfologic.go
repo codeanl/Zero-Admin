@@ -67,6 +67,11 @@ func (l *ProductInfoLogic) ProductInfo(in *pms.ProductInfoReq) (*pms.ProductInfo
 	for _, i := range img {
 		ImgUrl = append(ImgUrl, i.Url)
 	}
+	var IntroduceImgUrl []string
+	introduceImgUrl, _ := l.svcCtx.ProductIntroduceImgModel.GetImgtByProducID(in.ID)
+	for _, i := range introduceImgUrl {
+		IntroduceImgUrl = append(IntroduceImgUrl, i.Url)
+	}
 	//获取sku
 	var skuList []*pms.SkuListData
 	sku, _, _ := l.svcCtx.SkuModel.GetSkuList(&pms.SkuListReq{ProductID: in.ID})
@@ -85,10 +90,11 @@ func (l *ProductInfoLogic) ProductInfo(in *pms.ProductInfoReq) (*pms.ProductInfo
 		})
 	}
 	return &pms.ProductInfoResp{
-		ProductInfo: productInfo,
-		ImgUrl:      ImgUrl,
-		SkuList:     skuList,
-		Attribute:   Attribute,
+		ProductInfo:     productInfo,
+		ImgUrl:          ImgUrl,
+		IntroduceImgUrl: IntroduceImgUrl,
+		SkuList:         skuList,
+		Attribute:       Attribute,
 	}, nil
 }
 func FilterDuplicates(nums []int64) []int64 {

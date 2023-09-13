@@ -17,6 +17,7 @@ type (
         Price float64 `json:"price,optional,default=0"`
         AttributeValueList []AttributeValueList  `json:"attributeValueList"`
         ImgUrl []string `json:"imgUrl"`
+        IntroduceImgUrl []string `json:"introduceImgUrl"`
     }
     AttributeValueList struct{
         AttributeID int64 `json:"attributeID,optional"`
@@ -72,6 +73,7 @@ type (
        Price float64 `json:"price,optional"`
        AttributeValueList []AttributeValueList  `json:"attributeValueList,optional"`
       ImgUrl []string `json:"imgUrl"`
+      IntroduceImgUrl []string `json:"introduceImgUrl"`
     }
     UpdateProductResp struct {
         Code int64 `json:"code"`
@@ -93,6 +95,7 @@ type (
         SkuList []SkuList `json:"skuList"`
         Attribute Attribute `json:"attributeValue"`
         ImgUrl []string `json:"imgUrl"`
+        IntroduceImgUrl []string `json:"introduceImgUrl"`
     }
     ProductInfoResp struct {
         Code int64 `json:"code"`

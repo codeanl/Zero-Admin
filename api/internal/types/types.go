@@ -572,6 +572,7 @@ type AddProductReq struct {
 	Price               float64              `json:"price,optional,default=0"`
 	AttributeValueList  []AttributeValueList `json:"attributeValueList"`
 	ImgUrl              []string             `json:"imgUrl"`
+	IntroduceImgUrl     []string             `json:"introduceImgUrl"`
 }
 
 type AttributeValueList struct {
@@ -631,6 +632,7 @@ type UpdateProductReq struct {
 	Price               float64              `json:"price,optional"`
 	AttributeValueList  []AttributeValueList `json:"attributeValueList,optional"`
 	ImgUrl              []string             `json:"imgUrl"`
+	IntroduceImgUrl     []string             `json:"introduceImgUrl"`
 }
 
 type UpdateProductResp struct {
@@ -652,10 +654,11 @@ type ProductInfoReq struct {
 }
 
 type InfoData struct {
-	ProductInfo ListProductData `json:"productInfo"`
-	SkuList     []SkuList       `json:"skuList"`
-	Attribute   Attribute       `json:"attributeValue"`
-	ImgUrl      []string        `json:"imgUrl"`
+	ProductInfo     ListProductData `json:"productInfo"`
+	SkuList         []SkuList       `json:"skuList"`
+	Attribute       Attribute       `json:"attributeValue"`
+	ImgUrl          []string        `json:"imgUrl"`
+	IntroduceImgUrl []string        `json:"introduceImgUrl"`
 }
 
 type ProductInfoResp struct {

@@ -45,6 +45,7 @@ func (l *ProductUpdateLogic) ProductUpdate(req *types.UpdateProductReq) (resp *t
 		Unit:                req.Unit,
 		AttributeValueList:  AttributeValueList,
 		ImgUrl:              req.ImgUrl,
+		IntroduceImgUrl:     req.IntroduceImgUrl,
 	})
 	if err != nil {
 		return nil, err

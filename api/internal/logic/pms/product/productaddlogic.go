@@ -45,6 +45,7 @@ func (l *ProductAddLogic) ProductAdd(req *types.AddProductReq) (resp *types.AddP
 		Unit:                req.Unit,
 		AttributeValueList:  AttributeValueList,
 		ImgUrl:              req.ImgUrl,
+		IntroduceImgUrl:     req.IntroduceImgUrl,
 	})
 	if err != nil {
 		return nil, err

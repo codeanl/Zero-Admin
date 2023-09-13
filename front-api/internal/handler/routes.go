@@ -8,6 +8,8 @@ import (
 	cart "SimplePick-Mall-Server/front-api/internal/handler/cart"
 	index "SimplePick-Mall-Server/front-api/internal/handler/index"
 	order "SimplePick-Mall-Server/front-api/internal/handler/order"
+	place "SimplePick-Mall-Server/front-api/internal/handler/place"
+	upload "SimplePick-Mall-Server/front-api/internal/handler/upload"
 	"SimplePick-Mall-Server/front-api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -69,8 +71,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/placeList",
-				Handler: index.PlaceListHandler(serverCtx),
+				Path:    "/productListByCateID",
+				Handler: index.ProductListByCateIDHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/api/index"),
@@ -110,7 +112,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: order.OrderAddHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
+				Method:  http.MethodPost,
 				Path:    "/list",
 				Handler: order.OrderListHandler(serverCtx),
 			},
@@ -131,5 +133,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithPrefix("/api/order"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: place.PlaceAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: place.PlaceUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: place.PlaceDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/list",
+				Handler: place.PlaceListHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/place"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/upload",
+				Handler: upload.UploadHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api"),
 	)
 }

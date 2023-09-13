@@ -132,6 +132,7 @@ message ProductAddReq {
   int64       AttributeCategoryID = 13;
   repeated AttributeValueList AttributeValueList=20;
   repeated string ImgUrl =31;
+  repeated string IntroduceImgUrl =32;
 }
 message AttributeValueList {
   int64    AttributeID = 1;
@@ -161,6 +162,7 @@ message ProductUpdateReq {
   int64       AttributeCategoryID = 13;
   repeated AttributeValueList AttributeValueList=20;
   repeated string ImgUrl =31;
+  repeated string IntroduceImgUrl =32;
 }
 message ProductUpdateResp {
   string pong = 1;
@@ -265,6 +267,7 @@ message ProductInfoResp{
     repeated string ImgUrl =2;
     repeated SkuListData SkuList =3;
     repeated Attribute Attribute=4;
+  repeated string IntroduceImgUrl =32;
 }
 message Attribute{
   int64 ID =4;
