@@ -10,7 +10,9 @@ message LoginReq {
 }
 message LoginResp {
   string Token = 1;
+  string Status =3;
   int64 UserID=2;
+
 }
 //用户信息
 message InfoReq {

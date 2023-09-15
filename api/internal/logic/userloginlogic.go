@@ -33,6 +33,9 @@ func (l *UserLoginLogic) UserLogin(req *types.LoginReq, ip string) (*types.Login
 	if err != nil {
 		return nil, errorx.NewDefaultError("登录失败")
 	}
+	if resp.Status == "0" {
+		return nil, errorx.NewDefaultError("账号已锁定，请联系超级管理员解锁。")
+	}
 	//登录日志
 	_, _ = l.svcCtx.Sys.LoginLogAdd(l.ctx, &sysclient.LoginLogAddReq{
 		UserID: resp.UserID,

@@ -9,6 +9,8 @@ import (
 	index "SimplePick-Mall-Server/front-api/internal/handler/index"
 	order "SimplePick-Mall-Server/front-api/internal/handler/order"
 	place "SimplePick-Mall-Server/front-api/internal/handler/place"
+	returnApply "SimplePick-Mall-Server/front-api/internal/handler/returnApply"
+	returnReason "SimplePick-Mall-Server/front-api/internal/handler/returnReason"
 	upload "SimplePick-Mall-Server/front-api/internal/handler/upload"
 	"SimplePick-Mall-Server/front-api/internal/svc"
 
@@ -170,5 +172,57 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithPrefix("/api"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: returnApply.ReturnApplyAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: returnApply.ReturnApplyUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: returnApply.ReturnApplyDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/list",
+				Handler: returnApply.ReturnApplyListHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/returnApply"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: returnReason.ReturnReasonAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: returnReason.ReturnReasonUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: returnReason.ReturnReasonDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/list",
+				Handler: returnReason.ReturnReasonListHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/returnReason"),
 	)
 }

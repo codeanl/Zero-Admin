@@ -51,5 +51,6 @@ func (l *UserLoginLogic) UserLogin(in *sys.LoginReq) (*sys.LoginResp, error) {
 	return &sys.LoginResp{
 		Token:  AccessToken,
 		UserID: int64(user.ID),
+		Status: user.Status,
 	}, nil
 }

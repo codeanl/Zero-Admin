@@ -55,6 +55,7 @@ func (l *OrderInfoLogic) OrderInfo(req *types.OrderInfoReq) (*types.OrderInfoRes
 		DeliveryTime:          resp.OrderInfo.DeliveryTime,
 		ReceiveTime:           resp.OrderInfo.ReceiveTime,
 		CommentTime:           resp.OrderInfo.CommentTime,
+		CreateTime:            resp.OrderInfo.CreateTime,
 	}
 	var skuList []*types.SkuListData
 	for _, i := range resp.Skus {

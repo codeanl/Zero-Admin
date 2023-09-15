@@ -55,6 +55,7 @@ func (l *OrderInfoLogic) OrderInfo(in *oms.OrderInfoReq) (*oms.OrderInfoResp, er
 		DeliveryTime:          order.DeliveryTime,
 		ReceiveTime:           order.ReceiveTime,
 		CommentTime:           order.CommentTime,
+		CreateTime:            order.CreatedAt.Format("2006-01-02 15:04:05"),
 	}
 	var Skus []*oms.Skus
 	sku, err := l.svcCtx.OrderSkuModel.GetOrderSkuByOrderID(in.Id)

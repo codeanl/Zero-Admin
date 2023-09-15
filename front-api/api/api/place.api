@@ -1,0 +1,90 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+type(
+ //添加------------------------------------------------
+   addPlaceReq struct {
+        Name string `json:"name"`
+        Place string `json:"place"`
+        Status string `json:"status"`
+        Pic string `json:"pic"`
+        Phone string `json:"phone"`
+        Principal string `json:"principal"`
+    }
+    addPlaceResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+     //添加------------------------------------------------
+
+     //修改------------------------------------------------
+    UpdatePlaceReq struct {
+        Id int64 `json:"id"`
+        Name string `json:"name,optional"`
+        Place string `json:"place,optional"`
+        Status string `json:"status,optional"`
+        Pic string `json:"pic,optional"`
+        Phone string `json:"phone,optional"`
+        Principal string `json:"principal,optional"`
+    }
+    UpdatePlaceResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+     //修改------------------------------------------------
+
+
+     //删除------------------------------------------------
+    DeletePlaceReq struct {
+        Ids []int64 `json:"ids"`
+    }
+    DeletePlaceResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+    ListPlaceReq struct {
+    }
+    ListPlaceData struct {
+        Id int64 `json:"id"`
+        Name string `json:"name"`
+        Place string `json:"place"`
+        Status string `json:"status"`
+        Pic string `json:"pic"`
+        Phone string `json:"phone"`
+        Principal string `json:"principal"`
+    }
+    ListPlaceResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Total int64 `json:"total"`
+        Data []*ListPlaceData `json:"data"`
+    }
+     //角色列表------------------------------------------------
+     //------------------------------------------------
+)
+
+
+@server(
+    group: place
+    prefix: /api/place
+)
+service api {
+    @handler PlaceAdd
+    post /add (addPlaceReq) returns (addPlaceResp)
+
+    @handler PlaceUpdate
+    post /update (UpdatePlaceReq) returns (UpdatePlaceResp)
+
+    @handler PlaceDelete
+    post /delete (DeletePlaceReq) returns (DeletePlaceResp)
+
+    @handler PlaceList
+    post /list (ListPlaceReq) returns (ListPlaceResp)
+
+}

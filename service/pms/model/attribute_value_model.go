@@ -12,6 +12,7 @@ type (
 		GetAttributeValueBySPUID(id int64) (info []AttributeValue, err error)
 		GetAttributeValueBySpuIdAndAttrId(SpuID, AttrID int64) (info []AttributeValue, err error)
 		GetAttributeValueBySpuIdAndValue(SpuID int64, value string) (info AttributeValue, err error)
+		DeleteAttributeValueByProductIDAndAttrID(SpuID, AttrID int64) (err error)
 	}
 
 	defaultAttributeValueModel struct {
@@ -62,4 +63,8 @@ func (m *defaultAttributeValueModel) UpdateAttributeValue(id int64, role *Attrib
 func (m *defaultAttributeValueModel) DeleteAttributeValueByProductID(id int64) (err error) {
 	var info *AttributeValue
 	return m.conn.Model(&AttributeValue{}).Where("product_id=?", id).Delete(&info).Error
+}
+func (m *defaultAttributeValueModel) DeleteAttributeValueByProductIDAndAttrID(SpuID, AttrID int64) (err error) {
+	var info *AttributeValue
+	return m.conn.Model(&AttributeValue{}).Where("product_id=? && attribute_id=?", SpuID, AttrID).Delete(&info).Error
 }

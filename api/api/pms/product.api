@@ -21,7 +21,7 @@ type (
     }
     AttributeValueList struct{
         AttributeID int64 `json:"attributeID,optional"`
-       Value []string `json:"value,optional"`
+       Value []string `json:"value,optional,optional"`
        }
 
     Size struct{
@@ -73,7 +73,7 @@ type (
        Price float64 `json:"price,optional"`
        AttributeValueList []AttributeValueList  `json:"attributeValueList,optional"`
       ImgUrl []string `json:"imgUrl"`
-      IntroduceImgUrl []string `json:"introduceImgUrl"`
+      IntroduceImgUrl []string `json:"introduceImgUrl,optional"`
     }
     UpdateProductResp struct {
         Code int64 `json:"code"`

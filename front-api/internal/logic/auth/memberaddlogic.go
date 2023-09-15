@@ -33,6 +33,10 @@ func (l *MemberAddLogic) MemberAdd(req *types.MemberLoginReq) (*types.MemberLogi
 	if err != nil {
 		return nil, errorx.NewCodeError(400, "查询用户异常")
 	}
+
+	if resp.Member.Status == "0" {
+		return nil, errorx.NewCodeError(400, "用户已锁定")
+	}
 	userInfo := types.Info{
 		Id:        resp.Member.Id,
 		Username:  resp.Member.Username,
