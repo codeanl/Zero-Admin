@@ -18,7 +18,7 @@ func MemberAddHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := auth.NewMemberAddLogic(r.Context(), svcCtx)
-		resp, err := l.MemberAdd(&req)
+		resp, err := l.MemberAdd(&req, httpx.GetRemoteAddr(r))
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

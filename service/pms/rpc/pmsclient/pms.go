@@ -42,6 +42,26 @@ type (
 	CategoryListResp              = pms.CategoryListResp
 	CategoryUpdateReq             = pms.CategoryUpdateReq
 	CategoryUpdateResp            = pms.CategoryUpdateResp
+	MerchantApplysListData        = pms.MerchantApplysListData
+	MerchantsAddReq               = pms.MerchantsAddReq
+	MerchantsAddResp              = pms.MerchantsAddResp
+	MerchantsApplyAddReq          = pms.MerchantsApplyAddReq
+	MerchantsApplyAddResp         = pms.MerchantsApplyAddResp
+	MerchantsApplyDeleteReq       = pms.MerchantsApplyDeleteReq
+	MerchantsApplyDeleteResp      = pms.MerchantsApplyDeleteResp
+	MerchantsApplyListReq         = pms.MerchantsApplyListReq
+	MerchantsApplyListResp        = pms.MerchantsApplyListResp
+	MerchantsApplyUpdateReq       = pms.MerchantsApplyUpdateReq
+	MerchantsApplyUpdateResp      = pms.MerchantsApplyUpdateResp
+	MerchantsDeleteReq            = pms.MerchantsDeleteReq
+	MerchantsDeleteResp           = pms.MerchantsDeleteResp
+	MerchantsInfoReq              = pms.MerchantsInfoReq
+	MerchantsInfoResp             = pms.MerchantsInfoResp
+	MerchantsListData             = pms.MerchantsListData
+	MerchantsListReq              = pms.MerchantsListReq
+	MerchantsListResp             = pms.MerchantsListResp
+	MerchantsUpdateReq            = pms.MerchantsUpdateReq
+	MerchantsUpdateResp           = pms.MerchantsUpdateResp
 	ProductAddReq                 = pms.ProductAddReq
 	ProductAddResp                = pms.ProductAddResp
 	ProductDeleteReq              = pms.ProductDeleteReq
@@ -112,6 +132,24 @@ type (
 		AttributeCategoryDelete(ctx context.Context, in *AttributeCategoryDeleteAddReq, opts ...grpc.CallOption) (*AttributeCategoryDeleteResp, error)
 		// 属性分类列表
 		AttributeCategoryList(ctx context.Context, in *AttributeCategoryListReq, opts ...grpc.CallOption) (*AttributeCategoryListResp, error)
+		// 添加商家
+		MerchantsAdd(ctx context.Context, in *MerchantsAddReq, opts ...grpc.CallOption) (*MerchantsAddResp, error)
+		// 商家列表
+		MerchantsList(ctx context.Context, in *MerchantsListReq, opts ...grpc.CallOption) (*MerchantsListResp, error)
+		// 更新商家
+		MerchantsUpdate(ctx context.Context, in *MerchantsUpdateReq, opts ...grpc.CallOption) (*MerchantsUpdateResp, error)
+		// 删除商家
+		MerchantsDelete(ctx context.Context, in *MerchantsDeleteReq, opts ...grpc.CallOption) (*MerchantsDeleteResp, error)
+		// 商家详情
+		MerchantsInfo(ctx context.Context, in *MerchantsInfoReq, opts ...grpc.CallOption) (*MerchantsInfoResp, error)
+		// 添加商家申请
+		MerchantsApplyAdd(ctx context.Context, in *MerchantsApplyAddReq, opts ...grpc.CallOption) (*MerchantsApplyAddResp, error)
+		// 商家申请列表
+		MerchantsApplyList(ctx context.Context, in *MerchantsApplyListReq, opts ...grpc.CallOption) (*MerchantsApplyListResp, error)
+		// 更新商家申请
+		MerchantsApplyUpdate(ctx context.Context, in *MerchantsApplyUpdateReq, opts ...grpc.CallOption) (*MerchantsApplyUpdateResp, error)
+		// 删除商家申请
+		MerchantsApplyDelete(ctx context.Context, in *MerchantsApplyDeleteReq, opts ...grpc.CallOption) (*MerchantsApplyDeleteResp, error)
 	}
 
 	defaultPms struct {
@@ -255,4 +293,58 @@ func (m *defaultPms) AttributeCategoryDelete(ctx context.Context, in *AttributeC
 func (m *defaultPms) AttributeCategoryList(ctx context.Context, in *AttributeCategoryListReq, opts ...grpc.CallOption) (*AttributeCategoryListResp, error) {
 	client := pms.NewPmsClient(m.cli.Conn())
 	return client.AttributeCategoryList(ctx, in, opts...)
+}
+
+// 添加商家
+func (m *defaultPms) MerchantsAdd(ctx context.Context, in *MerchantsAddReq, opts ...grpc.CallOption) (*MerchantsAddResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.MerchantsAdd(ctx, in, opts...)
+}
+
+// 商家列表
+func (m *defaultPms) MerchantsList(ctx context.Context, in *MerchantsListReq, opts ...grpc.CallOption) (*MerchantsListResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.MerchantsList(ctx, in, opts...)
+}
+
+// 更新商家
+func (m *defaultPms) MerchantsUpdate(ctx context.Context, in *MerchantsUpdateReq, opts ...grpc.CallOption) (*MerchantsUpdateResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.MerchantsUpdate(ctx, in, opts...)
+}
+
+// 删除商家
+func (m *defaultPms) MerchantsDelete(ctx context.Context, in *MerchantsDeleteReq, opts ...grpc.CallOption) (*MerchantsDeleteResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.MerchantsDelete(ctx, in, opts...)
+}
+
+// 商家详情
+func (m *defaultPms) MerchantsInfo(ctx context.Context, in *MerchantsInfoReq, opts ...grpc.CallOption) (*MerchantsInfoResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.MerchantsInfo(ctx, in, opts...)
+}
+
+// 添加商家申请
+func (m *defaultPms) MerchantsApplyAdd(ctx context.Context, in *MerchantsApplyAddReq, opts ...grpc.CallOption) (*MerchantsApplyAddResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.MerchantsApplyAdd(ctx, in, opts...)
+}
+
+// 商家申请列表
+func (m *defaultPms) MerchantsApplyList(ctx context.Context, in *MerchantsApplyListReq, opts ...grpc.CallOption) (*MerchantsApplyListResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.MerchantsApplyList(ctx, in, opts...)
+}
+
+// 更新商家申请
+func (m *defaultPms) MerchantsApplyUpdate(ctx context.Context, in *MerchantsApplyUpdateReq, opts ...grpc.CallOption) (*MerchantsApplyUpdateResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.MerchantsApplyUpdate(ctx, in, opts...)
+}
+
+// 删除商家申请
+func (m *defaultPms) MerchantsApplyDelete(ctx context.Context, in *MerchantsApplyDeleteReq, opts ...grpc.CallOption) (*MerchantsApplyDeleteResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.MerchantsApplyDelete(ctx, in, opts...)
 }

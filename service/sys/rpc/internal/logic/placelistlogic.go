@@ -39,6 +39,7 @@ func (l *PlaceListLogic) PlaceList(in *sys.PlaceListReq) (*sys.PlaceListResp, er
 			Pic:       role.Pic,
 			Phone:     role.Phone,
 			Principal: role.Principal,
+			UserID:    role.UserID,
 		})
 	}
 	return &sys.PlaceListResp{

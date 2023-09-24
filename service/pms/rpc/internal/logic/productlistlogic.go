@@ -40,6 +40,7 @@ func (l *ProductListLogic) ProductList(in *pms.ProductListReq) (*pms.ProductList
 			Unit:                i.Unit,
 			Price:               i.Price,
 			AttributeCategoryID: i.AttributeCategoryID,
+			MerchantID:          i.MerchantID,
 		})
 	}
 

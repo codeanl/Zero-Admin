@@ -35,6 +35,7 @@ func (l *PlaceUpdateLogic) PlaceUpdate(req *types.UpdatePlaceReq) (resp *types.U
 		Phone:     req.Phone,
 		Principal: req.Principal,
 		UpdateBy:  l.ctx.Value("username").(string),
+		UserID:    req.UserID,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("更新用户失败")

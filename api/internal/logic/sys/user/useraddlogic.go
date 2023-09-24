@@ -24,8 +24,8 @@ func NewUserAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserAddLo
 	}
 }
 
-func (l *UserAddLogic) UserAdd(req *types.AddUserReq) (resp *types.AddUserResp, err error) {
-	_, err = l.svcCtx.Sys.UserAdd(l.ctx, &sysclient.UserAddReq{
+func (l *UserAddLogic) UserAdd(req *types.AddUserReq) (*types.AddUserResp, error) {
+	resp, err := l.svcCtx.Sys.UserAdd(l.ctx, &sysclient.UserAddReq{
 		Username: req.Username,
 		Phone:    req.Phone,
 		Nickname: req.Nickname,
@@ -43,5 +43,6 @@ func (l *UserAddLogic) UserAdd(req *types.AddUserReq) (resp *types.AddUserResp, 
 	return &types.AddUserResp{
 		Code:    200,
 		Message: "添加成功",
+		Data:    resp.ID,
 	}, nil
 }

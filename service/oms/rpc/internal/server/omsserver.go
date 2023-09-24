@@ -100,6 +100,12 @@ func (s *OmsServer) ReturnApplyDelete(ctx context.Context, in *oms.ReturnApplyDe
 	return l.ReturnApplyDelete(in)
 }
 
+// 退货详情
+func (s *OmsServer) ReturnApplyInfo(ctx context.Context, in *oms.ReturnApplyInfoReq) (*oms.ReturnApplyInfoResp, error) {
+	l := logic.NewReturnApplyInfoLogic(ctx, s.svcCtx)
+	return l.ReturnApplyInfo(in)
+}
+
 // 添加购物车
 func (s *OmsServer) CartAdd(ctx context.Context, in *oms.CartAddReq) (*oms.CartAddResp, error) {
 	l := logic.NewCartAddLogic(ctx, s.svcCtx)

@@ -38,6 +38,7 @@ func (l *ProductAddLogic) ProductAdd(in *pms.ProductAddReq) (*pms.ProductAddResp
 		Price:               in.Price,
 		Unit:                in.Unit,
 		AttributeCategoryID: in.AttributeCategoryID,
+		MerchantID:          in.MerchantID,
 	}
 	spu, err := l.svcCtx.ProductModel.AddProduct(&info)
 

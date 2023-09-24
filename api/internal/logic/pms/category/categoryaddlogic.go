@@ -45,5 +45,4 @@ func (l *CategoryAddLogic) CategoryAdd(req *types.AddCategoryReq) (resp *types.A
 		Code:    200,
 		Message: "添加成功",
 	}, nil
-	return
 }

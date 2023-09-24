@@ -63,7 +63,7 @@ func (m *defaultAttributeModel) DeleteAttributeByIds(ids []int64) error {
 //GetUserList 获取用户列表
 func (m *defaultAttributeModel) GetAttributeList(in *pms.AttributeListReq) ([]Attribute, int64, error) {
 	var list []Attribute
-	db := m.conn.Model(&Attribute{}).Order("created_at DESC")
+	db := m.conn.Model(&Attribute{}).Order("sort ASC")
 	if in.Name != "" {
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))
 	}

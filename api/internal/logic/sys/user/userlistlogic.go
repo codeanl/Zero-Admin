@@ -34,6 +34,7 @@ func (l *UserListLogic) UserList(req *types.ListUserReq) (*types.ListUserResp, e
 		Username: req.Username,
 		Status:   req.Status,
 		Gender:   req.Gander,
+		Email:    req.Email,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")

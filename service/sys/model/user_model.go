@@ -100,6 +100,9 @@ func (m *defaultUserModel) GetUserList(in *sys.UserListReq) ([]*User, int64, err
 	if in.Gender != "" {
 		db = db.Where("gender LIKE ?", fmt.Sprintf("%%%s%%", in.Gender))
 	}
+	if in.Email != "" {
+		db = db.Where("email LIKE ?", fmt.Sprintf("%%%s%%", in.Email))
+	}
 	var total int64
 	err := db.Count(&total).Error
 	if err != nil {

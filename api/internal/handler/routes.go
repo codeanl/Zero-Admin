@@ -7,6 +7,8 @@ import (
 	omsReturnApply "SimplePick-Mall-Server/api/internal/handler/oms/ReturnApply"
 	omsReturnReason "SimplePick-Mall-Server/api/internal/handler/oms/ReturnReason"
 	omsorder "SimplePick-Mall-Server/api/internal/handler/oms/order"
+	pmsMerchants "SimplePick-Mall-Server/api/internal/handler/pms/Merchants"
+	pmsMerchantsApply "SimplePick-Mall-Server/api/internal/handler/pms/MerchantsApply"
 	pmsattribute "SimplePick-Mall-Server/api/internal/handler/pms/attribute"
 	pmsattributeCategory "SimplePick-Mall-Server/api/internal/handler/pms/attributeCategory"
 	pmscategory "SimplePick-Mall-Server/api/internal/handler/pms/category"
@@ -122,6 +124,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/list",
 				Handler: sysplace.PlaceListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/info",
+				Handler: sysplace.PlaceInfoHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
@@ -363,6 +370,72 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/pms/attributeCategory"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: pmsMerchants.MerchantsAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: pmsMerchants.MerchantsListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: pmsMerchants.MerchantsUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: pmsMerchants.MerchantsDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/info",
+				Handler: pmsMerchants.MerchantsInfoHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/pms/merchants"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: pmsMerchantsApply.MerchantsApplyAddHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/pms/merchantsApply"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: pmsMerchantsApply.MerchantsApplyListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: pmsMerchantsApply.MerchantsApplyUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: pmsMerchantsApply.MerchantsApplyDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/pms/merchantsApply"),
 	)
 
 	server.AddRoutes(

@@ -41,6 +41,7 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 		Unit:                resp.ProductInfo.Unit,
 		Price:               resp.ProductInfo.Price,
 		AttributeCategoryID: resp.ProductInfo.AttributeCategoryID,
+		MerchantID:          resp.ProductInfo.MerchantID,
 	}
 	var SkuList []types.SkuList
 	for _, i := range resp.SkuList {

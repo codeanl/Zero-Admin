@@ -26,6 +26,7 @@ func NewProductUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Pro
 
 // 更新商品
 func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.ProductUpdateResp, error) {
+	//更新
 	err := l.svcCtx.ProductModel.UpdateProduct(in.Id, &model.Product{
 		CategoryID:          in.CategoryID,
 		Name:                in.Name,
@@ -36,10 +37,12 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 		Unit:                in.Unit,
 		Price:               in.Price,
 		AttributeCategoryID: in.AttributeCategoryID,
+		MerchantID:          in.MerchantID,
 	})
 	if err != nil {
 		return nil, err
 	}
+	//图片
 	l.svcCtx.ProductImgModel.DeleteProductImgBySpuID(in.Id)
 	for _, i := range in.ImgUrl {
 		l.svcCtx.ProductImgModel.AddProductImg(&model.ProductImg{
@@ -47,6 +50,7 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 			Url:       i,
 		})
 	}
+	//介绍图片
 	l.svcCtx.ProductIntroduceImgModel.DeleteProductIntroduceImgBySpuID(in.Id)
 	for _, i := range in.IntroduceImgUrl {
 		l.svcCtx.ProductIntroduceImgModel.AddProductIntroduceImg(&model.ProductIntroduceImg{
@@ -56,21 +60,26 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 	}
 	//添加属性
 	spu, _ := l.svcCtx.ProductModel.GetProductById(in.Id)
+	var AttributeValueType1 []*pms.AttributeValueList
 	var AttributeValueType2 []*pms.AttributeValueList
 	for _, i := range in.AttributeValueList {
 		attr, _ := l.svcCtx.AttributeModel.GetAttributeByID(i.AttributeID)
 		if attr.Type == "1" {
-			l.svcCtx.AttributeValueModel.DeleteAttributeValueByProductIDAndAttrID(in.Id, int64(attr.ID))
+			AttributeValueType1 = append(AttributeValueType1, &pms.AttributeValueList{
+				AttributeID: i.AttributeID,
+				Value:       i.Value,
+			})
 		}
 		if attr.Type == "2" {
-			if len(in.AttributeValueList) != 0 {
-				l.svcCtx.AttributeValueModel.DeleteAttributeValueByProductIDAndAttrID(in.Id, int64(attr.ID))
-			}
 			AttributeValueType2 = append(AttributeValueType2, &pms.AttributeValueList{
 				AttributeID: i.AttributeID,
 				Value:       i.Value,
 			})
 		}
+	}
+
+	for _, i := range AttributeValueType1 {
+		l.svcCtx.AttributeValueModel.DeleteAttributeValueByProductIDAndAttrID(in.Id, i.AttributeID)
 		for _, j := range i.Value {
 			l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
 				ProductID:   int64(spu.ID),
@@ -79,6 +88,19 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 			})
 		}
 	}
+	if len(AttributeValueType2) != 0 {
+		for _, i := range AttributeValueType2 {
+			l.svcCtx.AttributeValueModel.DeleteAttributeValueByProductIDAndAttrID(in.Id, i.AttributeID)
+			for _, j := range i.Value {
+				l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
+					ProductID:   int64(spu.ID),
+					AttributeID: i.AttributeID,
+					Value:       j,
+				})
+			}
+		}
+	}
+
 	//添加sku
 	var result [][]string
 	temp := make([]string, len(AttributeValueType2))
@@ -86,7 +108,7 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 		temp[0] = value
 		generateCombinations(AttributeValueType2, 1, temp, &result)
 	}
-	if len(result) != 0 {
+	if len(AttributeValueType2) != 0 {
 		l.svcCtx.SkuModel.DeleteSkuBySpuID(in.Id)
 		for _, values := range result {
 			var data []string

@@ -42,7 +42,7 @@ type (
         MemberUsername string `form:"memberUserName,optional"`                    // 用户帐号
         PayType int64 `form:"payType,default=3"`                                   // 支付方式：0->未支付；1->支付宝；2->微信
         SourceType int64 `form:"sourceType,default=2"`                             // 订单来源：0->PC订单；1->app订单
-        Status int64 `form:"status,default=6"`                                     // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
+        Status string `form:"status,optional"`                                     // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
         OrderType int64 `form:"orderType,default=2"`                               // 订单类型：0->正常订单；1->秒杀订单
     }
     ListOrderData struct {

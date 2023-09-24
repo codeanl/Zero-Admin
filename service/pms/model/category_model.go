@@ -70,7 +70,7 @@ func (m *defaultCategoryModel) DeleteCategoryByIds(ids []int64) error {
 //GetUserList 获取用户列表
 func (m *defaultCategoryModel) GetCategoryList() ([]Category, int64, error) {
 	var list []Category
-	db := m.conn.Model(&Category{}).Order("created_at DESC").Find(&list)
+	db := m.conn.Model(&Category{}).Order("sort ASC").Find(&list)
 	var total int64
 	err := db.Count(&total).Error
 	if err != nil {

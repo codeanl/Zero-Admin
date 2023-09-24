@@ -35,6 +35,7 @@ func (l *ProductInfoLogic) ProductInfo(in *pms.ProductInfoReq) (*pms.ProductInfo
 		OriginalPrice:       resp1.OriginalPrice,
 		Unit:                resp1.Unit,
 		AttributeCategoryID: resp1.AttributeCategoryID,
+		MerchantID:          resp1.MerchantID,
 	}
 
 	var attrIDs []int64

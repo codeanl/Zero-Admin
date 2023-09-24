@@ -17,9 +17,10 @@ type (
 	}
 	UserRole struct {
 		gorm.Model
-		UserID   int64  `json:"user_id" gorm:"type:bigint;comment:用户ID;not null"`        //用户id
-		RoleID   int64  `json:"role_id" gorm:"type:bigint;comment:角色ID;not null"`        //角色id
-		CreateBy string `json:"create_by" gorm:"type:varchar(191);comment:创建者;not null"` //创建者
+		UserID   int64  `json:"user_id" gorm:"type:bigint;comment:用户ID;not null"`                    //用户id
+		RoleID   int64  `json:"role_id" gorm:"type:bigint;comment:角色ID;not null"`                    //角色id
+		CreateBy string `json:"create_by" gorm:"type:varchar(191);comment:创建者;not null"`             //创建者
+		DataType string `json:"data_type" gorm:"type:varchar(191);comment:数据类型;not null;default:0;"` //数据类型 0->全部数据 1->本自提点｜商户数据
 	}
 )
 

@@ -196,6 +196,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/list",
 				Handler: returnApply.ReturnApplyListHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/info",
+				Handler: returnApply.ReturnApplyInfoHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/api/returnApply"),
 	)

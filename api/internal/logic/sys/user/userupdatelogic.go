@@ -37,6 +37,7 @@ func (l *UserUpdateLogic) UserUpdate(req *types.UpdateUserReq) (resp *types.Upda
 		UpdateBy: l.ctx.Value("username").(string),
 		RoleID:   req.RoleID,
 		Avatar:   req.Avatar,
+		DataType: req.DataType,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("更新用户失败")

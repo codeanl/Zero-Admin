@@ -25,7 +25,7 @@ func NewMemberAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *MemberA
 	}
 }
 
-func (l *MemberAddLogic) MemberAdd(req *types.MemberLoginReq) (*types.MemberLoginResp, error) {
+func (l *MemberAddLogic) MemberAdd(req *types.MemberLoginReq, ip string) (*types.MemberLoginResp, error) {
 	resp, err := l.svcCtx.Ums.MemberLogin(l.ctx, &umsclient.MemberLoginReq{
 		Username: "codeanl",
 		Password: "123456",
@@ -33,7 +33,10 @@ func (l *MemberAddLogic) MemberAdd(req *types.MemberLoginReq) (*types.MemberLogi
 	if err != nil {
 		return nil, errorx.NewCodeError(400, "查询用户异常")
 	}
-
+	l.svcCtx.Ums.MemberLoginLogAdd(l.ctx, &umsclient.MemberLoginLogAddReq{
+		UserID: resp.Member.Id,
+		IP:     ip,
+	})
 	if resp.Member.Status == "0" {
 		return nil, errorx.NewCodeError(400, "用户已锁定")
 	}

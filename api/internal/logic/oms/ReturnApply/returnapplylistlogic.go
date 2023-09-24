@@ -5,10 +5,8 @@ import (
 	"SimplePick-Mall-Server/api/internal/types"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
-	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
+	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
 	"context"
-	"log"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -88,21 +86,17 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 			OrderInfo: OrderInfo,
 			SkuList:   skuList,
 		}
-		user, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: item.UserID})
-		log.Print(user)
+		//user, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: item.UserID})
+		user, _ := l.svcCtx.Ums.MemberInfo(l.ctx, &umsclient.MemberInfoReq{Id: item.UserID})
 		User := types.UserData{
-			ID:       user.UserInfo.ID,
-			Username: user.UserInfo.Username,
-			NickName: user.UserInfo.Nickname,
-			Phone:    user.UserInfo.Phone,
-			Gander:   user.UserInfo.Gender,
-			Avatar:   user.UserInfo.Avatar,
-			Email:    user.UserInfo.Email,
-			Status:   user.UserInfo.Status,
-			CreateAt: user.UserInfo.CreateAt,
-			UpdateAt: user.UserInfo.UpdateAt,
-			CreateBy: user.UserInfo.CreateBy,
-			UpdateBy: user.UserInfo.UpdateBy,
+			ID:       user.Id,
+			Username: user.Username,
+			NickName: user.Nickname,
+			Phone:    user.Phone,
+			Gander:   user.Gender,
+			Avatar:   user.Avatar,
+			Email:    user.Email,
+			Status:   user.Status,
 		}
 		listUserData := types.ListReturnApplyData{
 			ID:               item.ID,

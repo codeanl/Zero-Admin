@@ -12,8 +12,8 @@ type (
 		DeleteReturnApplyByIds(ids []int64) error
 		GetReturnApplyList(in *oms.ReturnApplyListReq) ([]*ReturnApply, int64, error)
 		GetReturnApplyById(id int64) (ReturnApply *ReturnApply, err error)
+		GetReturnApplyByOrderID(id int64) (info *ReturnApply, err error)
 	}
-
 	defaultReturnApplyModel struct {
 		conn *gorm.DB
 	}
@@ -57,6 +57,11 @@ func (m *defaultReturnApplyModel) DeleteReturnApplyByIds(ids []int64) error {
 	}
 	err := m.conn.Where(id).Delete(&ReturnApply{}).Error
 	return err
+}
+
+func (m *defaultReturnApplyModel) GetReturnApplyByOrderID(id int64) (info *ReturnApply, err error) {
+	err = m.conn.Model(&ReturnApply{}).Where("order_id=?", id).Find(&info).Error
+	return info, err
 }
 
 //GetUserList 获取用户列表

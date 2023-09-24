@@ -232,6 +232,21 @@ message ReturnApplyDeleteReq {
 message ReturnApplyDeleteResp {
   string pong = 1;
 }
+//退货详情
+message ReturnApplyInfoReq {
+  int64   OrderID = 2;
+}
+message ReturnApplyInfoResp {
+  int64 ID= 1;
+  int64 UserID= 2;
+  int64 OrderID= 3;
+  int64 ReturnReasonID=4;
+  string ReturnReasonName=9;
+  string Status= 5;
+  string Description= 6;
+  string ProofPics= 7;
+  double ReturnAmount= 8;
+}
 //添加购物车
 message CartAddReq{
   int64 UserID= 1;
@@ -303,6 +318,8 @@ service Oms {
   rpc ReturnApplyList(ReturnApplyListReq) returns(ReturnApplyListResp);
   //删除退货
   rpc ReturnApplyDelete (ReturnApplyDeleteReq) returns(ReturnApplyDeleteResp);
+  //退货详情
+  rpc ReturnApplyInfo (ReturnApplyInfoReq) returns(ReturnApplyInfoResp);
 
 
   //添加购物车

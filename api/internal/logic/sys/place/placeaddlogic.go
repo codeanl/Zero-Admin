@@ -24,8 +24,8 @@ func NewPlaceAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PlaceAdd
 	}
 }
 
-func (l *PlaceAddLogic) PlaceAdd(req *types.AddPlaceReq) (resp *types.AddPlaceResp, err error) {
-	_, err = l.svcCtx.Sys.PlaceAdd(l.ctx, &sysclient.PlaceAddReq{
+func (l *PlaceAddLogic) PlaceAdd(req *types.AddPlaceReq) (*types.AddPlaceResp, error) {
+	resp, err := l.svcCtx.Sys.PlaceAdd(l.ctx, &sysclient.PlaceAddReq{
 		Name:      req.Name,
 		Place:     req.Place,
 		Status:    req.Status,
@@ -33,6 +33,7 @@ func (l *PlaceAddLogic) PlaceAdd(req *types.AddPlaceReq) (resp *types.AddPlaceRe
 		Phone:     req.Phone,
 		Principal: req.Principal,
 		CreateBy:  l.ctx.Value("username").(string),
+		UserID:    req.UserID,
 	})
 	if err != nil {
 		return nil, err
@@ -40,5 +41,6 @@ func (l *PlaceAddLogic) PlaceAdd(req *types.AddPlaceReq) (resp *types.AddPlaceRe
 	return &types.AddPlaceResp{
 		Code:    200,
 		Message: "添加成功",
+		Data:    resp.ID,
 	}, nil
 }

@@ -41,6 +41,15 @@ const (
 	Pms_AttributeCategoryUpdate_FullMethodName = "/pms.Pms/AttributeCategoryUpdate"
 	Pms_AttributeCategoryDelete_FullMethodName = "/pms.Pms/AttributeCategoryDelete"
 	Pms_AttributeCategoryList_FullMethodName   = "/pms.Pms/AttributeCategoryList"
+	Pms_MerchantsAdd_FullMethodName            = "/pms.Pms/MerchantsAdd"
+	Pms_MerchantsList_FullMethodName           = "/pms.Pms/MerchantsList"
+	Pms_MerchantsUpdate_FullMethodName         = "/pms.Pms/MerchantsUpdate"
+	Pms_MerchantsDelete_FullMethodName         = "/pms.Pms/MerchantsDelete"
+	Pms_MerchantsInfo_FullMethodName           = "/pms.Pms/MerchantsInfo"
+	Pms_MerchantsApplyAdd_FullMethodName       = "/pms.Pms/MerchantsApplyAdd"
+	Pms_MerchantsApplyList_FullMethodName      = "/pms.Pms/MerchantsApplyList"
+	Pms_MerchantsApplyUpdate_FullMethodName    = "/pms.Pms/MerchantsApplyUpdate"
+	Pms_MerchantsApplyDelete_FullMethodName    = "/pms.Pms/MerchantsApplyDelete"
 )
 
 // PmsClient is the client API for Pms service.
@@ -91,6 +100,24 @@ type PmsClient interface {
 	AttributeCategoryDelete(ctx context.Context, in *AttributeCategoryDeleteAddReq, opts ...grpc.CallOption) (*AttributeCategoryDeleteResp, error)
 	// 属性分类列表
 	AttributeCategoryList(ctx context.Context, in *AttributeCategoryListReq, opts ...grpc.CallOption) (*AttributeCategoryListResp, error)
+	// 添加商家
+	MerchantsAdd(ctx context.Context, in *MerchantsAddReq, opts ...grpc.CallOption) (*MerchantsAddResp, error)
+	// 商家列表
+	MerchantsList(ctx context.Context, in *MerchantsListReq, opts ...grpc.CallOption) (*MerchantsListResp, error)
+	// 更新商家
+	MerchantsUpdate(ctx context.Context, in *MerchantsUpdateReq, opts ...grpc.CallOption) (*MerchantsUpdateResp, error)
+	// 删除商家
+	MerchantsDelete(ctx context.Context, in *MerchantsDeleteReq, opts ...grpc.CallOption) (*MerchantsDeleteResp, error)
+	// 商家详情
+	MerchantsInfo(ctx context.Context, in *MerchantsInfoReq, opts ...grpc.CallOption) (*MerchantsInfoResp, error)
+	// 添加商家申请
+	MerchantsApplyAdd(ctx context.Context, in *MerchantsApplyAddReq, opts ...grpc.CallOption) (*MerchantsApplyAddResp, error)
+	// 商家申请列表
+	MerchantsApplyList(ctx context.Context, in *MerchantsApplyListReq, opts ...grpc.CallOption) (*MerchantsApplyListResp, error)
+	// 更新商家申请
+	MerchantsApplyUpdate(ctx context.Context, in *MerchantsApplyUpdateReq, opts ...grpc.CallOption) (*MerchantsApplyUpdateResp, error)
+	// 删除商家申请
+	MerchantsApplyDelete(ctx context.Context, in *MerchantsApplyDeleteReq, opts ...grpc.CallOption) (*MerchantsApplyDeleteResp, error)
 }
 
 type pmsClient struct {
@@ -299,6 +326,87 @@ func (c *pmsClient) AttributeCategoryList(ctx context.Context, in *AttributeCate
 	return out, nil
 }
 
+func (c *pmsClient) MerchantsAdd(ctx context.Context, in *MerchantsAddReq, opts ...grpc.CallOption) (*MerchantsAddResp, error) {
+	out := new(MerchantsAddResp)
+	err := c.cc.Invoke(ctx, Pms_MerchantsAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) MerchantsList(ctx context.Context, in *MerchantsListReq, opts ...grpc.CallOption) (*MerchantsListResp, error) {
+	out := new(MerchantsListResp)
+	err := c.cc.Invoke(ctx, Pms_MerchantsList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) MerchantsUpdate(ctx context.Context, in *MerchantsUpdateReq, opts ...grpc.CallOption) (*MerchantsUpdateResp, error) {
+	out := new(MerchantsUpdateResp)
+	err := c.cc.Invoke(ctx, Pms_MerchantsUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) MerchantsDelete(ctx context.Context, in *MerchantsDeleteReq, opts ...grpc.CallOption) (*MerchantsDeleteResp, error) {
+	out := new(MerchantsDeleteResp)
+	err := c.cc.Invoke(ctx, Pms_MerchantsDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) MerchantsInfo(ctx context.Context, in *MerchantsInfoReq, opts ...grpc.CallOption) (*MerchantsInfoResp, error) {
+	out := new(MerchantsInfoResp)
+	err := c.cc.Invoke(ctx, Pms_MerchantsInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) MerchantsApplyAdd(ctx context.Context, in *MerchantsApplyAddReq, opts ...grpc.CallOption) (*MerchantsApplyAddResp, error) {
+	out := new(MerchantsApplyAddResp)
+	err := c.cc.Invoke(ctx, Pms_MerchantsApplyAdd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) MerchantsApplyList(ctx context.Context, in *MerchantsApplyListReq, opts ...grpc.CallOption) (*MerchantsApplyListResp, error) {
+	out := new(MerchantsApplyListResp)
+	err := c.cc.Invoke(ctx, Pms_MerchantsApplyList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) MerchantsApplyUpdate(ctx context.Context, in *MerchantsApplyUpdateReq, opts ...grpc.CallOption) (*MerchantsApplyUpdateResp, error) {
+	out := new(MerchantsApplyUpdateResp)
+	err := c.cc.Invoke(ctx, Pms_MerchantsApplyUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pmsClient) MerchantsApplyDelete(ctx context.Context, in *MerchantsApplyDeleteReq, opts ...grpc.CallOption) (*MerchantsApplyDeleteResp, error) {
+	out := new(MerchantsApplyDeleteResp)
+	err := c.cc.Invoke(ctx, Pms_MerchantsApplyDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PmsServer is the server API for Pms service.
 // All implementations must embed UnimplementedPmsServer
 // for forward compatibility
@@ -347,6 +455,24 @@ type PmsServer interface {
 	AttributeCategoryDelete(context.Context, *AttributeCategoryDeleteAddReq) (*AttributeCategoryDeleteResp, error)
 	// 属性分类列表
 	AttributeCategoryList(context.Context, *AttributeCategoryListReq) (*AttributeCategoryListResp, error)
+	// 添加商家
+	MerchantsAdd(context.Context, *MerchantsAddReq) (*MerchantsAddResp, error)
+	// 商家列表
+	MerchantsList(context.Context, *MerchantsListReq) (*MerchantsListResp, error)
+	// 更新商家
+	MerchantsUpdate(context.Context, *MerchantsUpdateReq) (*MerchantsUpdateResp, error)
+	// 删除商家
+	MerchantsDelete(context.Context, *MerchantsDeleteReq) (*MerchantsDeleteResp, error)
+	// 商家详情
+	MerchantsInfo(context.Context, *MerchantsInfoReq) (*MerchantsInfoResp, error)
+	// 添加商家申请
+	MerchantsApplyAdd(context.Context, *MerchantsApplyAddReq) (*MerchantsApplyAddResp, error)
+	// 商家申请列表
+	MerchantsApplyList(context.Context, *MerchantsApplyListReq) (*MerchantsApplyListResp, error)
+	// 更新商家申请
+	MerchantsApplyUpdate(context.Context, *MerchantsApplyUpdateReq) (*MerchantsApplyUpdateResp, error)
+	// 删除商家申请
+	MerchantsApplyDelete(context.Context, *MerchantsApplyDeleteReq) (*MerchantsApplyDeleteResp, error)
 	mustEmbedUnimplementedPmsServer()
 }
 
@@ -419,6 +545,33 @@ func (UnimplementedPmsServer) AttributeCategoryDelete(context.Context, *Attribut
 }
 func (UnimplementedPmsServer) AttributeCategoryList(context.Context, *AttributeCategoryListReq) (*AttributeCategoryListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AttributeCategoryList not implemented")
+}
+func (UnimplementedPmsServer) MerchantsAdd(context.Context, *MerchantsAddReq) (*MerchantsAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantsAdd not implemented")
+}
+func (UnimplementedPmsServer) MerchantsList(context.Context, *MerchantsListReq) (*MerchantsListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantsList not implemented")
+}
+func (UnimplementedPmsServer) MerchantsUpdate(context.Context, *MerchantsUpdateReq) (*MerchantsUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantsUpdate not implemented")
+}
+func (UnimplementedPmsServer) MerchantsDelete(context.Context, *MerchantsDeleteReq) (*MerchantsDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantsDelete not implemented")
+}
+func (UnimplementedPmsServer) MerchantsInfo(context.Context, *MerchantsInfoReq) (*MerchantsInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantsInfo not implemented")
+}
+func (UnimplementedPmsServer) MerchantsApplyAdd(context.Context, *MerchantsApplyAddReq) (*MerchantsApplyAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantsApplyAdd not implemented")
+}
+func (UnimplementedPmsServer) MerchantsApplyList(context.Context, *MerchantsApplyListReq) (*MerchantsApplyListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantsApplyList not implemented")
+}
+func (UnimplementedPmsServer) MerchantsApplyUpdate(context.Context, *MerchantsApplyUpdateReq) (*MerchantsApplyUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantsApplyUpdate not implemented")
+}
+func (UnimplementedPmsServer) MerchantsApplyDelete(context.Context, *MerchantsApplyDeleteReq) (*MerchantsApplyDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantsApplyDelete not implemented")
 }
 func (UnimplementedPmsServer) mustEmbedUnimplementedPmsServer() {}
 
@@ -829,6 +982,168 @@ func _Pms_AttributeCategoryList_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pms_MerchantsAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantsAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).MerchantsAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_MerchantsAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).MerchantsAdd(ctx, req.(*MerchantsAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_MerchantsList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantsListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).MerchantsList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_MerchantsList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).MerchantsList(ctx, req.(*MerchantsListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_MerchantsUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantsUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).MerchantsUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_MerchantsUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).MerchantsUpdate(ctx, req.(*MerchantsUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_MerchantsDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantsDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).MerchantsDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_MerchantsDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).MerchantsDelete(ctx, req.(*MerchantsDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_MerchantsInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantsInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).MerchantsInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_MerchantsInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).MerchantsInfo(ctx, req.(*MerchantsInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_MerchantsApplyAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantsApplyAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).MerchantsApplyAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_MerchantsApplyAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).MerchantsApplyAdd(ctx, req.(*MerchantsApplyAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_MerchantsApplyList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantsApplyListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).MerchantsApplyList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_MerchantsApplyList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).MerchantsApplyList(ctx, req.(*MerchantsApplyListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_MerchantsApplyUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantsApplyUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).MerchantsApplyUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_MerchantsApplyUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).MerchantsApplyUpdate(ctx, req.(*MerchantsApplyUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pms_MerchantsApplyDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantsApplyDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PmsServer).MerchantsApplyDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Pms_MerchantsApplyDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PmsServer).MerchantsApplyDelete(ctx, req.(*MerchantsApplyDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pms_ServiceDesc is the grpc.ServiceDesc for Pms service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -923,6 +1238,42 @@ var Pms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AttributeCategoryList",
 			Handler:    _Pms_AttributeCategoryList_Handler,
+		},
+		{
+			MethodName: "MerchantsAdd",
+			Handler:    _Pms_MerchantsAdd_Handler,
+		},
+		{
+			MethodName: "MerchantsList",
+			Handler:    _Pms_MerchantsList_Handler,
+		},
+		{
+			MethodName: "MerchantsUpdate",
+			Handler:    _Pms_MerchantsUpdate_Handler,
+		},
+		{
+			MethodName: "MerchantsDelete",
+			Handler:    _Pms_MerchantsDelete_Handler,
+		},
+		{
+			MethodName: "MerchantsInfo",
+			Handler:    _Pms_MerchantsInfo_Handler,
+		},
+		{
+			MethodName: "MerchantsApplyAdd",
+			Handler:    _Pms_MerchantsApplyAdd_Handler,
+		},
+		{
+			MethodName: "MerchantsApplyList",
+			Handler:    _Pms_MerchantsApplyList_Handler,
+		},
+		{
+			MethodName: "MerchantsApplyUpdate",
+			Handler:    _Pms_MerchantsApplyUpdate_Handler,
+		},
+		{
+			MethodName: "MerchantsApplyDelete",
+			Handler:    _Pms_MerchantsApplyDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

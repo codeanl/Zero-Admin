@@ -41,18 +41,19 @@ type UserInfo struct {
 }
 
 type AddUserReq struct {
-	Username string  `json:"username"`
-	Phone    string  `json:"phone"`
-	Nickname string  `json:"nickname"`
-	Gender   string  `json:"gender"`
-	Email    string  `json:"email"`
-	Status   string  `json:"status"`
+	Username string  `json:"username,optional"`
+	Phone    string  `json:"phone,optional"`
+	Nickname string  `json:"nickname,optional"`
+	Gender   string  `json:"gender,optional"`
+	Email    string  `json:"email,optional"`
+	Status   string  `json:"status,optional"`
 	RoleID   []int64 `json:"roleId,optional"`
 }
 
 type AddUserResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
+	Data    int64  `json:"data"`
 }
 
 type UpdateUserReq struct {
@@ -65,6 +66,7 @@ type UpdateUserReq struct {
 	Email    string  `json:"email,optional"`
 	RoleID   []int64 `json:"roleId,optional"`
 	Avatar   string  `json:"avatar,optional"`
+	DataType string  `json:"dataType,optional"`
 }
 
 type UpdateUserResp struct {
@@ -89,6 +91,7 @@ type ListUserReq struct {
 	Username string `form:"username,optional"`
 	Status   string `form:"status,optional"`
 	Gander   string `form:"gender,optional"`
+	Email    string `form:"email,optional"`
 }
 
 type User struct {
@@ -173,11 +176,13 @@ type AddPlaceReq struct {
 	Pic       string `json:"pic"`
 	Phone     string `json:"phone"`
 	Principal string `json:"principal"`
+	UserID    int64  `json:"userID,optional"`
 }
 
 type AddPlaceResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
+	Data    int64  `json:"data"`
 }
 
 type UpdatePlaceReq struct {
@@ -188,6 +193,7 @@ type UpdatePlaceReq struct {
 	Pic       string `json:"pic,optional"`
 	Phone     string `json:"phone,optional"`
 	Principal string `json:"principal,optional"`
+	UserID    int64  `json:"userID,optional"`
 }
 
 type UpdatePlaceResp struct {
@@ -205,11 +211,12 @@ type DeletePlaceResp struct {
 }
 
 type ListPlaceReq struct {
-	Current  int64  `form:"current,default=1"`
-	PageSize int64  `form:"pageSize,default=20"`
-	Name     string `form:"name,optional "`
-	Place    string `form:"place,optional"`
-	Phone    string `form:"phone,optional"`
+	Current   int64  `form:"current,default=1"`
+	PageSize  int64  `form:"pageSize,default=20"`
+	Name      string `form:"name,optional "`
+	Place     string `form:"place,optional"`
+	Phone     string `form:"phone,optional"`
+	Principal string `form:"principal,optional"`
 }
 
 type ListPlaceData struct {
@@ -220,6 +227,7 @@ type ListPlaceData struct {
 	Pic       string `json:"pic"`
 	Phone     string `json:"phone"`
 	Principal string `json:"principal"`
+	UserID    int64  `json:"userID,optional"`
 }
 
 type ListPlaceResp struct {
@@ -227,6 +235,17 @@ type ListPlaceResp struct {
 	Message string           `json:"message"`
 	Total   int64            `json:"total"`
 	Data    []*ListPlaceData `json:"data"`
+}
+
+type PlaceInfoReq struct {
+	ID     int64 `json:"id,optional"`
+	UserID int64 `json:"userID,optional"`
+}
+
+type PlaceInfoResp struct {
+	Code    int64         `json:"code"`
+	Message string        `json:"message"`
+	Data    ListPlaceData `json:"data"`
 }
 
 type AddRoleReq struct {
@@ -573,11 +592,12 @@ type AddProductReq struct {
 	AttributeValueList  []AttributeValueList `json:"attributeValueList"`
 	ImgUrl              []string             `json:"imgUrl"`
 	IntroduceImgUrl     []string             `json:"introduceImgUrl"`
+	MerchantID          int64                `json:"merchantID,optional"`
 }
 
 type AttributeValueList struct {
 	AttributeID int64    `json:"attributeID,optional"`
-	Value       []string `json:"value,optional,optional"`
+	Value       []string `json:"value,optional"`
 }
 
 type Size struct {
@@ -597,6 +617,7 @@ type ListProductReq struct {
 	PageSize   int64  `form:"pageSize,optional"`
 	Name       string `form:"name,optional"`
 	CategoryId int64  `form:"categoryId,optional"`
+	MerchantID int64  `form:"merchantID,optional"`
 }
 
 type ListProductData struct {
@@ -610,6 +631,7 @@ type ListProductData struct {
 	Unit                string  `json:"unit,optional"`
 	Price               float64 `json:"price,optional"`
 	AttributeCategoryID int64   `json:"attributeCategoryID"`
+	MerchantID          int64   `json:"merchantID,optional"`
 }
 
 type ListProductResp struct {
@@ -633,6 +655,7 @@ type UpdateProductReq struct {
 	AttributeValueList  []AttributeValueList `json:"attributeValueList,optional"`
 	ImgUrl              []string             `json:"imgUrl"`
 	IntroduceImgUrl     []string             `json:"introduceImgUrl,optional"`
+	MerchantID          int64                `json:"merchantID,optional"`
 }
 
 type UpdateProductResp struct {
@@ -805,6 +828,160 @@ type DeleteAttributeCategoryReq struct {
 }
 
 type DeleteAttributeCategoryResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type AddMerchantsReq struct {
+	Name      string `json:"name"`
+	Principal string `json:"principal"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	Pic       string `json:"pic"`
+	UserID    int64  `json:"userID"`
+}
+
+type AddMerchantsResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type ListMerchantsReq struct {
+	Current   int64  `form:"current,optional"`
+	PageSize  int64  `form:"pageSize,optional"`
+	Name      string `form:"name,optional"`
+	Address   string `form:"address,optional"`
+	Phone     string `form:"phone,optional"`
+	Principal string `form:"principal,optional"`
+}
+
+type ListMerchantsData struct {
+	ID        int64  `json:"id"`
+	Name      string `json:"name"`
+	Principal string `json:"principal"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	Pic       string `json:"pic"`
+	UserID    int64  `json:"userID"`
+}
+
+type ListMerchantsResp struct {
+	Code    int64               `json:"code"`
+	Message string              `json:"message"`
+	Data    []ListMerchantsData `json:"data"`
+	Total   int64               `json:"total"`
+}
+
+type UpdateMerchantsReq struct {
+	ID        int64  `json:"id"`
+	Name      string `json:"name"`
+	Principal string `json:"principal"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	Pic       string `json:"pic"`
+	UserID    int64  `json:"userID"`
+}
+
+type UpdateMerchantsResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteMerchantsReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteMerchantsResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type MerchantsInfoReq struct {
+	ID     int64 `json:"id"`
+	UserID int64 `json:"userID"`
+}
+
+type MerchantsInfoResp struct {
+	Code    int64             `json:"code"`
+	Message string            `json:"message"`
+	Data    ListMerchantsData `json:"data"`
+}
+
+type AddMerchantsApplyReq struct {
+	PrincipalName  string `json:"principalName"`
+	PrincipalPhone string `json:"principalPhone"`
+	IDCardFront    string `json:"IDCardFront"`
+	IDCardReverse  string `json:"IDCardReverse"`
+	Name           string `json:"name"`
+	Address        string `json:"address"`
+	Type           string `json:"type,optional"`
+	Pic            string `json:"pic"`
+	Remarks        string `json:"remarks,optional"`
+}
+
+type AddMerchantsApplyResp struct {
+	Code    int64                  `json:"code"`
+	Message string                 `json:"message"`
+	Data    ListMerchantsApplyData `json:"data"`
+}
+
+type ListMerchantsApplyReq struct {
+	Current  int64  `form:"current,optional"`
+	PageSize int64  `form:"pageSize,optional"`
+	Name     string `form:"name,optional"`
+	Status   string `form:"status,optional"`
+	Type     string `form:"type,optional"`
+}
+
+type ListMerchantsApplyData struct {
+	ID             int64  `json:"id"`
+	PrincipalName  string `json:"principalName"`
+	PrincipalPhone string `json:"principalPhone"`
+	IDCardFront    string `json:"IDCardFront"`
+	IDCardReverse  string `json:"IDCardReverse"`
+	Name           string `json:"name"`
+	Address        string `json:"address"`
+	Pic            string `json:"pic"`
+	Type           string `json:"type,optional"`
+	Status         string `json:"status"`
+	Approver       string `json:"approver"`
+	ApprovalTime   string `json:"approvalTime"`
+	Remarks        string `json:"remarks"`
+}
+
+type ListMerchantsApplyResp struct {
+	Code    int64                    `json:"code"`
+	Message string                   `json:"message"`
+	Data    []ListMerchantsApplyData `json:"data"`
+	Total   int64                    `json:"total"`
+}
+
+type UpdateMerchantsApplyReq struct {
+	ID             int64  `json:"id"`
+	PrincipalName  string `json:"principalName,optional"`
+	PrincipalPhone string `json:"principalPhone,optional"`
+	IDCardFront    string `json:"IDCardFront,optional"`
+	IDCardReverse  string `json:"IDCardReverse,optional"`
+	Name           string `json:"name,optional"`
+	Address        string `json:"address,optional"`
+	Pic            string `json:"pic,optional"`
+	Type           string `json:"type,optional"`
+	Status         string `json:"status,optional"`
+	Approver       string `json:"approver,optional"`
+	ApprovalTime   string `json:"approvalTime,optional"`
+	Remarks        string `json:"remarks,optional"`
+}
+
+type UpdateMerchantsApplyResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteMerchantsApplyReq struct {
+	Ids []int64 `json:"ids"`
+}
+
+type DeleteMerchantsApplyResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
 }
@@ -1300,7 +1477,7 @@ type ListOrderReq struct {
 	MemberUsername string `form:"memberUserName,optional"` // 用户帐号
 	PayType        int64  `form:"payType,default=3"`       // 支付方式：0->未支付；1->支付宝；2->微信
 	SourceType     int64  `form:"sourceType,default=2"`    // 订单来源：0->PC订单；1->app订单
-	Status         int64  `form:"status,default=6"`        // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
+	Status         string `form:"status,optional"`         // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
 	OrderType      int64  `form:"orderType,default=2"`     // 订单类型：0->正常订单；1->秒杀订单
 }
 

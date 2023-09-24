@@ -37,6 +37,8 @@ type (
 	ReturnApplyAddResp     = oms.ReturnApplyAddResp
 	ReturnApplyDeleteReq   = oms.ReturnApplyDeleteReq
 	ReturnApplyDeleteResp  = oms.ReturnApplyDeleteResp
+	ReturnApplyInfoReq     = oms.ReturnApplyInfoReq
+	ReturnApplyInfoResp    = oms.ReturnApplyInfoResp
 	ReturnApplyListData    = oms.ReturnApplyListData
 	ReturnApplyListReq     = oms.ReturnApplyListReq
 	ReturnApplyListResp    = oms.ReturnApplyListResp
@@ -80,6 +82,8 @@ type (
 		ReturnApplyList(ctx context.Context, in *ReturnApplyListReq, opts ...grpc.CallOption) (*ReturnApplyListResp, error)
 		// 删除退货
 		ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error)
+		// 退货详情
+		ReturnApplyInfo(ctx context.Context, in *ReturnApplyInfoReq, opts ...grpc.CallOption) (*ReturnApplyInfoResp, error)
 		// 添加购物车
 		CartAdd(ctx context.Context, in *CartAddReq, opts ...grpc.CallOption) (*CartAddResp, error)
 		// 更新购物车
@@ -177,6 +181,12 @@ func (m *defaultOms) ReturnApplyList(ctx context.Context, in *ReturnApplyListReq
 func (m *defaultOms) ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error) {
 	client := oms.NewOmsClient(m.cli.Conn())
 	return client.ReturnApplyDelete(ctx, in, opts...)
+}
+
+// 退货详情
+func (m *defaultOms) ReturnApplyInfo(ctx context.Context, in *ReturnApplyInfoReq, opts ...grpc.CallOption) (*ReturnApplyInfoResp, error) {
+	client := oms.NewOmsClient(m.cli.Conn())
+	return client.ReturnApplyInfo(ctx, in, opts...)
 }
 
 // 添加购物车

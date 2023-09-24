@@ -11,6 +11,8 @@ import "pms/attribute.api"
 import "pms/product.api"
 import "pms/sku.api"
 import "pms/attributeCategory.api"
+import "pms/merchants.api"
+import "pms/merchantsApply.api"
 
 import "ums/member.api"
 import "ums/memberLoginLog.api"

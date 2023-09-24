@@ -26,6 +26,7 @@ func NewSkuInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SkuInfoLo
 // sku详情
 func (l *SkuInfoLogic) SkuInfo(in *pms.SkuInfoReq) (*pms.SkuInfoResp, error) {
 	sku, _ := l.svcCtx.SkuModel.GetSkuById(in.ID)
+	spu, _ := l.svcCtx.ProductModel.GetProductById(sku.ProductID)
 	skuInfo := &pms.SkuListData{
 		ID:          int64(sku.ID),
 		ProductID:   sku.ProductID,
@@ -37,6 +38,7 @@ func (l *SkuInfoLogic) SkuInfo(in *pms.SkuInfoReq) (*pms.SkuInfoResp, error) {
 		Stock:       sku.Stock,
 		Sale:        sku.Sale,
 		Tag:         sku.Tag,
+		MerchantID:  spu.MerchantID,
 	}
 	return &pms.SkuInfoResp{
 		SkuInfo: skuInfo,

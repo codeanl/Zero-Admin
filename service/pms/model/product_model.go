@@ -29,6 +29,7 @@ type (
 		Price               float64 `json:"price" gorm:"type: decimal(10, 2);comment:价格;not null"`            //价格
 		OriginalPrice       float64 `json:"original_price" gorm:"type:decimal(10, 2);comment:市场价;not null"`   //市场价
 		Unit                string  `json:"unit" gorm:"type:varchar(191);comment:单位;not null"`                //单位
+		MerchantID          int64   `json:"merchant_id" gorm:"type:bigint;comment:商家id;not null"`             //商家id
 	}
 )
 

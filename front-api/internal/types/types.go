@@ -702,6 +702,28 @@ type Order struct {
 	SkuList   []SkuData `json:"skuList"`
 }
 
+type ReturnApplyInfoReq struct {
+	OrderID int64 `json:"orderID"`
+}
+
+type ReturnApplyInfoData struct {
+	ID               int64   `json:"id"`
+	UserID           int64   `json:"userID"`
+	OrderID          int64   `json:"orderID"`
+	ReturnReasonID   int64   `json:"returnReasonID"`
+	ReturnReasonName string  `json:"returnReasonName"`
+	Status           string  `json:"status"`
+	Description      string  `json:"description"`
+	ProofPics        string  `json:"proofPics"`
+	ReturnAmount     float64 `json:"returnAmount"`
+}
+
+type ReturnApplyInfoResp struct {
+	Code    int64               `json:"code"`
+	Message string              `json:"message"`
+	Data    ReturnApplyInfoData `json:"data"`
+}
+
 type AddReturnReasonReq struct {
 	Name   string `json:"name"`
 	Status string `json:"status"`

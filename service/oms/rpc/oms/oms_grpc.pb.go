@@ -32,6 +32,7 @@ const (
 	Oms_ReturnApplyUpdate_FullMethodName  = "/oms.Oms/ReturnApplyUpdate"
 	Oms_ReturnApplyList_FullMethodName    = "/oms.Oms/ReturnApplyList"
 	Oms_ReturnApplyDelete_FullMethodName  = "/oms.Oms/ReturnApplyDelete"
+	Oms_ReturnApplyInfo_FullMethodName    = "/oms.Oms/ReturnApplyInfo"
 	Oms_CartAdd_FullMethodName            = "/oms.Oms/CartAdd"
 	Oms_CartUpdate_FullMethodName         = "/oms.Oms/CartUpdate"
 	Oms_CartList_FullMethodName           = "/oms.Oms/CartList"
@@ -68,6 +69,8 @@ type OmsClient interface {
 	ReturnApplyList(ctx context.Context, in *ReturnApplyListReq, opts ...grpc.CallOption) (*ReturnApplyListResp, error)
 	// 删除退货
 	ReturnApplyDelete(ctx context.Context, in *ReturnApplyDeleteReq, opts ...grpc.CallOption) (*ReturnApplyDeleteResp, error)
+	// 退货详情
+	ReturnApplyInfo(ctx context.Context, in *ReturnApplyInfoReq, opts ...grpc.CallOption) (*ReturnApplyInfoResp, error)
 	// 添加购物车
 	CartAdd(ctx context.Context, in *CartAddReq, opts ...grpc.CallOption) (*CartAddResp, error)
 	// 更新购物车
@@ -203,6 +206,15 @@ func (c *omsClient) ReturnApplyDelete(ctx context.Context, in *ReturnApplyDelete
 	return out, nil
 }
 
+func (c *omsClient) ReturnApplyInfo(ctx context.Context, in *ReturnApplyInfoReq, opts ...grpc.CallOption) (*ReturnApplyInfoResp, error) {
+	out := new(ReturnApplyInfoResp)
+	err := c.cc.Invoke(ctx, Oms_ReturnApplyInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *omsClient) CartAdd(ctx context.Context, in *CartAddReq, opts ...grpc.CallOption) (*CartAddResp, error) {
 	out := new(CartAddResp)
 	err := c.cc.Invoke(ctx, Oms_CartAdd_FullMethodName, in, out, opts...)
@@ -269,6 +281,8 @@ type OmsServer interface {
 	ReturnApplyList(context.Context, *ReturnApplyListReq) (*ReturnApplyListResp, error)
 	// 删除退货
 	ReturnApplyDelete(context.Context, *ReturnApplyDeleteReq) (*ReturnApplyDeleteResp, error)
+	// 退货详情
+	ReturnApplyInfo(context.Context, *ReturnApplyInfoReq) (*ReturnApplyInfoResp, error)
 	// 添加购物车
 	CartAdd(context.Context, *CartAddReq) (*CartAddResp, error)
 	// 更新购物车
@@ -322,6 +336,9 @@ func (UnimplementedOmsServer) ReturnApplyList(context.Context, *ReturnApplyListR
 }
 func (UnimplementedOmsServer) ReturnApplyDelete(context.Context, *ReturnApplyDeleteReq) (*ReturnApplyDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReturnApplyDelete not implemented")
+}
+func (UnimplementedOmsServer) ReturnApplyInfo(context.Context, *ReturnApplyInfoReq) (*ReturnApplyInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnApplyInfo not implemented")
 }
 func (UnimplementedOmsServer) CartAdd(context.Context, *CartAddReq) (*CartAddResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CartAdd not implemented")
@@ -582,6 +599,24 @@ func _Oms_ReturnApplyDelete_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Oms_ReturnApplyInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReturnApplyInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmsServer).ReturnApplyInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Oms_ReturnApplyInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmsServer).ReturnApplyInfo(ctx, req.(*ReturnApplyInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Oms_CartAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CartAddReq)
 	if err := dec(in); err != nil {
@@ -712,6 +747,10 @@ var Oms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReturnApplyDelete",
 			Handler:    _Oms_ReturnApplyDelete_Handler,
+		},
+		{
+			MethodName: "ReturnApplyInfo",
+			Handler:    _Oms_ReturnApplyInfo_Handler,
 		},
 		{
 			MethodName: "CartAdd",

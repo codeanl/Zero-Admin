@@ -27,11 +27,12 @@ func NewPlaceListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PlaceLi
 
 func (l *PlaceListLogic) PlaceList(req *types.ListPlaceReq) (*types.ListPlaceResp, error) {
 	resp, err := l.svcCtx.Sys.PlaceList(l.ctx, &sysclient.PlaceListReq{
-		Current:  req.Current,
-		PageSize: req.PageSize,
-		Name:     req.Name,
-		Place:    req.Place,
-		Phone:    req.Phone,
+		Current:   req.Current,
+		PageSize:  req.PageSize,
+		Name:      req.Name,
+		Place:     req.Place,
+		Phone:     req.Phone,
+		Principal: req.Principal,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")
@@ -46,6 +47,7 @@ func (l *PlaceListLogic) PlaceList(req *types.ListPlaceReq) (*types.ListPlaceRes
 			Pic:       item.Pic,
 			Phone:     item.Phone,
 			Principal: item.Principal,
+			UserID:    item.UserID,
 		}
 		list = append(list, &listUserData)
 	}

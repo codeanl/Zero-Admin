@@ -26,7 +26,7 @@ func NewPlaceInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PlaceIn
 
 // 自提点详情
 func (l *PlaceInfoLogic) PlaceInfo(in *sys.PlaceInfoReq) (*sys.PlaceInfoResp, error) {
-	place, _ := l.svcCtx.PlaceModel.GetPlaceById(in.Id)
+	place, _ := l.svcCtx.PlaceModel.GetPlaceByIdOrUserID(in)
 	placeInfo := &sys.PlaceListData{
 		Id:        int64(place.ID),
 		Name:      place.Name,
@@ -37,6 +37,7 @@ func (l *PlaceInfoLogic) PlaceInfo(in *sys.PlaceInfoReq) (*sys.PlaceInfoResp, er
 		Principal: place.Principal,
 		CreateBy:  place.CreateBy,
 		UpdateBy:  place.UpdateBy,
+		UserID:    place.UserID,
 	}
 	log.Print(place)
 	return &sys.PlaceInfoResp{

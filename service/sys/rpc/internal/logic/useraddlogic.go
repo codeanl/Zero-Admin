@@ -50,5 +50,7 @@ func (l *UserAddLogic) UserAdd(in *sys.UserAddReq) (*sys.UserAddResp, error) {
 		return nil, errors.New("添加失败")
 	}
 	//3.返回响应
-	return &sys.UserAddResp{}, nil
+	return &sys.UserAddResp{
+		ID: int64(admin.ID),
+	}, nil
 }

@@ -12,7 +12,7 @@ type (
 		DeletePlaceByIds(ids []int64) error
 		GetPlaceList(in *sys.PlaceListReq) ([]*Place, int64, error)
 		UpdatePlace(id int64, role *Place) error
-		GetPlaceById(id int64) (place *Place, err error)
+		GetPlaceByIdOrUserID(in *sys.PlaceInfoReq) (place *Place, err error)
 	}
 
 	defaultPlaceModel struct {
@@ -28,6 +28,7 @@ type (
 		Principal string `json:"principal" gorm:"type:varchar(191);comment:负责人;not null"` //负责人
 		CreateBy  string `json:"create_by" gorm:"type:varchar(191);comment:创建人;not null"` //创建人
 		UpdateBy  string `json:"update_by" gorm:"type:varchar(191);comment:更新人;not null"` //更新人
+		UserID    int64  `json:"userID" gorm:"type:bigint;comment:用户id;not null"`         //用户id
 	}
 )
 
@@ -56,9 +57,13 @@ func (m *defaultPlaceModel) DeletePlaceByIds(ids []int64) error {
 	err := m.conn.Where(id).Delete(&Place{}).Error
 	return err
 }
-func (m *defaultPlaceModel) GetPlaceById(id int64) (place *Place, err error) {
-	place = &Place{}
-	err = m.conn.Model(&Place{}).Where("id=?", id).First(place).Error
+func (m *defaultPlaceModel) GetPlaceByIdOrUserID(in *sys.PlaceInfoReq) (place *Place, err error) {
+	if in.Id != 0 {
+		err = m.conn.Model(&Place{}).Where("id=?", in.Id).First(&place).Error
+	}
+	if in.UserID != 0 {
+		err = m.conn.Model(&Place{}).Where("user_id=?", in.UserID).First(&place).Error
+	}
 	return place, err
 }
 
@@ -73,6 +78,9 @@ func (m *defaultPlaceModel) GetPlaceList(in *sys.PlaceListReq) ([]*Place, int64,
 	}
 	if in.Phone != "" {
 		db = db.Where("phone LIKE ?", fmt.Sprintf("%%%s%%", in.Phone))
+	}
+	if in.Principal != "" {
+		db = db.Where("principal LIKE ?", fmt.Sprintf("%%%s%%", in.Principal))
 	}
 	var total int64
 	err := db.Count(&total).Error

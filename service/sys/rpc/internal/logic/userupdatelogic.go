@@ -51,6 +51,7 @@ func (l *UserUpdateLogic) UserUpdate(in *sys.UserUpdateReq) (*sys.UserUpdateResp
 					UserID:   in.ID,
 					RoleID:   r,
 					CreateBy: in.UpdateBy,
+					DataType: in.DataType,
 				})
 				if err != nil {
 					return nil, errors.New("修改用户角色失败")

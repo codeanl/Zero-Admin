@@ -35,10 +35,13 @@ func (l *PlaceAddLogic) PlaceAdd(in *sys.PlaceAddReq) (*sys.PlaceAddResp, error)
 		Phone:     in.Phone,
 		Principal: in.Principal,
 		CreateBy:  in.CreateBy,
+		UserID:    in.UserID,
 	}
 	err := l.svcCtx.PlaceModel.AddPlace(place)
 	if err != nil {
 		return nil, errors.New("添加自提点失败")
 	}
-	return &sys.PlaceAddResp{}, nil
+	return &sys.PlaceAddResp{
+		ID: int64(place.ID),
+	}, nil
 }

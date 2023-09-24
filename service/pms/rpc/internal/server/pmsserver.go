@@ -153,3 +153,57 @@ func (s *PmsServer) AttributeCategoryList(ctx context.Context, in *pms.Attribute
 	l := logic.NewAttributeCategoryListLogic(ctx, s.svcCtx)
 	return l.AttributeCategoryList(in)
 }
+
+// 添加商家
+func (s *PmsServer) MerchantsAdd(ctx context.Context, in *pms.MerchantsAddReq) (*pms.MerchantsAddResp, error) {
+	l := logic.NewMerchantsAddLogic(ctx, s.svcCtx)
+	return l.MerchantsAdd(in)
+}
+
+// 商家列表
+func (s *PmsServer) MerchantsList(ctx context.Context, in *pms.MerchantsListReq) (*pms.MerchantsListResp, error) {
+	l := logic.NewMerchantsListLogic(ctx, s.svcCtx)
+	return l.MerchantsList(in)
+}
+
+// 更新商家
+func (s *PmsServer) MerchantsUpdate(ctx context.Context, in *pms.MerchantsUpdateReq) (*pms.MerchantsUpdateResp, error) {
+	l := logic.NewMerchantsUpdateLogic(ctx, s.svcCtx)
+	return l.MerchantsUpdate(in)
+}
+
+// 删除商家
+func (s *PmsServer) MerchantsDelete(ctx context.Context, in *pms.MerchantsDeleteReq) (*pms.MerchantsDeleteResp, error) {
+	l := logic.NewMerchantsDeleteLogic(ctx, s.svcCtx)
+	return l.MerchantsDelete(in)
+}
+
+// 商家详情
+func (s *PmsServer) MerchantsInfo(ctx context.Context, in *pms.MerchantsInfoReq) (*pms.MerchantsInfoResp, error) {
+	l := logic.NewMerchantsInfoLogic(ctx, s.svcCtx)
+	return l.MerchantsInfo(in)
+}
+
+// 添加商家申请
+func (s *PmsServer) MerchantsApplyAdd(ctx context.Context, in *pms.MerchantsApplyAddReq) (*pms.MerchantsApplyAddResp, error) {
+	l := logic.NewMerchantsApplyAddLogic(ctx, s.svcCtx)
+	return l.MerchantsApplyAdd(in)
+}
+
+// 商家申请列表
+func (s *PmsServer) MerchantsApplyList(ctx context.Context, in *pms.MerchantsApplyListReq) (*pms.MerchantsApplyListResp, error) {
+	l := logic.NewMerchantsApplyListLogic(ctx, s.svcCtx)
+	return l.MerchantsApplyList(in)
+}
+
+// 更新商家申请
+func (s *PmsServer) MerchantsApplyUpdate(ctx context.Context, in *pms.MerchantsApplyUpdateReq) (*pms.MerchantsApplyUpdateResp, error) {
+	l := logic.NewMerchantsApplyUpdateLogic(ctx, s.svcCtx)
+	return l.MerchantsApplyUpdate(in)
+}
+
+// 删除商家申请
+func (s *PmsServer) MerchantsApplyDelete(ctx context.Context, in *pms.MerchantsApplyDeleteReq) (*pms.MerchantsApplyDeleteResp, error) {
+	l := logic.NewMerchantsApplyDeleteLogic(ctx, s.svcCtx)
+	return l.MerchantsApplyDelete(in)
+}

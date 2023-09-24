@@ -16,10 +16,12 @@ type(
         Pic string `json:"pic"`
         Phone string `json:"phone"`
         Principal string `json:"principal"`
+        UserID int64 `json:"userID,optional"`
     }
     addPlaceResp struct {
         Code int64 `json:"code"`
         Message string `json:"message"`
+        Data int64 `json:"data"`
     }
      //添加------------------------------------------------
 
@@ -32,6 +34,7 @@ type(
         Pic string `json:"pic,optional"`
         Phone string `json:"phone,optional"`
         Principal string `json:"principal,optional"`
+        UserID int64 `json:"userID,optional"`
     }
     UpdatePlaceResp struct {
         Code int64 `json:"code"`
@@ -56,6 +59,7 @@ type(
         Name string `form:"name,optional "`
         Place string `form:"place,optional"`
         Phone string `form:"phone,optional"`
+        Principal string `form:"principal,optional"`
     }
     ListPlaceData struct {
         Id int64 `json:"id"`
@@ -65,6 +69,7 @@ type(
         Pic string `json:"pic"`
         Phone string `json:"phone"`
         Principal string `json:"principal"`
+        UserID int64 `json:"userID,optional"`
     }
     ListPlaceResp struct {
         Code int64 `json:"code"`
@@ -74,6 +79,15 @@ type(
     }
      //角色列表------------------------------------------------
      //------------------------------------------------
+ PlaceInfoReq struct {
+        ID int64 `json:"id,optional"`
+        UserID int64 `json:"userID,optional"`
+    }
+    PlaceInfoResp struct {
+           Code int64 `json:"code"`
+           Message string `json:"message"`
+           Data ListPlaceData `json:"data"`
+       }
 )
 
 
@@ -95,4 +109,6 @@ service api {
     @handler PlaceList
     get /list (ListPlaceReq) returns (ListPlaceResp)
 
+    @handler PlaceInfo
+    post /info (PlaceInfoReq) returns (PlaceInfoResp)
 }

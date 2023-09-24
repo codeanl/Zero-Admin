@@ -122,6 +122,26 @@ type(
              OrderInfo OrderData `json:"orderInfo"`
              SkuList []SkuData `json:"skuList"`
           }
+
+        ReturnApplyInfoReq struct {
+           OrderID int64 `json:"orderID"`
+        }
+        ReturnApplyInfoData struct {
+            ID int64 `json:"id"`
+           UserID int64 `json:"userID"`
+            OrderID int64 `json:"orderID"`
+            ReturnReasonID int64 `json:"returnReasonID"`
+            ReturnReasonName string `json:"returnReasonName"`
+            Status string `json:"status"`
+            Description string `json:"description"`
+            ProofPics string `json:"proofPics"`
+            ReturnAmount float64 `json:"returnAmount"`
+        }
+        ReturnApplyInfoResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+            Data ReturnApplyInfoData `json:"data"`
+        }
 )
 
 
@@ -141,4 +161,7 @@ service api {
 
     @handler ReturnApplyList
     post /list (ListReturnApplyReq) returns (ListReturnApplyResp)
+
+     @handler ReturnApplyInfo
+     post /info (ReturnApplyInfoReq) returns (ReturnApplyInfoResp)
 }

@@ -5,7 +5,9 @@ import (
 	"SimplePick-Mall-Server/api/internal/types"
 	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
+	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
+	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -29,24 +31,55 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 		PageSize:   req.PageSize,
 		Name:       req.Name,
 		CategoryID: req.CategoryId,
+		MerchantID: req.MerchantID,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")
 	}
+	//
+	id, _ := l.ctx.Value("id").(json.Number).Int64()
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	isSJ := false
+	for _, ii := range userInfo.Roles {
+		if ii == "商家" {
+			isSJ = true
+		}
+	}
+	//
 	var list []types.ListProductData
 	for _, item := range resp.List {
-		list = append(list, types.ListProductData{
-			Id:                  item.Id,
-			CategoryID:          item.CategoryID,
-			Name:                item.Name,
-			Pic:                 item.Pic,
-			ProductSn:           item.ProductSn,
-			Price:               item.Price,
-			Desc:                item.Desc,
-			OriginalPrice:       item.OriginalPrice,
-			Unit:                item.Unit,
-			AttributeCategoryID: item.AttributeCategoryID,
-		})
+		if isSJ {
+			if item.MerchantID == merchant.ID {
+				list = append(list, types.ListProductData{
+					Id:                  item.Id,
+					CategoryID:          item.CategoryID,
+					Name:                item.Name,
+					Pic:                 item.Pic,
+					ProductSn:           item.ProductSn,
+					Price:               item.Price,
+					Desc:                item.Desc,
+					OriginalPrice:       item.OriginalPrice,
+					Unit:                item.Unit,
+					AttributeCategoryID: item.AttributeCategoryID,
+					MerchantID:          item.MerchantID,
+				})
+			}
+		} else {
+			list = append(list, types.ListProductData{
+				Id:                  item.Id,
+				CategoryID:          item.CategoryID,
+				Name:                item.Name,
+				Pic:                 item.Pic,
+				ProductSn:           item.ProductSn,
+				Price:               item.Price,
+				Desc:                item.Desc,
+				OriginalPrice:       item.OriginalPrice,
+				Unit:                item.Unit,
+				AttributeCategoryID: item.AttributeCategoryID,
+				MerchantID:          item.MerchantID,
+			})
+		}
 	}
 	return &types.ListProductResp{
 		Code:    200,

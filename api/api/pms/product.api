@@ -18,10 +18,11 @@ type (
         AttributeValueList []AttributeValueList  `json:"attributeValueList"`
         ImgUrl []string `json:"imgUrl"`
         IntroduceImgUrl []string `json:"introduceImgUrl"`
+        MerchantID int64 `json:"merchantID,optional"`
     }
     AttributeValueList struct{
         AttributeID int64 `json:"attributeID,optional"`
-       Value []string `json:"value,optional,optional"`
+       Value []string `json:"value,optional"`
        }
 
     Size struct{
@@ -40,6 +41,7 @@ type (
         PageSize int64 `form:"pageSize,optional"`
         Name   string `form:"name,optional"`
         CategoryId int64  `form:"categoryId,optional"`
+        MerchantID int64 `form:"merchantID,optional"`
     }
     ListProductData struct {
         Id int64 `json:"id"`
@@ -52,6 +54,7 @@ type (
          Unit string `json:"unit,optional"`
         Price float64 `json:"price,optional"`
         AttributeCategoryID int64 `json:"attributeCategoryID"`
+        MerchantID int64 `json:"merchantID,optional"`
     }
 
     ListProductResp struct {
@@ -74,6 +77,7 @@ type (
        AttributeValueList []AttributeValueList  `json:"attributeValueList,optional"`
       ImgUrl []string `json:"imgUrl"`
       IntroduceImgUrl []string `json:"introduceImgUrl,optional"`
+        MerchantID int64 `json:"merchantID,optional"`
     }
     UpdateProductResp struct {
         Code int64 `json:"code"`
