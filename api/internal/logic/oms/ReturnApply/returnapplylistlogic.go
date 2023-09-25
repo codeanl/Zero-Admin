@@ -5,8 +5,10 @@ import (
 	"SimplePick-Mall-Server/api/internal/types"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
+	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
 	"context"
+	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -34,6 +36,24 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 		//return nil, errorx.NewDefaultError("查询失败")
 		return nil, err
 	}
+	//
+	id, _ := l.ctx.Value("id").(json.Number).Int64()
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
+	place, _ := l.svcCtx.Sys.PlaceInfo(l.ctx, &sysclient.PlaceInfoReq{UserID: userInfo.UserInfo.ID})
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	isZTD := false
+	for _, ii := range userInfo.Roles {
+		if ii == "自提点管理员" {
+			isZTD = true
+		}
+	}
+	isSJ := false
+	for _, ii := range userInfo.Roles {
+		if ii == "商家" {
+			isSJ = true
+		}
+	}
+	//
 	var list []types.ListReturnApplyData
 	for _, item := range resp.List {
 		order, _ := l.svcCtx.Oms.OrderInfo(l.ctx, &omsclient.OrderInfoReq{Id: item.OrderID})
@@ -111,7 +131,21 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 			Order:            Order,
 			User:             User,
 		}
-		list = append(list, listUserData)
+		//
+		if isZTD {
+			if order.OrderInfo.PlaceId == place.PlaceInfo.Id {
+				list = append(list, listUserData)
+			}
+		} else if isSJ {
+			spu, _ := l.svcCtx.Pms.ProductInfo(l.ctx, &pmsclient.ProductInfoReq{ID: order.Skus[0].SkuID})
+			if merchant.ID == spu.ProductInfo.MerchantID {
+				list = append(list, listUserData)
+			}
+		} else {
+			list = append(list, listUserData)
+		}
+		//
+		//list = append(list, listUserData)
 	}
 	return &types.ListReturnApplyResp{
 		Code:    200,
