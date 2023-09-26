@@ -31,6 +31,7 @@ func (l *HomeAdvertiseAddLogic) HomeAdvertiseAdd(req *types.AddHomeAdvertiseReq)
 		Status: req.Status,
 		Url:    req.Url,
 		Note:   req.Note,
+		Sort:   req.Sort,
 	})
 	if err != nil {
 		return nil, err

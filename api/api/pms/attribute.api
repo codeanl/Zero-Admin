@@ -11,6 +11,7 @@ type (
         Type           string `json:"type"`
         Value           string `json:"value"`
         Sort           int64 `json:"sort"`
+        MerchantID           int64 `json:"merchantID"`
     }
     addAttributeResp struct {
         Code int64 `json:"code"`
@@ -22,6 +23,7 @@ type (
         Name   string `form:"name,optional"`
         Type   string `form:"type,optional"`
        AttributeCategoryID int64  `form:"attributeCategoryID,optional"`
+         MerchantID   int64  `form:"merchantID,optional"`
     }
     ListAttributeData struct {
         Id         int64  `json:"id"`
@@ -30,6 +32,7 @@ type (
         Type           string `json:"type"`
         Value           string `json:"value"`
         Sort           int64 `json:"sort"`
+        MerchantID      int64 `json:"merchantID"`
     }
     AttributeValue struct{
         Id int64 `json:"id"`
@@ -49,6 +52,7 @@ type (
         Type           string `json:"type"`
         Value           string `json:"value"`
         Sort           int64 `json:"sort"`
+         MerchantID           int64 `json:"merchantID"`
     }
     UpdateAttributeResp struct {
         Code int64 `json:"code"`

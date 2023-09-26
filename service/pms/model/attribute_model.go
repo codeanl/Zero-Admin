@@ -25,7 +25,7 @@ type (
 		Type                string `json:"type" gorm:"type:varchar(191);comment:类型;not null"`                //1->商品属性 2->规格
 		Value               string `json:"value" gorm:"type:varchar(255);comment:可选值列表;not null"`            //'可选值列表，以逗号隔开'
 		Sort                int64  `json:"sort" gorm:"type:bigint;comment:排序;not null"`                      //排序
-
+		MerchantID          int64  `json:"merchant_id" gorm:"type:bigint;comment:商家id;not null"`             //商家id
 	}
 )
 
@@ -73,6 +73,9 @@ func (m *defaultAttributeModel) GetAttributeList(in *pms.AttributeListReq) ([]At
 	}
 	if in.Type != "" {
 		db = db.Where("type = ?", in.Type)
+	}
+	if in.MerchantID != 0 {
+		db = db.Where("merchant_id = ?", in.MerchantID)
 	}
 	var total int64
 	err := db.Count(&total).Error

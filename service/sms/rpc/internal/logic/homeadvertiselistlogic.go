@@ -39,6 +39,7 @@ func (l *HomeAdvertiseListLogic) HomeAdvertiseList(in *sms.HomeAdvertiseListReq)
 			ClickCount: role.ClickCount,
 			Url:        role.Url,
 			Note:       role.Note,
+			Sort:       role.Sort,
 		})
 	}
 	return &sms.HomeAdvertiseListResp{

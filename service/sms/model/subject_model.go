@@ -60,7 +60,7 @@ func (m *defaultSubjectModel) DeleteSubjectByIds(ids []int64) error {
 //GetUserList 获取用户列表
 func (m *defaultSubjectModel) GetSubjectList(in *sms.SubjectListReq) ([]*Subject, int64, error) {
 	var list []*Subject
-	db := m.conn.Model(&Subject{}).Order("created_at DESC")
+	db := m.conn.Model(&Subject{}).Order("sort ASC")
 	if in.Status != "" {
 		db = db.Where("Subject_sn LIKE ?", fmt.Sprintf("%%%s%%", in.Status))
 	}

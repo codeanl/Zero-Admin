@@ -33,6 +33,7 @@ func (l *HomeAdvertiseUpdateLogic) HomeAdvertiseUpdate(req *types.UpdateHomeAdve
 		Status: req.Status,
 		Url:    req.Url,
 		Note:   req.Note,
+		Sort:   req.Sort,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("更新用户失败")

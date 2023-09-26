@@ -36,6 +36,7 @@ func (l *AttributeListLogic) AttributeList(in *pms.AttributeListReq) (*pms.Attri
 			Type:                i.Type,
 			Value:               i.Value,
 			Sort:                i.Sort,
+			MerchantID:          i.MerchantID,
 		})
 	}
 	return &pms.AttributeListResp{

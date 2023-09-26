@@ -519,6 +519,7 @@ type AddAttributeReq struct {
 	Type                string `json:"type"`
 	Value               string `json:"value"`
 	Sort                int64  `json:"sort"`
+	MerchantID          int64  `json:"merchantID"`
 }
 
 type AddAttributeResp struct {
@@ -532,6 +533,7 @@ type ListAttributeReq struct {
 	Name                string `form:"name,optional"`
 	Type                string `form:"type,optional"`
 	AttributeCategoryID int64  `form:"attributeCategoryID,optional"`
+	MerchantID          int64  `form:"merchantID,optional"`
 }
 
 type ListAttributeData struct {
@@ -541,6 +543,7 @@ type ListAttributeData struct {
 	Type                string `json:"type"`
 	Value               string `json:"value"`
 	Sort                int64  `json:"sort"`
+	MerchantID          int64  `json:"merchantID"`
 }
 
 type AttributeValue struct {
@@ -563,6 +566,7 @@ type UpdateAttributeReq struct {
 	Type                string `json:"type"`
 	Value               string `json:"value"`
 	Sort                int64  `json:"sort"`
+	MerchantID          int64  `json:"merchantID"`
 }
 
 type UpdateAttributeResp struct {
@@ -1111,6 +1115,7 @@ type AddHomeAdvertiseReq struct {
 	Status string `json:"status"`        // 上下线状态：0->下线；1->上线
 	Url    string `json:"url"`           // 链接地址
 	Note   string `json:"note,optional"` // 备注
+	Sort   int64  `json:"sort,optional"` // 备注
 }
 
 type AddHomeAdvertiseResp struct {
@@ -1127,12 +1132,13 @@ type ListHomeAdvertiseReq struct {
 
 type ListHomeAdvertiseData struct {
 	Id         int64  `json:"id"`
-	Name       string `json:"name"`       // 名称
-	Pic        string `json:"pic"`        // 图片地址
-	Status     string `json:"status"`     // 上下线状态：0->下线；1->上线
-	ClickCount int64  `json:"clickCount"` // 点击数
-	Url        string `json:"url"`        // 链接地址
-	Note       string `json:"note"`       // 备注
+	Name       string `json:"name"`          // 名称
+	Pic        string `json:"pic"`           // 图片地址
+	Status     string `json:"status"`        // 上下线状态：0->下线；1->上线
+	ClickCount int64  `json:"clickCount"`    // 点击数
+	Url        string `json:"url"`           // 链接地址
+	Note       string `json:"note"`          // 备注
+	Sort       int64  `json:"sort,optional"` // 备注
 }
 
 type ListHomeAdvertiseResp struct {
@@ -1149,6 +1155,7 @@ type UpdateHomeAdvertiseReq struct {
 	Status string `json:"status,optional"` // 上下线状态：0->下线；1->上线
 	Url    string `json:"url,optional"`    // 链接地址
 	Note   string `json:"note,optional"`   // 备注
+	Sort   int64  `json:"sort,optional"`
 }
 
 type UpdateHomeAdvertiseResp struct {
@@ -1327,10 +1334,10 @@ type AddSubjectResp struct {
 
 type UpdateSubjectReq struct {
 	ID     int64  `json:"id"`
-	Name   string `json:"name"`
-	Pic    string `json:"pic"`
-	Status string `json:"status"`
-	Sort   int64  `json:"sort"`
+	Name   string `json:"name,optional"`
+	Pic    string `json:"pic,optional"`
+	Status string `json:"status,optional"`
+	Sort   int64  `json:"sort,optional"`
 }
 
 type UpdateSubjectResp struct {

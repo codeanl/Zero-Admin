@@ -33,6 +33,7 @@ func (l *HomeAdvertiseUpdateLogic) HomeAdvertiseUpdate(in *sms.HomeAdvertiseUpda
 		ClickCount: in.ClickCount,
 		Url:        in.Url,
 		Note:       in.Note,
+		Sort:       in.Sort,
 	})
 	if err != nil {
 		return nil, errors.New("更新用户失败")
