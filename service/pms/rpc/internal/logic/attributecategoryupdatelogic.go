@@ -28,8 +28,9 @@ func NewAttributeCategoryUpdateLogic(ctx context.Context, svcCtx *svc.ServiceCon
 // 更新属性分类
 func (l *AttributeCategoryUpdateLogic) AttributeCategoryUpdate(in *pms.AttributeCategoryUpdateReq) (*pms.AttributeCategoryUpdateResp, error) {
 	err := l.svcCtx.AttributeCategoryModel.UpdateAttributeCategory(in.ID, &model.AttributeCategory{
-		Name:     in.Name,
-		ParentId: in.ParentID,
+		Name:       in.Name,
+		ParentId:   in.ParentID,
+		MerchantID: in.MerchantID,
 	})
 	if err != nil {
 		return nil, errors.New("更新失败")

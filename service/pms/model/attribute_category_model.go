@@ -18,8 +18,9 @@ type (
 	}
 	AttributeCategory struct {
 		gorm.Model
-		Name     string `json:"name" gorm:"type:varchar(191);comment:名称;not null"`     //名称
-		ParentId int64  `json:"parent_id" gorm:"type:bigint;comment:上机分类的编号;not null"` //上机分类的编号
+		Name       string `json:"name" gorm:"type:varchar(191);comment:名称;not null"`     //名称
+		ParentId   int64  `json:"parent_id" gorm:"type:bigint;comment:上机分类的编号;not null"` //上机分类的编号
+		MerchantID int64  `json:"merchant_id" gorm:"type:bigint;comment:商家id;not null"`  //商家id
 	}
 )
 

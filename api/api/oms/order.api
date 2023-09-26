@@ -138,7 +138,8 @@ type (
     OrderInfo struct{
         OrderInfo ListOrderData `json:"orderInfo"`
         SkuList []*SkuListData `json:"skuList"`
-         PlaceInfo PlaceInfoData `json:"placeInfo"`
+        PlaceInfo PlaceInfoData `json:"placeInfo"`
+        MerchantInfo MerchantInfoData `json:"merchantInfo"`
      }
 
     OrderInfoResp struct{
@@ -155,6 +156,16 @@ type (
           Phone string `json:"phone"`
           Principal string `json:"principal"`
       }
+    MerchantInfoData struct {
+            ID         int64  `json:"id"`
+           Name           string `json:"name"`
+           Principal      string `json:"principal"`
+           Phone          string `json:"phone"`
+           Address        string `json:"address"`
+           Pic           string `json:"pic"`
+            UserID        int64 `json:"userID"`
+       }
+
 )
 
 @server(

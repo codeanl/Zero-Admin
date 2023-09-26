@@ -519,6 +519,7 @@ type AddAttributeReq struct {
 	Type                string `json:"type"`
 	Value               string `json:"value"`
 	Sort                int64  `json:"sort"`
+	MerchantID          int64  `json:"merchantID,optional"`
 }
 
 type AddAttributeResp struct {
@@ -532,6 +533,7 @@ type ListAttributeReq struct {
 	Name                string `form:"name,optional"`
 	Type                string `form:"type,optional"`
 	AttributeCategoryID int64  `form:"attributeCategoryID,optional"`
+	MerchantID          int64  `form:"merchantID,optional"`
 }
 
 type ListAttributeData struct {
@@ -541,6 +543,7 @@ type ListAttributeData struct {
 	Type                string `json:"type"`
 	Value               string `json:"value"`
 	Sort                int64  `json:"sort"`
+	MerchantID          int64  `json:"merchantID,optional"`
 }
 
 type AttributeValue struct {
@@ -563,6 +566,7 @@ type UpdateAttributeReq struct {
 	Type                string `json:"type"`
 	Value               string `json:"value"`
 	Sort                int64  `json:"sort"`
+	MerchantID          int64  `json:"merchantID"`
 }
 
 type UpdateAttributeResp struct {
@@ -682,6 +686,7 @@ type InfoData struct {
 	Attribute       Attribute       `json:"attributeValue"`
 	ImgUrl          []string        `json:"imgUrl"`
 	IntroduceImgUrl []string        `json:"introduceImgUrl"`
+	Merchant        MerchantData    `json:"merchant"`
 }
 
 type ProductInfoResp struct {
@@ -717,6 +722,16 @@ type AttributeList struct {
 
 type ValuesList struct {
 	Value string `json:"value"`
+}
+
+type MerchantData struct {
+	ID        int64  `json:"id"`
+	Name      string `json:"name"`
+	Principal string `json:"principal"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	Pic       string `json:"pic"`
+	UserID    int64  `json:"userID"`
 }
 
 type AddSkuReq struct {
@@ -786,8 +801,9 @@ type ListSkuData struct {
 }
 
 type AddAttributeCategoryReq struct {
-	Name     string `json:"name"`
-	ParentID int64  `json:"parentID"`
+	Name       string `json:"name"`
+	ParentID   int64  `json:"parentID"`
+	MerchantID int64  `json:"merchantID,optional"`
 }
 
 type AddAttributeCategoryResp struct {
@@ -799,10 +815,11 @@ type ListAttributeCategoryReq struct {
 }
 
 type ListAttributeCategoryData struct {
-	Id       int64                       `json:"id"`
-	Name     string                      `json:"name"`
-	ParentID int64                       `json:"parentID"`
-	Children []ListAttributeCategoryData `json:"children"`
+	Id         int64                       `json:"id"`
+	Name       string                      `json:"name"`
+	ParentID   int64                       `json:"parentID"`
+	MerchantID int64                       `json:"merchantID"`
+	Children   []ListAttributeCategoryData `json:"children"`
 }
 
 type ListAttributeCategoryResp struct {
@@ -813,9 +830,10 @@ type ListAttributeCategoryResp struct {
 }
 
 type UpdateAttributeCategoryReq struct {
-	Id       int64  `json:"id"`
-	Name     string `json:"name"`
-	ParentID int64  `json:"parentID"`
+	Id         int64  `json:"id"`
+	Name       string `json:"name"`
+	ParentID   int64  `json:"parentID"`
+	MerchantID int64  `json:"merchantID"`
 }
 
 type UpdateAttributeCategoryResp struct {
@@ -1111,6 +1129,7 @@ type AddHomeAdvertiseReq struct {
 	Status string `json:"status"`        // 上下线状态：0->下线；1->上线
 	Url    string `json:"url"`           // 链接地址
 	Note   string `json:"note,optional"` // 备注
+	Sort   int64  `json:"sort,optional"` // 备注
 }
 
 type AddHomeAdvertiseResp struct {
@@ -1127,12 +1146,13 @@ type ListHomeAdvertiseReq struct {
 
 type ListHomeAdvertiseData struct {
 	Id         int64  `json:"id"`
-	Name       string `json:"name"`       // 名称
-	Pic        string `json:"pic"`        // 图片地址
-	Status     string `json:"status"`     // 上下线状态：0->下线；1->上线
-	ClickCount int64  `json:"clickCount"` // 点击数
-	Url        string `json:"url"`        // 链接地址
-	Note       string `json:"note"`       // 备注
+	Name       string `json:"name"`          // 名称
+	Pic        string `json:"pic"`           // 图片地址
+	Status     string `json:"status"`        // 上下线状态：0->下线；1->上线
+	ClickCount int64  `json:"clickCount"`    // 点击数
+	Url        string `json:"url"`           // 链接地址
+	Note       string `json:"note"`          // 备注
+	Sort       int64  `json:"sort,optional"` // 备注
 }
 
 type ListHomeAdvertiseResp struct {
@@ -1149,6 +1169,7 @@ type UpdateHomeAdvertiseReq struct {
 	Status string `json:"status,optional"` // 上下线状态：0->下线；1->上线
 	Url    string `json:"url,optional"`    // 链接地址
 	Note   string `json:"note,optional"`   // 备注
+	Sort   int64  `json:"sort,optional"`
 }
 
 type UpdateHomeAdvertiseResp struct {
@@ -1327,10 +1348,10 @@ type AddSubjectResp struct {
 
 type UpdateSubjectReq struct {
 	ID     int64  `json:"id"`
-	Name   string `json:"name"`
-	Pic    string `json:"pic"`
-	Status string `json:"status"`
-	Sort   int64  `json:"sort"`
+	Name   string `json:"name,optional"`
+	Pic    string `json:"pic,optional"`
+	Status string `json:"status,optional"`
+	Sort   int64  `json:"sort,optional"`
 }
 
 type UpdateSubjectResp struct {
@@ -1579,9 +1600,10 @@ type SkuListData struct {
 }
 
 type OrderInfo struct {
-	OrderInfo ListOrderData  `json:"orderInfo"`
-	SkuList   []*SkuListData `json:"skuList"`
-	PlaceInfo PlaceInfoData  `json:"placeInfo"`
+	OrderInfo    ListOrderData    `json:"orderInfo"`
+	SkuList      []*SkuListData   `json:"skuList"`
+	PlaceInfo    PlaceInfoData    `json:"placeInfo"`
+	MerchantInfo MerchantInfoData `json:"merchantInfo"`
 }
 
 type OrderInfoResp struct {
@@ -1598,6 +1620,16 @@ type PlaceInfoData struct {
 	Pic       string `json:"pic"`
 	Phone     string `json:"phone"`
 	Principal string `json:"principal"`
+}
+
+type MerchantInfoData struct {
+	ID        int64  `json:"id"`
+	Name      string `json:"name"`
+	Principal string `json:"principal"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	Pic       string `json:"pic"`
+	UserID    int64  `json:"userID"`
 }
 
 type AddReturnReasonReq struct {

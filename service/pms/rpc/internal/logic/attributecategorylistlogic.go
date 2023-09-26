@@ -32,9 +32,10 @@ func (l *AttributeCategoryListLogic) AttributeCategoryList(in *pms.AttributeCate
 	var list []*pms.AttributeCategoryListData
 	for _, role := range all {
 		list = append(list, &pms.AttributeCategoryListData{
-			ID:       int64(role.ID),
-			Name:     role.Name,
-			ParentID: role.ParentId,
+			ID:         int64(role.ID),
+			Name:       role.Name,
+			ParentID:   role.ParentId,
+			MerchantID: role.MerchantID,
 		})
 	}
 	return &pms.AttributeCategoryListResp{

@@ -97,12 +97,23 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 		AttributeType1: AttributeType1,
 		AttributeType2: AttributeType2,
 	}
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{ID: resp.ProductInfo.MerchantID})
+	Merchant := types.MerchantData{
+		ID:        merchant.ID,
+		Name:      merchant.Name,
+		Principal: merchant.Principal,
+		Phone:     merchant.Phone,
+		Address:   merchant.Address,
+		Pic:       merchant.Pic,
+		UserID:    merchant.UserID,
+	}
 	data := types.InfoData{
 		ProductInfo:     productInfo,
 		SkuList:         SkuList,
 		ImgUrl:          resp.ImgUrl,
 		IntroduceImgUrl: resp.IntroduceImgUrl,
 		Attribute:       Attribute,
+		Merchant:        Merchant,
 	}
 	return &types.ProductInfoResp{
 		Code:    200,

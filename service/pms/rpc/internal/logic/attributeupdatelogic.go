@@ -32,6 +32,7 @@ func (l *AttributeUpdateLogic) AttributeUpdate(in *pms.AttributeUpdateReq) (*pms
 		Type:                in.Type,
 		Value:               in.Value,
 		Sort:                in.Sort,
+		MerchantID:          in.MerchantID,
 	})
 	if err != nil {
 		return nil, errors.New("更新失败")

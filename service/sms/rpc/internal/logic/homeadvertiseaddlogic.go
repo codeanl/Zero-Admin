@@ -33,6 +33,7 @@ func (l *HomeAdvertiseAddLogic) HomeAdvertiseAdd(in *sms.HomeAdvertiseAddReq) (*
 		ClickCount: in.ClickCount,
 		Url:        in.Url,
 		Note:       in.Note,
+		Sort:       in.Sort,
 	}
 	err := l.svcCtx.HomeAdvertiseModel.AddHomeAdvertise(role)
 	if err != nil {

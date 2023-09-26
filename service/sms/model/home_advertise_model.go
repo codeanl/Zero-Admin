@@ -22,6 +22,7 @@ type (
 		Pic        string `json:"pic" gorm:"type:varchar(191);comment:图片地址;not null"` //图片地址
 		Status     string `json:"status" gorm:"type:varchar(191);comment:上下线状态"`      //上下线状态：0->下线；1->上线',
 		ClickCount int64  `json:"click_count" gorm:"type:bigint;comment:点击数"`         //点击数
+		Sort       int64  `json:"sort" gorm:"type:bigint;comment:排序"`                 //排序
 		Url        string `json:"url" gorm:"type:varchar(191);comment:链接地址"`          //链接地址
 		Note       string `json:"note" gorm:"type:varchar(191);comment:备注"`           //备注
 	}
@@ -54,7 +55,7 @@ func (m *defaultHomeAdvertiseModel) DeleteHomeAdvertiseByIds(ids []int64) error 
 
 func (m *defaultHomeAdvertiseModel) GetHomeAdvertiseList(in *sms.HomeAdvertiseListReq) ([]*HomeAdvertise, int64, error) {
 	var list []*HomeAdvertise
-	db := m.conn.Model(&list)
+	db := m.conn.Model(&list).Order("sort ASC")
 	if in.Name != "" {
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))
 	}

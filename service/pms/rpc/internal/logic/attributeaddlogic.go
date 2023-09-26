@@ -32,6 +32,7 @@ func (l *AttributeAddLogic) AttributeAdd(in *pms.AttributeAddReq) (*pms.Attribut
 		Type:                in.Type,
 		Value:               in.Value,
 		Sort:                in.Sort,
+		MerchantID:          in.MerchantID,
 	}
 	_, err := l.svcCtx.AttributeModel.AddAttribute(info)
 	if err != nil {

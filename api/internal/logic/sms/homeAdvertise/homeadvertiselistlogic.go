@@ -44,6 +44,7 @@ func (l *HomeAdvertiseListLogic) HomeAdvertiseList(req *types.ListHomeAdvertiseR
 			Status: item.Status,
 			Url:    item.Url,
 			Note:   item.Note,
+			Sort:   item.Sort,
 		}
 		list = append(list, &listUserData)
 	}

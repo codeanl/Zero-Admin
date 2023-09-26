@@ -14,6 +14,8 @@ type (
 		GetSkuById(id int64) (info *Sku, err error)
 		DeleteSkuBySpuID(id int64) error
 		GetSkuByTag(tag string) (info *Sku, err error)
+		DeleteSkuByTag(tag string) error
+		DeleteSkuByID(id int64) error
 	}
 
 	defaultSkuModel struct {
@@ -69,6 +71,14 @@ func (m *defaultSkuModel) DeleteSkuByIds(ids []int64) error {
 
 func (m *defaultSkuModel) DeleteSkuBySpuID(id int64) error {
 	err := m.conn.Model(&Sku{}).Where("product_id=?", id).Delete(&Sku{}).Error
+	return err
+}
+func (m *defaultSkuModel) DeleteSkuByTag(tag string) error {
+	err := m.conn.Model(&Sku{}).Where("tag=?", tag).Delete(&Sku{}).Error
+	return err
+}
+func (m *defaultSkuModel) DeleteSkuByID(id int64) error {
+	err := m.conn.Model(&Sku{}).Where("id=?", id).Delete(&Sku{}).Error
 	return err
 }
 

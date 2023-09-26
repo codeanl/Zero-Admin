@@ -96,7 +96,7 @@ func (l *ProductAddLogic) ProductAdd(in *pms.ProductAddReq) (*pms.ProductAddResp
 			SkuSn:       spu.ProductSn,
 			Description: spu.Desc,
 			Price:       spu.Price,
-			Stock:       0,
+			Stock:       999,
 			Sale:        0,
 			Tag:         tag,
 		})

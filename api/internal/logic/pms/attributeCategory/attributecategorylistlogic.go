@@ -3,7 +3,9 @@ package attributeCategory
 import (
 	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
+	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
+	"encoding/json"
 
 	"SimplePick-Mall-Server/api/internal/svc"
 	"SimplePick-Mall-Server/api/internal/types"
@@ -31,13 +33,32 @@ func (l *AttributeCategoryListLogic) AttributeCategoryList(req *types.ListAttrib
 		return nil, errorx.NewDefaultError("查询失败")
 	}
 	list := make([]types.ListAttributeCategoryData, 0)
+	//
+	id, _ := l.ctx.Value("id").(json.Number).Int64()
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	isSJ := false
+	for _, ii := range userInfo.Roles {
+		if ii == "商家" {
+			isSJ = true
+		}
+	}
+	//
 	for _, item := range resp.List {
 		listUserData := types.ListAttributeCategoryData{
-			Id:       item.ID,
-			Name:     item.Name,
-			ParentID: item.ParentID,
+			Id:         item.ID,
+			Name:       item.Name,
+			ParentID:   item.ParentID,
+			MerchantID: item.MerchantID,
 		}
-		list = append(list, listUserData)
+		if isSJ {
+			if merchant.ID == item.MerchantID {
+				list = append(list, listUserData)
+			}
+		} else {
+			list = append(list, listUserData)
+		}
+
 	}
 	list = buildTree(list, 0)
 

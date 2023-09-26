@@ -100,6 +100,7 @@ type (
         Attribute Attribute `json:"attributeValue"`
         ImgUrl []string `json:"imgUrl"`
         IntroduceImgUrl []string `json:"introduceImgUrl"`
+        Merchant MerchantData  `json:"merchant"`
     }
     ProductInfoResp struct {
         Code int64 `json:"code"`
@@ -131,6 +132,15 @@ type (
        ValuesList struct{
              Value string `json:"value"`
       }
+     MerchantData struct{
+         ID         int64  `json:"id"`
+           Name           string `json:"name"`
+           Principal      string `json:"principal"`
+           Phone          string `json:"phone"`
+           Address        string `json:"address"`
+           Pic           string `json:"pic"`
+          UserID        int64 `json:"userID"`
+        }
 )
 
 @server(

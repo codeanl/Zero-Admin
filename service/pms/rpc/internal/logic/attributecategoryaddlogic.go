@@ -28,8 +28,9 @@ func NewAttributeCategoryAddLogic(ctx context.Context, svcCtx *svc.ServiceContex
 // 添加属性分类
 func (l *AttributeCategoryAddLogic) AttributeCategoryAdd(in *pms.AttributeCategoryAddReq) (*pms.AttributeCategoryAddResp, error) {
 	role := &model.AttributeCategory{
-		Name:     in.Name,
-		ParentId: in.ParentID,
+		Name:       in.Name,
+		ParentId:   in.ParentID,
+		MerchantID: in.MerchantID,
 	}
 	_, err := l.svcCtx.AttributeCategoryModel.AddAttributeCategory(role)
 	if err != nil {

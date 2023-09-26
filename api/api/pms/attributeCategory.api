@@ -8,6 +8,7 @@ type (
     addAttributeCategoryReq struct {
         Name           string `json:"name"`
         ParentID        int64 `json:"parentID"`
+        MerchantID    int64 `json:"merchantID,optional"`
     }
     addAttributeCategoryResp struct {
         Code int64 `json:"code"`
@@ -18,7 +19,8 @@ type (
     ListAttributeCategoryData struct {
         Id         int64  `json:"id"`
         Name        string `json:"name"`
-         ParentID        int64 `json:"parentID"`
+      ParentID        int64 `json:"parentID"`
+       MerchantID    int64 `json:"merchantID"`
      Children []ListAttributeCategoryData `json:"children"`
     }
     ListAttributeCategoryResp struct {
@@ -31,7 +33,7 @@ type (
         Id        int64  `json:"id"`
         Name           string `json:"name"`
        ParentID        int64 `json:"parentID"`
-
+        MerchantID    int64 `json:"merchantID"`
     }
     UpdateAttributeCategoryResp struct {
         Code int64 `json:"code"`

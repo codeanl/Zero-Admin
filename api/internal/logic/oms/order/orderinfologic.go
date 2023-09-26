@@ -7,8 +7,6 @@ import (
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
-	"log"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -60,7 +58,6 @@ func (l *OrderInfoLogic) OrderInfo(req *types.OrderInfoReq) (*types.OrderInfoRes
 	for _, i := range resp.Skus {
 		idd := i.SkuID
 		sku, _ := l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: idd})
-		log.Print(sku)
 		spu, _ := l.svcCtx.Pms.ProductInfo(l.ctx, &pmsclient.ProductInfoReq{ID: sku.SkuInfo.ProductID})
 		skuList = append(skuList, &types.SkuListData{
 			ID:          sku.SkuInfo.ID,
@@ -86,10 +83,23 @@ func (l *OrderInfoLogic) OrderInfo(req *types.OrderInfoReq) (*types.OrderInfoRes
 		Phone:     place.PlaceInfo.Phone,
 		Principal: place.PlaceInfo.Principal,
 	}
+	sku, _ := l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: resp.Skus[0].SkuID})
+	spu, _ := l.svcCtx.Pms.ProductInfo(l.ctx, &pmsclient.ProductInfoReq{ID: sku.SkuInfo.ProductID})
+	Merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{ID: spu.ProductInfo.MerchantID})
+	MerchantInfo := types.MerchantInfoData{
+		ID:        Merchant.ID,
+		Name:      Merchant.Name,
+		Principal: Merchant.Principal,
+		Phone:     Merchant.Phone,
+		Address:   Merchant.Address,
+		Pic:       Merchant.Pic,
+		UserID:    Merchant.UserID,
+	}
 	data := types.OrderInfo{
-		OrderInfo: OrderInfo,
-		SkuList:   skuList,
-		PlaceInfo: PlaceInfo,
+		OrderInfo:    OrderInfo,
+		SkuList:      skuList,
+		PlaceInfo:    PlaceInfo,
+		MerchantInfo: MerchantInfo,
 	}
 	return &types.OrderInfoResp{
 		Code:    200,

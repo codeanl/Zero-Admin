@@ -106,7 +106,6 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 			OrderInfo: OrderInfo,
 			SkuList:   skuList,
 		}
-		//user, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: item.UserID})
 		user, _ := l.svcCtx.Ums.MemberInfo(l.ctx, &umsclient.MemberInfoReq{Id: item.UserID})
 		User := types.UserData{
 			ID:       user.Id,
@@ -137,8 +136,9 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 				list = append(list, listUserData)
 			}
 		} else if isSJ {
-			spu, _ := l.svcCtx.Pms.ProductInfo(l.ctx, &pmsclient.ProductInfoReq{ID: order.Skus[0].SkuID})
-			if merchant.ID == spu.ProductInfo.MerchantID {
+			sku, _ := l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: order.Skus[0].SkuID})
+			spu, _ := l.svcCtx.Pms.ProductInfo(l.ctx, &pmsclient.ProductInfoReq{ID: sku.SkuInfo.ProductID})
+			if spu.ProductInfo.MerchantID == merchant.ID {
 				list = append(list, listUserData)
 			}
 		} else {

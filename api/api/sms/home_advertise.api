@@ -11,6 +11,7 @@ type (
         Status string `json:"status"`         // 上下线状态：0->下线；1->上线
         Url string `json:"url"`              // 链接地址
         Note string `json:"note,optional"`            // 备注
+        Sort int64 `json:"sort,optional"`            // 备注
     }
     addHomeAdvertiseResp struct {
         Code int64 `json:"code"`
@@ -30,6 +31,7 @@ type (
         ClickCount int64 `json:"clickCount"` // 点击数
         Url string `json:"url"`              // 链接地址
         Note string `json:"note"`            // 备注
+        Sort int64 `json:"sort,optional"`            // 备注
     }
     ListHomeAdvertiseResp struct {
         Code int64 `json:"code"`
@@ -44,6 +46,7 @@ type (
         Status string `json:"status,optional"`         // 上下线状态：0->下线；1->上线
         Url string `json:"url,optional"`               // 链接地址
         Note string `json:"note,optional"`    // 备注
+        Sort int64 `json:"sort,optional"`
     }
     UpdateHomeAdvertiseResp struct {
         Code int64 `json:"code"`
