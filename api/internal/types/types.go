@@ -475,6 +475,7 @@ type ListCategoryData struct {
 	Keywords     string             `json:"keywords"`
 	Description  string             `json:"description"` // 描述
 	Children     []ListCategoryData `json:"children"`
+	Count        int64              `json:"count"`
 }
 
 type ListCategoryResp struct {
@@ -1445,10 +1446,10 @@ type ListSubjectProductResp struct {
 
 type UpdateSubjectProductReq struct {
 	ID        int64  `json:"id"`
-	SubjectID int64  `json:"subject_id"`
-	ProductID int64  `json:"product_id"`
-	Status    string `json:"status"`
-	Sort      int64  `json:"sort"`
+	SubjectID int64  `json:"subject_id,optional"`
+	ProductID int64  `json:"product_id,optional"`
+	Status    string `json:"status,optional"`
+	Sort      int64  `json:"sort,optional"`
 }
 
 type UpdateSubjectProductResp struct {

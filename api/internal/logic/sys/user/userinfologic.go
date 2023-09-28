@@ -1,6 +1,7 @@
 package user
 
 import (
+	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 	"encoding/json"
@@ -42,6 +43,19 @@ func (l *UserInfoLogic) UserInfo() (*types.UserInfoResp, error) {
 		CreateBy: resp.UserInfo.CreateBy,
 		UpdateBy: resp.UserInfo.UpdateBy,
 	}
+	//
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
+	for index, d := range resp.Roles {
+		if d == "自提点管理员" {
+			place, _ := l.svcCtx.Sys.PlaceInfo(l.ctx, &sysclient.PlaceInfoReq{UserID: userInfo.UserInfo.ID})
+			resp.Roles[index] = "自提点管理员（" + place.PlaceInfo.Name + ")"
+		}
+		if d == "商家" {
+			merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+			resp.Roles[index] = "商家（" + merchant.Name + ")"
+		}
+	}
+	//
 	data := types.Data{
 		UserInfo: UserInfo,
 		Routes:   resp.Routes,

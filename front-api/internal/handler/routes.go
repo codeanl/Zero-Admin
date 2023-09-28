@@ -62,7 +62,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: index.SubjectListHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
+				Method:  http.MethodPost,
 				Path:    "/subjectProductList",
 				Handler: index.SubjectProductListHandler(serverCtx),
 			},

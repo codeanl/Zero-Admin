@@ -66,7 +66,7 @@ func (m *defaultProductModel) DeleteProductByIds(ids []int64) error {
 
 func (m *defaultProductModel) GetProductList(in *pms.ProductListReq) ([]*Product, int64, error) {
 	var list []*Product
-	sortField := "created_at DESC"
+	sortField := "RAND()"
 	if in.SearchType == 1 {
 		sortField = "created_at DESC"
 	}
@@ -84,7 +84,6 @@ func (m *defaultProductModel) GetProductList(in *pms.ProductListReq) ([]*Product
 	}
 	db := m.conn.Model(&Product{}).Order(sortField)
 	//db := m.conn.Model(&Product{}).Order("created_at DESC")
-	//
 	if in.CategoryID != 0 {
 		var count int64
 		err := m.conn.Model(&Category{}).Where("parent_id = ?", in.CategoryID).Count(&count).Error

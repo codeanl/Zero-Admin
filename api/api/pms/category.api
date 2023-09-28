@@ -40,7 +40,8 @@ type (
         Icon string `json:"icon"`                // 图标
         Keywords string `json:"keywords"`
         Description string `json:"description"`  // 描述
-         Children []ListCategoryData `json:"children"`
+        Children []ListCategoryData `json:"children"`
+        Count int64 `json:"count"`
     }
     ListCategoryResp struct {
         Code int64 `json:"code"`

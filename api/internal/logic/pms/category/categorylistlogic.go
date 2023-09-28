@@ -31,19 +31,20 @@ func (l *CategoryListLogic) CategoryList(req *types.ListCategoryReq) (*types.Lis
 	}
 	list := make([]types.ListCategoryData, 0)
 	for _, item := range resp.List {
+		pms, _ := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{CategoryID: item.Id})
 		listUserData := types.ListCategoryData{
-			Id:           item.Id,
-			ParentId:     item.ParentId,
-			Name:         item.Name,
-			Level:        item.Level,
-			ProductCount: item.Sort,
-			ProductUnit:  item.ProductUnit,
-			NavStatus:    item.ShowStatus,
-			ShowStatus:   item.ShowStatus,
-			Sort:         item.Sort,
-			Icon:         item.Icon,
-			Keywords:     item.Keywords,
-			Description:  item.Description,
+			Id:          item.Id,
+			ParentId:    item.ParentId,
+			Name:        item.Name,
+			Level:       item.Level,
+			ProductUnit: item.ProductUnit,
+			NavStatus:   item.ShowStatus,
+			ShowStatus:  item.ShowStatus,
+			Sort:        item.Sort,
+			Icon:        item.Icon,
+			Keywords:    item.Keywords,
+			Description: item.Description,
+			Count:       pms.Total,
 		}
 		list = append(list, listUserData)
 	}
