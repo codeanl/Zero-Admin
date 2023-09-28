@@ -23,7 +23,13 @@ func NewQueryMenuByRoleIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 }
 
 func (l *QueryMenuByRoleIdLogic) QueryMenuByRoleId(req *types.RoleMenuReq) (*types.RoleMenuResp, error) {
-	resp, _ := l.svcCtx.Sys.MenuList(l.ctx, &sysclient.MenuListReq{})
+	resp, err := l.svcCtx.Sys.MenuList(l.ctx, &sysclient.MenuListReq{})
+	if err != nil {
+		return &types.RoleMenuResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
+	}
 	var listIds []int64
 	for _, i := range resp.MenuList {
 		listIds = append(listIds, i.ID)
@@ -36,6 +42,6 @@ func (l *QueryMenuByRoleIdLogic) QueryMenuByRoleId(req *types.RoleMenuReq) (*typ
 	return &types.RoleMenuResp{
 		Data:    listIds,
 		Code:    200,
-		Message: "根据角色id查询菜单成功",
+		Message: "查询成功",
 	}, nil
 }

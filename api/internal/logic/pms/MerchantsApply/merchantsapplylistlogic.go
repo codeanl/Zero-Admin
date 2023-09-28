@@ -1,7 +1,6 @@
 package MerchantsApply
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -34,7 +33,10 @@ func (l *MerchantsApplyListLogic) MerchantsApplyList(req *types.ListMerchantsApp
 		Type:     req.Type,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListMerchantsApplyResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []types.ListMerchantsApplyData
 	for _, item := range resp.List {

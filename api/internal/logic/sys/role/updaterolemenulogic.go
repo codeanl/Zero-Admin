@@ -1,7 +1,6 @@
 package role
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -32,11 +31,13 @@ func (l *UpdateRoleMenuLogic) UpdateRoleMenu(req *types.UpdateRoleMenuReq) (*typ
 		CreateBy: l.ctx.Value("username").(string),
 	})
 	if err != nil {
-		logx.Error(err)
-		return nil, errorx.NewDefaultError("更新角色菜单失败")
+		return &types.UpdateRoleMenuResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateRoleMenuResp{
 		Code:    200,
-		Message: "更新角色菜单成功",
+		Message: "更新成功",
 	}, nil
 }

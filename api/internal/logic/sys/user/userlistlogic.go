@@ -1,12 +1,11 @@
 package user
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
-	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
-	"context"
-
 	"SimplePick-Mall-Server/api/internal/svc"
 	"SimplePick-Mall-Server/api/internal/types"
+	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
+	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -37,10 +36,26 @@ func (l *UserListLogic) UserList(req *types.ListUserReq) (*types.ListUserResp, e
 		Email:    req.Email,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListUserResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.User
 	for _, item := range resp.List {
+		//
+		userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: item.Id})
+		for index, d := range item.RoleName {
+			if d == "自提点管理员" {
+				place, _ := l.svcCtx.Sys.PlaceInfo(l.ctx, &sysclient.PlaceInfoReq{UserID: userInfo.UserInfo.ID})
+				item.RoleName[index] = "自提点管理员（" + place.PlaceInfo.Name + ")"
+			}
+			if d == "商家" {
+				merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+				item.RoleName[index] = "商家（" + merchant.Name + ")"
+			}
+		}
+		//
 		listUserData := types.User{
 			ID:       item.Id,
 			Username: item.Username,

@@ -1,7 +1,6 @@
 package MerchantsApply
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -42,7 +41,10 @@ func (l *MerchantsApplyUpdateLogic) MerchantsApplyUpdate(req *types.UpdateMercha
 		Remarks:        req.Remarks,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新失败")
+		return &types.UpdateMerchantsApplyResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateMerchantsApplyResp{
 		Code:    200,

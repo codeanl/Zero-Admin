@@ -35,7 +35,10 @@ func (l *ReturnApplyAddLogic) ReturnApplyAdd(req *types.AddReturnApplyReq) (resp
 		ReturnAmount:   req.ReturnAmount,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddReturnApplyResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddReturnApplyResp{
 		Code:    200,

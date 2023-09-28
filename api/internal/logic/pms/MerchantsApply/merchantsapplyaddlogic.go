@@ -51,7 +51,10 @@ func (l *MerchantsApplyAddLogic) MerchantsApplyAdd(req *types.AddMerchantsApplyR
 		Remarks:        resp.Remarks,
 	}
 	if err != nil {
-		return nil, err
+		return &types.AddMerchantsApplyResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddMerchantsApplyResp{
 		Code:    200,

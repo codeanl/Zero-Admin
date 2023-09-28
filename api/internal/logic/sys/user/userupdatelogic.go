@@ -1,7 +1,6 @@
 package user
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -40,10 +39,13 @@ func (l *UserUpdateLogic) UserUpdate(req *types.UpdateUserReq) (resp *types.Upda
 		DataType: req.DataType,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.UpdateUserResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateUserResp{
 		Code:    200,
-		Message: "成功",
+		Message: "更新成功",
 	}, nil
 }

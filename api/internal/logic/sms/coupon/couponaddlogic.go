@@ -40,7 +40,10 @@ func (l *CouponAddLogic) CouponAdd(req *types.AddCouponReq) (resp *types.AddCoup
 		Code:       req.Code,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddCouponResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddCouponResp{
 		Code:    200,

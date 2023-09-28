@@ -1,7 +1,6 @@
 package ReturnReason
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"context"
 
@@ -32,10 +31,13 @@ func (l *ReturnReasonUpdateLogic) ReturnReasonUpdate(req *types.UpdateReturnReas
 		Status: req.Status,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.UpdateReturnReasonResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateReturnReasonResp{
 		Code:    200,
-		Message: "更新用户成功",
+		Message: "更新成功",
 	}, nil
 }

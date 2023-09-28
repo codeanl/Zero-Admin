@@ -34,7 +34,10 @@ func (l *HomeAdvertiseAddLogic) HomeAdvertiseAdd(req *types.AddHomeAdvertiseReq)
 		Sort:   req.Sort,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddHomeAdvertiseResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddHomeAdvertiseResp{
 		Code:    200,

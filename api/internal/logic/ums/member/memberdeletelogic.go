@@ -1,7 +1,6 @@
 package member
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
 	"context"
 
@@ -30,10 +29,13 @@ func (l *MemberDeleteLogic) MemberDelete(req *types.DeleteMemberReq) (*types.Del
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteMemberResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteMemberResp{
 		Code:    200,
-		Message: "删除用户成功",
+		Message: "删除成功",
 	}, nil
 }

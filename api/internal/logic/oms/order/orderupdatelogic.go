@@ -1,7 +1,6 @@
 package order
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"context"
 
@@ -53,10 +52,13 @@ func (l *OrderUpdateLogic) OrderUpdate(req *types.UpdateOrderReq) (resp *types.U
 		CommentTime:           req.CommentTime,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.UpdateOrderResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateOrderResp{
 		Code:    200,
-		Message: "更新用户成功",
+		Message: "更新成功",
 	}, nil
 }

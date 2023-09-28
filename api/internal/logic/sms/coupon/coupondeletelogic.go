@@ -1,7 +1,6 @@
 package coupon
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *CouponDeleteLogic) CouponDelete(req *types.DeleteCouponReq) (resp *type
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteCouponResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteCouponResp{
 		Code:    200,

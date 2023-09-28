@@ -1,7 +1,6 @@
 package SubjectProduct
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -34,8 +33,10 @@ func (l *SubjectProductUpdateLogic) SubjectProductUpdate(req *types.UpdateSubjec
 		Sort:      req.Sort,
 	})
 	if err != nil {
-		logx.Error(err)
-		return nil, errorx.NewDefaultError("更新失败")
+		return &types.UpdateSubjectProductResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateSubjectProductResp{
 		Code:    200,

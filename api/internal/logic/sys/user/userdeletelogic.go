@@ -1,7 +1,6 @@
 package user
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -30,10 +29,13 @@ func (l *UserDeleteLogic) UserDelete(req *types.DeleteUserReq) (*types.DeleteUse
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除失败")
+		return &types.DeleteUserResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteUserResp{
 		Code:    200,
-		Message: "删除用户成功",
+		Message: "删除成功",
 	}, nil
 }

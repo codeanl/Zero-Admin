@@ -1,7 +1,6 @@
 package HotRecommend
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *HotRecommendDeleteLogic) HotRecommendDelete(req *types.DeleteHotRecomme
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除失败")
+		return &types.DeleteHotRecommendResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteHotRecommendResp{
 		Code:    200,

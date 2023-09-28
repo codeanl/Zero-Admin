@@ -1,7 +1,6 @@
 package loginLog
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -30,10 +29,13 @@ func (l *LoginLogDeleteLogic) LoginLogDelete(req *types.DeleteLoginLogReq) (*typ
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除登录日志失败")
+		return &types.DeleteLoginLogResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteLoginLogResp{
 		Code:    200,
-		Message: "删除登录日志成功",
+		Message: "删除成功",
 	}, nil
 }

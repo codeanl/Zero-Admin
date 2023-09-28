@@ -40,7 +40,6 @@ func (l *AttributeAddLogic) AttributeAdd(req *types.AddAttributeReq) (resp *type
 	if isSJ {
 		merchantID = merchant.ID
 	}
-
 	_, err = l.svcCtx.Pms.AttributeAdd(l.ctx, &pmsclient.AttributeAddReq{
 		AttributeCategoryID: req.AttributeCategoryID,
 		Name:                req.Name,
@@ -50,10 +49,13 @@ func (l *AttributeAddLogic) AttributeAdd(req *types.AddAttributeReq) (resp *type
 		MerchantID:          merchantID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddAttributeResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddAttributeResp{
 		Code:    200,
-		Message: "添加角色成功",
+		Message: "添加成功",
 	}, nil
 }

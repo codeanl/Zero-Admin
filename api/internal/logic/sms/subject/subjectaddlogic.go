@@ -32,7 +32,10 @@ func (l *SubjectAddLogic) SubjectAdd(req *types.AddSubjectReq) (resp *types.AddS
 		Sort:   req.Sort,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddSubjectResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddSubjectResp{
 		Code:    200,

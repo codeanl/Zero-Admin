@@ -37,7 +37,10 @@ func (l *SkuAddLogic) SkuAdd(req *types.AddSkuReq) (resp *types.AddSkuResp, err 
 		SizeValueID: req.SizeValueID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddSkuResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddSkuResp{
 		Code:    200,

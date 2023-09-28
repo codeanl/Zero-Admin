@@ -35,8 +35,11 @@ func (l *OrderListLogic) OrderList(req *types.ListOrderReq) (*types.ListOrderRes
 		MemberUsername: req.MemberUsername,
 	})
 	if err != nil {
-		//return nil, errorx.NewDefaultError("查询失败")
-		return nil, err
+		return &types.ListOrderResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
+
 	}
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
 	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
@@ -151,7 +154,7 @@ func (l *OrderListLogic) OrderList(req *types.ListOrderReq) (*types.ListOrderRes
 	}
 	return &types.ListOrderResp{
 		Code:    200,
-		Message: "查询角色列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

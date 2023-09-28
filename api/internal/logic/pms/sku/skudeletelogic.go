@@ -1,7 +1,6 @@
 package sku
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *SkuDeleteLogic) SkuDelete(req *types.DeleteSkuReq) (resp *types.DeleteS
 		Ids: req.IDs,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteSkuResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteSkuResp{
 		Code:    200,

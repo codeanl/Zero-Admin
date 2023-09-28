@@ -33,8 +33,11 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 		Status:   req.Status,
 	})
 	if err != nil {
-		//return nil, errorx.NewDefaultError("查询失败")
-		return nil, err
+
+		return &types.ListReturnApplyResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	//
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
@@ -149,7 +152,7 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 	}
 	return &types.ListReturnApplyResp{
 		Code:    200,
-		Message: "查询角色列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

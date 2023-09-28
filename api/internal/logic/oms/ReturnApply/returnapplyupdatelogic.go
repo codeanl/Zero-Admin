@@ -1,7 +1,6 @@
 package ReturnApply
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"context"
 
@@ -37,10 +36,13 @@ func (l *ReturnApplyUpdateLogic) ReturnApplyUpdate(req *types.UpdateReturnApplyR
 		ReturnAmount:   req.ReturnAmount,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.UpdateReturnApplyResp{
+			Code:    200,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateReturnApplyResp{
 		Code:    200,
-		Message: "更新用户成功",
+		Message: "更新成功",
 	}, nil
 }

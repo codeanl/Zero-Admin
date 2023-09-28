@@ -1,7 +1,6 @@
 package homeAdvertise
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -33,7 +32,10 @@ func (l *HomeAdvertiseListLogic) HomeAdvertiseList(req *types.ListHomeAdvertiseR
 		Status:   req.Status,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListHomeAdvertiseResp{
+			Code:    200,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.ListHomeAdvertiseData
 	for _, item := range resp.List {
@@ -50,7 +52,7 @@ func (l *HomeAdvertiseListLogic) HomeAdvertiseList(req *types.ListHomeAdvertiseR
 	}
 	return &types.ListHomeAdvertiseResp{
 		Code:    200,
-		Message: "查询角色列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

@@ -112,6 +112,10 @@ type ListProductReq struct {
 	PageSize   int64  `form:"pageSize,optional"`
 	Name       string `form:"name,optional"`
 	CategoryId int64  `form:"categoryId,optional"`
+	MerchantID int64  `form:"merchantID,optional"`
+	MinPrice   int64  `form:"minPrice,optional"`
+	MaxPrice   int64  `form:"maxPrice,optional"`
+	SearchType int64  `form:"searchType,optional"`
 }
 
 type ListProductByCateIDReq struct {
@@ -161,10 +165,10 @@ type ListSubjectResp struct {
 }
 
 type ListSubjectProductReq struct {
-	Current   int64  `form:"current,default=1"`
-	PageSize  int64  `form:"pageSize,default=20"`
-	SubjectID int64  `form:"subjectId"`
-	Status    string `form:"status,optional"`
+	Current   int64  `json:"current,optional"`
+	PageSize  int64  `json:"pageSize,optional"`
+	SubjectID int64  `json:"subjectId,optional"`
+	Status    string `json:"status,optional"`
 }
 
 type ListSubjectProductData struct {
@@ -380,7 +384,7 @@ type AddOrderResp struct {
 }
 
 type Data struct {
-	OrderID int64 `json:"orderID"`
+	OrderID []int64 `json:"orderID"`
 }
 
 type ListOrderReq struct {

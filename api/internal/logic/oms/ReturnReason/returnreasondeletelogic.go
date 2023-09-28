@@ -1,7 +1,6 @@
 package ReturnReason
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"context"
 
@@ -30,10 +29,13 @@ func (l *ReturnReasonDeleteLogic) ReturnReasonDelete(req *types.DeleteReturnReas
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteReturnReasonResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteReturnReasonResp{
 		Code:    200,
-		Message: "删除用户成功",
+		Message: "删除成功",
 	}, nil
 }

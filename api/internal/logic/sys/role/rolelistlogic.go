@@ -1,7 +1,6 @@
 package role
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -32,7 +31,10 @@ func (l *RoleListLogic) RoleList(req *types.ListRoleReq) (*types.ListRoleResp, e
 		Name:     req.Name,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListRoleResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.ListRoleData
 	for _, item := range resp.List {
@@ -50,7 +52,7 @@ func (l *RoleListLogic) RoleList(req *types.ListRoleReq) (*types.ListRoleResp, e
 
 	return &types.ListRoleResp{
 		Code:    200,
-		Message: "查询角色列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

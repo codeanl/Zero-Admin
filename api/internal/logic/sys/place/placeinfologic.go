@@ -1,7 +1,6 @@
 package place
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -31,7 +30,10 @@ func (l *PlaceInfoLogic) PlaceInfo(req *types.PlaceInfoReq) (*types.PlaceInfoRes
 		UserID: req.UserID,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.PlaceInfoResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	data := types.ListPlaceData{
 		Id:        resp.PlaceInfo.Id,
@@ -45,7 +47,7 @@ func (l *PlaceInfoLogic) PlaceInfo(req *types.PlaceInfoReq) (*types.PlaceInfoRes
 	}
 	return &types.PlaceInfoResp{
 		Code:    200,
-		Message: "成功",
+		Message: "查询成功",
 		Data:    data,
 	}, nil
 }

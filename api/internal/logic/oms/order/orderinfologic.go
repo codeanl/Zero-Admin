@@ -25,7 +25,13 @@ func NewOrderInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *OrderIn
 }
 
 func (l *OrderInfoLogic) OrderInfo(req *types.OrderInfoReq) (*types.OrderInfoResp, error) {
-	resp, _ := l.svcCtx.Oms.OrderInfo(l.ctx, &omsclient.OrderInfoReq{Id: req.ID})
+	resp, err := l.svcCtx.Oms.OrderInfo(l.ctx, &omsclient.OrderInfoReq{Id: req.ID})
+	if err != nil {
+		return &types.OrderInfoResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
+	}
 	OrderInfo := types.ListOrderData{
 		ID:                    resp.OrderInfo.ID,
 		MemberId:              resp.OrderInfo.MemberId,
@@ -103,7 +109,7 @@ func (l *OrderInfoLogic) OrderInfo(req *types.OrderInfoReq) (*types.OrderInfoRes
 	}
 	return &types.OrderInfoResp{
 		Code:    200,
-		Message: "success",
+		Message: "查询成功",
 		Data:    data,
 	}, nil
 }

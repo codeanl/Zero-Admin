@@ -1,7 +1,6 @@
 package systemLog
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -30,10 +29,13 @@ func (l *SystemLogDeleteLogic) SystemLogDelete(req *types.DeleteSysLogReq) (resp
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除登录日志失败")
+		return &types.DeleteSysLogResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteSysLogResp{
 		Code:    200,
-		Message: "删除登录日志成功",
+		Message: "删除成功",
 	}, nil
 }

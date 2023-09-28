@@ -1,7 +1,6 @@
 package place
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -35,7 +34,10 @@ func (l *PlaceListLogic) PlaceList(req *types.ListPlaceReq) (*types.ListPlaceRes
 		Principal: req.Principal,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListPlaceResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.ListPlaceData
 	for _, item := range resp.List {

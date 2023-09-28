@@ -27,7 +27,10 @@ func NewMenuListsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *MenuLis
 func (l *MenuListsLogic) MenuLists(req *types.ListMenuReq) (*types.ListMenuResp, error) {
 	resp, err := l.svcCtx.Sys.MenuList(l.ctx, &sysclient.MenuListReq{})
 	if err != nil {
-		return nil, err
+		return &types.ListMenuResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	menuItems := make([]types.ListMenuData, 0)
 	for _, item := range resp.MenuList {
@@ -50,7 +53,7 @@ func (l *MenuListsLogic) MenuLists(req *types.ListMenuReq) (*types.ListMenuResp,
 	return &types.ListMenuResp{
 		Code:    200,
 		Data:    menuTree,
-		Message: "获取菜单成功",
+		Message: "查询成功",
 	}, nil
 }
 func buildMenuTree(menuItems []types.ListMenuData, parentID int64) []types.ListMenuData {

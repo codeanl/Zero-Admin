@@ -41,7 +41,7 @@ type (
         Data Data `json:"data"`
     }
       Data struct {
-            OrderID int64 `json:"orderID"`
+            OrderID []int64 `json:"orderID"`
         }
     ListOrderReq struct {
         Current int64 `json:"current,optional"`

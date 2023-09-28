@@ -1,7 +1,6 @@
 package SubjectProduct
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
@@ -34,7 +33,10 @@ func (l *SubjectProductListLogic) SubjectProductList(req *types.ListSubjectProdu
 		SubjectID: req.SubjectID,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListSubjectProductResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []types.ListSubjectProductData
 	for _, item := range resp.List {

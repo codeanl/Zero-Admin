@@ -1,7 +1,6 @@
 package coupon
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -42,8 +41,10 @@ func (l *CouponUpdateLogic) CouponUpdate(req *types.UpdateCouponReq) (resp *type
 		Code:       req.Code,
 	})
 	if err != nil {
-		logx.Error(err)
-		return nil, errorx.NewDefaultError("更新失败")
+		return &types.UpdateCouponResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateCouponResp{
 		Code:    200,

@@ -1,7 +1,6 @@
 package coupon
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -34,7 +33,10 @@ func (l *CouponListLogic) CouponList(req *types.ListCouponReq) (*types.ListCoupo
 		UseType:  req.UseType,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListCouponResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.ListCouponData
 	for _, item := range resp.List {
@@ -58,7 +60,7 @@ func (l *CouponListLogic) CouponList(req *types.ListCouponReq) (*types.ListCoupo
 
 	return &types.ListCouponResp{
 		Code:    200,
-		Message: "查询角色列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

@@ -48,10 +48,10 @@ type (
     }
     UpdateSubjectProductReq struct {
         ID int64 `json:"id"`
-        SubjectID int64 `json:"subject_id"`
-        ProductID int64 `json:"product_id"`
-        Status string `json:"status"`
-        Sort int64 `json:"sort"`
+        SubjectID int64 `json:"subject_id,optional"`
+        ProductID int64 `json:"product_id,optional"`
+        Status string `json:"status,optional"`
+        Sort int64 `json:"sort,optional"`
     }
     UpdateSubjectProductResp struct {
         Code int64 `json:"code"`

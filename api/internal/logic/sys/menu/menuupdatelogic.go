@@ -1,7 +1,6 @@
 package menu
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -39,7 +38,10 @@ func (l *MenuUpdateLogic) MenuUpdate(req *types.UpdateMenuReq) (resp *types.Upda
 		UpdateBy: l.ctx.Value("username").(string),
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.UpdateMenuResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateMenuResp{
 		Code:    200,

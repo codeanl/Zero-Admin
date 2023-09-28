@@ -1,7 +1,6 @@
 package sku
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *SkuListLogic) SkuList(req *types.ListSkuReq) (*types.ListSkuResp, error
 		ProductID: req.ProductID,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListSkuResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []types.ListSkuData
 	for _, item := range resp.List {
@@ -50,7 +52,7 @@ func (l *SkuListLogic) SkuList(req *types.ListSkuReq) (*types.ListSkuResp, error
 	}
 	return &types.ListSkuResp{
 		Code:    200,
-		Message: "查询列表成功",
+		Message: "查询成功",
 		Data:    list,
 	}, nil
 }

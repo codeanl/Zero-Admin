@@ -1,7 +1,6 @@
 package loginLog
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -33,7 +32,10 @@ func (l *LoginLogListLogic) LoginLogList(req *types.ListLoginLogReq) (*types.Lis
 		Status:   req.Status,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListLoginLogResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.ListLoginLogData
 	for _, item := range resp.List {
@@ -48,10 +50,9 @@ func (l *LoginLogListLogic) LoginLogList(req *types.ListLoginLogReq) (*types.Lis
 		}
 		list = append(list, &listUserData)
 	}
-
 	return &types.ListLoginLogResp{
 		Code:    200,
-		Message: "查询登录日志列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

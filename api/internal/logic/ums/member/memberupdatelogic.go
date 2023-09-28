@@ -1,7 +1,6 @@
 package member
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
 	"context"
 
@@ -41,7 +40,10 @@ func (l *MemberUpdateLogic) MemberUpdate(req *types.UpdateMemberReq) (resp *type
 		Signature: req.Signature,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新失败")
+		return &types.UpdateMemberResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateMemberResp{
 		Code:    200,

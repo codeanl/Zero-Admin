@@ -36,7 +36,10 @@ func (l *PlaceAddLogic) PlaceAdd(req *types.AddPlaceReq) (*types.AddPlaceResp, e
 		UserID:    req.UserID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddPlaceResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddPlaceResp{
 		Code:    200,

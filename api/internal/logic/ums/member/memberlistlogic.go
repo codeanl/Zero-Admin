@@ -1,7 +1,6 @@
 package member
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
 	"context"
 
@@ -34,7 +33,10 @@ func (l *MemberListLogic) MemberList(req *types.ListMemberReq) (*types.ListMembe
 		Status:   req.Status,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListMemberResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.ListMemberData
 	for _, item := range resp.List {
@@ -58,7 +60,7 @@ func (l *MemberListLogic) MemberList(req *types.ListMemberReq) (*types.ListMembe
 
 	return &types.ListMemberResp{
 		Code:    200,
-		Message: "查询列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

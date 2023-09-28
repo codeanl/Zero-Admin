@@ -1,7 +1,6 @@
 package attributeCategory
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
@@ -30,7 +29,10 @@ func NewAttributeCategoryListLogic(ctx context.Context, svcCtx *svc.ServiceConte
 func (l *AttributeCategoryListLogic) AttributeCategoryList(req *types.ListAttributeCategoryReq) (*types.ListAttributeCategoryResp, error) {
 	resp, err := l.svcCtx.Pms.AttributeCategoryList(l.ctx, &pmsclient.AttributeCategoryListReq{})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListAttributeCategoryResp{
+			Code:    200,
+			Message: "查询失败",
+		}, nil
 	}
 	list := make([]types.ListAttributeCategoryData, 0)
 	//

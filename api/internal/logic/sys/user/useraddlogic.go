@@ -38,7 +38,10 @@ func (l *UserAddLogic) UserAdd(req *types.AddUserReq) (*types.AddUserResp, error
 		RoleID:   req.RoleID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddUserResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddUserResp{
 		Code:    200,

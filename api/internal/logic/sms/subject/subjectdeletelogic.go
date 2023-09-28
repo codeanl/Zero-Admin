@@ -1,7 +1,6 @@
 package subject
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *SubjectDeleteLogic) SubjectDelete(req *types.DeleteSubjectReq) (resp *t
 		IDs: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteSubjectResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteSubjectResp{
 		Code:    200,

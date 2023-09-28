@@ -1,7 +1,6 @@
 package category
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -41,7 +40,10 @@ func (l *CategoryUpdateLogic) CategoryUpdate(req *types.UpdateCategoryReq) (*typ
 		Description:  req.Description,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新失败")
+		return &types.UpdateCategoryResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateCategoryResp{
 		Code:    200,

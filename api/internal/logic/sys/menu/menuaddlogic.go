@@ -1,7 +1,6 @@
 package menu
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -38,7 +37,10 @@ func (l *MenuAddLogic) MenuAdd(req *types.AddMenuReq) (resp *types.AddMenuResp, 
 		TAG:      req.TAG,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("添加菜单失败")
+		return &types.AddMenuResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddMenuResp{
 		Code:    200,

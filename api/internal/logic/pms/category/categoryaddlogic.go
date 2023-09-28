@@ -39,7 +39,10 @@ func (l *CategoryAddLogic) CategoryAdd(req *types.AddCategoryReq) (resp *types.A
 		Description:  req.Description,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddCategoryResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddCategoryResp{
 		Code:    200,

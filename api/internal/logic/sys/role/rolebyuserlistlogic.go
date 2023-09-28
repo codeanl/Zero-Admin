@@ -1,7 +1,6 @@
 package role
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *RoleByUserListLogic) RoleByUserList(req *types.RoleByUserListReq) (*typ
 		UserID: req.UserID,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.RoleByUserListResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.ListRoleData
 	for _, item := range resp.List {
@@ -48,7 +50,7 @@ func (l *RoleByUserListLogic) RoleByUserList(req *types.RoleByUserListReq) (*typ
 
 	return &types.RoleByUserListResp{
 		Code:    200,
-		Message: "查询角色列表成功",
+		Message: "查询成功",
 		Data:    list,
 	}, nil
 }

@@ -1,7 +1,6 @@
 package menu
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *MenuDeleteLogic) MenuDelete(req *types.DeleteMenuReq) (resp *types.Dele
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteMenuResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteMenuResp{
 		Code:    200,

@@ -1,7 +1,6 @@
 package member
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
 	"context"
 
@@ -39,7 +38,10 @@ func (l *MemberAddLogic) MemberAdd(req *types.AddMemberReq) (resp *types.AddMemb
 		Signature: req.Signature,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("添加失败")
+		return &types.AddMemberResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddMemberResp{
 		Code:    200,

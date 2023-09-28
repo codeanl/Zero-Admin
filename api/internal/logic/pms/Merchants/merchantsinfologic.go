@@ -1,7 +1,6 @@
 package Merchants
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -31,7 +30,10 @@ func (l *MerchantsInfoLogic) MerchantsInfo(req *types.MerchantsInfoReq) (*types.
 		UserID: req.UserID,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新失败")
+		return &types.MerchantsInfoResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	data := types.ListMerchantsData{
 		ID:        resp.ID,
@@ -44,7 +46,7 @@ func (l *MerchantsInfoLogic) MerchantsInfo(req *types.MerchantsInfoReq) (*types.
 	}
 	return &types.MerchantsInfoResp{
 		Code:    200,
-		Message: "成功",
+		Message: "查询成功",
 		Data:    data,
 	}, nil
 }

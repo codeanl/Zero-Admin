@@ -38,7 +38,10 @@ func (l *SkuUpdateLogic) SkuUpdate(req *types.UpdateSkuReq) (resp *types.UpdateS
 		SizeValueID: req.SizeValueID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.UpdateSkuResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateSkuResp{
 		Code:    200,

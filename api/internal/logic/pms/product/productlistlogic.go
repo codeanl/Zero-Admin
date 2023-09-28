@@ -3,7 +3,6 @@ package product
 import (
 	"SimplePick-Mall-Server/api/internal/svc"
 	"SimplePick-Mall-Server/api/internal/types"
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
@@ -37,7 +36,10 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 		SearchType: req.SearchType,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListProductResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	//
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
@@ -88,7 +90,7 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 	}
 	return &types.ListProductResp{
 		Code:    200,
-		Message: "查询列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

@@ -46,10 +46,13 @@ func (l *AttributeCategoryAddLogic) AttributeCategoryAdd(req *types.AddAttribute
 		MerchantID: merchantID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddAttributeCategoryResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddAttributeCategoryResp{
 		Code:    200,
-		Message: "添加角色成功",
+		Message: "添加成功",
 	}, nil
 }

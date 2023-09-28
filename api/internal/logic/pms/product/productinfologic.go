@@ -28,7 +28,10 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 		ID: req.ID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.ProductInfoResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	productInfo := types.ListProductData{
 		Id:                  resp.ProductInfo.Id,
@@ -119,6 +122,6 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 	return &types.ProductInfoResp{
 		Code:    200,
 		Data:    data,
-		Message: "success",
+		Message: "查询成功",
 	}, nil
 }

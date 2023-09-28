@@ -1,7 +1,6 @@
 package HotRecommend
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -30,10 +29,13 @@ func (l *HotRecommendAddLogic) HotRecommendAdd(req *types.AddHotRecommendReq) (r
 		ProductId: req.ProductIds,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("添加人气推荐商品失败")
+		return &types.AddHotRecommendResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddHotRecommendResp{
 		Code:    200,
-		Message: "添加人气推荐商品成功",
+		Message: "添加成功",
 	}, nil
 }

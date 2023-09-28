@@ -1,7 +1,6 @@
 package MemberLoginLog
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *MemberLoginLogDeleteLogic) MemberLoginLogDelete(req *types.DeleteMember
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteMemberLoginLogResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteMemberLoginLogResp{
 		Code:    200,

@@ -1,7 +1,6 @@
 package product
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -30,10 +29,13 @@ func (l *ProductDeleteLogic) ProductDelete(req *types.DeleteProductReq) (resp *t
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteProductResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteProductResp{
 		Code:    200,
-		Message: "删除用户成功",
+		Message: "删除成功",
 	}, nil
 }

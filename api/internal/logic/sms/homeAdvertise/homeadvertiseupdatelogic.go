@@ -1,7 +1,6 @@
 package homeAdvertise
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -36,10 +35,13 @@ func (l *HomeAdvertiseUpdateLogic) HomeAdvertiseUpdate(req *types.UpdateHomeAdve
 		Sort:   req.Sort,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.UpdateHomeAdvertiseResp{
+			Code:    200,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateHomeAdvertiseResp{
 		Code:    200,
-		Message: "更新用户成功",
+		Message: "更新成功",
 	}, nil
 }

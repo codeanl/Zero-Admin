@@ -1,7 +1,6 @@
 package place
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *PlaceDeleteLogic) PlaceDelete(req *types.DeletePlaceReq) (resp *types.D
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeletePlaceResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeletePlaceResp{
 		Code:    200,

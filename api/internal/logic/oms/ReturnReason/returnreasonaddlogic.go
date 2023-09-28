@@ -30,7 +30,10 @@ func (l *ReturnReasonAddLogic) ReturnReasonAdd(req *types.AddReturnReasonReq) (r
 		Status: req.Status,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddReturnReasonResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddReturnReasonResp{
 		Code:    200,

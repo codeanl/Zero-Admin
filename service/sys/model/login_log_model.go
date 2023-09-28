@@ -19,7 +19,7 @@ type (
 	LoginLog struct {
 		gorm.Model
 		UserID int64  `json:"user_id" gorm:"type:bigint;comment:用户名;not null"`       //用户id
-		Status string `json:"status" gorm:"type:varchar(191);comment:登录状态;not null"` //登录状态（online:在线，登录初始状态，方便统计在线人数；login:退出登录后将online置为login；logout:退出登录）
+		Status string `json:"status" gorm:"type:varchar(191);comment:登录状态;not null"` //登录状态（1:在线，登录初始状态，方便统计在线人数；login:退出登录后将online置为login；0:退出登录）
 		IP     string `json:"ip" gorm:"type:varchar(191);comment:IP地址;not null"`     //IP地址
 	}
 )

@@ -31,7 +31,10 @@ func (l *RoleAddLogic) RoleAdd(req *types.AddRoleReq) (resp *types.AddRoleResp, 
 		CreateBy: l.ctx.Value("username").(string),
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddRoleResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddRoleResp{
 		Code:    200,

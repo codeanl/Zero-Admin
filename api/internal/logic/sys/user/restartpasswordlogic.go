@@ -28,6 +28,6 @@ func (l *RestartPasswordLogic) RestartPassword(req *types.RestartPasswordReq) (r
 	_, err = l.svcCtx.Sys.RestartPassword(l.ctx, &sysclient.RestartPasswordReq{ID: req.ID})
 	return &types.RestartPasswordResp{
 		Code:    200,
-		Message: "success",
+		Message: "重置密码成功：123456",
 	}, nil
 }

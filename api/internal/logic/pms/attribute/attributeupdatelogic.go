@@ -3,7 +3,6 @@ package attribute
 import (
 	"SimplePick-Mall-Server/api/internal/svc"
 	"SimplePick-Mall-Server/api/internal/types"
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -34,7 +33,10 @@ func (l *AttributeUpdateLogic) AttributeUpdate(req *types.UpdateAttributeReq) (r
 		Sort:                req.Sort,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.UpdateAttributeResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateAttributeResp{
 		Code:    200,

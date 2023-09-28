@@ -49,7 +49,10 @@ func (l *ProductUpdateLogic) ProductUpdate(req *types.UpdateProductReq) (resp *t
 		MerchantID:          req.MerchantID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.UpdateProductResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateProductResp{
 		Code:    200,

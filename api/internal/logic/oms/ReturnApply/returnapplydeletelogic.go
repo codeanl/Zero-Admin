@@ -1,7 +1,6 @@
 package ReturnApply
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *ReturnApplyDeleteLogic) ReturnApplyDelete(req *types.DeleteReturnApplyR
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteReturnApplyResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteReturnApplyResp{
 		Code:    200,

@@ -32,8 +32,11 @@ func (l *ReturnReasonListLogic) ReturnReasonList(req *types.ListReturnReasonReq)
 		Status:   req.Status,
 	})
 	if err != nil {
-		//return nil, errorx.NewDefaultError("查询失败")
-		return nil, err
+		return &types.ListReturnReasonResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
+
 	}
 	var list []types.ListReturnReasonData
 	for _, item := range resp.List {
@@ -46,7 +49,7 @@ func (l *ReturnReasonListLogic) ReturnReasonList(req *types.ListReturnReasonReq)
 	}
 	return &types.ListReturnReasonResp{
 		Code:    200,
-		Message: "查询角色列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

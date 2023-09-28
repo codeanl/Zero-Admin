@@ -34,7 +34,10 @@ func (l *MerchantsAddLogic) MerchantsAdd(req *types.AddMerchantsReq) (resp *type
 		UserID:    req.UserID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddMerchantsResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddMerchantsResp{
 		Code:    200,

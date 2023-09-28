@@ -1,7 +1,6 @@
 package MerchantsApply
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -30,10 +29,13 @@ func (l *MerchantsApplyDeleteLogic) MerchantsApplyDelete(req *types.DeleteMercha
 		IDs: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteMerchantsApplyResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteMerchantsApplyResp{
 		Code:    200,
-		Message: "删除用户成功",
+		Message: "删除成功",
 	}, nil
 }

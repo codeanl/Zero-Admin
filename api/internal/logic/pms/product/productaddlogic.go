@@ -65,7 +65,10 @@ func (l *ProductAddLogic) ProductAdd(req *types.AddProductReq) (resp *types.AddP
 		MerchantID:          merchantID,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddProductResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddProductResp{
 		Code:    200,

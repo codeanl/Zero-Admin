@@ -1,7 +1,6 @@
 package attributeCategory
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -30,10 +29,13 @@ func (l *AttributeCategoryDeleteLogic) AttributeCategoryDelete(req *types.Delete
 		IDs: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteAttributeCategoryResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteAttributeCategoryResp{
 		Code:    200,
-		Message: "删除用户成功",
+		Message: "删除成功",
 	}, nil
 }

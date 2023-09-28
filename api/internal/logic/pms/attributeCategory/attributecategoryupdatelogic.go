@@ -1,7 +1,6 @@
 package attributeCategory
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
@@ -33,7 +32,10 @@ func (l *AttributeCategoryUpdateLogic) AttributeCategoryUpdate(req *types.Update
 		MerchantID: req.MerchantID,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.UpdateAttributeCategoryResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateAttributeCategoryResp{
 		Code:    200,

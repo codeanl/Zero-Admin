@@ -1,7 +1,6 @@
 package user
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 	"encoding/json"
@@ -34,11 +33,13 @@ func (l *UpdatePasswordLogic) UpdatePassword(req *types.UpdatePasswordReq) (resp
 		OldPassword: req.OldPassword,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新密码失败")
+		return &types.UpdatePasswordResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdatePasswordResp{
 		Code:    200,
-		Message: "成功",
+		Message: "更新成功",
 	}, nil
-	return
 }

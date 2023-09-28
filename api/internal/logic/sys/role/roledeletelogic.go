@@ -1,7 +1,6 @@
 package role
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -30,7 +29,10 @@ func (l *RoleDeleteLogic) RoleDelete(req *types.DeleteRoleReq) (*types.DeleteRol
 		Ids: req.Ids,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("删除用户失败")
+		return &types.DeleteRoleResp{
+			Code:    400,
+			Message: "删除失败",
+		}, nil
 	}
 	return &types.DeleteRoleResp{
 		Code:    200,

@@ -1,7 +1,6 @@
 package attribute
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
@@ -36,7 +35,10 @@ func (l *AttributeListLogic) AttributeList(req *types.ListAttributeReq) (*types.
 		AttributeCategoryID: req.AttributeCategoryID,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListAttributeResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
 	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
@@ -75,7 +77,7 @@ func (l *AttributeListLogic) AttributeList(req *types.ListAttributeReq) (*types.
 	}
 	return &types.ListAttributeResp{
 		Code:    200,
-		Message: "查询列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

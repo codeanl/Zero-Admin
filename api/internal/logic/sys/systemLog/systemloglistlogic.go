@@ -1,7 +1,6 @@
 package systemLog
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -32,7 +31,10 @@ func (l *SystemLogListLogic) SystemLogList(req *types.ListSysLogReq) (*types.Lis
 		Method:   req.Method,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListSysLogResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.ListSysLogData
 	for _, item := range resp.List {
@@ -51,11 +53,9 @@ func (l *SystemLogListLogic) SystemLogList(req *types.ListSysLogReq) (*types.Lis
 		list = append(list, &listUserData)
 	}
 	return &types.ListSysLogResp{
-		Code:     200,
-		Message:  "查询登录日志列表成功",
-		Total:    resp.Total,
-		Data:     list,
-		PageNum:  req.PageNum,
-		PageSize: req.PageSize,
+		Code:    200,
+		Message: "查询成功",
+		Total:   resp.Total,
+		Data:    list,
 	}, nil
 }

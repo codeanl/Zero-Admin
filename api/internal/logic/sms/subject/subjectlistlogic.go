@@ -1,7 +1,6 @@
 package subject
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sms/rpc/smsclient"
 	"context"
 
@@ -33,7 +32,10 @@ func (l *SubjectListLogic) SubjectList(req *types.ListSubjectReq) (*types.ListSu
 		Status:   req.Status,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListSubjectResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []types.ListSubjectData
 	for _, item := range resp.List {
@@ -49,7 +51,7 @@ func (l *SubjectListLogic) SubjectList(req *types.ListSubjectReq) (*types.ListSu
 
 	return &types.ListSubjectResp{
 		Code:    200,
-		Message: "查询角色列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

@@ -1,7 +1,6 @@
 package MemberLoginLog
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
 	"context"
 
@@ -32,7 +31,10 @@ func (l *MemberLoginLogListLogic) MemberLoginLogList(req *types.ListMemberLoginL
 		UserID:   req.UserID,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("查询失败")
+		return &types.ListMemberLoginLogResp{
+			Code:    400,
+			Message: "查询失败",
+		}, nil
 	}
 	var list []*types.ListMemberLoginLogData
 	for _, item := range resp.List {
@@ -46,7 +48,7 @@ func (l *MemberLoginLogListLogic) MemberLoginLogList(req *types.ListMemberLoginL
 	}
 	return &types.ListMemberLoginLogResp{
 		Code:    200,
-		Message: "查询列表成功",
+		Message: "查询成功",
 		Total:   resp.Total,
 		Data:    list,
 	}, nil

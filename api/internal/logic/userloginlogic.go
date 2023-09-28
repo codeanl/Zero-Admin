@@ -1,7 +1,6 @@
 package logic
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -31,20 +30,26 @@ func (l *UserLoginLogic) UserLogin(req *types.LoginReq, ip string) (*types.Login
 		Password: req.Password,
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("登录失败")
+		return &types.LoginResp{
+			Code:    400,
+			Message: "账号或密码有误，请重新输入",
+		}, nil
 	}
 	if resp.Status == "0" {
-		return nil, errorx.NewDefaultError("账号已锁定，请联系超级管理员解锁。")
+		return &types.LoginResp{
+			Code:    400,
+			Message: "账号已锁定，请联系超级管理员解锁。",
+		}, nil
 	}
 	//登录日志
 	_, _ = l.svcCtx.Sys.LoginLogAdd(l.ctx, &sysclient.LoginLogAddReq{
 		UserID: resp.UserID,
-		Status: "online",
+		Status: "1",
 		IP:     ip,
 	})
 	return &types.LoginResp{
 		Code:    200,
 		Data:    resp.Token,
-		Message: "success",
+		Message: "登录成功",
 	}, nil
 }

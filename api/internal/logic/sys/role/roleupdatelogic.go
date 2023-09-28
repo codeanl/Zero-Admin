@@ -1,7 +1,6 @@
 package role
 
 import (
-	"SimplePick-Mall-Server/common/errorx"
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
@@ -33,7 +32,10 @@ func (l *RoleUpdateLogic) RoleUpdate(req *types.UpdateRoleReq) (resp *types.Upda
 		UpdateBy: l.ctx.Value("username").(string),
 	})
 	if err != nil {
-		return nil, errorx.NewDefaultError("更新用户失败")
+		return &types.UpdateRoleResp{
+			Code:    400,
+			Message: "更新失败",
+		}, nil
 	}
 	return &types.UpdateRoleResp{
 		Code:    200,

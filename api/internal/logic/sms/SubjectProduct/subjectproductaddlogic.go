@@ -32,7 +32,10 @@ func (l *SubjectProductAddLogic) SubjectProductAdd(req *types.AddSubjectProductR
 		Sort:      req.Sort,
 	})
 	if err != nil {
-		return nil, err
+		return &types.AddSubjectProductResp{
+			Code:    400,
+			Message: "添加失败",
+		}, nil
 	}
 	return &types.AddSubjectProductResp{
 		Code:    200,
