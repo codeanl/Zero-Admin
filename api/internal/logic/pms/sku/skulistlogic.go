@@ -44,10 +44,10 @@ func (l *SkuListLogic) SkuList(req *types.ListSkuReq) (*types.ListSkuResp, error
 			Price:       item.Price,
 			Stock:       item.Stock,
 			Tag:         item.Tag,
+			Sale:        item.Sale,
 		}
 		list = append(list, listUserData)
 	}
-
 	return &types.ListSkuResp{
 		Code:    200,
 		Message: "查询列表成功",

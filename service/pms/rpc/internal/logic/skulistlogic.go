@@ -40,6 +40,7 @@ func (l *SkuListLogic) SkuList(in *pms.SkuListReq) (*pms.SkuListResp, error) {
 			Price:       role.Price,
 			Stock:       role.Stock,
 			Tag:         role.Tag,
+			Sale:        role.Sale,
 		})
 	}
 	return &pms.SkuListResp{

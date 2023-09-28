@@ -1,13 +1,11 @@
 package order
 
 import (
+	"SimplePick-Mall-Server/front-api/internal/svc"
+	"SimplePick-Mall-Server/front-api/internal/types"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
-
-	"SimplePick-Mall-Server/front-api/internal/svc"
-	"SimplePick-Mall-Server/front-api/internal/types"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -56,7 +54,19 @@ func (l *OrderListLogic) OrderList(req *types.ListOrderReq) (*types.ListOrderRes
 				Count:       i.Count,
 			})
 		}
-		listUserData := types.ListOrderData{
+		sku, _ := l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: item.Skus[0].SkuID})
+		spu, _ := l.svcCtx.Pms.ProductInfo(l.ctx, &pmsclient.ProductInfoReq{ID: sku.SkuInfo.ProductID})
+		merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{ID: spu.ProductInfo.MerchantID})
+		merchantInfo := types.MerchantInfo{
+			ID:        merchant.ID,
+			Name:      merchant.Name,
+			Principal: merchant.Principal,
+			Phone:     merchant.Phone,
+			Address:   merchant.Address,
+			Pic:       merchant.Pic,
+			UserID:    merchant.UserID,
+		}
+		list = append(list, types.ListOrderData{
 			ID:                    item.ID,
 			PlaceId:               item.PlaceId,
 			MemberId:              item.MemberId,
@@ -83,8 +93,8 @@ func (l *OrderListLogic) OrderList(req *types.ListOrderReq) (*types.ListOrderRes
 			ReceiveTime:           item.ReceiveTime,
 			CommentTime:           item.CommentTime,
 			SkuList:               skuList,
-		}
-		list = append(list, listUserData)
+			MerchantInfo:          merchantInfo,
+		})
 	}
 	return &types.ListOrderResp{
 		Code:    200,

@@ -636,6 +636,7 @@ type ListProductData struct {
 	Price               float64 `json:"price,optional"`
 	AttributeCategoryID int64   `json:"attributeCategoryID"`
 	MerchantID          int64   `json:"merchantID,optional"`
+	Sale                int64   `json:"sale,optional"`
 }
 
 type ListProductResp struct {
@@ -656,6 +657,7 @@ type UpdateProductReq struct {
 	OriginalPrice       float64              `json:"originalPrice,optional"`
 	Unit                string               `json:"unit,optional"`
 	Price               float64              `json:"price,optional"`
+	Sale                int64                `json:"sale,optional"`
 	AttributeValueList  []AttributeValueList `json:"attributeValueList,optional"`
 	ImgUrl              []string             `json:"imgUrl"`
 	IntroduceImgUrl     []string             `json:"introduceImgUrl,optional"`
@@ -797,6 +799,7 @@ type ListSkuData struct {
 	Description string  `json:"description"`
 	Price       float64 `json:"price"`
 	Stock       int64   `json:"stock"`
+	Sale        int64   `json:"sale"`
 	Tag         string  `json:"tag"`
 }
 

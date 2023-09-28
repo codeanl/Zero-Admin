@@ -49,36 +49,38 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 	//
 	var list []types.ListProductData
 	for _, item := range resp.List {
+		//
+		skuList, _ := l.svcCtx.Pms.SkuList(l.ctx, &pmsclient.SkuListReq{ProductID: item.Id})
+		var sale int64 = 0
+		for _, i := range skuList.List {
+			sale = sale + i.Sale
+		}
+		_, _ = l.svcCtx.Pms.ProductUpdate(l.ctx, &pmsclient.ProductUpdateReq{
+			Id:   item.Id,
+			Sale: sale,
+		})
+
+		listProduct := types.ListProductData{
+			Id:                  item.Id,
+			CategoryID:          item.CategoryID,
+			Name:                item.Name,
+			Pic:                 item.Pic,
+			ProductSn:           item.ProductSn,
+			Price:               item.Price,
+			Desc:                item.Desc,
+			OriginalPrice:       item.OriginalPrice,
+			Unit:                item.Unit,
+			AttributeCategoryID: item.AttributeCategoryID,
+			MerchantID:          item.MerchantID,
+			Sale:                sale,
+		}
+		//
 		if isSJ {
 			if item.MerchantID == merchant.ID {
-				list = append(list, types.ListProductData{
-					Id:                  item.Id,
-					CategoryID:          item.CategoryID,
-					Name:                item.Name,
-					Pic:                 item.Pic,
-					ProductSn:           item.ProductSn,
-					Price:               item.Price,
-					Desc:                item.Desc,
-					OriginalPrice:       item.OriginalPrice,
-					Unit:                item.Unit,
-					AttributeCategoryID: item.AttributeCategoryID,
-					MerchantID:          item.MerchantID,
-				})
+				list = append(list, listProduct)
 			}
 		} else {
-			list = append(list, types.ListProductData{
-				Id:                  item.Id,
-				CategoryID:          item.CategoryID,
-				Name:                item.Name,
-				Pic:                 item.Pic,
-				ProductSn:           item.ProductSn,
-				Price:               item.Price,
-				Desc:                item.Desc,
-				OriginalPrice:       item.OriginalPrice,
-				Unit:                item.Unit,
-				AttributeCategoryID: item.AttributeCategoryID,
-				MerchantID:          item.MerchantID,
-			})
+			list = append(list, listProduct)
 		}
 	}
 	return &types.ListProductResp{

@@ -27,6 +27,7 @@ type (
 		ProductSn           string  `json:"product_sn" gorm:"type:varchar(191);comment:货号;not null"`          //货号
 		Desc                string  `json:"sub_title" gorm:"type:varchar(191);comment:商品描述;not null"`         //副标题
 		Price               float64 `json:"price" gorm:"type: decimal(10, 2);comment:价格;not null"`            //价格
+		Sale                int64   `json:"sale" gorm:"type:bigint;comment:销量;not null"`                      //销量
 		OriginalPrice       float64 `json:"original_price" gorm:"type:decimal(10, 2);comment:市场价;not null"`   //市场价
 		Unit                string  `json:"unit" gorm:"type:varchar(191);comment:单位;not null"`                //单位
 		MerchantID          int64   `json:"merchant_id" gorm:"type:bigint;comment:商家id;not null"`             //商家id

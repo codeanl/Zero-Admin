@@ -68,6 +68,7 @@ type(
             Description string `json:"description"`
             Price float64 `json:"price"`
             Stock int64 `json:"stock"`
+            Sale int64 `json:"sale"`
             Tag string `json:"tag"`
         }
 )

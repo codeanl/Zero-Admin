@@ -64,12 +64,24 @@ func (l *CartListLogic) CartList(req *types.ListCartReq) (*types.ListCartResp, e
 			TagText:     sku.SkuInfo.Tag,
 			Space:       space,
 		}
+		spu, _ := l.svcCtx.Pms.ProductInfo(l.ctx, &pmsclient.ProductInfoReq{ID: sku.SkuInfo.ProductID})
+		merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{ID: spu.ProductInfo.MerchantID})
+		Merchant := types.MerchantData{
+			ID:        merchant.ID,
+			Name:      merchant.Name,
+			Principal: merchant.Principal,
+			Phone:     merchant.Phone,
+			Address:   merchant.Address,
+			Pic:       merchant.Pic,
+			UserID:    merchant.UserID,
+		}
 		listUserData := types.ListCartData{
-			ID:          item.ID,
-			UserID:      item.UserID,
-			SkuID:       item.SkuID,
-			Count:       item.Count,
-			ListSkuData: SkuData,
+			ID:           item.ID,
+			UserID:       item.UserID,
+			SkuID:        item.SkuID,
+			Count:        item.Count,
+			ListSkuData:  SkuData,
+			MerchantData: Merchant,
 		}
 		list = append(list, listUserData)
 	}

@@ -42,6 +42,7 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 		OriginalPrice: resp.ProductInfo.OriginalPrice,
 		Unit:          resp.ProductInfo.Unit,
 		Price:         resp.ProductInfo.Price,
+		Sale:          resp.ProductInfo.Sale,
 	}
 	var SkuList []types.SkuList
 	for _, i := range resp.SkuList {
@@ -92,6 +93,16 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 			})
 		}
 	}
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{ID: resp.ProductInfo.MerchantID})
+	Merchant := types.MerchantInfoData{
+		ID:        merchant.ID,
+		Name:      merchant.Name,
+		Principal: merchant.Principal,
+		Phone:     merchant.Phone,
+		Address:   merchant.Address,
+		Pic:       merchant.Pic,
+		UserID:    merchant.UserID,
+	}
 	data := types.InfoData{
 		ProductInfo:     productInfo,
 		SkuList:         SkuList,
@@ -99,6 +110,7 @@ func (l *ProductInfoLogic) ProductInfo(req *types.ProductInfoReq) (*types.Produc
 		IntroduceImgUrl: resp.IntroduceImgUrl,
 		AttributeList:   AttributeList,
 		SizeList:        SizeList,
+		MerchantInfo:    Merchant,
 	}
 	return &types.ProductInfoResp{
 		Code:    200,

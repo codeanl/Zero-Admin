@@ -166,6 +166,7 @@ message ProductUpdateReq {
   double      OriginalPrice = 23;
   string      Unit = 26;
   int64       AttributeCategoryID = 13;
+  int64       Sale = 131;
   repeated AttributeValueList AttributeValueList=20;
   repeated string ImgUrl =31;
   repeated string IntroduceImgUrl =32;
@@ -195,7 +196,8 @@ message ProductListData{
   double     OriginalPrice = 23;
   string      Unit = 26;
   int64       AttributeCategoryID = 13;
-  int64 MerchantID=100;
+  int64   MerchantID=100;
+  int64   Sale=101;
 }
 message ProductListResp {
   int64 total = 1;

@@ -45,7 +45,17 @@ type(
               SkuID int64 `json:"skuID"`
               Count int64 `json:"count"`
               ListSkuData ListSkuData `json:"listSkuData"`
+              MerchantData MerchantData `json:"merchantData"`
       }
+     MerchantData struct {
+             ID         int64  `json:"id"`
+            Name           string `json:"name"`
+            Principal      string `json:"principal"`
+            Phone          string `json:"phone"`
+            Address        string `json:"address"`
+            Pic           string `json:"pic"`
+            UserID        int64 `json:"userID"`
+     }
       ListCartResp struct {
           Code int64 `json:"code"`
           Message string `json:"message"`

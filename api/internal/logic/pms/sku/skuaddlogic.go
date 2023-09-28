@@ -32,7 +32,7 @@ func (l *SkuAddLogic) SkuAdd(req *types.AddSkuReq) (resp *types.AddSkuResp, err 
 		Price:       req.Price,
 		SkuSn:       req.SkuSn,
 		Description: req.Description,
-		Stock:       req.Stock,
+		Stock:       0,
 		Tag:         req.TAG,
 		SizeValueID: req.SizeValueID,
 	})

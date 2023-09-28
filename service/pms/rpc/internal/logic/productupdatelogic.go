@@ -38,6 +38,7 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 		Price:               in.Price,
 		AttributeCategoryID: in.AttributeCategoryID,
 		MerchantID:          in.MerchantID,
+		Sale:                in.Sale,
 	})
 	if err != nil {
 		return nil, err

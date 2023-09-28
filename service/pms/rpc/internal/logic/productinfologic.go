@@ -24,19 +24,6 @@ func NewProductInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produ
 // 查询商品详情
 func (l *ProductInfoLogic) ProductInfo(in *pms.ProductInfoReq) (*pms.ProductInfoResp, error) {
 	resp1, _ := l.svcCtx.ProductModel.GetProductById(in.ID)
-	productInfo := &pms.ProductListData{
-		Id:                  int64(resp1.ID),
-		CategoryID:          resp1.CategoryID,
-		Name:                resp1.Name,
-		Pic:                 resp1.Pic,
-		ProductSn:           resp1.ProductSn,
-		Desc:                resp1.Desc,
-		Price:               resp1.Price,
-		OriginalPrice:       resp1.OriginalPrice,
-		Unit:                resp1.Unit,
-		AttributeCategoryID: resp1.AttributeCategoryID,
-		MerchantID:          resp1.MerchantID,
-	}
 
 	var attrIDs []int64
 	attrValue, _ := l.svcCtx.AttributeValueModel.GetAttributeValueBySPUID(in.ID)
@@ -75,8 +62,10 @@ func (l *ProductInfoLogic) ProductInfo(in *pms.ProductInfoReq) (*pms.ProductInfo
 	}
 	//获取sku
 	var skuList []*pms.SkuListData
+	var sale int64 = 0
 	sku, _, _ := l.svcCtx.SkuModel.GetSkuList(&pms.SkuListReq{ProductID: in.ID})
 	for _, i := range sku {
+		sale = sale + i.Sale
 		skuList = append(skuList, &pms.SkuListData{
 			ID:          int64(i.ID),
 			ProductID:   i.ProductID,
@@ -89,6 +78,20 @@ func (l *ProductInfoLogic) ProductInfo(in *pms.ProductInfoReq) (*pms.ProductInfo
 			Sale:        i.Sale,
 			Tag:         i.Tag,
 		})
+	}
+	productInfo := &pms.ProductListData{
+		Id:                  int64(resp1.ID),
+		CategoryID:          resp1.CategoryID,
+		Name:                resp1.Name,
+		Pic:                 resp1.Pic,
+		ProductSn:           resp1.ProductSn,
+		Desc:                resp1.Desc,
+		Price:               resp1.Price,
+		OriginalPrice:       resp1.OriginalPrice,
+		Unit:                resp1.Unit,
+		AttributeCategoryID: resp1.AttributeCategoryID,
+		MerchantID:          resp1.MerchantID,
+		Sale:                sale,
 	}
 	return &pms.ProductInfoResp{
 		ProductInfo:     productInfo,

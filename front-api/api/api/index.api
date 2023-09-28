@@ -73,6 +73,7 @@ type(
             OriginalPrice float64 `json:"originalPrice,optional"`
              Unit string `json:"unit,optional"`
               Price float64 `json:"price,optional"`
+              Sale int64 `json:"sale,optional"`
         }
 
         ListProductResp struct {
@@ -138,12 +139,22 @@ type(
         }
          InfoData struct {
             ProductInfo ListProductData  `json:"productInfo"`
+            MerchantInfo MerchantInfoData  `json:"merchantInfo"`
             SkuList []SkuList `json:"skuList"`
             SizeList []SizeList `json:"sizeList"`
             AttributeList []AttributeLists `json:"attributeList"`
             ImgUrl []string `json:"imgUrl"`
             IntroduceImgUrl []string `json:"introduceImgUrl"`
         }
+           MerchantInfoData struct {
+                    ID         int64  `json:"id"`
+                   Name           string `json:"name"`
+                   Principal      string `json:"principal"`
+                   Phone          string `json:"phone"`
+                   Address        string `json:"address"`
+                   Pic           string `json:"pic"`
+                    UserID        int64 `json:"userID"`
+            }
         ProductInfoResp struct {
             Code int64 `json:"code"`
             Message string `json:"message"`

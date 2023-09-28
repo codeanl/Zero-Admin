@@ -128,6 +128,7 @@ type ListProductData struct {
 	OriginalPrice float64 `json:"originalPrice,optional"`
 	Unit          string  `json:"unit,optional"`
 	Price         float64 `json:"price,optional"`
+	Sale          int64   `json:"sale,optional"`
 }
 
 type ListProductResp struct {
@@ -200,11 +201,22 @@ type ProductInfoReq struct {
 
 type InfoData struct {
 	ProductInfo     ListProductData  `json:"productInfo"`
+	MerchantInfo    MerchantInfoData `json:"merchantInfo"`
 	SkuList         []SkuList        `json:"skuList"`
 	SizeList        []SizeList       `json:"sizeList"`
 	AttributeList   []AttributeLists `json:"attributeList"`
 	ImgUrl          []string         `json:"imgUrl"`
 	IntroduceImgUrl []string         `json:"introduceImgUrl"`
+}
+
+type MerchantInfoData struct {
+	ID        int64  `json:"id"`
+	Name      string `json:"name"`
+	Principal string `json:"principal"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	Pic       string `json:"pic"`
+	UserID    int64  `json:"userID"`
 }
 
 type ProductInfoResp struct {
@@ -285,11 +297,22 @@ type ListCartReq struct {
 }
 
 type ListCartData struct {
-	ID          int64       `json:"id"`
-	UserID      int64       `json:"userID"`
-	SkuID       int64       `json:"skuID"`
-	Count       int64       `json:"count"`
-	ListSkuData ListSkuData `json:"listSkuData"`
+	ID           int64        `json:"id"`
+	UserID       int64        `json:"userID"`
+	SkuID        int64        `json:"skuID"`
+	Count        int64        `json:"count"`
+	ListSkuData  ListSkuData  `json:"listSkuData"`
+	MerchantData MerchantData `json:"merchantData"`
+}
+
+type MerchantData struct {
+	ID        int64  `json:"id"`
+	Name      string `json:"name"`
+	Principal string `json:"principal"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	Pic       string `json:"pic"`
+	UserID    int64  `json:"userID"`
 }
 
 type ListCartResp struct {
@@ -397,6 +420,7 @@ type ListOrderData struct {
 	CommentTime           string        `json:"commentTime,optional"`  // 修改时间
 	SkuList               []Sku         `json:"skuList"`
 	Place                 PlaceInfoData `json:"placeInfo"`
+	MerchantInfo          MerchantInfo  `json:"merchantInfo"`
 }
 
 type Sku struct {
@@ -492,15 +516,26 @@ type SkuListData struct {
 }
 
 type OrderInfo struct {
-	OrderInfo ListOrderData  `json:"orderInfo"`
-	SkuList   []*SkuListData `json:"skuList"`
-	PlaceInfo PlaceInfoData  `json:"placeInfo"`
+	OrderInfo    ListOrderData  `json:"orderInfo"`
+	SkuList      []*SkuListData `json:"skuList"`
+	PlaceInfo    PlaceInfoData  `json:"placeInfo"`
+	MerchantInfo MerchantInfo   `json:"merchantInfo"`
 }
 
 type OrderInfoResp struct {
 	Code    int64     `json:"code"`
 	Message string    `json:"message"`
 	Data    OrderInfo `json:"data"`
+}
+
+type MerchantInfo struct {
+	ID        int64  `json:"id"`
+	Name      string `json:"name"`
+	Principal string `json:"principal"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	Pic       string `json:"pic"`
+	UserID    int64  `json:"userID"`
 }
 
 type PlaceInfoData struct {

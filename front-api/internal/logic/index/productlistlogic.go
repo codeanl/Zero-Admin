@@ -37,6 +37,15 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 	}
 	var list []types.ListProductData
 	for _, item := range resp.List {
+		skuList, _ := l.svcCtx.Pms.SkuList(l.ctx, &pmsclient.SkuListReq{ProductID: item.Id})
+		var sale int64 = 0
+		for _, i := range skuList.List {
+			sale = sale + i.Sale
+		}
+		_, _ = l.svcCtx.Pms.ProductUpdate(l.ctx, &pmsclient.ProductUpdateReq{
+			Id:   item.Id,
+			Sale: sale,
+		})
 		list = append(list, types.ListProductData{
 			Id:            item.Id,
 			CategoryID:    item.CategoryID,

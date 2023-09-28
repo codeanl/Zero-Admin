@@ -79,6 +79,7 @@ type (
            CommentTime string `json:"commentTime,optional"`                           // 修改时间
           SkuList []Sku `json:"skuList"`
           Place PlaceInfoData `json:"placeInfo"`
+          MerchantInfo MerchantInfo `json:"merchantInfo"`
     }
      Sku struct{
                ID int64 `json:"id"`
@@ -168,6 +169,7 @@ type (
         OrderInfo ListOrderData `json:"orderInfo"`
         SkuList []*SkuListData `json:"skuList"`
          PlaceInfo PlaceInfoData `json:"placeInfo"`
+         MerchantInfo MerchantInfo `json:"merchantInfo"`
      }
 
     OrderInfoResp struct{
@@ -175,6 +177,15 @@ type (
           Message string `json:"message"`
           Data  OrderInfo `json:"data"`
     }
+      MerchantInfo struct {
+            ID         int64  `json:"id"`
+           Name           string `json:"name"`
+           Principal      string `json:"principal"`
+           Phone          string `json:"phone"`
+           Address        string `json:"address"`
+           Pic           string `json:"pic"`
+            UserID        int64 `json:"userID"`
+       }
    PlaceInfoData struct {
           Id int64 `json:"id"`
           Name string `json:"name"`
