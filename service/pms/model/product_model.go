@@ -66,9 +66,26 @@ func (m *defaultProductModel) DeleteProductByIds(ids []int64) error {
 
 func (m *defaultProductModel) GetProductList(in *pms.ProductListReq) ([]*Product, int64, error) {
 	var list []*Product
-	db := m.conn.Model(&Product{}).Order("created_at DESC")
+	sortField := "created_at DESC"
+	if in.SearchType == 1 {
+		sortField = "created_at DESC"
+	}
+	if in.SearchType == 2 {
+		sortField = "sale DESC"
+	}
+	//if in.SearchType == 3 {
+	//	sortField = "sale"
+	//}
+	if in.SearchType == 4 {
+		sortField = "price ASC"
+	}
+	if in.SearchType == 5 {
+		sortField = "price DESC"
+	}
+	db := m.conn.Model(&Product{}).Order(sortField)
+	//db := m.conn.Model(&Product{}).Order("created_at DESC")
+	//
 	if in.CategoryID != 0 {
-
 		var count int64
 		err := m.conn.Model(&Category{}).Where("parent_id = ?", in.CategoryID).Count(&count).Error
 		if err != nil {
@@ -89,6 +106,12 @@ func (m *defaultProductModel) GetProductList(in *pms.ProductListReq) ([]*Product
 			}
 			db = db.Where("category_id IN (?)", ids)
 		}
+	}
+	if in.MinPrice != 0 {
+		db = db.Where("price >= ?", in.MinPrice)
+	}
+	if in.MaxPrice != 0 {
+		db = db.Where("price <= ?", in.MaxPrice)
 	}
 	if in.Name != "" {
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))

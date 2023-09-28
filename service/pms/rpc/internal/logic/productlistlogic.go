@@ -43,7 +43,6 @@ func (l *ProductListLogic) ProductList(in *pms.ProductListReq) (*pms.ProductList
 			MerchantID:          i.MerchantID,
 		})
 	}
-
 	return &pms.ProductListResp{
 		Total: total,
 		List:  list,

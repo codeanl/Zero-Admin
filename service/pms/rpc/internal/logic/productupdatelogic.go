@@ -44,20 +44,24 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 		return nil, err
 	}
 	//图片
-	l.svcCtx.ProductImgModel.DeleteProductImgBySpuID(in.Id)
-	for _, i := range in.ImgUrl {
-		l.svcCtx.ProductImgModel.AddProductImg(&model.ProductImg{
-			ProductID: in.Id,
-			Url:       i,
-		})
+	if len(in.ImgUrl) > 0 {
+		l.svcCtx.ProductImgModel.DeleteProductImgBySpuID(in.Id)
+		for _, i := range in.ImgUrl {
+			l.svcCtx.ProductImgModel.AddProductImg(&model.ProductImg{
+				ProductID: in.Id,
+				Url:       i,
+			})
+		}
 	}
 	//介绍图片
-	l.svcCtx.ProductIntroduceImgModel.DeleteProductIntroduceImgBySpuID(in.Id)
-	for _, i := range in.IntroduceImgUrl {
-		l.svcCtx.ProductIntroduceImgModel.AddProductIntroduceImg(&model.ProductIntroduceImg{
-			ProductID: in.Id,
-			Url:       i,
-		})
+	if len(in.IntroduceImgUrl) > 0 {
+		l.svcCtx.ProductIntroduceImgModel.DeleteProductIntroduceImgBySpuID(in.Id)
+		for _, i := range in.IntroduceImgUrl {
+			l.svcCtx.ProductIntroduceImgModel.AddProductIntroduceImg(&model.ProductIntroduceImg{
+				ProductID: in.Id,
+				Url:       i,
+			})
+		}
 	}
 	//添加属性
 	spu, _ := l.svcCtx.ProductModel.GetProductById(in.Id)
@@ -80,70 +84,77 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 		}
 	}
 	//type1添加
-	for _, i := range AttributeValueType1 {
-		l.svcCtx.AttributeValueModel.DeleteAttributeValueByProductIDAndAttrID(in.Id, i.AttributeID)
-		for _, j := range i.Value {
-			l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
-				ProductID:   int64(spu.ID),
-				AttributeID: i.AttributeID,
-				Value:       j,
-			})
+	if len(AttributeValueType1) > 0 {
+		for _, i := range AttributeValueType1 {
+			l.svcCtx.AttributeValueModel.DeleteAttributeValueByProductIDAndAttrID(in.Id, i.AttributeID)
+			for _, j := range i.Value {
+				l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
+					ProductID:   int64(spu.ID),
+					AttributeID: i.AttributeID,
+					Value:       j,
+				})
+			}
 		}
 	}
 	//type2添加
-	for _, i := range AttributeValueType2 {
-		l.svcCtx.AttributeValueModel.DeleteAttributeValueByProductIDAndAttrID(in.Id, i.AttributeID)
-		for _, j := range i.Value {
-			l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
+	if len(AttributeValueType1) > 0 {
+		for _, i := range AttributeValueType2 {
+			l.svcCtx.AttributeValueModel.DeleteAttributeValueByProductIDAndAttrID(in.Id, i.AttributeID)
+			for _, j := range i.Value {
+				l.svcCtx.AttributeValueModel.AddAttributeValue(&model.AttributeValue{
+					ProductID:   int64(spu.ID),
+					AttributeID: i.AttributeID,
+					Value:       j,
+				})
+			}
+		}
+	}
+	if len(AttributeValueType2) > 0 {
+		//添加sku
+		var result [][]string
+		temp := make([]string, len(AttributeValueType2))
+		for _, value := range AttributeValueType2[0].Value {
+			temp[0] = value
+			generateCombinations(AttributeValueType2, 1, temp, &result)
+		}
+		//
+		skuList, _, _ := l.svcCtx.SkuModel.GetSkuList(&pms.SkuListReq{ProductID: in.Id})
+		var nowSku []string
+		for _, i := range skuList {
+			nowSku = append(nowSku, i.Tag)
+		}
+		var reqSku []string
+		for _, values := range result {
+			var data []string
+			for _, i := range values {
+				attrValue, _ := l.svcCtx.AttributeValueModel.GetAttributeValueBySpuIdAndValue(int64(spu.ID), i)
+				info1, _ := l.svcCtx.AttributeModel.GetAttributeByID(attrValue.AttributeID)
+				nn := fmt.Sprintf(`{"%s": "%s"}`, info1.Name, attrValue.Value)
+				data = append(data, nn)
+			}
+			tag := strings.Join(data, ", ")
+			reqSku = append(reqSku, tag)
+		}
+		//过滤新添加和需要删除的
+		a, b := filterArrays(reqSku, nowSku)
+		for _, i := range a {
+			l.svcCtx.SkuModel.AddSku(&model.Sku{
 				ProductID:   int64(spu.ID),
-				AttributeID: i.AttributeID,
-				Value:       j,
+				Name:        spu.Name,
+				Pic:         spu.Pic,
+				SkuSn:       spu.ProductSn,
+				Description: spu.Desc,
+				Price:       spu.Price,
+				Stock:       100,
+				Sale:        0,
+				Tag:         i,
 			})
 		}
-	}
-	//添加sku
-	var result [][]string
-	temp := make([]string, len(AttributeValueType2))
-	for _, value := range AttributeValueType2[0].Value {
-		temp[0] = value
-		generateCombinations(AttributeValueType2, 1, temp, &result)
-	}
-	//
-	skuList, _, _ := l.svcCtx.SkuModel.GetSkuList(&pms.SkuListReq{ProductID: in.Id})
-	var nowSku []string
-	for _, i := range skuList {
-		nowSku = append(nowSku, i.Tag)
-	}
-	var reqSku []string
-	for _, values := range result {
-		var data []string
-		for _, i := range values {
-			attrValue, _ := l.svcCtx.AttributeValueModel.GetAttributeValueBySpuIdAndValue(int64(spu.ID), i)
-			info1, _ := l.svcCtx.AttributeModel.GetAttributeByID(attrValue.AttributeID)
-			nn := fmt.Sprintf(`{"%s": "%s"}`, info1.Name, attrValue.Value)
-			data = append(data, nn)
+		for _, i := range b {
+			l.svcCtx.SkuModel.DeleteSkuByTag(i)
 		}
-		tag := strings.Join(data, ", ")
-		reqSku = append(reqSku, tag)
 	}
-	//过滤新添加和需要删除的
-	a, b := filterArrays(reqSku, nowSku)
-	for _, i := range a {
-		l.svcCtx.SkuModel.AddSku(&model.Sku{
-			ProductID:   int64(spu.ID),
-			Name:        spu.Name,
-			Pic:         spu.Pic,
-			SkuSn:       spu.ProductSn,
-			Description: spu.Desc,
-			Price:       spu.Price,
-			Stock:       100,
-			Sale:        0,
-			Tag:         i,
-		})
-	}
-	for _, i := range b {
-		l.svcCtx.SkuModel.DeleteSkuByTag(i)
-	}
+
 	return &pms.ProductUpdateResp{}, nil
 }
 

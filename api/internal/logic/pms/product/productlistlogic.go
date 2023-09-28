@@ -32,6 +32,9 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 		Name:       req.Name,
 		CategoryID: req.CategoryId,
 		MerchantID: req.MerchantID,
+		MinPrice:   req.MinPrice,
+		MaxPrice:   req.MaxPrice,
+		SearchType: req.SearchType,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")

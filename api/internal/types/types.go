@@ -622,6 +622,9 @@ type ListProductReq struct {
 	Name       string `form:"name,optional"`
 	CategoryId int64  `form:"categoryId,optional"`
 	MerchantID int64  `form:"merchantID,optional"`
+	MinPrice   int64  `form:"minPrice,optional"`
+	MaxPrice   int64  `form:"maxPrice,optional"`
+	SearchType int64  `form:"searchType,optional"`
 }
 
 type ListProductData struct {

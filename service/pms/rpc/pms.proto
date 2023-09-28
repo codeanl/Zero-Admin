@@ -182,8 +182,11 @@ message ProductListReq {
   int64 pageSize = 2;
   string Name = 3;
   int64 CategoryID=5; //分类
-  int64 MerchantID=100;
-
+  int64 MerchantID=10;
+  int64 MinPrice=101; //最低价钱
+  int64 MaxPrice=102;//最高价钱
+  //1->最新发布 2->销量 3->点击数 4->价格低-高 5->价格高-低
+  int64 SearchType=103;
 }
 message ProductListData{
   int64       Id = 1;
