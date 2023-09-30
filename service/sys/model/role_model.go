@@ -51,6 +51,9 @@ func (m *defaultRoleModel) DeleteRoleByIds(ids []int64) error {
 		"id": ids,
 	}
 	err := m.conn.Where(id).Delete(&Role{}).Error
+	// 手动删除相关的 userrole 数据
+	err = m.conn.Where("role_id IN (?)", ids).Delete(&UserRole{}).Error
+	return err
 	return err
 }
 

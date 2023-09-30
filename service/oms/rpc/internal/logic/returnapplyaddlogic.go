@@ -34,6 +34,8 @@ func (l *ReturnApplyAddLogic) ReturnApplyAdd(in *oms.ReturnApplyAddReq) (*oms.Re
 		Description:    in.Description,
 		ProofPics:      in.ProofPics,
 		ReturnAmount:   in.ReturnAmount,
+		PlaceId:        in.PlaceId,
+		MerchantID:     in.MerchantID,
 	}
 	_, err := l.svcCtx.ReturnApplyModel.AddReturnApply(role)
 	if err != nil {

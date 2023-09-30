@@ -23,6 +23,7 @@ type (
 		MemberId              int64   `json:"member_id" gorm:"type:bigint;comment:用户ID;not null"`                 //用户ID
 		CouponId              int64   `json:"coupon_id" gorm:"type:bigint;comment:优惠券ID;not null"`                //优惠券ID
 		PlaceId               int64   `json:"place_id" gorm:"type:bigint;comment:自提点ID;not null"`                 //自提点ID
+		MerchantID            int64   `json:"merchant_id" gorm:"type:bigint;comment:商家ID;not null"`               //商家ID
 		OrderSn               string  `json:"order_sn" gorm:"type:varchar(191);comment:订单编号;not null"`            //订单编号
 		MemberUsername        string  `json:"member_username" gorm:"type:varchar(191);comment:备注;not null"`       //用户帐号
 		TotalAmount           float64 `json:"total_amount" gorm:"type:decimal(10, 2) ;comment:订单总金额;not null"`    //订单总金额
@@ -93,6 +94,12 @@ func (m *defaultOrderModel) GetOrderList(in *oms.OrderListReq) ([]*Order, int64,
 	}
 	if in.UserID != 0 {
 		db = db.Where("member_id = ?", in.UserID)
+	}
+	if in.PlaceID != 0 {
+		db = db.Where("place_id = ?", in.PlaceID)
+	}
+	if in.MerchantID != 0 {
+		db = db.Where("merchant_id = ?", in.MerchantID)
 	}
 	var total int64
 	err := db.Count(&total).Error

@@ -11,7 +11,7 @@ type (
         Phone          string `json:"phone"`
         Address        string `json:"address"`
         Pic           string `json:"pic"`
-        UserID        int64 `json:"userID"`
+        UserID        int64 `json:"userID,optional"`
     }
     addMerchantsResp struct {
         Code int64 `json:"code"`

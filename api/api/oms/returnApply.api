@@ -47,6 +47,8 @@ type(
           Current int64 `form:"current,optional"`
           PageSize int64 `form:"pageSize,optional"`
           Status string `form:"status,optional"`
+          PlaceId int64 `json:"placeId,optional"`
+         MerchantID int64 `json:"merchantID,optional"`
       }
       ListReturnApplyData struct {
           ID int64 `json:"id"`

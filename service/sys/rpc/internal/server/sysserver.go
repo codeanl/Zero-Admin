@@ -70,6 +70,12 @@ func (s *SysServer) RestartPassword(ctx context.Context, in *sys.RestartPassword
 	return l.RestartPassword(in)
 }
 
+// 分配权限
+func (s *SysServer) UserRbac(ctx context.Context, in *sys.UserRbacReq) (*sys.UserRbacResp, error) {
+	l := logic.NewUserRbacLogic(ctx, s.svcCtx)
+	return l.UserRbac(in)
+}
+
 // 添加登录日志
 func (s *SysServer) LoginLogAdd(ctx context.Context, in *sys.LoginLogAddReq) (*sys.LoginLogAddResp, error) {
 	l := logic.NewLoginLogAddLogic(ctx, s.svcCtx)

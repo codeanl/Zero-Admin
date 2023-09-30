@@ -5,6 +5,7 @@ import (
 	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 	"encoding/json"
+	"strings"
 
 	"SimplePick-Mall-Server/api/internal/svc"
 	"SimplePick-Mall-Server/api/internal/types"
@@ -27,25 +28,28 @@ func NewAttributeCategoryListLogic(ctx context.Context, svcCtx *svc.ServiceConte
 }
 
 func (l *AttributeCategoryListLogic) AttributeCategoryList(req *types.ListAttributeCategoryReq) (*types.ListAttributeCategoryResp, error) {
-	resp, err := l.svcCtx.Pms.AttributeCategoryList(l.ctx, &pmsclient.AttributeCategoryListReq{})
+	id, _ := l.ctx.Value("id").(json.Number).Int64()
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	isSJ := false
+	for _, ii := range userInfo.Roles {
+		if strings.Contains("商家", ii) {
+			isSJ = true
+		}
+	}
+	if isSJ == true {
+		req.MerchantID = merchant.ID
+	}
+	resp, err := l.svcCtx.Pms.AttributeCategoryList(l.ctx, &pmsclient.AttributeCategoryListReq{
+		MerchantID: req.MerchantID,
+	})
 	if err != nil {
 		return &types.ListAttributeCategoryResp{
 			Code:    200,
 			Message: "查询失败",
 		}, nil
 	}
-	list := make([]types.ListAttributeCategoryData, 0)
-	//
-	id, _ := l.ctx.Value("id").(json.Number).Int64()
-	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
-	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
-	isSJ := false
-	for _, ii := range userInfo.Roles {
-		if ii == "商家" {
-			isSJ = true
-		}
-	}
-	//
+	var list []types.ListAttributeCategoryData
 	for _, item := range resp.List {
 		listUserData := types.ListAttributeCategoryData{
 			Id:         item.ID,

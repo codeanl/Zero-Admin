@@ -47,6 +47,7 @@ func (l *OrderAddLogic) OrderAdd(in *oms.OrderAddReq) (*oms.OrderAddResp, error)
 		ConfirmStatus:         in.ConfirmStatus,
 		DeleteStatus:          in.DeleteStatus,
 		PaymentTime:           in.PaymentTime,
+		MerchantID:            in.MerchantID,
 	}
 	order, err := l.svcCtx.OrderModel.AddOrder(role)
 	if err != nil {

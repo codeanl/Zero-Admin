@@ -43,6 +43,8 @@ func (l *ReturnApplyListLogic) ReturnApplyList(in *oms.ReturnApplyListReq) (*oms
 			Description:      i.Description,
 			ProofPics:        i.ProofPics,
 			ReturnAmount:     i.ReturnAmount,
+			PlaceId:          i.PlaceId,
+			MerchantID:       i.MerchantID,
 		})
 	}
 	return &oms.ReturnApplyListResp{

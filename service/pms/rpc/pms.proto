@@ -332,6 +332,7 @@ message  AttributeCategoryDeleteResp{
 }
 //属性分类列表
 message AttributeCategoryListReq {
+  int64 MerchantID = 1;
 }
 message  AttributeCategoryListData {
   int64 ID = 1;

@@ -2,7 +2,6 @@ package model
 
 import (
 	"SimplePick-Mall-Server/service/sms/rpc/sms"
-	"fmt"
 	"gorm.io/gorm"
 )
 
@@ -62,7 +61,7 @@ func (m *defaultSubjectModel) GetSubjectList(in *sms.SubjectListReq) ([]*Subject
 	var list []*Subject
 	db := m.conn.Model(&Subject{}).Order("sort ASC")
 	if in.Status != "" {
-		db = db.Where("Subject_sn LIKE ?", fmt.Sprintf("%%%s%%", in.Status))
+		db = db.Where("status = ?", in.Status)
 	}
 	var total int64
 	err := db.Count(&total).Error

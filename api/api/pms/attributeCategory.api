@@ -15,6 +15,7 @@ type (
         Message string `json:"message"`
     }
     ListAttributeCategoryReq struct {
+          MerchantID    int64 `json:"merchantID,optional"`
     }
     ListAttributeCategoryData struct {
         Id         int64  `json:"id"`

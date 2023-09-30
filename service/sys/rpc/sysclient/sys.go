@@ -78,6 +78,8 @@ type (
 	UserList              = sys.UserList
 	UserListReq           = sys.UserListReq
 	UserListResp          = sys.UserListResp
+	UserRbacReq           = sys.UserRbacReq
+	UserRbacResp          = sys.UserRbacResp
 	UserUpdateReq         = sys.UserUpdateReq
 	UserUpdateResp        = sys.UserUpdateResp
 
@@ -98,6 +100,8 @@ type (
 		UpdatePassword(ctx context.Context, in *UpdatePasswordReq, opts ...grpc.CallOption) (*UpdatePasswordResp, error)
 		// 重置密码
 		RestartPassword(ctx context.Context, in *RestartPasswordReq, opts ...grpc.CallOption) (*RestartPasswordResp, error)
+		// 分配权限
+		UserRbac(ctx context.Context, in *UserRbacReq, opts ...grpc.CallOption) (*UserRbacResp, error)
 		// 添加登录日志
 		LoginLogAdd(ctx context.Context, in *LoginLogAddReq, opts ...grpc.CallOption) (*LoginLogAddResp, error)
 		// 登录日志列表
@@ -201,6 +205,12 @@ func (m *defaultSys) UpdatePassword(ctx context.Context, in *UpdatePasswordReq, 
 func (m *defaultSys) RestartPassword(ctx context.Context, in *RestartPasswordReq, opts ...grpc.CallOption) (*RestartPasswordResp, error) {
 	client := sys.NewSysClient(m.cli.Conn())
 	return client.RestartPassword(ctx, in, opts...)
+}
+
+// 分配权限
+func (m *defaultSys) UserRbac(ctx context.Context, in *UserRbacReq, opts ...grpc.CallOption) (*UserRbacResp, error) {
+	client := sys.NewSysClient(m.cli.Conn())
+	return client.UserRbac(ctx, in, opts...)
 }
 
 // 添加登录日志

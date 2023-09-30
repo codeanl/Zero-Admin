@@ -115,6 +115,10 @@ func (m *defaultProductModel) GetProductList(in *pms.ProductListReq) ([]*Product
 	if in.Name != "" {
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))
 	}
+	if in.MerchantID != 0 {
+		db = db.Where("merchant_id = ?", in.MerchantID)
+	}
+
 	var total int64
 	err := db.Count(&total).Error
 	if err != nil {

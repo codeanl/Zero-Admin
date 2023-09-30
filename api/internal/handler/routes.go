@@ -63,6 +63,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/rbac",
+				Handler: sysuser.UserRbacHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/delete",
 				Handler: sysuser.UserDeleteHandler(serverCtx),
 			},

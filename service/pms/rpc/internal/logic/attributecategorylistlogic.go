@@ -25,7 +25,7 @@ func NewAttributeCategoryListLogic(ctx context.Context, svcCtx *svc.ServiceConte
 
 // 属性分类列表
 func (l *AttributeCategoryListLogic) AttributeCategoryList(in *pms.AttributeCategoryListReq) (*pms.AttributeCategoryListResp, error) {
-	all, total, err := l.svcCtx.AttributeCategoryModel.GetAttributeCategoryList()
+	all, total, err := l.svcCtx.AttributeCategoryModel.GetAttributeCategoryList(in)
 	if err != nil {
 		return nil, err
 	}

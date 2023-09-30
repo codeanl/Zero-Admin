@@ -8,6 +8,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
+	"strings"
 )
 
 type ProductListLogic struct {
@@ -25,6 +26,19 @@ func NewProductListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produ
 }
 
 func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListProductResp, error) {
+
+	id, _ := l.ctx.Value("id").(json.Number).Int64()
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	isSJ := false
+	for _, ii := range userInfo.Roles {
+		if strings.Contains("商家", ii) {
+			isSJ = true
+		}
+	}
+	if isSJ == true {
+		req.MerchantID = merchant.ID
+	}
 	resp, err := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
 		PageNum:    req.Current,
 		PageSize:   req.PageSize,
@@ -41,17 +55,7 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 			Message: "查询失败",
 		}, nil
 	}
-	//
-	id, _ := l.ctx.Value("id").(json.Number).Int64()
-	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
-	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
-	isSJ := false
-	for _, ii := range userInfo.Roles {
-		if ii == "商家" {
-			isSJ = true
-		}
-	}
-	//
+
 	var list []types.ListProductData
 	for _, item := range resp.List {
 		//
@@ -79,14 +83,7 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 			MerchantID:          item.MerchantID,
 			Sale:                sale,
 		}
-		//
-		if isSJ {
-			if item.MerchantID == merchant.ID {
-				list = append(list, listProduct)
-			}
-		} else {
-			list = append(list, listProduct)
-		}
+		list = append(list, listProduct)
 	}
 	return &types.ListProductResp{
 		Code:    200,

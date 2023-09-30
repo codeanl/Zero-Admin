@@ -72,6 +72,14 @@ message UserUpdateReq {
 message UserUpdateResp {
   string pong = 1;
 }
+//分配权限
+message UserRbacReq {
+  int64 ID=1;
+  repeated int64 RoleID=10;
+}
+message UserRbacResp {
+  string pong = 1;
+}
 //删除用户
 message UserDeleteReq {
   repeated int64 ids = 1;
@@ -423,6 +431,8 @@ service Sys{
   rpc UpdatePassword(UpdatePasswordReq) returns(UpdatePasswordResp);
   //重置密码
   rpc RestartPassword(RestartPasswordReq) returns(RestartPasswordResp);
+  //分配权限
+  rpc UserRbac(UserRbacReq) returns(UserRbacResp);
 
   //添加登录日志
   rpc LoginLogAdd(LoginLogAddReq) returns(LoginLogAddResp);

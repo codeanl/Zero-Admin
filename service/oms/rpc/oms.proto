@@ -9,6 +9,7 @@ message OrderAddReq {
   int64       MemberId = 2;
   int64       CouponId = 3;
   string      OrderSn = 4;
+  int64       MerchantID = 23;
   string      MemberUsername = 6;
   double     TotalAmount = 7;
   double     PayAmount = 8;
@@ -48,6 +49,7 @@ message OrderUpdateReq{
   int64       MemberId = 2;
   int64       CouponId = 3;
   string      OrderSn = 4;
+  int64       MerchantID = 23;
   string      MemberUsername = 6;
   double     TotalAmount = 7;
   double     PayAmount = 8;
@@ -83,7 +85,8 @@ message OrderListReq {
   string       Status = 7;
   string       OrderType = 8;
   int64   UserID = 9;
-
+  int64   MerchantID = 10;
+  int64   PlaceID = 19;
 }
 
 message OrderListData{
@@ -91,6 +94,7 @@ message OrderListData{
   int64       PlaceId = 45;
   int64       MemberId = 2;
   int64       CouponId = 3;
+  int64       MerchantID = 23;
   string      OrderSn = 4;
   string      MemberUsername = 6;
   double     TotalAmount = 7;
@@ -186,6 +190,8 @@ message ReturnApplyAddReq{
   string Description= 6;
   string ProofPics= 7;
   double ReturnAmount= 8;
+  int64  PlaceId = 45;
+  int64  MerchantID = 23;
 }
 message ReturnApplyAddResp{
   string pong = 1;
@@ -209,6 +215,8 @@ message ReturnApplyListReq {
   string    Status = 4;
   int64    current = 1;
   int64   pageSize = 2;
+  int64  PlaceId = 45;
+  int64  MerchantID = 23;
 }
 message ReturnApplyListData{
   int64 ID= 1;
@@ -220,6 +228,8 @@ message ReturnApplyListData{
   string Description= 6;
   string ProofPics= 7;
   double ReturnAmount= 8;
+  int64  PlaceId = 45;
+  int64  MerchantID = 23;
 }
 message ReturnApplyListResp {
   int64 total = 1;
@@ -246,6 +256,8 @@ message ReturnApplyInfoResp {
   string Description= 6;
   string ProofPics= 7;
   double ReturnAmount= 8;
+  int64  PlaceId = 45;
+  int64  MerchantID = 23;
 }
 //添加购物车
 message CartAddReq{

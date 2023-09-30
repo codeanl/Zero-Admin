@@ -22,6 +22,8 @@ type (
 		UserID         int64   `json:"user_id" gorm:"type:bigint;comment:订单id;not null"`                //用户id
 		OrderID        int64   `json:"order_id" gorm:"type:bigint;comment:订单id;not null"`               //订单id
 		ReturnReasonID int64   `json:"return_reason_id" gorm:"type:bigint;comment:订单id;not null"`       //订单id
+		PlaceId        int64   `json:"place_id" gorm:"type:bigint;comment:自提点ID;not null"`              //自提点ID
+		MerchantID     int64   `json:"merchant_id" gorm:"type:bigint;comment:商家ID;not null"`            //商家ID
 		Status         string  `json:"status" gorm:"type:varchar(191);comment:状态;not null"`             //'申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝'
 		Description    string  `json:"description" gorm:"type:varchar(191);comment:状态;not null"`        //描述
 		ProofPics      string  `json:"proof_pics" gorm:"type:varchar(191);comment:状态;not null"`         //凭证图片
@@ -71,9 +73,12 @@ func (m *defaultReturnApplyModel) GetReturnApplyList(in *oms.ReturnApplyListReq)
 	if in.Status != "" {
 		db = db.Where("status = ?", in.Status)
 	}
-	//if in.Status != "" {
-	//	db = db.Where("status LIKE ?", fmt.Sprintf("%%%s%%", in.Status))
-	//}
+	if in.PlaceId != 0 {
+		db = db.Where("place_id = ?", in.PlaceId)
+	}
+	if in.MerchantID != 0 {
+		db = db.Where("merchant_id = ?", in.MerchantID)
+	}
 	var total int64
 	err := db.Count(&total).Error
 	if err != nil {

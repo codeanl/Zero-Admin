@@ -29,6 +29,18 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 func (l *UserInfoLogic) UserInfo() (*types.UserInfoResp, error) {
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
 	resp, err := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
+	if len(resp.Roles) == 0 {
+		return &types.UserInfoResp{
+			Code:    400,
+			Message: "该账号无角色，不可登录",
+		}, nil
+	}
+	if len(resp.Routes) == 0 {
+		return &types.UserInfoResp{
+			Code:    400,
+			Message: "该账号无可用路由，不可登录",
+		}, nil
+	}
 	if err != nil {
 		return &types.UserInfoResp{
 			Code:    400,

@@ -76,6 +76,14 @@ type(
                  Message string `json:"message"`
              }
 
+            UserRbacReq struct {
+                 ID int64 `json:"id"`
+                RoleID []int64 `json:"roleId,optional"`
+             }
+             UserRbacResp struct {
+                 Code int64 `json:"code"`
+                 Message string `json:"message"`
+             }
         DeleteUserReq struct {
                    Ids []int64 `json:"ids"`
                }
@@ -159,6 +167,9 @@ service api {
             @doc(summary: "更新")
                @handler UserUpdate
                post /update (updateUserReq) returns (updateUserResp)
+
+           @handler UserRbac
+           post /rbac (UserRbacReq) returns (UserRbacResp)
 
          @doc(summary: "删除")
            @handler UserDelete

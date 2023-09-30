@@ -74,6 +74,16 @@ type UpdateUserResp struct {
 	Message string `json:"message"`
 }
 
+type UserRbacReq struct {
+	ID     int64   `json:"id"`
+	RoleID []int64 `json:"roleId,optional"`
+}
+
+type UserRbacResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
 type DeleteUserReq struct {
 	Ids []int64 `json:"ids"`
 }
@@ -819,6 +829,7 @@ type AddAttributeCategoryResp struct {
 }
 
 type ListAttributeCategoryReq struct {
+	MerchantID int64 `json:"merchantID,optional"`
 }
 
 type ListAttributeCategoryData struct {
@@ -863,7 +874,7 @@ type AddMerchantsReq struct {
 	Phone     string `json:"phone"`
 	Address   string `json:"address"`
 	Pic       string `json:"pic"`
-	UserID    int64  `json:"userID"`
+	UserID    int64  `json:"userID,optional"`
 }
 
 type AddMerchantsResp struct {
@@ -1470,6 +1481,7 @@ type AddOrderReq struct {
 	MemberId              int64   `json:"memberId"`
 	PlaceId               int64   `json:"placeId"`
 	CouponId              int64   `json:"couponId"`
+	MerchantID            int64   `json:"merchantID,optional"`
 	OrderSn               string  `json:"orderSn"`               // 订单编号
 	MemberUsername        string  `json:"memberUserName"`        // 用户帐号
 	TotalAmount           float64 `json:"totalAmount"`           // 订单总金额
@@ -1507,6 +1519,8 @@ type ListOrderReq struct {
 	SourceType     int64  `form:"sourceType,default=2"`    // 订单来源：0->PC订单；1->app订单
 	Status         string `form:"status,optional"`         // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
 	OrderType      int64  `form:"orderType,default=2"`     // 订单类型：0->正常订单；1->秒杀订单
+	MerchantID     int64  `form:"merchantID,optional"`
+	PlaceID        int64  `form:"placeID,optional"`
 }
 
 type ListOrderData struct {
@@ -1514,6 +1528,7 @@ type ListOrderData struct {
 	MemberId              int64   `json:"memberId"`
 	PlaceId               int64   `json:"placeId"`
 	CouponId              int64   `json:"couponId"`
+	MerchantID            int64   `json:"merchantID"`
 	OrderSn               string  `json:"orderSn"`               // 订单编号
 	MemberUsername        string  `json:"memberUserName"`        // 用户帐号
 	TotalAmount           float64 `json:"totalAmount"`           // 订单总金额
@@ -1730,9 +1745,11 @@ type DeleteReturnApplyResp struct {
 }
 
 type ListReturnApplyReq struct {
-	Current  int64  `form:"current,optional"`
-	PageSize int64  `form:"pageSize,optional"`
-	Status   string `form:"status,optional"`
+	Current    int64  `form:"current,optional"`
+	PageSize   int64  `form:"pageSize,optional"`
+	Status     string `form:"status,optional"`
+	PlaceId    int64  `json:"placeId,optional"`
+	MerchantID int64  `json:"merchantID,optional"`
 }
 
 type ListReturnApplyData struct {

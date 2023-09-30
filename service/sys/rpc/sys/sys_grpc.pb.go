@@ -27,6 +27,7 @@ const (
 	Sys_UserList_FullMethodName          = "/sys.Sys/UserList"
 	Sys_UpdatePassword_FullMethodName    = "/sys.Sys/UpdatePassword"
 	Sys_RestartPassword_FullMethodName   = "/sys.Sys/RestartPassword"
+	Sys_UserRbac_FullMethodName          = "/sys.Sys/UserRbac"
 	Sys_LoginLogAdd_FullMethodName       = "/sys.Sys/LoginLogAdd"
 	Sys_LoginLogList_FullMethodName      = "/sys.Sys/LoginLogList"
 	Sys_LoginLogDelete_FullMethodName    = "/sys.Sys/LoginLogDelete"
@@ -71,6 +72,8 @@ type SysClient interface {
 	UpdatePassword(ctx context.Context, in *UpdatePasswordReq, opts ...grpc.CallOption) (*UpdatePasswordResp, error)
 	// 重置密码
 	RestartPassword(ctx context.Context, in *RestartPasswordReq, opts ...grpc.CallOption) (*RestartPasswordResp, error)
+	// 分配权限
+	UserRbac(ctx context.Context, in *UserRbacReq, opts ...grpc.CallOption) (*UserRbacResp, error)
 	// 添加登录日志
 	LoginLogAdd(ctx context.Context, in *LoginLogAddReq, opts ...grpc.CallOption) (*LoginLogAddResp, error)
 	// 登录日志列表
@@ -191,6 +194,15 @@ func (c *sysClient) UpdatePassword(ctx context.Context, in *UpdatePasswordReq, o
 func (c *sysClient) RestartPassword(ctx context.Context, in *RestartPasswordReq, opts ...grpc.CallOption) (*RestartPasswordResp, error) {
 	out := new(RestartPasswordResp)
 	err := c.cc.Invoke(ctx, Sys_RestartPassword_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysClient) UserRbac(ctx context.Context, in *UserRbacReq, opts ...grpc.CallOption) (*UserRbacResp, error) {
+	out := new(UserRbacResp)
+	err := c.cc.Invoke(ctx, Sys_UserRbac_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -415,6 +427,8 @@ type SysServer interface {
 	UpdatePassword(context.Context, *UpdatePasswordReq) (*UpdatePasswordResp, error)
 	// 重置密码
 	RestartPassword(context.Context, *RestartPasswordReq) (*RestartPasswordResp, error)
+	// 分配权限
+	UserRbac(context.Context, *UserRbacReq) (*UserRbacResp, error)
 	// 添加登录日志
 	LoginLogAdd(context.Context, *LoginLogAddReq) (*LoginLogAddResp, error)
 	// 登录日志列表
@@ -489,6 +503,9 @@ func (UnimplementedSysServer) UpdatePassword(context.Context, *UpdatePasswordReq
 }
 func (UnimplementedSysServer) RestartPassword(context.Context, *RestartPasswordReq) (*RestartPasswordResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestartPassword not implemented")
+}
+func (UnimplementedSysServer) UserRbac(context.Context, *UserRbacReq) (*UserRbacResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserRbac not implemented")
 }
 func (UnimplementedSysServer) LoginLogAdd(context.Context, *LoginLogAddReq) (*LoginLogAddResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginLogAdd not implemented")
@@ -709,6 +726,24 @@ func _Sys_RestartPassword_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SysServer).RestartPassword(ctx, req.(*RestartPasswordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sys_UserRbac_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserRbacReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).UserRbac(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Sys_UserRbac_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).UserRbac(ctx, req.(*UserRbacReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1147,6 +1182,10 @@ var Sys_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RestartPassword",
 			Handler:    _Sys_RestartPassword_Handler,
+		},
+		{
+			MethodName: "UserRbac",
+			Handler:    _Sys_UserRbac_Handler,
 		},
 		{
 			MethodName: "LoginLogAdd",

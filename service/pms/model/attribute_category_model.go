@@ -1,6 +1,7 @@
 package model
 
 import (
+	"SimplePick-Mall-Server/service/pms/rpc/pms"
 	"gorm.io/gorm"
 )
 
@@ -9,7 +10,7 @@ type (
 		AddAttributeCategory(AttributeCategory *AttributeCategory) (*AttributeCategory, error)
 		UpdateAttributeCategory(id int64, role *AttributeCategory) error
 		DeleteAttributeCategoryByIds(ids []int64) error
-		GetAttributeCategoryList() ([]AttributeCategory, int64, error)
+		GetAttributeCategoryList(in *pms.AttributeCategoryListReq) ([]AttributeCategory, int64, error)
 		GetAttributeCategoryByID(id int64) (info AttributeCategory, err error)
 	}
 
@@ -56,9 +57,12 @@ func (m *defaultAttributeCategoryModel) DeleteAttributeCategoryByIds(ids []int64
 }
 
 //GetUserList 获取用户列表
-func (m *defaultAttributeCategoryModel) GetAttributeCategoryList() ([]AttributeCategory, int64, error) {
+func (m *defaultAttributeCategoryModel) GetAttributeCategoryList(in *pms.AttributeCategoryListReq) ([]AttributeCategory, int64, error) {
 	var list []AttributeCategory
 	db := m.conn.Model(&AttributeCategory{}).Order("created_at DESC")
+	if in.MerchantID != 0 {
+		db = db.Where("merchant_id = ?", in.MerchantID)
+	}
 	var total int64
 	err := db.Count(&total).Error
 	if err != nil {

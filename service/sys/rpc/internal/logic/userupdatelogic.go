@@ -40,24 +40,6 @@ func (l *UserUpdateLogic) UserUpdate(in *sys.UserUpdateReq) (*sys.UserUpdateResp
 	if err != nil {
 		return nil, errors.New("更新用户失败")
 	}
-	//把原有信息删除 添加新数据
-	if in.RoleID != nil {
-		//删除
-		err = l.svcCtx.UserRoleModel.DeleteByUserID(in.ID)
-		//添加
-		for _, r := range in.RoleID {
-			if r != 0 {
-				err := l.svcCtx.UserRoleModel.AddUserRole(&model.UserRole{
-					UserID:   in.ID,
-					RoleID:   r,
-					CreateBy: in.UpdateBy,
-					DataType: in.DataType,
-				})
-				if err != nil {
-					return nil, errors.New("修改用户角色失败")
-				}
-			}
-		}
-	}
+
 	return &sys.UserUpdateResp{}, nil
 }

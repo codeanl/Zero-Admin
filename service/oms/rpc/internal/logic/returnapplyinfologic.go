@@ -40,5 +40,8 @@ func (l *ReturnApplyInfoLogic) ReturnApplyInfo(in *oms.ReturnApplyInfoReq) (*oms
 		Description:      info.Description,
 		ProofPics:        info.ProofPics,
 		ReturnAmount:     info.ReturnAmount,
+		PlaceId:          info.PlaceId,
+		MerchantID:       info.MerchantID,
 	}, nil
+
 }
