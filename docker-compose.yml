@@ -14,7 +14,7 @@ services:
       - 1003:1003
   sms:
     build:
-      context: ./service/ums/rpc
+      context: ./service/sms/rpc
       dockerfile: Dockerfile
     ports:
       - 1004:1004
