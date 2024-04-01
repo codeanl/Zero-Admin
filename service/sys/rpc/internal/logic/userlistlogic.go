@@ -33,10 +33,10 @@ func (l *UserListLogic) UserList(in *sys.UserListReq) (*sys.UserListResp, error)
 	var list []*sys.UserList
 	for _, user := range all {
 		//获取用户的所有角色
-		role, err := l.svcCtx.RoleModel.GetRoleByUserID(int64(user.ID))
-		if err != nil {
-			return nil, err
-		}
+		role, _ := l.svcCtx.RoleModel.GetRoleByUserID(int64(user.ID))
+		//if err != nil {
+		//	return nil, err
+		//}
 		var Roles []string
 		for _, item := range role {
 			Roles = append(Roles, item.Name)

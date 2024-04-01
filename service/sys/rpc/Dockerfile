@@ -9,7 +9,7 @@ ENV GOPROXY https://goproxy.cn,direct
 WORKDIR /build/zero
 COPY . .
 RUN sh -c "[ -f go.mod ]" || exit
-COPY service/sys/rpc/etc /app/etc
+COPY ./etc /app/etc
 RUN go build -ldflags="-s -w" -o /app/sys service/sys/rpc/sys.go
 
 
