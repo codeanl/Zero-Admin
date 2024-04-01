@@ -1,12 +1,11 @@
 package loginLog
 
 import (
-	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
-	"context"
-
 	"SimplePick-Mall-Server/api/internal/svc"
 	"SimplePick-Mall-Server/api/internal/types"
-
+	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
+	"context"
+	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -31,6 +30,12 @@ func (l *LoginLogListLogic) LoginLogList(req *types.ListLoginLogReq) (*types.Lis
 		Username: req.Username,
 		Status:   req.Status,
 	})
+	for _, i := range resp.List {
+		user, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.UserInfoReq{Id: i.UserID})
+		i.Avatar = user.UserInfo.Avatar
+		i.Status = user.UserInfo.Status
+		i.Username = user.UserInfo.Username
+	}
 	if err != nil {
 		return &types.ListLoginLogResp{
 			Code:    400,
@@ -38,18 +43,8 @@ func (l *LoginLogListLogic) LoginLogList(req *types.ListLoginLogReq) (*types.Lis
 		}, nil
 	}
 	var list []*types.ListLoginLogData
-	for _, item := range resp.List {
-		listUserData := types.ListLoginLogData{
-			Id:         item.ID,
-			UserId:     item.UserID,
-			Status:     item.Status,
-			Ip:         item.IP,
-			CreateTime: item.CreateTime,
-			Avatar:     item.Avatar,
-			Username:   item.Username,
-		}
-		list = append(list, &listUserData)
-	}
+	jsonData, err := json.Marshal(resp.List)
+	err = json.Unmarshal(jsonData, &list)
 	return &types.ListLoginLogResp{
 		Code:    200,
 		Message: "查询成功",

@@ -4,6 +4,7 @@ import (
 	"SimplePick-Mall-Server/service/sys/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/sys/rpc/sys"
 	"context"
+	"encoding/json"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -23,26 +24,16 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 }
 
 // 用户信息
-func (l *UserInfoLogic) UserInfo(in *sys.InfoReq) (*sys.InfoResp, error) {
+func (l *UserInfoLogic) UserInfo(in *sys.UserInfoReq) (*sys.UserInfoResp, error) {
 	//查询用户信息
-	user, _ := l.svcCtx.UserModel.GetUserByID(in.ID)
-	userInfo := &sys.UserInfo{
-		ID:       int64(user.ID),
-		Username: user.Username,
-		Phone:    user.Phone,
-		Nickname: user.Nickname,
-		Gender:   user.Gender,
-		Avatar:   user.Avatar,
-		Email:    user.Email,
-		Status:   user.Status,
-		RoleName: user.Username,
-		CreateBy: user.CreateBy,
-		UpdateBy: user.UpdateBy,
-		CreateAt: user.CreateBy,
-		UpdateAt: user.UpdateBy,
-	}
+	user, _ := l.svcCtx.UserModel.GetUserByID(in.Id)
+
+	var userInfo *sys.UserInfo
+	jsonData, err := json.Marshal(user)
+	err = json.Unmarshal(jsonData, &userInfo)
+
 	//获取用户的所有角色名字
-	role, err := l.svcCtx.RoleModel.GetRoleByUserID(in.ID)
+	role, err := l.svcCtx.RoleModel.GetRoleByUserID(in.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -60,32 +51,22 @@ func (l *UserInfoLogic) UserInfo(in *sys.InfoReq) (*sys.InfoResp, error) {
 		}
 	}
 	var Routes []string
-	var Buttons []string
 	//超级管理员 获取所有得到菜单
 	if contains {
 		menus, _, _ := l.svcCtx.MenuModel.GetMenuList()
 		for _, i := range menus {
-			if i.Type != "3" { //type=3 -->按钮
-				Routes = append(Routes, i.TAG)
-			} else {
-				Buttons = append(Buttons, i.TAG)
-			}
+			Routes = append(Routes, i.TAG)
 		}
 	} else {
 		//其他角色  通过用户id-->查询角色-->查询角色原拥有菜单
-		menus, _ := l.svcCtx.MenuModel.GetMenusByUserID(in.ID)
+		menus, _ := l.svcCtx.MenuModel.GetMenusByUserID(in.Id)
 		for _, i := range menus {
-			if i.Type != "3" {
-				Routes = append(Routes, i.TAG)
-			} else {
-				Buttons = append(Buttons, i.TAG)
-			}
+			Routes = append(Routes, i.TAG)
 		}
 	}
-	return &sys.InfoResp{
+	return &sys.UserInfoResp{
 		UserInfo: userInfo,
 		Routes:   Routes,
 		Roles:    Roles,
-		Buttons:  Buttons,
 	}, nil
 }

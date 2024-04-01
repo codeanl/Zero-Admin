@@ -27,7 +27,7 @@ func NewMenuAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *MenuAddLo
 
 // 添加菜单
 func (l *MenuAddLogic) MenuAdd(in *sys.MenuAddReq) (*sys.MenuAddResp, error) {
-	menu := &model.Menu{
+	err := l.svcCtx.MenuModel.AddMenu(&model.Menu{
 		Name:     in.Name,
 		ParentID: in.ParentId,
 		Url:      in.Url,
@@ -37,8 +37,7 @@ func (l *MenuAddLogic) MenuAdd(in *sys.MenuAddReq) (*sys.MenuAddResp, error) {
 		CreateBy: in.CreateBy,
 		Remark:   in.Remark,
 		TAG:      in.TAG,
-	}
-	err := l.svcCtx.MenuModel.AddMenu(menu)
+	})
 	if err != nil {
 		return nil, errors.New("添加菜单失败")
 	}

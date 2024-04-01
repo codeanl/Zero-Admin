@@ -37,7 +37,7 @@ func (l *SkuAddLogic) SkuAdd(in *pms.SkuAddReq) (*pms.SkuAddResp, error) {
 		data = append(data, nn)
 	}
 	tag := strings.Join(data, ", ")
-	info := model.Sku{
+	info := model.ProductSku{
 		ProductID:   in.ProductID,
 		Name:        in.Name,
 		Pic:         in.Pic,

@@ -93,6 +93,12 @@ func (m *defaultMemberModel) GetMemberList(in *ums.MemberListReq) ([]*Member, in
 	if in.Status != "" {
 		db = db.Where("status= ?", in.Status)
 	}
+	if in.Gender != "" {
+		db = db.Where("gender= ?", in.Gender)
+	}
+	if in.Nickname != "" {
+		db = db.Where("nickname LIKE ?", fmt.Sprintf("%%%s%%", in.Nickname))
+	}
 	var total int64
 	err := db.Count(&total).Error
 	if err != nil {

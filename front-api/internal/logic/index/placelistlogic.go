@@ -2,7 +2,7 @@ package index
 
 import (
 	"SimplePick-Mall-Server/common/errorx"
-	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
+	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
 	"SimplePick-Mall-Server/front-api/internal/svc"
@@ -26,7 +26,7 @@ func NewPlaceListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PlaceLi
 }
 
 func (l *PlaceListLogic) PlaceList(req *types.ListPlaceReq) (*types.ListPlaceResp, error) {
-	resp, err := l.svcCtx.Sys.PlaceList(l.ctx, &sysclient.PlaceListReq{})
+	resp, err := l.svcCtx.Pms.PlaceList(l.ctx, &pmsclient.PlaceListReq{})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")
 	}

@@ -1,11 +1,10 @@
 package member
 
 import (
-	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
-	"context"
-
 	"SimplePick-Mall-Server/api/internal/svc"
 	"SimplePick-Mall-Server/api/internal/types"
+	"SimplePick-Mall-Server/service/ums/rpc/umsclient"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -31,6 +30,8 @@ func (l *MemberListLogic) MemberList(req *types.ListMemberReq) (*types.ListMembe
 		Username: req.Username,
 		Phone:    req.Phone,
 		Status:   req.Status,
+		Nickname: req.Nickname,
+		Gender:   req.Gender,
 	})
 	if err != nil {
 		return &types.ListMemberResp{

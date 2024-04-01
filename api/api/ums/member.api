@@ -29,6 +29,8 @@ type (
         Username string `form:"username,optional"`                               // 用户名
         Phone string `form:"phone,optional"`                                     // 手机号码
         Status string `form:"status,optional"`                                    // 帐号启用状态:0->禁用；1->启用
+        Gender string `form:"gender,optional"`                                     // 手机号码
+        Nickname string `form:"nickname,optional"`
     }
     ListMemberData struct {
         Id int64 `json:"id"`

@@ -3,7 +3,6 @@ package order
 import (
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
-	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 
 	"SimplePick-Mall-Server/front-api/internal/svc"
@@ -76,7 +75,7 @@ func (l *OrderInfoLogic) OrderInfo(req *types.OrderInfoReq) (*types.OrderInfoRes
 			Count:       i.Count,
 		})
 	}
-	place, _ := l.svcCtx.Sys.PlaceInfo(l.ctx, &sysclient.PlaceInfoReq{Id: resp.OrderInfo.PlaceId})
+	place, _ := l.svcCtx.Pms.PlaceInfo(l.ctx, &pmsclient.PlaceInfoReq{Id: resp.OrderInfo.PlaceId})
 	PlaceInfo := types.PlaceInfoData{
 		Id:        place.PlaceInfo.Id,
 		Name:      place.PlaceInfo.Name,

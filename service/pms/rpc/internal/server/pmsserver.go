@@ -207,3 +207,33 @@ func (s *PmsServer) MerchantsApplyDelete(ctx context.Context, in *pms.MerchantsA
 	l := logic.NewMerchantsApplyDeleteLogic(ctx, s.svcCtx)
 	return l.MerchantsApplyDelete(in)
 }
+
+// 添加自提点
+func (s *PmsServer) PlaceAdd(ctx context.Context, in *pms.PlaceAddReq) (*pms.PlaceAddResp, error) {
+	l := logic.NewPlaceAddLogic(ctx, s.svcCtx)
+	return l.PlaceAdd(in)
+}
+
+// 自提点列表
+func (s *PmsServer) PlaceList(ctx context.Context, in *pms.PlaceListReq) (*pms.PlaceListResp, error) {
+	l := logic.NewPlaceListLogic(ctx, s.svcCtx)
+	return l.PlaceList(in)
+}
+
+// 更新自提点
+func (s *PmsServer) PlaceUpdate(ctx context.Context, in *pms.PlaceUpdateReq) (*pms.PlaceUpdateResp, error) {
+	l := logic.NewPlaceUpdateLogic(ctx, s.svcCtx)
+	return l.PlaceUpdate(in)
+}
+
+// 删除自提点
+func (s *PmsServer) PlaceDelete(ctx context.Context, in *pms.PlaceDeleteReq) (*pms.PlaceDeleteResp, error) {
+	l := logic.NewPlaceDeleteLogic(ctx, s.svcCtx)
+	return l.PlaceDelete(in)
+}
+
+// 自提点详情
+func (s *PmsServer) PlaceInfo(ctx context.Context, in *pms.PlaceInfoReq) (*pms.PlaceInfoResp, error) {
+	l := logic.NewPlaceInfoLogic(ctx, s.svcCtx)
+	return l.PlaceInfo(in)
+}

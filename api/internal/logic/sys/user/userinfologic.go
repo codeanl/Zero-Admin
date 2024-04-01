@@ -28,7 +28,7 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 
 func (l *UserInfoLogic) UserInfo() (*types.UserInfoResp, error) {
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
-	resp, err := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
+	resp, err := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.UserInfoReq{Id: id})
 	if len(resp.Roles) == 0 {
 		return &types.UserInfoResp{
 			Code:    400,
@@ -48,7 +48,7 @@ func (l *UserInfoLogic) UserInfo() (*types.UserInfoResp, error) {
 		}, nil
 	}
 	UserInfo := types.UserInfo{
-		ID:       resp.UserInfo.ID,
+		ID:       resp.UserInfo.Id,
 		Username: resp.UserInfo.Username,
 		NickName: resp.UserInfo.Nickname,
 		Phone:    resp.UserInfo.Phone,
@@ -58,18 +58,16 @@ func (l *UserInfoLogic) UserInfo() (*types.UserInfoResp, error) {
 		Status:   resp.UserInfo.Status,
 		CreateAt: resp.UserInfo.CreateAt,
 		UpdateAt: resp.UserInfo.UpdateAt,
-		CreateBy: resp.UserInfo.CreateBy,
-		UpdateBy: resp.UserInfo.UpdateBy,
 	}
 	//
-	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.UserInfoReq{Id: id})
 	for index, d := range resp.Roles {
 		if d == "自提点管理员" {
-			place, _ := l.svcCtx.Sys.PlaceInfo(l.ctx, &sysclient.PlaceInfoReq{UserID: userInfo.UserInfo.ID})
+			place, _ := l.svcCtx.Pms.PlaceInfo(l.ctx, &pmsclient.PlaceInfoReq{UserID: userInfo.UserInfo.Id})
 			resp.Roles[index] = "自提点管理员（" + place.PlaceInfo.Name + ")"
 		}
 		if d == "商家" {
-			merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+			merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.Id})
 			resp.Roles[index] = "商家（" + merchant.Name + ")"
 		}
 	}
@@ -78,7 +76,6 @@ func (l *UserInfoLogic) UserInfo() (*types.UserInfoResp, error) {
 		UserInfo: UserInfo,
 		Routes:   resp.Routes,
 		Roles:    resp.Roles,
-		Buttons:  resp.Buttons,
 	}
 	return &types.UserInfoResp{
 		Code:    200,

@@ -25,6 +25,7 @@ func NewReturnApplyAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Re
 }
 
 func (l *ReturnApplyAddLogic) ReturnApplyAdd(req *types.AddReturnApplyReq) (resp *types.AddReturnApplyResp, err error) {
+	order, _ := l.svcCtx.Oms.OrderInfo(l.ctx, &omsclient.OrderInfoReq{Id: req.OrderID})
 	_, err = l.svcCtx.Oms.ReturnApplyAdd(l.ctx, &omsclient.ReturnApplyAddReq{
 		UserID:         req.UserID,
 		OrderID:        req.OrderID,
@@ -33,6 +34,7 @@ func (l *ReturnApplyAddLogic) ReturnApplyAdd(req *types.AddReturnApplyReq) (resp
 		Description:    req.Description,
 		ProofPics:      req.ProofPics,
 		ReturnAmount:   req.ReturnAmount,
+		MerchantID:     order.OrderInfo.MerchantID,
 	})
 	if err != nil {
 		return nil, err

@@ -171,7 +171,6 @@ message ProductUpdateReq {
   repeated string ImgUrl =31;
   repeated string IntroduceImgUrl =32;
   int64 MerchantID=100;
-
 }
 message ProductUpdateResp {
   string pong = 1;
@@ -496,6 +495,79 @@ message  MerchantsApplyDeleteReq{
 message  MerchantsApplyDeleteResp{
   string pong = 1;
 }
+
+//添加自提点
+message PlaceAddReq {
+  string name = 1;
+  string place = 2;
+  string status = 3;
+  string pic = 4;
+  string phone = 5;
+  string principal = 6;
+  string CreateBy = 7;
+  int64 UserID=8;
+}
+message PlaceAddResp {
+  int64 ID=8;
+}
+//自提点列表
+message PlaceUpdateReq {
+  int64 id = 1;
+  string name = 2;
+  string place = 3;
+  string status = 4;
+  string pic = 5;
+  string phone = 6;
+  string principal = 7;
+  string UpdateBy = 8;
+  int64 UserID=18;
+}
+message PlaceUpdateResp {
+  string pong = 1;
+}
+//更新自提点
+message PlaceListReq {
+  string name = 1;
+  string place = 2;
+  string phone = 3;
+  int64 current = 4;
+  int64 pageSize = 5;
+  string principal = 7;
+}
+message PlaceListData {
+  int64 id = 1;
+  string name = 2;
+  string place = 3;
+  string status = 4;
+  string pic = 5;
+  string phone = 6;
+  string principal = 7;
+  string CreateBy = 8;
+  string CreateAt = 9;
+  string UpdateBy = 10;
+  string UpdateAt = 11;
+  int64 UserID=18;
+}
+message PlaceListResp{
+  int64 total = 1;
+  repeated  PlaceListData list = 2;
+}
+//删除自提点
+message PlaceDeleteReq {
+  repeated int64 ids = 1;
+}
+message PlaceDeleteResp {
+  string pong = 1;
+}
+//自提点详情
+message PlaceInfoReq {
+  int64 id = 1;
+  int64 UserID = 2;
+}
+message PlaceInfoResp {
+  PlaceListData PlaceInfo = 1;
+}
+
 service Pms {
   //添加分类
   rpc CategoryAdd(CategoryAddReq) returns(CategoryAddResp);
@@ -506,7 +578,7 @@ service Pms {
   //删除分类
   rpc CategoryDelete(CategoryDeleteReq) returns(CategoryDeleteResp);
 
-//添加属性
+  //添加属性
   rpc AttributeAdd(AttributeAddReq) returns(AttributeAddResp);
   //属性列表
   rpc AttributeList(AttributeListReq) returns(AttributeListResp);
@@ -565,4 +637,15 @@ service Pms {
   rpc MerchantsApplyUpdate(MerchantsApplyUpdateReq) returns(MerchantsApplyUpdateResp);
   //删除商家申请
   rpc MerchantsApplyDelete(MerchantsApplyDeleteReq) returns(MerchantsApplyDeleteResp);
+
+  //添加自提点
+  rpc PlaceAdd(PlaceAddReq) returns(PlaceAddResp);
+  //自提点列表
+  rpc PlaceList(PlaceListReq) returns(PlaceListResp);
+  //更新自提点
+  rpc PlaceUpdate(PlaceUpdateReq) returns(PlaceUpdateResp);
+  //删除自提点
+  rpc PlaceDelete(PlaceDeleteReq) returns(PlaceDeleteResp);
+  //自提点详情
+  rpc PlaceInfo(PlaceInfoReq) returns(PlaceInfoResp);
 }

@@ -32,7 +32,7 @@ func (l *ProductUpdateLogic) ProductUpdate(req *types.UpdateProductReq) (resp *t
 			Value:       i.Value,
 		})
 	}
-	_, err = l.svcCtx.Pms.ProductUpdate(l.ctx, &pmsclient.ProductUpdateReq{
+	_, _ = l.svcCtx.Pms.ProductUpdate(l.ctx, &pmsclient.ProductUpdateReq{
 		Id:                  req.Id,
 		AttributeCategoryID: req.AttributeCategoryID,
 		CategoryID:          req.CategoryID,
@@ -48,12 +48,12 @@ func (l *ProductUpdateLogic) ProductUpdate(req *types.UpdateProductReq) (resp *t
 		IntroduceImgUrl:     req.IntroduceImgUrl,
 		MerchantID:          req.MerchantID,
 	})
-	if err != nil {
-		return &types.UpdateProductResp{
-			Code:    400,
-			Message: "更新失败",
-		}, nil
-	}
+	//if err != nil {
+	//	return &types.UpdateProductResp{
+	//		Code:    400,
+	//		Message: "更新失败",
+	//	}, nil
+	//}
 	return &types.UpdateProductResp{
 		Code:    200,
 		Message: "更新成功",

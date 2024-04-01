@@ -7,13 +7,13 @@ import (
 
 type (
 	SkuModel interface {
-		AddSku(Sku *Sku) (*Sku, error)
-		UpdateSku(id int64, role *Sku) error
+		AddSku(Sku *ProductSku) (*ProductSku, error)
+		UpdateSku(id int64, role *ProductSku) error
 		DeleteSkuByIds(ids []int64) error
-		GetSkuList(in *pms.SkuListReq) ([]*Sku, int64, error)
-		GetSkuById(id int64) (info *Sku, err error)
+		GetSkuList(in *pms.SkuListReq) ([]*ProductSku, int64, error)
+		GetSkuById(id int64) (info *ProductSku, err error)
 		DeleteSkuBySpuID(id int64) error
-		GetSkuByTag(tag string) (info *Sku, err error)
+		GetSkuByTag(tag string) (info *ProductSku, err error)
 		DeleteSkuByTag(tag string) error
 		DeleteSkuByID(id int64) error
 	}
@@ -21,7 +21,7 @@ type (
 	defaultSkuModel struct {
 		conn *gorm.DB
 	}
-	Sku struct {
+	ProductSku struct {
 		gorm.Model
 		ProductID   int64   `json:"product_id" gorm:"type:bigint;comment:商品id;not null"`        //商品id
 		Name        string  `json:"name" gorm:"type:varchar(191);comment:商品名称;not null"`        //商品名称
@@ -37,26 +37,26 @@ type (
 
 func NewSkuModel(conn *gorm.DB) SkuModel {
 	//如果没有表则自动构建表
-	conn.AutoMigrate(&Sku{})
+	conn.AutoMigrate(&ProductSku{})
 	return &defaultSkuModel{
 		conn: conn,
 	}
 }
-func (m *defaultSkuModel) AddSku(info *Sku) (*Sku, error) {
-	err := m.conn.Model(&Sku{}).Create(info).Error
+func (m *defaultSkuModel) AddSku(info *ProductSku) (*ProductSku, error) {
+	err := m.conn.Model(&ProductSku{}).Create(info).Error
 	return info, err
 }
 
-func (m *defaultSkuModel) UpdateSku(id int64, role *Sku) error {
-	err := m.conn.Model(&Sku{}).Where("id=?", id).Updates(role).Error
+func (m *defaultSkuModel) UpdateSku(id int64, role *ProductSku) error {
+	err := m.conn.Model(&ProductSku{}).Where("id=?", id).Updates(role).Error
 	return err
 }
-func (m *defaultSkuModel) GetSkuById(id int64) (info *Sku, err error) {
-	err = m.conn.Model(&Sku{}).Where("id=?", id).Find(&info).Error
+func (m *defaultSkuModel) GetSkuById(id int64) (info *ProductSku, err error) {
+	err = m.conn.Model(&ProductSku{}).Where("id=?", id).Find(&info).Error
 	return info, err
 }
-func (m *defaultSkuModel) GetSkuByTag(tag string) (info *Sku, err error) {
-	err = m.conn.Model(&Sku{}).Where("tag=?", tag).Find(&info).Error
+func (m *defaultSkuModel) GetSkuByTag(tag string) (info *ProductSku, err error) {
+	err = m.conn.Model(&ProductSku{}).Where("tag=?", tag).Find(&info).Error
 	return info, err
 }
 
@@ -65,27 +65,27 @@ func (m *defaultSkuModel) DeleteSkuByIds(ids []int64) error {
 	id := map[string]interface{}{
 		"id": ids,
 	}
-	err := m.conn.Where(id).Delete(&Sku{}).Error
+	err := m.conn.Where(id).Delete(&ProductSku{}).Error
 	return err
 }
 
 func (m *defaultSkuModel) DeleteSkuBySpuID(id int64) error {
-	err := m.conn.Model(&Sku{}).Where("product_id=?", id).Delete(&Sku{}).Error
+	err := m.conn.Model(&ProductSku{}).Where("product_id=?", id).Delete(&ProductSku{}).Error
 	return err
 }
 func (m *defaultSkuModel) DeleteSkuByTag(tag string) error {
-	err := m.conn.Model(&Sku{}).Where("tag=?", tag).Delete(&Sku{}).Error
+	err := m.conn.Model(&ProductSku{}).Where("tag=?", tag).Delete(&ProductSku{}).Error
 	return err
 }
 func (m *defaultSkuModel) DeleteSkuByID(id int64) error {
-	err := m.conn.Model(&Sku{}).Where("id=?", id).Delete(&Sku{}).Error
+	err := m.conn.Model(&ProductSku{}).Where("id=?", id).Delete(&ProductSku{}).Error
 	return err
 }
 
 //GetUserList 获取用户列表
-func (m *defaultSkuModel) GetSkuList(in *pms.SkuListReq) ([]*Sku, int64, error) {
-	var list []*Sku
-	db := m.conn.Model(&Sku{}).Order("created_at DESC")
+func (m *defaultSkuModel) GetSkuList(in *pms.SkuListReq) ([]*ProductSku, int64, error) {
+	var list []*ProductSku
+	db := m.conn.Model(&ProductSku{}).Order("created_at DESC")
 	if in.ProductID != 0 {
 		db = db.Where("product_id = ?", in.ProductID)
 	}

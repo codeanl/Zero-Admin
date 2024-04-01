@@ -23,13 +23,13 @@ func NewSysServer(svcCtx *svc.ServiceContext) *SysServer {
 }
 
 // 用户登录
-func (s *SysServer) UserLogin(ctx context.Context, in *sys.LoginReq) (*sys.LoginResp, error) {
+func (s *SysServer) UserLogin(ctx context.Context, in *sys.UserLoginReq) (*sys.UserLoginResp, error) {
 	l := logic.NewUserLoginLogic(ctx, s.svcCtx)
 	return l.UserLogin(in)
 }
 
 // 用户信息
-func (s *SysServer) UserInfo(ctx context.Context, in *sys.InfoReq) (*sys.InfoResp, error) {
+func (s *SysServer) UserInfo(ctx context.Context, in *sys.UserInfoReq) (*sys.UserInfoResp, error) {
 	l := logic.NewUserInfoLogic(ctx, s.svcCtx)
 	return l.UserInfo(in)
 }
@@ -92,36 +92,6 @@ func (s *SysServer) LoginLogList(ctx context.Context, in *sys.LoginLogListReq) (
 func (s *SysServer) LoginLogDelete(ctx context.Context, in *sys.LoginLogDeleteReq) (*sys.LoginLogDeleteResp, error) {
 	l := logic.NewLoginLogDeleteLogic(ctx, s.svcCtx)
 	return l.LoginLogDelete(in)
-}
-
-// 添加自提点
-func (s *SysServer) PlaceAdd(ctx context.Context, in *sys.PlaceAddReq) (*sys.PlaceAddResp, error) {
-	l := logic.NewPlaceAddLogic(ctx, s.svcCtx)
-	return l.PlaceAdd(in)
-}
-
-// 自提点列表
-func (s *SysServer) PlaceList(ctx context.Context, in *sys.PlaceListReq) (*sys.PlaceListResp, error) {
-	l := logic.NewPlaceListLogic(ctx, s.svcCtx)
-	return l.PlaceList(in)
-}
-
-// 更新自提点
-func (s *SysServer) PlaceUpdate(ctx context.Context, in *sys.PlaceUpdateReq) (*sys.PlaceUpdateResp, error) {
-	l := logic.NewPlaceUpdateLogic(ctx, s.svcCtx)
-	return l.PlaceUpdate(in)
-}
-
-// 删除自提点
-func (s *SysServer) PlaceDelete(ctx context.Context, in *sys.PlaceDeleteReq) (*sys.PlaceDeleteResp, error) {
-	l := logic.NewPlaceDeleteLogic(ctx, s.svcCtx)
-	return l.PlaceDelete(in)
-}
-
-// 自提点详情
-func (s *SysServer) PlaceInfo(ctx context.Context, in *sys.PlaceInfoReq) (*sys.PlaceInfoResp, error) {
-	l := logic.NewPlaceInfoLogic(ctx, s.svcCtx)
-	return l.PlaceInfo(in)
 }
 
 // 添加角色

@@ -2,12 +2,10 @@ package index
 
 import (
 	"SimplePick-Mall-Server/common/errorx"
-	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
-	"context"
-
 	"SimplePick-Mall-Server/front-api/internal/svc"
 	"SimplePick-Mall-Server/front-api/internal/types"
-
+	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
+	"context"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -32,24 +30,26 @@ func (l *CategoryListLogic) CategoryList(req *types.ListCategoryReq) (*types.Lis
 	}
 	list := make([]types.ListCategoryData, 0)
 	for _, item := range resp.List {
-		productList, _ := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
-			CategoryID: item.Id,
-			PageNum:    1,
-			PageSize:   6,
-		})
 		var ProductList []types.ListProductData
-		for _, i := range productList.List {
-			ProductList = append(ProductList, types.ListProductData{
-				Id:            i.Id,
-				CategoryID:    i.CategoryID,
-				Name:          i.Name,
-				Pic:           i.Pic,
-				ProductSn:     i.ProductSn,
-				Desc:          i.Desc,
-				OriginalPrice: i.OriginalPrice,
-				Unit:          i.Unit,
-				Price:         i.Price,
+		if item.ParentId != 0 {
+			productList, _ := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
+				CategoryID: item.Id,
+				PageNum:    1,
+				PageSize:   6,
 			})
+			for _, i := range productList.List {
+				ProductList = append(ProductList, types.ListProductData{
+					Id:            i.Id,
+					CategoryID:    i.CategoryID,
+					Name:          i.Name,
+					Pic:           i.Pic,
+					ProductSn:     i.ProductSn,
+					Desc:          i.Desc,
+					OriginalPrice: i.OriginalPrice,
+					Unit:          i.Unit,
+					Price:         i.Price,
+				})
+			}
 		}
 		listData := types.ListCategoryData{
 			Id:           item.Id,

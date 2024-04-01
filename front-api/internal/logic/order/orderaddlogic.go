@@ -6,8 +6,6 @@ import (
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
-	"log"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -26,44 +24,6 @@ func NewOrderAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *OrderAdd
 }
 
 func (l *OrderAddLogic) OrderAdd(req *types.AddOrderReq) (*types.AddOrderResp, error) {
-	//var Skus []*omsclient.Skus
-	//for _, i := range req.Skus {
-	//	Skus = append(Skus, &omsclient.Skus{
-	//		Count: i.Count,
-	//		SkuID: i.SkuID,
-	//	})
-	//	l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: i.SkuID})
-	//}
-	//order, err := l.svcCtx.Oms.OrderAdd(l.ctx, &omsclient.OrderAddReq{
-	//	PlaceId:               req.PlaceId,
-	//	MemberId:              req.MemberId,
-	//	OrderSn:               req.OrderSn,
-	//	MemberUsername:        req.MemberUsername,
-	//	TotalAmount:           req.TotalAmount,
-	//	PayAmount:             req.PayAmount,
-	//	FreightAmount:         req.FreightAmount,
-	//	CouponAmount:          req.CouponAmount,
-	//	PayType:               req.PayType,
-	//	Status:                req.Status,
-	//	OrderType:             req.OrderType,
-	//	ReceiverName:          req.ReceiverName,
-	//	ReceiverPhone:         req.ReceiverPhone,
-	//	ReceiverProvince:      req.ReceiverProvince,
-	//	ReceiverCity:          req.ReceiverCity,
-	//	ReceiverRegion:        req.ReceiverRegion,
-	//	ReceiverDetailAddress: req.ReceiverDetailAddress,
-	//	Note:                  req.Note,
-	//	ConfirmStatus:         "0", //确认收货状态：0->未确认
-	//	DeleteStatus:          "0", // 删除状态：0->未删除
-	//	PaymentTime:           req.PaymentTime,
-	//	Skus:                  Skus,
-	//})
-	//data := types.Data{
-	//	OrderID: order.OrderID,
-	//}
-	//if err != nil {
-	//	return nil, err
-	//}
 	type SkuList struct {
 		Sku        []*omsclient.Skus
 		MerchantID int64
@@ -99,7 +59,6 @@ func (l *OrderAddLogic) OrderAdd(req *types.AddOrderReq) (*types.AddOrderResp, e
 			}
 		}
 	}
-	log.Print(data)
 	var orderIDS []int64
 	for _, i := range data {
 		var Skus []*omsclient.Skus
@@ -109,9 +68,11 @@ func (l *OrderAddLogic) OrderAdd(req *types.AddOrderReq) (*types.AddOrderResp, e
 				SkuID: j.SkuID,
 			})
 		}
+		sku, _ := l.svcCtx.Pms.SkuInfo(l.ctx, &pmsclient.SkuInfoReq{ID: i.Sku[0].SkuID})
 		order, err := l.svcCtx.Oms.OrderAdd(l.ctx, &omsclient.OrderAddReq{
 			PlaceId:               req.PlaceId,
 			MemberId:              req.MemberId,
+			MerchantID:            sku.SkuInfo.MerchantID,
 			OrderSn:               req.OrderSn,
 			MemberUsername:        req.MemberUsername,
 			TotalAmount:           req.TotalAmount,

@@ -13,8 +13,6 @@ import (
 )
 
 type (
-	InfoReq               = sys.InfoReq
-	InfoResp              = sys.InfoResp
 	LogAddReq             = sys.LogAddReq
 	LogAddResp            = sys.LogAddResp
 	LoginLogAddReq        = sys.LoginLogAddReq
@@ -24,8 +22,6 @@ type (
 	LoginLogListData      = sys.LoginLogListData
 	LoginLogListReq       = sys.LoginLogListReq
 	LoginLogListResp      = sys.LoginLogListResp
-	LoginReq              = sys.LoginReq
-	LoginResp             = sys.LoginResp
 	MenuAddReq            = sys.MenuAddReq
 	MenuAddResp           = sys.MenuAddResp
 	MenuDeleteReq         = sys.MenuDeleteReq
@@ -35,17 +31,6 @@ type (
 	MenuListResp          = sys.MenuListResp
 	MenuUpdateReq         = sys.MenuUpdateReq
 	MenuUpdateResp        = sys.MenuUpdateResp
-	PlaceAddReq           = sys.PlaceAddReq
-	PlaceAddResp          = sys.PlaceAddResp
-	PlaceDeleteReq        = sys.PlaceDeleteReq
-	PlaceDeleteResp       = sys.PlaceDeleteResp
-	PlaceInfoReq          = sys.PlaceInfoReq
-	PlaceInfoResp         = sys.PlaceInfoResp
-	PlaceListData         = sys.PlaceListData
-	PlaceListReq          = sys.PlaceListReq
-	PlaceListResp         = sys.PlaceListResp
-	PlaceUpdateReq        = sys.PlaceUpdateReq
-	PlaceUpdateResp       = sys.PlaceUpdateResp
 	QueryMenuByRoleIdReq  = sys.QueryMenuByRoleIdReq
 	QueryMenuByRoleIdResp = sys.QueryMenuByRoleIdResp
 	RestartPasswordReq    = sys.RestartPasswordReq
@@ -75,9 +60,13 @@ type (
 	UserDeleteReq         = sys.UserDeleteReq
 	UserDeleteResp        = sys.UserDeleteResp
 	UserInfo              = sys.UserInfo
+	UserInfoReq           = sys.UserInfoReq
+	UserInfoResp          = sys.UserInfoResp
 	UserList              = sys.UserList
 	UserListReq           = sys.UserListReq
 	UserListResp          = sys.UserListResp
+	UserLoginReq          = sys.UserLoginReq
+	UserLoginResp         = sys.UserLoginResp
 	UserRbacReq           = sys.UserRbacReq
 	UserRbacResp          = sys.UserRbacResp
 	UserUpdateReq         = sys.UserUpdateReq
@@ -85,9 +74,9 @@ type (
 
 	Sys interface {
 		// 用户登录
-		UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+		UserLogin(ctx context.Context, in *UserLoginReq, opts ...grpc.CallOption) (*UserLoginResp, error)
 		// 用户信息
-		UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
+		UserInfo(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*UserInfoResp, error)
 		// 添加用户
 		UserAdd(ctx context.Context, in *UserAddReq, opts ...grpc.CallOption) (*UserAddResp, error)
 		// 更新用户
@@ -108,16 +97,6 @@ type (
 		LoginLogList(ctx context.Context, in *LoginLogListReq, opts ...grpc.CallOption) (*LoginLogListResp, error)
 		// 删除登录日志
 		LoginLogDelete(ctx context.Context, in *LoginLogDeleteReq, opts ...grpc.CallOption) (*LoginLogDeleteResp, error)
-		// 添加自提点
-		PlaceAdd(ctx context.Context, in *PlaceAddReq, opts ...grpc.CallOption) (*PlaceAddResp, error)
-		// 自提点列表
-		PlaceList(ctx context.Context, in *PlaceListReq, opts ...grpc.CallOption) (*PlaceListResp, error)
-		// 更新自提点
-		PlaceUpdate(ctx context.Context, in *PlaceUpdateReq, opts ...grpc.CallOption) (*PlaceUpdateResp, error)
-		// 删除自提点
-		PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ...grpc.CallOption) (*PlaceDeleteResp, error)
-		// 自提点详情
-		PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error)
 		// 添加角色
 		RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error)
 		// 更新角色
@@ -160,13 +139,13 @@ func NewSys(cli zrpc.Client) Sys {
 }
 
 // 用户登录
-func (m *defaultSys) UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
+func (m *defaultSys) UserLogin(ctx context.Context, in *UserLoginReq, opts ...grpc.CallOption) (*UserLoginResp, error) {
 	client := sys.NewSysClient(m.cli.Conn())
 	return client.UserLogin(ctx, in, opts...)
 }
 
 // 用户信息
-func (m *defaultSys) UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
+func (m *defaultSys) UserInfo(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*UserInfoResp, error) {
 	client := sys.NewSysClient(m.cli.Conn())
 	return client.UserInfo(ctx, in, opts...)
 }
@@ -229,36 +208,6 @@ func (m *defaultSys) LoginLogList(ctx context.Context, in *LoginLogListReq, opts
 func (m *defaultSys) LoginLogDelete(ctx context.Context, in *LoginLogDeleteReq, opts ...grpc.CallOption) (*LoginLogDeleteResp, error) {
 	client := sys.NewSysClient(m.cli.Conn())
 	return client.LoginLogDelete(ctx, in, opts...)
-}
-
-// 添加自提点
-func (m *defaultSys) PlaceAdd(ctx context.Context, in *PlaceAddReq, opts ...grpc.CallOption) (*PlaceAddResp, error) {
-	client := sys.NewSysClient(m.cli.Conn())
-	return client.PlaceAdd(ctx, in, opts...)
-}
-
-// 自提点列表
-func (m *defaultSys) PlaceList(ctx context.Context, in *PlaceListReq, opts ...grpc.CallOption) (*PlaceListResp, error) {
-	client := sys.NewSysClient(m.cli.Conn())
-	return client.PlaceList(ctx, in, opts...)
-}
-
-// 更新自提点
-func (m *defaultSys) PlaceUpdate(ctx context.Context, in *PlaceUpdateReq, opts ...grpc.CallOption) (*PlaceUpdateResp, error) {
-	client := sys.NewSysClient(m.cli.Conn())
-	return client.PlaceUpdate(ctx, in, opts...)
-}
-
-// 删除自提点
-func (m *defaultSys) PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ...grpc.CallOption) (*PlaceDeleteResp, error) {
-	client := sys.NewSysClient(m.cli.Conn())
-	return client.PlaceDelete(ctx, in, opts...)
-}
-
-// 自提点详情
-func (m *defaultSys) PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error) {
-	client := sys.NewSysClient(m.cli.Conn())
-	return client.PlaceInfo(ctx, in, opts...)
 }
 
 // 添加角色

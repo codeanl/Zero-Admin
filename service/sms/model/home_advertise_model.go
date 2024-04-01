@@ -8,15 +8,15 @@ import (
 
 type (
 	HomeAdvertiseModel interface {
-		AddHomeAdvertise(coupon *HomeAdvertise) (err error)
-		UpdateHomeAdvertise(id int64, coupon *HomeAdvertise) error
+		AddHomeAdvertise(coupon *Banner) (err error)
+		UpdateHomeAdvertise(id int64, coupon *Banner) error
 		DeleteHomeAdvertiseByIds(ids []int64) error
-		GetHomeAdvertiseList(in *sms.HomeAdvertiseListReq) ([]*HomeAdvertise, int64, error)
+		GetHomeAdvertiseList(in *sms.HomeAdvertiseListReq) ([]*Banner, int64, error)
 	}
 	defaultHomeAdvertiseModel struct {
 		conn *gorm.DB
 	}
-	HomeAdvertise struct {
+	Banner struct {
 		gorm.Model
 		Name       string `json:"name" gorm:"type:varchar(191);comment:名称;not null"`  //名称
 		Pic        string `json:"pic" gorm:"type:varchar(191);comment:图片地址;not null"` //图片地址
@@ -30,18 +30,18 @@ type (
 
 func NewHomeAdvertiseModel(conn *gorm.DB) HomeAdvertiseModel {
 	//如果没有表则自动构建表
-	conn.AutoMigrate(&HomeAdvertise{})
+	conn.AutoMigrate(&Banner{})
 	return &defaultHomeAdvertiseModel{
 		conn: conn,
 	}
 }
 
-func (m *defaultHomeAdvertiseModel) AddHomeAdvertise(coupon *HomeAdvertise) (err error) {
-	return m.conn.Model(&HomeAdvertise{}).Create(coupon).Error
+func (m *defaultHomeAdvertiseModel) AddHomeAdvertise(coupon *Banner) (err error) {
+	return m.conn.Model(&Banner{}).Create(coupon).Error
 }
 
-func (m *defaultHomeAdvertiseModel) UpdateHomeAdvertise(id int64, coupon *HomeAdvertise) error {
-	err := m.conn.Model(&HomeAdvertise{}).Where("id=?", id).Updates(coupon).Error
+func (m *defaultHomeAdvertiseModel) UpdateHomeAdvertise(id int64, coupon *Banner) error {
+	err := m.conn.Model(&Banner{}).Where("id=?", id).Updates(coupon).Error
 	return err
 }
 
@@ -49,12 +49,12 @@ func (m *defaultHomeAdvertiseModel) DeleteHomeAdvertiseByIds(ids []int64) error 
 	id := map[string]interface{}{
 		"id": ids,
 	}
-	err := m.conn.Where(id).Delete(&HomeAdvertise{}).Error
+	err := m.conn.Where(id).Delete(&Banner{}).Error
 	return err
 }
 
-func (m *defaultHomeAdvertiseModel) GetHomeAdvertiseList(in *sms.HomeAdvertiseListReq) ([]*HomeAdvertise, int64, error) {
-	var list []*HomeAdvertise
+func (m *defaultHomeAdvertiseModel) GetHomeAdvertiseList(in *sms.HomeAdvertiseListReq) ([]*Banner, int64, error) {
+	var list []*Banner
 	db := m.conn.Model(&list).Order("sort ASC")
 	if in.Name != "" {
 		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", in.Name))

@@ -33,8 +33,8 @@ func NewUploadLogic(r *http.Request, ctx context.Context, svcCtx *svc.ServiceCon
 func (l *UploadLogic) Upload() (resp *types.UploadResp, err error) {
 	var AccessKey = "dXjfJ47I2-qY5SCiQ2KvWENU8BXsTXKiNpvocA9I"
 	var SerectKey = "VnWaBZkO9_AUcsEjr7iZd8-XqYn7nEUlKLMx0fFO"
-	var Bucket = "malldemo"                     //仓库名
-	var ImgUrl = "s0tjntegg.hd-bkt.clouddn.com" //域名
+	var Bucket = "shabiwocaonima"               //仓库名
+	var ImgUrl = "sb490u2w0.hn-bkt.clouddn.com" //域名
 	file, handler, _ := l.r.FormFile("file")
 	if err != nil {
 		// 处理错误
@@ -48,7 +48,7 @@ func (l *UploadLogic) Upload() (resp *types.UploadResp, err error) {
 	upToken := putPolicy.UploadToken(mac)
 	cfg := storage.Config{}
 	// 空间对应的机房
-	cfg.Region = &storage.ZoneHuadong
+	cfg.Region = &storage.ZoneHuanan
 	// 是否使用https域名
 	cfg.UseHTTPS = true
 	// 上传是否使用CDN上传加速

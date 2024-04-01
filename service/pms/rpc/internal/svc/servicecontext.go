@@ -18,6 +18,7 @@ type ServiceContext struct {
 	ProductIntroduceImgModel model.ProductIntroduceImgModel
 	MerchantsModel           model.MerchantsModel
 	MerchantsApplyModel      model.MerchantsApplyModel
+	PlaceModel               model.PlaceModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -35,5 +36,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		ProductIntroduceImgModel: model.NewProductIntroduceImgModel(conn),
 		MerchantsModel:           model.NewMerchantsModel(conn),
 		MerchantsApplyModel:      model.NewMerchantsApplyModel(conn),
+		PlaceModel:               model.NewPlaceModel(conn),
 	}
 }

@@ -89,7 +89,7 @@ func (l *ProductAddLogic) ProductAdd(in *pms.ProductAddReq) (*pms.ProductAddResp
 			data = append(data, nn)
 		}
 		tag := strings.Join(data, ", ")
-		l.svcCtx.SkuModel.AddSku(&model.Sku{
+		l.svcCtx.SkuModel.AddSku(&model.ProductSku{
 			ProductID:   int64(spu.ID),
 			Name:        spu.Name,
 			Pic:         spu.Pic,

@@ -24,7 +24,7 @@ func NewLoginLogDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Lo
 	}
 }
 
-// 删除登录日志
+//LoginLogDelete 删除登录日志
 func (l *LoginLogDeleteLogic) LoginLogDelete(in *sys.LoginLogDeleteReq) (*sys.LoginLogDeleteResp, error) {
 	err := l.svcCtx.LoginLogModel.DeleteLoginLogByIds(in.Ids)
 	if err != nil {

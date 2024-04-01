@@ -1,12 +1,10 @@
 package logic
 
 import (
-	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
-	"context"
-
 	"SimplePick-Mall-Server/service/oms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/oms/rpc/oms"
-
+	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
+	"context"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 

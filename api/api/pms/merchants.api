@@ -89,6 +89,6 @@ service api {
     @handler MerchantsDelete
     post /delete (DeleteMerchantsReq) returns (DeleteMerchantsResp)
 
-      @handler MerchantsInfo
-        post /info (MerchantsInfoReq) returns (MerchantsInfoResp)
+    @handler MerchantsInfo
+    post /info (MerchantsInfoReq) returns (MerchantsInfoResp)
 }

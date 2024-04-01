@@ -27,7 +27,7 @@ type (
 		Phone     string `json:"phone" gorm:"type:varchar(225);comment:联系电话;not null"`    //联系电话
 		Address   string `json:"address" gorm:"type:varchar(225);comment:地址;not null"`    //地址
 		Pic       string `json:"pic" gorm:"type:varchar(225);comment:图片;not null"`        //图片
-		UserID    int64  `json:"userID" gorm:"type:bigint;comment:用户id;not null"`         //用户id
+		UserID    int64  `json:"user_id" gorm:"type:bigint;comment:用户id;not null"`        //用户id
 	}
 )
 
@@ -99,13 +99,16 @@ func (m *defaultMerchantsModel) GetMerchantsList(in *pms.MerchantsListReq) ([]*M
 	return list, total, err
 }
 func (m *defaultMerchantsModel) GetMerchantsByIDOrUserID(in *pms.MerchantsInfoReq) (info Merchants, err error) {
-	if in.ID != 0 {
-		err = m.conn.Model(&Merchants{}).Where("id=?", in.ID).Find(&info).Error
-	}
+	fmt.Println(in)
 	if in.UserID != 0 {
 		err = m.conn.Model(&Merchants{}).Where("user_id=?", in.UserID).Find(&info).Error
+		return info, err
 	}
-	return info, err
+	if in.ID != 0 {
+		err = m.conn.Model(&Merchants{}).Where("id=?", in.ID).Find(&info).Error
+		return info, err
+	}
+	return info, nil
 }
 func (m *defaultMerchantsModel) GetMerchantsByPhone(phone string) (user *Merchants, exist bool, err error) {
 	var count int64

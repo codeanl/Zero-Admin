@@ -30,7 +30,7 @@ func (l *SubjectListLogic) SubjectList(req *types.ListSubjectReq) (*types.ListSu
 		Current:  req.Current,
 		PageSize: req.PageSize,
 		Name:     req.Name,
-		Status:   req.Status,
+		Status:   "1",
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")

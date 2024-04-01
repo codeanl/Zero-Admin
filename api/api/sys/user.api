@@ -8,16 +8,17 @@ info(
     version: "type version here"
 )
 type(
- //用户登录
-   loginReq struct {
+   //用户登录
+   UserLoginReq struct {
         Username string `json:"username"`
         Password string `json:"password"`
-    }
-    loginResp struct {
+   }
+   UserLoginResp struct {
         Code int64 `json:"code"`
         Message string `json:"message"`
         Data string `json:"data"`
-    }
+   }
+
     //用户信息
         UserInfoResp struct {
             Code int64 `json:"code"`
@@ -123,7 +124,6 @@ type(
                 Data []*User `json:"data"`
                 Total int64 `json:"total"`
             }
-
             UpdatePasswordReq struct{
                   OldPassword  string `json:"oldPassword"`
                   NewPassword  string `json:"newPassword"`
@@ -141,13 +141,14 @@ type(
                Message string `json:"message"`
               }
 )
-
+@server(
+    group: sys/user
+    prefix: /api/sys/user
+)
 service api {
-    @doc(
-		summary: "登录"
-	)
+    @doc(summary: "登录")
     @handler UserLogin
-    post /api/sys/user/login (loginReq) returns (loginResp)
+    post /login (UserLoginReq) returns (UserLoginResp)
 }
 
 @server(

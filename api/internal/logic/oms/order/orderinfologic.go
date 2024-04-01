@@ -5,7 +5,6 @@ import (
 	"SimplePick-Mall-Server/api/internal/types"
 	"SimplePick-Mall-Server/service/oms/rpc/omsclient"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
-	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
 	"context"
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -79,7 +78,7 @@ func (l *OrderInfoLogic) OrderInfo(req *types.OrderInfoReq) (*types.OrderInfoRes
 			Count:       i.Count,
 		})
 	}
-	place, _ := l.svcCtx.Sys.PlaceInfo(l.ctx, &sysclient.PlaceInfoReq{Id: resp.OrderInfo.PlaceId})
+	place, _ := l.svcCtx.Pms.PlaceInfo(l.ctx, &pmsclient.PlaceInfoReq{Id: resp.OrderInfo.PlaceId})
 	PlaceInfo := types.PlaceInfoData{
 		Id:        place.PlaceInfo.Id,
 		Name:      place.PlaceInfo.Name,

@@ -52,8 +52,6 @@ func (l *UserListLogic) UserList(in *sys.UserListReq) (*sys.UserListResp, error)
 			Status:   user.Status,
 			CreateAt: user.CreatedAt.Format("2006-01-02 15:04:05"),
 			UpdateAt: user.UpdatedAt.Format("2006-01-02 15:04:05"),
-			CreateBy: user.CreateBy,
-			UpdateBy: user.UpdateBy,
 			RoleName: Roles,
 		})
 	}

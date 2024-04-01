@@ -12,6 +12,7 @@ import (
 	pmsattribute "SimplePick-Mall-Server/api/internal/handler/pms/attribute"
 	pmsattributeCategory "SimplePick-Mall-Server/api/internal/handler/pms/attributeCategory"
 	pmscategory "SimplePick-Mall-Server/api/internal/handler/pms/category"
+	pmsplace "SimplePick-Mall-Server/api/internal/handler/pms/place"
 	pmsproduct "SimplePick-Mall-Server/api/internal/handler/pms/product"
 	pmssku "SimplePick-Mall-Server/api/internal/handler/pms/sku"
 	smsHotRecommend "SimplePick-Mall-Server/api/internal/handler/sms/HotRecommend"
@@ -21,7 +22,6 @@ import (
 	smssubject "SimplePick-Mall-Server/api/internal/handler/sms/subject"
 	sysloginLog "SimplePick-Mall-Server/api/internal/handler/sys/loginLog"
 	sysmenu "SimplePick-Mall-Server/api/internal/handler/sys/menu"
-	sysplace "SimplePick-Mall-Server/api/internal/handler/sys/place"
 	sysrole "SimplePick-Mall-Server/api/internal/handler/sys/role"
 	syssystemLog "SimplePick-Mall-Server/api/internal/handler/sys/systemLog"
 	sysupload "SimplePick-Mall-Server/api/internal/handler/sys/upload"
@@ -38,10 +38,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/sys/user/login",
-				Handler: UserLoginHandler(serverCtx),
+				Path:    "/login",
+				Handler: sysuser.UserLoginHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/api/sys/user"),
 	)
 
 	server.AddRoutes(
@@ -106,38 +107,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/sys/loginLog"),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/add",
-				Handler: sysplace.PlaceAddHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/update",
-				Handler: sysplace.PlaceUpdateHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/delete",
-				Handler: sysplace.PlaceDeleteHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/list",
-				Handler: sysplace.PlaceListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/info",
-				Handler: sysplace.PlaceInfoHandler(serverCtx),
-			},
-		},
-		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-		rest.WithPrefix("/api/sys/place"),
 	)
 
 	server.AddRoutes(
@@ -235,6 +204,38 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithPrefix("/api/sys"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/add",
+				Handler: pmsplace.PlaceAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/update",
+				Handler: pmsplace.PlaceUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delete",
+				Handler: pmsplace.PlaceDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: pmsplace.PlaceListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/info",
+				Handler: pmsplace.PlaceInfoHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/pms/place"),
 	)
 
 	server.AddRoutes(

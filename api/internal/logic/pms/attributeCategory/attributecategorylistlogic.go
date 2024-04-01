@@ -29,8 +29,8 @@ func NewAttributeCategoryListLogic(ctx context.Context, svcCtx *svc.ServiceConte
 
 func (l *AttributeCategoryListLogic) AttributeCategoryList(req *types.ListAttributeCategoryReq) (*types.ListAttributeCategoryResp, error) {
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
-	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
-	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.UserInfoReq{Id: id})
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.Id})
 	isSJ := false
 	for _, ii := range userInfo.Roles {
 		if strings.Contains("商家", ii) {

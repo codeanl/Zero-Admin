@@ -8,15 +8,15 @@ import (
 
 type (
 	LogModel interface {
-		AddLog(log *Log) (err error)
-		GetLogList(in *sys.SysLogListReq) ([]*Log, int64, error)
+		AddLog(log *OperationLog) (err error)
+		GetLogList(in *sys.SysLogListReq) ([]*OperationLog, int64, error)
 		DeleteLogByIds(ids []int64) error
 	}
 
 	defaultLogModel struct {
 		conn *gorm.DB
 	}
-	Log struct {
+	OperationLog struct {
 		gorm.Model
 		UserID int64 `json:"user_id" gorm:"type:bigint;comment:用户名;not null"` //用户名
 		//Username  string `json:"username" gorm:"type:varchar(191);comment:用户名;not null"`   //用户名
@@ -30,17 +30,17 @@ type (
 
 func NewLogModel(conn *gorm.DB) LogModel {
 	//如果没有表则自动构建表
-	conn.AutoMigrate(&Log{})
+	conn.AutoMigrate(&OperationLog{})
 	return &defaultLogModel{
 		conn: conn,
 	}
 }
-func (m *defaultLogModel) AddLog(log *Log) (err error) {
-	return m.conn.Model(&Log{}).Create(log).Error
+func (m *defaultLogModel) AddLog(log *OperationLog) (err error) {
+	return m.conn.Model(&OperationLog{}).Create(log).Error
 }
-func (m *defaultLogModel) GetLogList(in *sys.SysLogListReq) ([]*Log, int64, error) {
-	var list []*Log
-	db := m.conn.Model(&Log{}).Order("created_at DESC")
+func (m *defaultLogModel) GetLogList(in *sys.SysLogListReq) ([]*OperationLog, int64, error) {
+	var list []*OperationLog
+	db := m.conn.Model(&OperationLog{}).Order("created_at DESC")
 	if in.Method != "" {
 		db = db.Where("method LIKE ?", fmt.Sprintf("%%%s%%", in.Method))
 	}
@@ -60,6 +60,6 @@ func (m *defaultLogModel) DeleteLogByIds(ids []int64) error {
 	id := map[string]interface{}{
 		"id": ids,
 	}
-	err := m.conn.Where(id).Delete(&Log{}).Error
+	err := m.conn.Where(id).Delete(&OperationLog{}).Error
 	return err
 }

@@ -1,11 +1,11 @@
 import "sys/user.api"
 import "sys/loginLog.api"
-import "sys/place.api"
 import "sys/role.api"
 import "sys/menu.api"
 import "sys/systemLog.api"
 import "sys/upload.api"
 
+import "pms/place.api"
 import "pms/category.api"
 import "pms/attribute.api"
 import "pms/product.api"

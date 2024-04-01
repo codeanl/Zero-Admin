@@ -11,6 +11,8 @@ info(
 
 type (
     MemberLoginReq struct{
+        Username string `json:"username"`                           // 用户名
+        Password string `json:"password"`                           // 密码
     }
     Info struct {
         Id int64 `json:"id"`

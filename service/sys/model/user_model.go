@@ -20,16 +20,14 @@ type (
 	}
 	User struct {
 		gorm.Model
-		Username string `json:"username" gorm:"type:varchar(191);comment:用户名;not null"` //用户名
-		Phone    string `json:"phone" gorm:"type:varchar(191);comment:手机号;not null"`    //手机号
-		Nickname string `json:"nickname" gorm:"type:varchar(191);comment:昵称;not null"`  //昵称
-		Password string `json:"password" gorm:"type:varchar(191);comment:密码;not null"`  //密码
-		Gender   string `json:"gender" gorm:"type:varchar(255);comment:性别;"`            //性别  0--保密 1--男  2--女
-		Avatar   string `json:"avatar" gorm:"type:varchar(255);comment:用户头像"`           //头像
-		Email    string `json:"email" gorm:"type:varchar(255);comment:邮箱"`              //邮箱
-		Status   string `json:"status" gorm:"type:varchar(255);comment:状态;"`            //状态  1--正常 0--禁用 默认正常
-		CreateBy string `json:"create_by" gorm:"type:varchar(255);comment:创建人;"`        //创建人
-		UpdateBy string `json:"update_by" gorm:"type:varchar(255);comment:更新人;"`        //更新人
+		Username string `json:"username" gorm:"type:varchar(20);comment:用户名;not null"` //用户名
+		Phone    string `json:"phone" gorm:"type:varchar(11);comment:手机号;not null"`    //手机号
+		Nickname string `json:"nickname" gorm:"type:varchar(20);comment:昵称;not null"`  //昵称
+		Password string `json:"password" gorm:"type:varchar(100);comment:密码;not null"` //密码
+		Gender   string `json:"gender" gorm:"type:varchar(1);comment:性别;"`             //性别  0--保密 1--男  2--女
+		Avatar   string `json:"avatar" gorm:"type:varchar(255);comment:用户头像"`          //头像
+		Email    string `json:"email" gorm:"type:varchar(100);comment:邮箱"`             //邮箱
+		Status   string `json:"status" gorm:"type:varchar(1);comment:状态;"`             //状态  1--正常 0--禁用 默认正常
 	}
 )
 

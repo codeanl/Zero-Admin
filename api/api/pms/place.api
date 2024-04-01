@@ -1,0 +1,114 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+type(
+ //添加------------------------------------------------
+   addPlaceReq struct {
+        Name string `json:"name"`
+        Place string `json:"place"`
+        Status string `json:"status"`
+        Pic string `json:"pic"`
+        Phone string `json:"phone"`
+        Principal string `json:"principal"`
+        UserID int64 `json:"userID,optional"`
+    }
+    addPlaceResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Data int64 `json:"data"`
+    }
+     //添加------------------------------------------------
+
+     //修改------------------------------------------------
+    UpdatePlaceReq struct {
+        Id int64 `json:"id"`
+        Name string `json:"name,optional"`
+        Place string `json:"place,optional"`
+        Status string `json:"status,optional"`
+        Pic string `json:"pic,optional"`
+        Phone string `json:"phone,optional"`
+        Principal string `json:"principal,optional"`
+        UserID int64 `json:"userID,optional"`
+    }
+    UpdatePlaceResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+     //修改------------------------------------------------
+
+
+     //删除------------------------------------------------
+    DeletePlaceReq struct {
+        Ids []int64 `json:"ids"`
+    }
+    DeletePlaceResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+     //角色------------------------------------------------
+     //列表------------------------------------------------
+    ListPlaceReq struct {
+        Current int64 `form:"current,default=1"`
+        PageSize int64 `form:"pageSize,default=20"`
+        Name string `form:"name,optional "`
+        Place string `form:"place,optional"`
+        Phone string `form:"phone,optional"`
+        Principal string `form:"principal,optional"`
+    }
+    ListPlaceData struct {
+        Id int64 `json:"id"`
+        Name string `json:"name"`
+        Place string `json:"place"`
+        Status string `json:"status"`
+        Pic string `json:"pic"`
+        Phone string `json:"phone"`
+        Principal string `json:"principal"`
+        UserID int64 `json:"userID,optional"`
+    }
+    ListPlaceResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Total int64 `json:"total"`
+        Data []*ListPlaceData `json:"data"`
+    }
+     //角色列表------------------------------------------------
+     //------------------------------------------------
+ PlaceInfoReq struct {
+        ID int64 `json:"id,optional"`
+        UserID int64 `json:"userID,optional"`
+    }
+    PlaceInfoResp struct {
+           Code int64 `json:"code"`
+           Message string `json:"message"`
+           Data ListPlaceData `json:"data"`
+       }
+)
+
+
+@server(
+    jwt: Auth
+    group: pms/place
+    prefix: /api/pms/place
+)
+service api {
+    @handler PlaceAdd
+    post /add (addPlaceReq) returns (addPlaceResp)
+
+    @handler PlaceUpdate
+    post /update (UpdatePlaceReq) returns (UpdatePlaceResp)
+
+    @handler PlaceDelete
+    post /delete (DeletePlaceReq) returns (DeletePlaceResp)
+
+    @handler PlaceList
+    get /list (ListPlaceReq) returns (ListPlaceResp)
+
+    @handler PlaceInfo
+    post /info (PlaceInfoReq) returns (PlaceInfoResp)
+}

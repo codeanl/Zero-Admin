@@ -62,6 +62,17 @@ type (
 	MerchantsListResp             = pms.MerchantsListResp
 	MerchantsUpdateReq            = pms.MerchantsUpdateReq
 	MerchantsUpdateResp           = pms.MerchantsUpdateResp
+	PlaceAddReq                   = pms.PlaceAddReq
+	PlaceAddResp                  = pms.PlaceAddResp
+	PlaceDeleteReq                = pms.PlaceDeleteReq
+	PlaceDeleteResp               = pms.PlaceDeleteResp
+	PlaceInfoReq                  = pms.PlaceInfoReq
+	PlaceInfoResp                 = pms.PlaceInfoResp
+	PlaceListData                 = pms.PlaceListData
+	PlaceListReq                  = pms.PlaceListReq
+	PlaceListResp                 = pms.PlaceListResp
+	PlaceUpdateReq                = pms.PlaceUpdateReq
+	PlaceUpdateResp               = pms.PlaceUpdateResp
 	ProductAddReq                 = pms.ProductAddReq
 	ProductAddResp                = pms.ProductAddResp
 	ProductDeleteReq              = pms.ProductDeleteReq
@@ -150,6 +161,16 @@ type (
 		MerchantsApplyUpdate(ctx context.Context, in *MerchantsApplyUpdateReq, opts ...grpc.CallOption) (*MerchantsApplyUpdateResp, error)
 		// 删除商家申请
 		MerchantsApplyDelete(ctx context.Context, in *MerchantsApplyDeleteReq, opts ...grpc.CallOption) (*MerchantsApplyDeleteResp, error)
+		// 添加自提点
+		PlaceAdd(ctx context.Context, in *PlaceAddReq, opts ...grpc.CallOption) (*PlaceAddResp, error)
+		// 自提点列表
+		PlaceList(ctx context.Context, in *PlaceListReq, opts ...grpc.CallOption) (*PlaceListResp, error)
+		// 更新自提点
+		PlaceUpdate(ctx context.Context, in *PlaceUpdateReq, opts ...grpc.CallOption) (*PlaceUpdateResp, error)
+		// 删除自提点
+		PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ...grpc.CallOption) (*PlaceDeleteResp, error)
+		// 自提点详情
+		PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error)
 	}
 
 	defaultPms struct {
@@ -347,4 +368,34 @@ func (m *defaultPms) MerchantsApplyUpdate(ctx context.Context, in *MerchantsAppl
 func (m *defaultPms) MerchantsApplyDelete(ctx context.Context, in *MerchantsApplyDeleteReq, opts ...grpc.CallOption) (*MerchantsApplyDeleteResp, error) {
 	client := pms.NewPmsClient(m.cli.Conn())
 	return client.MerchantsApplyDelete(ctx, in, opts...)
+}
+
+// 添加自提点
+func (m *defaultPms) PlaceAdd(ctx context.Context, in *PlaceAddReq, opts ...grpc.CallOption) (*PlaceAddResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.PlaceAdd(ctx, in, opts...)
+}
+
+// 自提点列表
+func (m *defaultPms) PlaceList(ctx context.Context, in *PlaceListReq, opts ...grpc.CallOption) (*PlaceListResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.PlaceList(ctx, in, opts...)
+}
+
+// 更新自提点
+func (m *defaultPms) PlaceUpdate(ctx context.Context, in *PlaceUpdateReq, opts ...grpc.CallOption) (*PlaceUpdateResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.PlaceUpdate(ctx, in, opts...)
+}
+
+// 删除自提点
+func (m *defaultPms) PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ...grpc.CallOption) (*PlaceDeleteResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.PlaceDelete(ctx, in, opts...)
+}
+
+// 自提点详情
+func (m *defaultPms) PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error) {
+	client := pms.NewPmsClient(m.cli.Conn())
+	return client.PlaceInfo(ctx, in, opts...)
 }

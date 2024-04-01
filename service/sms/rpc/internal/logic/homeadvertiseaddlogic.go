@@ -26,7 +26,7 @@ func NewHomeAdvertiseAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 
 // 添加广告
 func (l *HomeAdvertiseAddLogic) HomeAdvertiseAdd(in *sms.HomeAdvertiseAddReq) (*sms.HomeAdvertiseAddResp, error) {
-	role := &model.HomeAdvertise{
+	role := &model.Banner{
 		Name:       in.Name,
 		Pic:        in.Pic,
 		Status:     in.Status,

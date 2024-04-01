@@ -2,11 +2,10 @@ package place
 
 import (
 	"SimplePick-Mall-Server/common/errorx"
-	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
-	"context"
-
 	"SimplePick-Mall-Server/front-api/internal/svc"
 	"SimplePick-Mall-Server/front-api/internal/types"
+	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,7 +25,8 @@ func NewPlaceListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PlaceLi
 }
 
 func (l *PlaceListLogic) PlaceList(req *types.ListPlaceReq) (*types.ListPlaceResp, error) {
-	resp, err := l.svcCtx.Sys.PlaceList(l.ctx, &sysclient.PlaceListReq{})
+	resp, err := l.svcCtx.Pms.PlaceList(l.ctx, &pmsclient.PlaceListReq{})
+
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")
 	}

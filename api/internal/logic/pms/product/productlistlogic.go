@@ -28,8 +28,7 @@ func NewProductListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produ
 func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListProductResp, error) {
 
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
-	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
-	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.UserInfoReq{Id: id})
 	isSJ := false
 	for _, ii := range userInfo.Roles {
 		if strings.Contains("商家", ii) {
@@ -37,9 +36,10 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 		}
 	}
 	if isSJ == true {
+		merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: id})
 		req.MerchantID = merchant.ID
 	}
-	resp, err := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
+	resp, _ := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{
 		PageNum:    req.Current,
 		PageSize:   req.PageSize,
 		Name:       req.Name,
@@ -49,12 +49,12 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 		MaxPrice:   req.MaxPrice,
 		SearchType: req.SearchType,
 	})
-	if err != nil {
-		return &types.ListProductResp{
-			Code:    400,
-			Message: "查询失败",
-		}, nil
-	}
+	//if err != nil {
+	//	return &types.ListProductResp{
+	//		Code:    400,
+	//		Message: "查询失败",
+	//	}, nil
+	//}
 
 	var list []types.ListProductData
 	for _, item := range resp.List {
@@ -64,10 +64,10 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 		for _, i := range skuList.List {
 			sale = sale + i.Sale
 		}
-		_, _ = l.svcCtx.Pms.ProductUpdate(l.ctx, &pmsclient.ProductUpdateReq{
-			Id:   item.Id,
-			Sale: sale,
-		})
+		//_, _ = l.svcCtx.Pms.ProductUpdate(l.ctx, &pmsclient.ProductUpdateReq{
+		//	Id:   item.Id,
+		//	Sale: sale,
+		//})
 
 		listProduct := types.ListProductData{
 			Id:                  item.Id,

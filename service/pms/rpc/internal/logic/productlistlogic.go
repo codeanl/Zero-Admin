@@ -28,21 +28,24 @@ func (l *ProductListLogic) ProductList(in *pms.ProductListReq) (*pms.ProductList
 		return nil, err
 	}
 	var list []*pms.ProductListData
-	for _, i := range all {
-		list = append(list, &pms.ProductListData{
-			Id:                  int64(i.ID),
-			CategoryID:          i.CategoryID,
-			Name:                i.Name,
-			Pic:                 i.Pic,
-			ProductSn:           i.ProductSn,
-			Desc:                i.Desc,
-			OriginalPrice:       i.OriginalPrice,
-			Unit:                i.Unit,
-			Price:               i.Price,
-			AttributeCategoryID: i.AttributeCategoryID,
-			MerchantID:          i.MerchantID,
-		})
+	if len(all) != 0 {
+		for _, i := range all {
+			list = append(list, &pms.ProductListData{
+				Id:                  int64(i.ID),
+				CategoryID:          i.CategoryID,
+				Name:                i.Name,
+				Pic:                 i.Pic,
+				ProductSn:           i.ProductSn,
+				Desc:                i.Desc,
+				OriginalPrice:       i.OriginalPrice,
+				Unit:                i.Unit,
+				Price:               i.Price,
+				AttributeCategoryID: i.AttributeCategoryID,
+				MerchantID:          i.MerchantID,
+			})
+		}
 	}
+
 	return &pms.ProductListResp{
 		Total: total,
 		List:  list,

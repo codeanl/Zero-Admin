@@ -40,7 +40,6 @@ message Skus {
 message OrderAddResp {
   string pong = 1;
   int64  OrderID =2;
-
 }
 //订单更新
 message OrderUpdateReq{

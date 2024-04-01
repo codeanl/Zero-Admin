@@ -38,7 +38,7 @@ func (l *SkuUpdateLogic) SkuUpdate(in *pms.SkuUpdateReq) (*pms.SkuUpdateResp, er
 		data = append(data, nn)
 	}
 	tag := strings.Join(data, ", ")
-	err := l.svcCtx.SkuModel.UpdateSku(in.ID, &model.Sku{
+	err := l.svcCtx.SkuModel.UpdateSku(in.ID, &model.ProductSku{
 		ProductID:   in.ProductID,
 		Name:        in.Name,
 		Pic:         in.Pic,

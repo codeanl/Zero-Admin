@@ -1,0 +1,57 @@
+version: '3'
+services:
+  sys:
+    build:
+      context: ./service/sys/rpc
+      dockerfile: Dockerfile
+    ports:
+      - 1001:1001
+  ums:
+    build:
+      context: ./service/ums/rpc
+      dockerfile: Dockerfile
+    ports:
+      - 1003:1003
+  sms:
+    build:
+      context: ./service/ums/rpc
+      dockerfile: Dockerfile
+    ports:
+      - 1004:1004
+  pms:
+    build:
+      context: ./service/pms/rpc
+      dockerfile: Dockerfile
+    ports:
+      - 1002:1002
+  oms:
+    build:
+      context: ./service/oms/rpc
+      dockerfile: Dockerfile
+    ports:
+      - 1005:1005
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - 6666:6666
+    depends_on:
+      - sys
+      - ums
+      - sms
+      - pms
+      - oms
+  front-api:
+    build:
+      context: ./front-api
+      dockerfile: Dockerfile
+    ports:
+      - 8089:8089
+    depends_on:
+      - sys
+      - ums
+      - sms
+      - pms
+      - oms

@@ -1,11 +1,9 @@
 package logic
 
 import (
-	"context"
-	"errors"
-
 	"SimplePick-Mall-Server/service/sms/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/sms/rpc/sms"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,9 +24,9 @@ func NewHotRecommendDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 
 // 删除推荐
 func (l *HotRecommendDeleteLogic) HotRecommendDelete(in *sms.HotRecommendDeleteReq) (*sms.HotRecommendDeleteResp, error) {
-	err := l.svcCtx.HotRecommendModel.DeleteHotRecommendByIds(in.Ids)
-	if err != nil {
-		return nil, errors.New("删除失败")
-	}
+	//err := l.svcCtx.HotRecommendModel.DeleteHotRecommendByIds(in.Ids)
+	//if err != nil {
+	//	return nil, errors.New("删除失败")
+	//}
 	return &sms.HotRecommendDeleteResp{}, nil
 }

@@ -26,7 +26,7 @@ func NewHomeAdvertiseUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext
 
 // 更新广告
 func (l *HomeAdvertiseUpdateLogic) HomeAdvertiseUpdate(in *sms.HomeAdvertiseUpdateReq) (*sms.HomeAdvertiseUpdateResp, error) {
-	err := l.svcCtx.HomeAdvertiseModel.UpdateHomeAdvertise(in.Id, &model.HomeAdvertise{
+	err := l.svcCtx.HomeAdvertiseModel.UpdateHomeAdvertise(in.Id, &model.Banner{
 		Name:       in.Name,
 		Pic:        in.Pic,
 		Status:     in.Status,

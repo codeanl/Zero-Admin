@@ -84,9 +84,9 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 			OrderInfo: OrderInfo,
 			SkuList:   skuList,
 		}
-		user, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: item.UserID})
+		user, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.UserInfoReq{Id: item.UserID})
 		User := types.UserData{
-			ID:       user.UserInfo.ID,
+			ID:       user.UserInfo.Id,
 			Username: user.UserInfo.Username,
 			NickName: user.UserInfo.Nickname,
 			Phone:    user.UserInfo.Phone,
@@ -96,8 +96,6 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 			Status:   user.UserInfo.Status,
 			CreateAt: user.UserInfo.CreateAt,
 			UpdateAt: user.UserInfo.UpdateAt,
-			CreateBy: user.UserInfo.CreateBy,
-			UpdateBy: user.UserInfo.UpdateBy,
 		}
 		listUserData := types.ListReturnApplyData{
 			ID:               item.ID,

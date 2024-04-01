@@ -29,6 +29,8 @@ message MemberListReq {
   string Username = 3;
   string Phone = 4;
   string  Status = 5;
+  string  Nickname = 6;
+  string  Gender = 7;
 }
 message MemberListData{
   int64       Id = 1;

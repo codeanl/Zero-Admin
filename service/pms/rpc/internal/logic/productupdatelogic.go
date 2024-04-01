@@ -138,7 +138,7 @@ func (l *ProductUpdateLogic) ProductUpdate(in *pms.ProductUpdateReq) (*pms.Produ
 		//过滤新添加和需要删除的
 		a, b := filterArrays(reqSku, nowSku)
 		for _, i := range a {
-			l.svcCtx.SkuModel.AddSku(&model.Sku{
+			l.svcCtx.SkuModel.AddSku(&model.ProductSku{
 				ProductID:   int64(spu.ID),
 				Name:        spu.Name,
 				Pic:         spu.Pic,

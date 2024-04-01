@@ -60,7 +60,6 @@ type (
         MerchantID int64 `json:"merchantID,optional"`
         Sale int64 `json:"sale,optional"`
     }
-
     ListProductResp struct {
         Code int64 `json:"code"`
         Message string `json:"message"`
@@ -100,12 +99,12 @@ type (
         ID int64 `json:"id"`
     }
      InfoData struct {
-        ProductInfo ListProductData  `json:"productInfo"`
+        ProductInfo ListProductData  `json:"product_info"`
         SkuList []SkuList `json:"skuList"`
         Attribute Attribute `json:"attributeValue"`
         ImgUrl []string `json:"imgUrl"`
         IntroduceImgUrl []string `json:"introduceImgUrl"`
-        Merchant MerchantData  `json:"merchant"`
+       Merchant MerchantData  `json:"merchant"`
     }
     ProductInfoResp struct {
         Code int64 `json:"code"`

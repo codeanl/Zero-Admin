@@ -43,7 +43,6 @@ func (l *UserAddLogic) UserAdd(in *sys.UserAddReq) (*sys.UserAddResp, error) {
 		Avatar:   in.Avatar,
 		Email:    in.Email,
 		Status:   in.Status,
-		CreateBy: in.CreateBy,
 	}
 	err := l.svcCtx.UserModel.AddUser(admin)
 	if err != nil {

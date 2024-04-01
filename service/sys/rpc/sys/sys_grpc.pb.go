@@ -31,11 +31,6 @@ const (
 	Sys_LoginLogAdd_FullMethodName       = "/sys.Sys/LoginLogAdd"
 	Sys_LoginLogList_FullMethodName      = "/sys.Sys/LoginLogList"
 	Sys_LoginLogDelete_FullMethodName    = "/sys.Sys/LoginLogDelete"
-	Sys_PlaceAdd_FullMethodName          = "/sys.Sys/PlaceAdd"
-	Sys_PlaceList_FullMethodName         = "/sys.Sys/PlaceList"
-	Sys_PlaceUpdate_FullMethodName       = "/sys.Sys/PlaceUpdate"
-	Sys_PlaceDelete_FullMethodName       = "/sys.Sys/PlaceDelete"
-	Sys_PlaceInfo_FullMethodName         = "/sys.Sys/PlaceInfo"
 	Sys_RoleAdd_FullMethodName           = "/sys.Sys/RoleAdd"
 	Sys_RoleUpdate_FullMethodName        = "/sys.Sys/RoleUpdate"
 	Sys_RoleDelete_FullMethodName        = "/sys.Sys/RoleDelete"
@@ -57,9 +52,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysClient interface {
 	// 用户登录
-	UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+	UserLogin(ctx context.Context, in *UserLoginReq, opts ...grpc.CallOption) (*UserLoginResp, error)
 	// 用户信息
-	UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
+	UserInfo(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*UserInfoResp, error)
 	// 添加用户
 	UserAdd(ctx context.Context, in *UserAddReq, opts ...grpc.CallOption) (*UserAddResp, error)
 	// 更新用户
@@ -80,16 +75,6 @@ type SysClient interface {
 	LoginLogList(ctx context.Context, in *LoginLogListReq, opts ...grpc.CallOption) (*LoginLogListResp, error)
 	// 删除登录日志
 	LoginLogDelete(ctx context.Context, in *LoginLogDeleteReq, opts ...grpc.CallOption) (*LoginLogDeleteResp, error)
-	// 添加自提点
-	PlaceAdd(ctx context.Context, in *PlaceAddReq, opts ...grpc.CallOption) (*PlaceAddResp, error)
-	// 自提点列表
-	PlaceList(ctx context.Context, in *PlaceListReq, opts ...grpc.CallOption) (*PlaceListResp, error)
-	// 更新自提点
-	PlaceUpdate(ctx context.Context, in *PlaceUpdateReq, opts ...grpc.CallOption) (*PlaceUpdateResp, error)
-	// 删除自提点
-	PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ...grpc.CallOption) (*PlaceDeleteResp, error)
-	// 自提点详情
-	PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error)
 	// 添加角色
 	RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error)
 	// 更新角色
@@ -128,8 +113,8 @@ func NewSysClient(cc grpc.ClientConnInterface) SysClient {
 	return &sysClient{cc}
 }
 
-func (c *sysClient) UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
-	out := new(LoginResp)
+func (c *sysClient) UserLogin(ctx context.Context, in *UserLoginReq, opts ...grpc.CallOption) (*UserLoginResp, error) {
+	out := new(UserLoginResp)
 	err := c.cc.Invoke(ctx, Sys_UserLogin_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -137,8 +122,8 @@ func (c *sysClient) UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.Ca
 	return out, nil
 }
 
-func (c *sysClient) UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
-	out := new(InfoResp)
+func (c *sysClient) UserInfo(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*UserInfoResp, error) {
+	out := new(UserInfoResp)
 	err := c.cc.Invoke(ctx, Sys_UserInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -230,51 +215,6 @@ func (c *sysClient) LoginLogList(ctx context.Context, in *LoginLogListReq, opts 
 func (c *sysClient) LoginLogDelete(ctx context.Context, in *LoginLogDeleteReq, opts ...grpc.CallOption) (*LoginLogDeleteResp, error) {
 	out := new(LoginLogDeleteResp)
 	err := c.cc.Invoke(ctx, Sys_LoginLogDelete_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *sysClient) PlaceAdd(ctx context.Context, in *PlaceAddReq, opts ...grpc.CallOption) (*PlaceAddResp, error) {
-	out := new(PlaceAddResp)
-	err := c.cc.Invoke(ctx, Sys_PlaceAdd_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *sysClient) PlaceList(ctx context.Context, in *PlaceListReq, opts ...grpc.CallOption) (*PlaceListResp, error) {
-	out := new(PlaceListResp)
-	err := c.cc.Invoke(ctx, Sys_PlaceList_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *sysClient) PlaceUpdate(ctx context.Context, in *PlaceUpdateReq, opts ...grpc.CallOption) (*PlaceUpdateResp, error) {
-	out := new(PlaceUpdateResp)
-	err := c.cc.Invoke(ctx, Sys_PlaceUpdate_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *sysClient) PlaceDelete(ctx context.Context, in *PlaceDeleteReq, opts ...grpc.CallOption) (*PlaceDeleteResp, error) {
-	out := new(PlaceDeleteResp)
-	err := c.cc.Invoke(ctx, Sys_PlaceDelete_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *sysClient) PlaceInfo(ctx context.Context, in *PlaceInfoReq, opts ...grpc.CallOption) (*PlaceInfoResp, error) {
-	out := new(PlaceInfoResp)
-	err := c.cc.Invoke(ctx, Sys_PlaceInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -412,9 +352,9 @@ func (c *sysClient) SysLogDelete(ctx context.Context, in *SysLogDeleteReq, opts 
 // for forward compatibility
 type SysServer interface {
 	// 用户登录
-	UserLogin(context.Context, *LoginReq) (*LoginResp, error)
+	UserLogin(context.Context, *UserLoginReq) (*UserLoginResp, error)
 	// 用户信息
-	UserInfo(context.Context, *InfoReq) (*InfoResp, error)
+	UserInfo(context.Context, *UserInfoReq) (*UserInfoResp, error)
 	// 添加用户
 	UserAdd(context.Context, *UserAddReq) (*UserAddResp, error)
 	// 更新用户
@@ -435,16 +375,6 @@ type SysServer interface {
 	LoginLogList(context.Context, *LoginLogListReq) (*LoginLogListResp, error)
 	// 删除登录日志
 	LoginLogDelete(context.Context, *LoginLogDeleteReq) (*LoginLogDeleteResp, error)
-	// 添加自提点
-	PlaceAdd(context.Context, *PlaceAddReq) (*PlaceAddResp, error)
-	// 自提点列表
-	PlaceList(context.Context, *PlaceListReq) (*PlaceListResp, error)
-	// 更新自提点
-	PlaceUpdate(context.Context, *PlaceUpdateReq) (*PlaceUpdateResp, error)
-	// 删除自提点
-	PlaceDelete(context.Context, *PlaceDeleteReq) (*PlaceDeleteResp, error)
-	// 自提点详情
-	PlaceInfo(context.Context, *PlaceInfoReq) (*PlaceInfoResp, error)
 	// 添加角色
 	RoleAdd(context.Context, *RoleAddReq) (*RoleAddResp, error)
 	// 更新角色
@@ -480,10 +410,10 @@ type SysServer interface {
 type UnimplementedSysServer struct {
 }
 
-func (UnimplementedSysServer) UserLogin(context.Context, *LoginReq) (*LoginResp, error) {
+func (UnimplementedSysServer) UserLogin(context.Context, *UserLoginReq) (*UserLoginResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserLogin not implemented")
 }
-func (UnimplementedSysServer) UserInfo(context.Context, *InfoReq) (*InfoResp, error) {
+func (UnimplementedSysServer) UserInfo(context.Context, *UserInfoReq) (*UserInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserInfo not implemented")
 }
 func (UnimplementedSysServer) UserAdd(context.Context, *UserAddReq) (*UserAddResp, error) {
@@ -515,21 +445,6 @@ func (UnimplementedSysServer) LoginLogList(context.Context, *LoginLogListReq) (*
 }
 func (UnimplementedSysServer) LoginLogDelete(context.Context, *LoginLogDeleteReq) (*LoginLogDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginLogDelete not implemented")
-}
-func (UnimplementedSysServer) PlaceAdd(context.Context, *PlaceAddReq) (*PlaceAddResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PlaceAdd not implemented")
-}
-func (UnimplementedSysServer) PlaceList(context.Context, *PlaceListReq) (*PlaceListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PlaceList not implemented")
-}
-func (UnimplementedSysServer) PlaceUpdate(context.Context, *PlaceUpdateReq) (*PlaceUpdateResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PlaceUpdate not implemented")
-}
-func (UnimplementedSysServer) PlaceDelete(context.Context, *PlaceDeleteReq) (*PlaceDeleteResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PlaceDelete not implemented")
-}
-func (UnimplementedSysServer) PlaceInfo(context.Context, *PlaceInfoReq) (*PlaceInfoResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PlaceInfo not implemented")
 }
 func (UnimplementedSysServer) RoleAdd(context.Context, *RoleAddReq) (*RoleAddResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RoleAdd not implemented")
@@ -587,7 +502,7 @@ func RegisterSysServer(s grpc.ServiceRegistrar, srv SysServer) {
 }
 
 func _Sys_UserLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginReq)
+	in := new(UserLoginReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -599,13 +514,13 @@ func _Sys_UserLogin_Handler(srv interface{}, ctx context.Context, dec func(inter
 		FullMethod: Sys_UserLogin_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysServer).UserLogin(ctx, req.(*LoginReq))
+		return srv.(SysServer).UserLogin(ctx, req.(*UserLoginReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Sys_UserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InfoReq)
+	in := new(UserInfoReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -617,7 +532,7 @@ func _Sys_UserInfo_Handler(srv interface{}, ctx context.Context, dec func(interf
 		FullMethod: Sys_UserInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysServer).UserInfo(ctx, req.(*InfoReq))
+		return srv.(SysServer).UserInfo(ctx, req.(*UserInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -798,96 +713,6 @@ func _Sys_LoginLogDelete_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SysServer).LoginLogDelete(ctx, req.(*LoginLogDeleteReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Sys_PlaceAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PlaceAddReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SysServer).PlaceAdd(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Sys_PlaceAdd_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysServer).PlaceAdd(ctx, req.(*PlaceAddReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Sys_PlaceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PlaceListReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SysServer).PlaceList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Sys_PlaceList_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysServer).PlaceList(ctx, req.(*PlaceListReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Sys_PlaceUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PlaceUpdateReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SysServer).PlaceUpdate(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Sys_PlaceUpdate_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysServer).PlaceUpdate(ctx, req.(*PlaceUpdateReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Sys_PlaceDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PlaceDeleteReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SysServer).PlaceDelete(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Sys_PlaceDelete_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysServer).PlaceDelete(ctx, req.(*PlaceDeleteReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Sys_PlaceInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PlaceInfoReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SysServer).PlaceInfo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Sys_PlaceInfo_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysServer).PlaceInfo(ctx, req.(*PlaceInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1198,26 +1023,6 @@ var Sys_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LoginLogDelete",
 			Handler:    _Sys_LoginLogDelete_Handler,
-		},
-		{
-			MethodName: "PlaceAdd",
-			Handler:    _Sys_PlaceAdd_Handler,
-		},
-		{
-			MethodName: "PlaceList",
-			Handler:    _Sys_PlaceList_Handler,
-		},
-		{
-			MethodName: "PlaceUpdate",
-			Handler:    _Sys_PlaceUpdate_Handler,
-		},
-		{
-			MethodName: "PlaceDelete",
-			Handler:    _Sys_PlaceDelete_Handler,
-		},
-		{
-			MethodName: "PlaceInfo",
-			Handler:    _Sys_PlaceInfo_Handler,
 		},
 		{
 			MethodName: "RoleAdd",

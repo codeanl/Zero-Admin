@@ -30,8 +30,8 @@ func NewAttributeAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Attr
 func (l *AttributeAddLogic) AttributeAdd(req *types.AddAttributeReq) (resp *types.AddAttributeResp, err error) {
 	//
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
-	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
-	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.UserInfoReq{Id: id})
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.Id})
 	isSJ := false
 	for _, ii := range userInfo.Roles {
 		if strings.Contains("商家", ii) {

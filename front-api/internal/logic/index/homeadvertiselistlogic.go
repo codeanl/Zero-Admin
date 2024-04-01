@@ -26,7 +26,9 @@ func NewHomeAdvertiseListLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 }
 
 func (l *HomeAdvertiseListLogic) HomeAdvertiseList(req *types.ListHomeAdvertiseReq) (*types.ListHomeAdvertiseResp, error) {
-	resp, err := l.svcCtx.Sms.HomeAdvertiseList(l.ctx, &smsclient.HomeAdvertiseListReq{})
+	resp, err := l.svcCtx.Sms.HomeAdvertiseList(l.ctx, &smsclient.HomeAdvertiseListReq{
+		Status: "1",
+	})
 	if err != nil {
 		return nil, errorx.NewDefaultError("查询失败")
 	}

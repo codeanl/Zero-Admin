@@ -27,12 +27,10 @@ func NewLoginLogAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Login
 
 // 添加登录日志
 func (l *LoginLogAddLogic) LoginLogAdd(in *sys.LoginLogAddReq) (*sys.LoginLogAddResp, error) {
-	loginLog := &model.LoginLog{
+	err := l.svcCtx.LoginLogModel.AddLoginLog(&model.LoginLog{
 		UserID: in.UserID,
-		Status: in.Status,
 		IP:     in.IP,
-	}
-	err := l.svcCtx.LoginLogModel.AddLoginLog(loginLog)
+	})
 	if err != nil {
 		return nil, errors.New("添加失败")
 	}

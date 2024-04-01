@@ -35,7 +35,6 @@ func (l *UserUpdateLogic) UserUpdate(in *sys.UserUpdateReq) (*sys.UserUpdateResp
 		Email:    in.Email,
 		Status:   in.Status,
 		Avatar:   in.Avatar,
-		UpdateBy: in.UpdateBy,
 	})
 	if err != nil {
 		return nil, errors.New("更新用户失败")

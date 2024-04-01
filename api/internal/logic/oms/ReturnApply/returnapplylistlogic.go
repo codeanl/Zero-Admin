@@ -29,9 +29,11 @@ func NewReturnApplyListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *R
 
 func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*types.ListReturnApplyResp, error) {
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
-	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
-	place, _ := l.svcCtx.Sys.PlaceInfo(l.ctx, &sysclient.PlaceInfoReq{UserID: userInfo.UserInfo.ID})
-	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.UserInfoReq{Id: id})
+
+	place, _ := l.svcCtx.Pms.PlaceInfo(l.ctx, &pmsclient.PlaceInfoReq{UserID: userInfo.UserInfo.Id})
+
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.Id})
 	isZTD := false
 	for _, ii := range userInfo.Roles {
 		if strings.Contains("自提点管理员", ii) {
@@ -116,7 +118,7 @@ func (l *ReturnApplyListLogic) ReturnApplyList(req *types.ListReturnApplyReq) (*
 			OrderInfo: OrderInfo,
 			SkuList:   skuList,
 		}
-		user, _ := l.svcCtx.Ums.MemberInfo(l.ctx, &umsclient.MemberInfoReq{Id: item.UserID})
+		user, _ := l.svcCtx.Ums.MemberInfo(l.ctx, &umsclient.MemberInfoReq{Id: order.OrderInfo.MemberId})
 		User := types.UserData{
 			ID:       user.Id,
 			Username: user.Username,

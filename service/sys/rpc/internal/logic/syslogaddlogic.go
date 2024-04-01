@@ -27,7 +27,7 @@ func NewSysLogAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SysLogA
 
 // 添加日志
 func (l *SysLogAddLogic) SysLogAdd(in *sys.LogAddReq) (*sys.LogAddResp, error) {
-	log := &model.Log{
+	log := &model.OperationLog{
 		UserID:    in.UserId,
 		Operation: in.Operation,
 		Method:    in.Method,

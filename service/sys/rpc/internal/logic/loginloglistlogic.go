@@ -1,12 +1,12 @@
 package logic
 
 import (
-	"context"
-
 	"SimplePick-Mall-Server/service/sys/rpc/internal/svc"
 	"SimplePick-Mall-Server/service/sys/rpc/sys"
-
+	"context"
+	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
+	"log"
 )
 
 type LoginLogListLogic struct {
@@ -26,25 +26,18 @@ func NewLoginLogListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Logi
 // 登录日志列表
 func (l *LoginLogListLogic) LoginLogList(in *sys.LoginLogListReq) (*sys.LoginLogListResp, error) {
 	all, total, err := l.svcCtx.LoginLogModel.GetLoginLogList(in)
+	log.Println(all[0].UserID)
 	if err != nil {
 		return nil, err
 	}
 	var list []*sys.LoginLogListData
-	for _, loginlog := range all {
-		user, _ := l.svcCtx.UserModel.GetUserByID(loginlog.UserID)
-		list = append(list, &sys.LoginLogListData{
-			ID:         int64(loginlog.ID),
-			Status:     loginlog.Status,
-			IP:         loginlog.IP,
-			CreateTime: loginlog.CreatedAt.Format("2006-01-02 15:04:05"),
-			UserID:     loginlog.UserID,
-			Avatar:     user.Avatar,
-			Username:   user.Username,
-		})
+	jsonData, _ := json.Marshal(all)
+	err = json.Unmarshal(jsonData, &list)
+	for index, i := range all {
+		list[index].CreateTime = i.CreatedAt.Format("2006-01-02 15:04:05")
 	}
 	return &sys.LoginLogListResp{
 		Total: total,
 		List:  list,
 	}, nil
-
 }

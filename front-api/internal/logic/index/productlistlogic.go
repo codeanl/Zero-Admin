@@ -46,10 +46,10 @@ func (l *ProductListLogic) ProductList(req *types.ListProductReq) (*types.ListPr
 		for _, i := range skuList.List {
 			sale = sale + i.Sale
 		}
-		_, _ = l.svcCtx.Pms.ProductUpdate(l.ctx, &pmsclient.ProductUpdateReq{
-			Id:   item.Id,
-			Sale: sale,
-		})
+		//_, _ = l.svcCtx.Pms.ProductUpdate(l.ctx, &pmsclient.ProductUpdateReq{
+		//	Id:   item.Id,
+		//	Sale: sale,
+		//})
 		list = append(list, types.ListProductData{
 			Id:            item.Id,
 			CategoryID:    item.CategoryID,

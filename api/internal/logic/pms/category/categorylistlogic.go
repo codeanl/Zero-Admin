@@ -5,7 +5,7 @@ import (
 	"SimplePick-Mall-Server/api/internal/types"
 	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
-
+	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -28,12 +28,12 @@ func (l *CategoryListLogic) CategoryList(req *types.ListCategoryReq) (*types.Lis
 	if err != nil {
 		return &types.ListCategoryResp{
 			Code:    400,
-			Message: "查询失败",
+			Message: err.Error(),
 		}, nil
 	}
 	list := make([]types.ListCategoryData, 0)
 	for _, item := range resp.List {
-		pms, _ := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{CategoryID: item.Id})
+		//pms, _ := l.svcCtx.Pms.ProductList(l.ctx, &pmsclient.ProductListReq{CategoryID: item.Id})
 		listUserData := types.ListCategoryData{
 			Id:          item.Id,
 			ParentId:    item.ParentId,
@@ -46,10 +46,12 @@ func (l *CategoryListLogic) CategoryList(req *types.ListCategoryReq) (*types.Lis
 			Icon:        item.Icon,
 			Keywords:    item.Keywords,
 			Description: item.Description,
-			Count:       pms.Total,
+			//Count:       pms.Total,
 		}
 		list = append(list, listUserData)
 	}
+	fmt.Println(list)
+
 	list = buildTree(list, 0)
 
 	return &types.ListCategoryResp{

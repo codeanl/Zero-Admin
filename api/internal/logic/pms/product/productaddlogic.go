@@ -30,8 +30,8 @@ func NewProductAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produc
 func (l *ProductAddLogic) ProductAdd(req *types.AddProductReq) (resp *types.AddProductResp, err error) {
 	//
 	id, _ := l.ctx.Value("id").(json.Number).Int64()
-	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.InfoReq{ID: id})
-	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.ID})
+	userInfo, _ := l.svcCtx.Sys.UserInfo(l.ctx, &sysclient.UserInfoReq{Id: id})
+	merchant, _ := l.svcCtx.Pms.MerchantsInfo(l.ctx, &pmsclient.MerchantsInfoReq{UserID: userInfo.UserInfo.Id})
 	isSJ := false
 	for _, ii := range userInfo.Roles {
 		if strings.Contains("商家", ii) {
@@ -50,7 +50,7 @@ func (l *ProductAddLogic) ProductAdd(req *types.AddProductReq) (resp *types.AddP
 		})
 	}
 
-	_, err = l.svcCtx.Pms.ProductAdd(l.ctx, &pmsclient.ProductAddReq{
+	_, _ = l.svcCtx.Pms.ProductAdd(l.ctx, &pmsclient.ProductAddReq{
 		CategoryID:          req.CategoryID,
 		AttributeCategoryID: req.AttributeCategoryID,
 		Name:                req.Name,
@@ -65,12 +65,12 @@ func (l *ProductAddLogic) ProductAdd(req *types.AddProductReq) (resp *types.AddP
 		IntroduceImgUrl:     req.IntroduceImgUrl,
 		MerchantID:          req.MerchantID,
 	})
-	if err != nil {
-		return &types.AddProductResp{
-			Code:    400,
-			Message: "添加失败",
-		}, nil
-	}
+	//if err != nil {
+	//	return &types.AddProductResp{
+	//		Code:    400,
+	//		Message: "添加失败",
+	//	}, nil
+	//}
 	return &types.AddProductResp{
 		Code:    200,
 		Message: "添加成功",

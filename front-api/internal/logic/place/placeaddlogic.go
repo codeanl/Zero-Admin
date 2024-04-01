@@ -1,7 +1,7 @@
 package place
 
 import (
-	"SimplePick-Mall-Server/service/sys/rpc/sysclient"
+	"SimplePick-Mall-Server/service/pms/rpc/pmsclient"
 	"context"
 
 	"SimplePick-Mall-Server/front-api/internal/svc"
@@ -25,7 +25,7 @@ func NewPlaceAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PlaceAdd
 }
 
 func (l *PlaceAddLogic) PlaceAdd(req *types.AddPlaceReq) (resp *types.AddPlaceResp, err error) {
-	_, err = l.svcCtx.Sys.PlaceAdd(l.ctx, &sysclient.PlaceAddReq{
+	_, err = l.svcCtx.Pms.PlaceAdd(l.ctx, &pmsclient.PlaceAddReq{
 		Name:      req.Name,
 		Place:     req.Place,
 		Status:    req.Status,
