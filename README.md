@@ -35,35 +35,26 @@
 ## 简介
 > zero-admin 是一个后台管理模板，前端基于vue3.2,ts和element-plus，后端基于go-zero和gorm。
 
-## TODO
-- [x] pms模块属性、sku重构
-- [x] 通知模块添加
-- [x] pms模块品牌添加
-
-- [ ] 商品sku(添加商品时默认添加销售属性的sku组合；更新时展示原有的sku 进行增删改)
-- [ ] 专题商品模块（前端完善默认第一个展示）
-- [ ] 订单模块（订单状态012345 前端修改样式 前端根据状态展示对应状态的按钮disable）
-（后端实现订单评论表 订单操作表）
-- [ ] 退货订单模块（后端实现管理员审核表）
-
-> 小程序端
-- [ ] 搜索页面
-- [ ] 商品分类列表
 ## 主要功能
 
 ## 项目截图
-![截屏2023-08-06 16.30.14.png](https://s2.loli.net/2023/08/06/dUhQFip9I3Ns2YG.png)
-![截屏2023-08-06 16.30.24.png](https://s2.loli.net/2023/08/06/CZ1WpuJldtawseB.png)
-![截屏2023-08-06 16.30.55.png](https://s2.loli.net/2023/08/06/NIrVzK2seXj9okm.png)
-![截屏2023-08-06 16.31.57.png](https://s2.loli.net/2023/08/06/BpOoh8gdsNS29FH.png)
-![截屏2023-08-06 16.30.42.png](https://s2.loli.net/2023/08/06/Ypg5ev8iXzDNERL.png)
-![截屏2023-08-06 16.30.03.png](https://s2.loli.net/2023/08/06/mYvwhnE57i1xcde.png)
-![截屏2023-08-06 16.31.26.png](https://s2.loli.net/2023/08/06/8cuKlvbwJDTeqdZ.png)
-
+![Snipaste_2024-06-02_00-31-07.png](https://s2.loli.net/2024/06/02/jLdEYkf2g31KiU4.png)
+![Snipaste_2024-06-02_00-32-03.png](https://s2.loli.net/2024/06/02/TStNKFqR18mWsXw.png)
+![Snipaste_2024-06-02_00-32-13.png](https://s2.loli.net/2024/06/02/Fr6qeimxENP8Kfp.png)
+![Snipaste_2024-06-02_00-33-01.png](https://s2.loli.net/2024/06/02/MT3j9LECUcViQrw.png)
+![Snipaste_2024-06-02_00-33-20.png](https://s2.loli.net/2024/06/02/r2cZXluM16GTRgO.png)
+![Snipaste_2024-06-02_00-33-31.png](https://s2.loli.net/2024/06/02/awoztq5QrWVHkxh.png)
+![Snipaste_2024-06-02_00-33-59.png](https://s2.loli.net/2024/06/02/7SALUbZHtcQ9FW3.png)
+![Snipaste_2024-06-02_00-34-40.png](https://s2.loli.net/2024/06/02/L8eKdcRrpVqwnak.png)
+![Snipaste_2024-06-02_00-40-52.png](https://s2.loli.net/2024/06/02/2z5WlnAYIqbPJZM.png)
+![Snipaste_2024-06-02_00-44-30.png](https://s2.loli.net/2024/06/02/5bPVi61v2Depla4.png)
+![Snipaste_2024-06-02_00-41-36.png](https://s2.loli.net/2024/06/02/zoe4SxpMkD5V8Ib.png)
+![Snipaste_2024-06-02_00-42-54.png](https://s2.loli.net/2024/06/02/qQrud98paJNt7wf.png)
+![Snipaste_2024-06-02_00-50-12.png](https://s2.loli.net/2024/06/02/RW3dKgJYlCO5QSn.png)
 
 ## 在线体验
-演示地址：https://an23.co  (开发中)
-文档地址：https://an23.co  (开发中)
+演示地址：https://xxx 服务器挂啦
+文档地址：https://xxx 服务器挂啦
 
 ## 浏览器支持
 Modern browsers and Internet Explorer 10+.
