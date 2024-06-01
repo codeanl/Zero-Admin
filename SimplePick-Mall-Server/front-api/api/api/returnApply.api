@@ -1,0 +1,167 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+type(
+       addReturnApplyReq struct {
+            UserID int64 `json:"userID"`
+            OrderID int64 `json:"orderID"`
+            ReturnReasonID int64 `json:"returnReasonID"`
+            Status string `json:"status"`
+            Description string `json:"description"`
+            ProofPics string `json:"proofPics"`
+            ReturnAmount float64 `json:"returnAmount"`
+        }
+        addReturnApplyResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+        }
+    UpdateReturnApplyReq struct {
+            ID int64 `json:"id"`
+          UserID int64 `json:"userID,optional"`
+           OrderID int64 `json:"orderID,optional"`
+              ReturnReasonID int64 `json:"returnReasonID,optional"`
+           Status string `json:"status,optional"`
+           Description string `json:"description,optional"`
+           ProofPics string `json:"proofPics,optional"`
+           ReturnAmount float64 `json:"returnAmount,optional"`
+        }
+        UpdateReturnApplyResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+        }
+    DeleteReturnApplyReq struct {
+          Ids []int64 `json:"ids"`
+      }
+      DeleteReturnApplyResp struct {
+          Code int64 `json:"code"`
+          Message string `json:"message"`
+      }
+
+    ListReturnApplyReq struct {
+      }
+      ListReturnApplyData struct {
+          ID int64 `json:"id"`
+         UserID int64 `json:"userID"`
+          OrderID int64 `json:"orderID"`
+          ReturnReasonID int64 `json:"returnReasonID"`
+          ReturnReasonName string `json:"returnReasonName"`
+          Status string `json:"status"`
+          Description string `json:"description"`
+          ProofPics string `json:"proofPics"`
+          ReturnAmount float64 `json:"returnAmount"`
+          Order Order `json:"order"`
+          User UserData `json:"user"`
+      }
+      ListReturnApplyResp struct {
+          Code int64 `json:"code"`
+          Message string `json:"message"`
+          Total int64 `json:"total"`
+          Data []ListReturnApplyData `json:"data"`
+      }
+       OrderData struct {
+            ID int64 `json:"id"`
+            MemberId int64 `json:"memberId"`
+              PlaceId int64 `json:"placeId"`
+              CouponId int64 `json:"couponId"`
+              OrderSn string `json:"orderSn"`                             // 订单编号
+              MemberUsername string `json:"memberUserName"`               // 用户帐号
+              TotalAmount float64 `json:"totalAmount"`                    // 订单总金额
+              PayAmount float64 `json:"payAmount"`                        // 应付金额（实际支付金额）
+              FreightAmount float64 `json:"freightAmount"`                // 运费金额
+              CouponAmount float64 `json:"couponAmount"`                  // 优惠券抵扣金额
+              PayType string `json:"payType"`                              // 支付方式：0->未支付；1->支付宝；2->微信
+              Status string `json:"status"`                                // 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
+              OrderType string `json:"orderType"`                          // 订单类型：0->正常订单；1->秒杀订单
+              ReceiverProvince string `json:"receiverProvince"`           // 省份/直辖市
+              ReceiverName string `json:"receiverName"`                   //
+              ReceiverPhone string `json:"receiverPhone"`                   //
+              ReceiverCity string `json:"receiverCity"`                   // 城市
+              ReceiverRegion string `json:"receiverRegion"`               // 区
+              ReceiverDetailAddress string `json:"receiverDetailAddress"` // 详细地址
+              Note string `json:"note"`                                   // 订单备注
+              ConfirmStatus string `json:"confirmStatus"`                  // 确认收货状态：0->未确认；1->已确认
+              DeleteStatus string `json:"deleteStatus"`                    // 删除状态：0->未删除；1->已删除
+             PaymentTime string `json:"paymentTime,optional"`                       // 支付时间
+                 DeliveryTime string `json:"deliveryTime,optional"`                        // 发货时间
+                ReceiveTime string `json:"receiveTime,optional"`                          // 确认收货时间
+                 CommentTime string `json:"commentTime,optional"`                           // 修改时间
+          }
+             UserData struct{
+                         ID int64 `json:"id"`
+                         Username string `json:"username"`
+                         NickName string `json:"nickname"`
+                         Phone string `json:"phone"`
+                         Gander string `json:"gender"`
+                         Avatar string `json:"avatar"`
+                         Email string `json:"email"`
+                         Status string `json:"status"`
+                         CreateAt string `json:"creat_at"`
+                         UpdateAt string `json:"update_at"`
+                         CreateBy string `json:"creat_by"`
+                         UpdateBy string `json:"update_by"`
+                   }
+         SkuData struct{
+                ID int64 `json:"id"`
+                ProductID int64 `json:"productId"`
+                ProductName string `json:"productName"`
+                Name string `json:"name"`
+                Pic string `json:"pic"`
+                SkuSn string `json:"skuSn"`
+                Description string `json:"description"`
+                Price float64 `json:"price"`
+                Stock int64 `json:"stock"`
+                 Tag string `json:"tag"`
+          }
+         Order struct{
+             OrderInfo OrderData `json:"orderInfo"`
+             SkuList []SkuData `json:"skuList"`
+          }
+
+        ReturnApplyInfoReq struct {
+           OrderID int64 `json:"orderID"`
+        }
+        ReturnApplyInfoData struct {
+            ID int64 `json:"id"`
+           UserID int64 `json:"userID"`
+            OrderID int64 `json:"orderID"`
+            ReturnReasonID int64 `json:"returnReasonID"`
+            ReturnReasonName string `json:"returnReasonName"`
+            Status string `json:"status"`
+            Description string `json:"description"`
+            ProofPics string `json:"proofPics"`
+            ReturnAmount float64 `json:"returnAmount"`
+        }
+        ReturnApplyInfoResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+            Data ReturnApplyInfoData `json:"data"`
+        }
+)
+
+
+@server(
+    group: returnApply
+    prefix: /api/returnApply
+)
+service api {
+    @handler ReturnApplyAdd
+    post /add (addReturnApplyReq) returns (addReturnApplyResp)
+
+    @handler ReturnApplyUpdate
+    post /update (UpdateReturnApplyReq) returns (UpdateReturnApplyResp)
+
+    @handler ReturnApplyDelete
+    post /delete (DeleteReturnApplyReq) returns (DeleteReturnApplyResp)
+
+    @handler ReturnApplyList
+    post /list (ListReturnApplyReq) returns (ListReturnApplyResp)
+
+     @handler ReturnApplyInfo
+     post /info (ReturnApplyInfoReq) returns (ReturnApplyInfoResp)
+}

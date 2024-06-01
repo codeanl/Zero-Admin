@@ -1,0 +1,49 @@
+info(
+    desc: "登录日志"
+    author: "koobe"
+    email: "1002219331@qq.com"
+)
+
+type (
+    ListLoginLogReq struct {
+        Current int64 `form:"current,default=1"`
+        PageSize int64 `form:"pageSize,default=20"`
+        Username string `form:"username,optional"`
+        Status string `form:"status,optional"`                      // 登录状态（online:在线，登录初始状态，方便统计在线人数；login:退出登录后将online置为login；logout:退出登录）
+    }
+    ListLoginLogData struct {
+        Id int64 `json:"id"`                               // 编号
+        UserId   int64 `json:"userId"`
+        Status string `json:"status"`                      // 登录状态（online:在线，登录初始状态，方便统计在线人数；login:退出登录后将online置为login；logout:退出登录）
+        Ip string `json:"ip"`                              // IP地址
+        CreateTime string `json:"createTime"`              // 创建时间
+        Avatar  string `json:"avatar"`
+        Username  string `json:"username"`
+    }
+    ListLoginLogResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Total int64 `json:"total"`
+        Data []*ListLoginLogData `json:"data"`
+    }
+    DeleteLoginLogReq struct {
+        Ids []int64 `json:"ids"`
+    }
+    DeleteLoginLogResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: sys/loginLog
+    prefix: /api/sys/loginLog
+)
+service api {
+    @handler LoginLogList
+    get /list (ListLoginLogReq) returns (ListLoginLogResp)
+
+    @handler LoginLogDelete
+    post /delete (DeleteLoginLogReq) returns (DeleteLoginLogResp)
+}

@@ -1,0 +1,87 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+type(
+     addMenuReq struct {
+         Name string `json:"name"`                                   // 菜单名称
+         ParentId int64 `json:"parentId,optional"`                   // 父菜单ID，一级菜单为0
+         Url string `json:"url,optional"`                            // 菜单URL,类型：1.普通页面（如用户管理， /sysmodel/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+         Remark string `json:"remark,optional"`
+         Type string `json:"type,optional"`                           // 类型   0：目录   1：菜单   2：按钮
+         Icon string `json:"icon,optional"`                          // 菜单图标
+         OrderNum int64 `json:"orderNum,optional"`                   // 排序
+        TAG string `json:"tag"`
+     }
+     addMenuResp struct {
+         Code int64 `json:"code"`
+         Message string `json:"message"`
+     }
+    ListMenuReq struct {
+    }
+    ListMenuData struct {
+        Id int64 `json:"id"`                                 // 编号
+        Name string `json:"name"`                            // 菜单名称
+        ParentId int64 `json:"parentId"`                     // 父菜单ID，一级菜单为0
+        Url string `json:"url"`                              // 菜单URL,类型：1.普通页面（如用户管理， /sysmodel/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        Remark string `json:"remark"`                          // 授权(多个用逗号分隔，如：sysmodel:user:add,sysmodel:user:edit)
+        Type string `json:"type"`                             // 类型   0：目录   1：菜单   2：按钮
+        Icon string `json:"icon"`                            // 菜单图标
+        OrderNum int64 `json:"orderNum"`                     // 排序
+        TAG string `json:"tag"`
+        Children []ListMenuData `json:"children"`
+    }
+    ListMenuResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Data []ListMenuData `json:"data"`
+    }
+
+    UpdateMenuReq struct {
+        Id int64 `json:"id"`                                        // 编号
+        Name string `json:"name"`                                   // 菜单名称
+        ParentId int64 `json:"parentId,default=0"`                            // 父菜单ID，一级菜单为0
+        Url string `json:"url,optional"`                            // 菜单URL,类型：1.普通页面（如用户管理， /sysmodel/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        Remark string `json:"remark,optional"`                        // 授权(多个用逗号分隔，如：sysmodel:user:add,sysmodel:user:edit)
+        Type string `json:"type,optional"`                           // 类型   0：目录   1：菜单   2：按钮
+        Icon string `json:"icon,optional"`                          // 菜单图标
+        OrderNum int64 `json:"orderNum,optional"`                   // 排序
+        TAG string `json:"tag"`
+    }
+    UpdateMenuResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+
+    DeleteMenuReq struct {
+        Ids []int64 `json:"ids"`
+    }
+    DeleteMenuResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+
+)
+@server(
+    jwt: Auth
+    group: sys/menu
+    prefix: /api/sys/menu
+)
+service api {
+    @handler MenuAdd
+    post /add (addMenuReq) returns (addMenuResp)
+
+    @handler MenuLists
+    post /list (ListMenuReq) returns (ListMenuResp)
+
+    @handler MenuUpdate
+    post /update (UpdateMenuReq) returns (UpdateMenuResp)
+
+   @handler MenuDelete
+    post /delete (DeleteMenuReq) returns (DeleteMenuResp)
+}

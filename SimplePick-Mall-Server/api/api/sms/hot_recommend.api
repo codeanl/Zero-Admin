@@ -1,0 +1,82 @@
+info(
+    desc: "首页推荐商品"
+    author: "koobe"
+    email: "1002219331@qq.com"
+)
+
+type (
+    addHotRecommendReq struct {
+        ProductIds []int64 `json:"productIds"`             // 商品id
+    }
+    addHotRecommendResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+    ListHotRecommendReq struct {
+        Current int64 `form:"current,default=1"`
+        PageSize int64 `form:"pageSize,default=20"`
+        Status string `form:"status,optional"` // 推荐状态：0->不推荐;1->推荐
+    }
+    ListHotRecommendData struct {
+        Id int64 `json:"id"`
+        ProductId int64 `json:"productId"`             // 商品id
+        Status string `json:"status"` // 推荐状态：0->不推荐;1->推荐
+        Sort int64 `json:"sort"`                       // 排序
+        ProductInfo ProductInfo `json:"productInfo"`
+    }
+    ProductInfo struct {
+          Id int64 `json:"id"`
+          CategoryID int64 `json:"categoryId"`
+           Name string `json:"name"`
+           Pic string `json:"pic,optional"`
+           ProductSn string `json:"productSn"`
+           SubTitle string `json:"subTitle,optional"`
+           Description string `json:"description,optional"`
+          OriginalPrice float64 `json:"originalPrice,optional"`
+          Stock int64 `json:"stock,optional"`
+           Unit string `json:"unit,optional"`
+           Sale int64 `json:"sale,optional,default=0"`
+          Price float64 `json:"price,optional"`
+      }
+    ListHotRecommendResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Data []*ListHotRecommendData `json:"data"`
+        Total int64 `json:"total"`
+    }
+    UpdateHotRecommendReq struct {
+        Id int64 `json:"id"`
+       Status string `json:"status"` // 推荐状态：0->不推荐;1->推荐
+        Sort int64 `json:"sort"`                       // 排序
+    }
+    UpdateHotRecommendResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+    DeleteHotRecommendReq struct {
+        Ids []int64 `json:"ids"`
+    }
+    DeleteHotRecommendResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: sms/HotRecommend
+    prefix: /api/sms/hotRecommend
+)
+service api {
+    @handler HotRecommendAdd
+    post /add (addHotRecommendReq) returns (addHotRecommendResp)
+
+    @handler HotRecommendList
+    get /list (ListHotRecommendReq) returns (ListHotRecommendResp)
+
+    @handler HotRecommendUpdate
+    post /update (UpdateHotRecommendReq) returns (UpdateHotRecommendResp)
+
+    @handler HotRecommendDelete
+    post /delete (DeleteHotRecommendReq) returns (DeleteHotRecommendResp)
+}

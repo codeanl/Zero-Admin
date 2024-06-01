@@ -1,0 +1,344 @@
+syntax = "proto3";
+
+package oms;
+
+option go_package = "./oms";
+//添加订单
+message OrderAddReq {
+  int64       PlaceId = 45;
+  int64       MemberId = 2;
+  int64       CouponId = 3;
+  string      OrderSn = 4;
+  int64       MerchantID = 23;
+  string      MemberUsername = 6;
+  double     TotalAmount = 7;
+  double     PayAmount = 8;
+  double     FreightAmount = 9;
+  double     CouponAmount = 12;
+  string       PayType = 14;
+  string       Status = 16;
+  string       OrderType = 17;
+  string      ReceiverName = 31;
+  string      ReceiverPhone = 30;
+  string      ReceiverProvince = 32;
+  string      ReceiverCity = 33;
+  string      ReceiverRegion = 34;
+  string      ReceiverDetailAddress = 35;
+  string      Note = 36;
+  string       ConfirmStatus = 37;
+  string       DeleteStatus = 38;
+  string   PaymentTime = 40;
+  string   DeliveryTime = 41;
+  string   ReceiveTime = 42;
+  string   CommentTime = 43;
+  repeated  Skus Skus=44;
+}
+message Skus {
+  int64  SkuID =1;
+  int64  Count =2;
+}
+message OrderAddResp {
+  string pong = 1;
+  int64  OrderID =2;
+}
+//订单更新
+message OrderUpdateReq{
+  int64       ID = 1;
+  int64       PlaceId = 45;
+  int64       MemberId = 2;
+  int64       CouponId = 3;
+  string      OrderSn = 4;
+  int64       MerchantID = 23;
+  string      MemberUsername = 6;
+  double     TotalAmount = 7;
+  double     PayAmount = 8;
+  double     FreightAmount = 9;
+  double     CouponAmount = 12;
+  string       PayType = 14;
+  string       Status = 16;
+  string       OrderType = 17;
+  string      ReceiverName = 31;
+  string      ReceiverPhone = 30;
+  string      ReceiverProvince = 32;
+  string      ReceiverCity = 33;
+  string      ReceiverRegion = 34;
+  string      ReceiverDetailAddress = 35;
+  string      Note = 36;
+  string       ConfirmStatus = 37;
+  string       DeleteStatus = 38;
+  string   PaymentTime = 40;
+  string   DeliveryTime = 41;
+  string   ReceiveTime = 42;
+  string   CommentTime = 43;
+}
+message OrderUpdateResp{
+  string pong = 1;
+}
+//订单订单列表
+message OrderListReq {
+  int64    current = 1;
+  int64   pageSize = 2;
+  string    OrderSn = 3;
+  string     MemberUsername = 4;
+  string       PayType = 5;
+  string       Status = 7;
+  string       OrderType = 8;
+  int64   UserID = 9;
+  int64   MerchantID = 10;
+  int64   PlaceID = 19;
+}
+
+message OrderListData{
+  int64       ID = 1;
+  int64       PlaceId = 45;
+  int64       MemberId = 2;
+  int64       CouponId = 3;
+  int64       MerchantID = 23;
+  string      OrderSn = 4;
+  string      MemberUsername = 6;
+  double     TotalAmount = 7;
+  double     PayAmount = 8;
+  double     FreightAmount = 9;
+  double     CouponAmount = 12;
+  string       PayType = 14;
+  string       Status = 16;
+  string       OrderType = 17;
+  string      ReceiverName = 31;
+  string      ReceiverPhone = 30;
+  string      ReceiverProvince = 32;
+  string      ReceiverCity = 33;
+  string      ReceiverRegion = 34;
+  string      ReceiverDetailAddress = 35;
+  string      Note = 36;
+  string       ConfirmStatus = 37;
+  string       DeleteStatus = 38;
+  string   PaymentTime = 40;
+  string   CreateTime = 401;
+  string   DeliveryTime = 41;
+  string   ReceiveTime = 42;
+  string   CommentTime = 43;
+  repeated  Skus Skus=44;
+}
+message OrderListResp {
+  int64 total = 1;
+  repeated  OrderListData list = 2;
+}
+
+//删除订单
+message OrderDeleteReq {
+  repeated int64 ids = 1;
+}
+message OrderDeleteResp {
+  string pong = 1;
+}
+//订单详情
+message OrderInfoReq {
+   int64 id = 1;
+}
+message OrderInfoResp {
+  OrderListData OrderInfo=1;
+  repeated Skus Skus=2;
+}
+//添加退货原因
+message ReturnReasonAddReq{
+  string       Name = 45;
+  string       Status = 2;
+}
+message ReturnReasonAddResp{
+  string pong = 1;
+}
+//更新退货原因
+message ReturnReasonUpdateReq{
+  int64       ID = 1;
+  string       Name = 45;
+  string       Status = 2;
+}
+message ReturnReasonUpdateResp{
+  string pong = 1;
+}
+//退货原因列表
+message ReturnReasonListReq {
+  string    Name = 3;
+  string    Status = 4;
+  int64    current = 1;
+  int64   pageSize = 2;
+}
+
+message ReturnReasonListData{
+  int64       ID = 1;
+  string       Name = 45;
+  string       Status = 2;
+}
+message ReturnReasonListResp {
+  int64 total = 1;
+  repeated ReturnReasonListData list = 2;
+}
+//删除退货原因
+message ReturnReasonDeleteReq {
+  repeated int64 ids = 1;
+}
+message ReturnReasonDeleteResp {
+  string pong = 1;
+}
+//添加退货
+message ReturnApplyAddReq{
+  int64 UserID= 2;
+  int64 OrderID= 3;
+  int64 ReturnReasonID=4;
+  string Status= 5;
+  string Description= 6;
+  string ProofPics= 7;
+  double ReturnAmount= 8;
+  int64  PlaceId = 45;
+  int64  MerchantID = 23;
+}
+message ReturnApplyAddResp{
+  string pong = 1;
+}
+//更新退货
+message ReturnApplyUpdateReq{
+  int64 ID= 1;
+  int64 UserID= 2;
+  int64 OrderID= 3;
+  int64 ReturnReasonID=4;
+  string Status= 5;
+  string Description= 6;
+  string ProofPics= 7;
+  double ReturnAmount= 8;
+}
+message ReturnApplyUpdateResp{
+  string pong = 1;
+}
+//退货列表
+message ReturnApplyListReq {
+  string    Status = 4;
+  int64    current = 1;
+  int64   pageSize = 2;
+  int64  PlaceId = 45;
+  int64  MerchantID = 23;
+}
+message ReturnApplyListData{
+  int64 ID= 1;
+  int64 UserID= 2;
+  int64 OrderID= 3;
+  int64 ReturnReasonID=4;
+  string ReturnReasonName=9;
+  string Status= 5;
+  string Description= 6;
+  string ProofPics= 7;
+  double ReturnAmount= 8;
+  int64  PlaceId = 45;
+  int64  MerchantID = 23;
+}
+message ReturnApplyListResp {
+  int64 total = 1;
+  repeated ReturnApplyListData list = 2;
+}
+//删除退货
+message ReturnApplyDeleteReq {
+  repeated int64 ids = 1;
+}
+message ReturnApplyDeleteResp {
+  string pong = 1;
+}
+//退货详情
+message ReturnApplyInfoReq {
+  int64   OrderID = 2;
+}
+message ReturnApplyInfoResp {
+  int64 ID= 1;
+  int64 UserID= 2;
+  int64 OrderID= 3;
+  int64 ReturnReasonID=4;
+  string ReturnReasonName=9;
+  string Status= 5;
+  string Description= 6;
+  string ProofPics= 7;
+  double ReturnAmount= 8;
+  int64  PlaceId = 45;
+  int64  MerchantID = 23;
+}
+//添加购物车
+message CartAddReq{
+  int64 UserID= 1;
+  int64 SkuID= 2;
+  int64 Count= 3;
+}
+message CartAddResp{
+  string pong = 1;
+}
+//更新购物车
+message CartUpdateReq{
+  int64 ID= 4;
+  int64 UserID= 1;
+  int64 SkuID= 2;
+  int64 Count= 3;
+}
+message CartUpdateResp{
+  string pong = 1;
+}
+//购物车列表
+message CartListReq {
+  int64    current = 1;
+  int64   pageSize = 2;
+  int64    UserID = 4;
+}
+message CartListData{
+  int64 ID= 4;
+  int64 UserID= 1;
+  int64 SkuID= 2;
+  int64 Count= 3;
+}
+message CartListResp {
+  int64 total = 1;
+  repeated CartListData list = 2;
+}
+//删除购物车
+message CartDeleteReq {
+  repeated int64 ids = 1;
+}
+message CartDeleteResp {
+  string pong = 1;
+}
+service Oms {
+  //添加订单
+  rpc OrderAdd(OrderAddReq) returns(OrderAddResp);
+  //订单列表
+  rpc OrderList(OrderListReq) returns(OrderListResp);
+  //更新订单
+  rpc OrderUpdate(OrderUpdateReq) returns(OrderUpdateResp);
+  //删除订单
+  rpc OrderDelete(OrderDeleteReq) returns(OrderDeleteResp);
+  //订单详情
+  rpc OrderInfo(OrderInfoReq) returns(OrderInfoResp);
+
+  //添加退货原因
+  rpc ReturnReasonAdd(ReturnReasonAddReq) returns(ReturnReasonAddResp);
+  //更新退货原因
+  rpc ReturnReasonUpdate(ReturnReasonUpdateReq) returns(ReturnReasonUpdateResp);
+  //退货原因列表
+  rpc ReturnReasonList(ReturnReasonListReq) returns(ReturnReasonListResp);
+  //删除退货原因
+  rpc ReturnReasonDelete (ReturnReasonDeleteReq) returns(ReturnReasonDeleteResp);
+
+  //添加退货
+  rpc ReturnApplyAdd(ReturnApplyAddReq) returns(ReturnApplyAddResp);
+  //更新退货
+  rpc ReturnApplyUpdate(ReturnApplyUpdateReq) returns(ReturnApplyUpdateResp);
+  //退货列表
+  rpc ReturnApplyList(ReturnApplyListReq) returns(ReturnApplyListResp);
+  //删除退货
+  rpc ReturnApplyDelete (ReturnApplyDeleteReq) returns(ReturnApplyDeleteResp);
+  //退货详情
+  rpc ReturnApplyInfo (ReturnApplyInfoReq) returns(ReturnApplyInfoResp);
+
+
+  //添加购物车
+  rpc CartAdd(CartAddReq) returns(CartAddResp);
+  //更新购物车
+  rpc CartUpdate(CartUpdateReq) returns(CartUpdateResp);
+  //购物车列表
+  rpc CartList(CartListReq) returns(CartListResp);
+  //删除购物车
+  rpc CartDelete (CartDeleteReq) returns(CartDeleteResp);
+}

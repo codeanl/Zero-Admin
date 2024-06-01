@@ -1,0 +1,73 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+type(
+       addReturnReasonReq struct {
+            Name string `json:"name"`
+            Status string `json:"status"`
+        }
+        addReturnReasonResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+        }
+    UpdateReturnReasonReq struct {
+            ID int64 `json:"id"`
+            Name string `json:"name,optional"`
+            Status string `json:"status,optional"`
+        }
+        UpdateReturnReasonResp struct {
+            Code int64 `json:"code"`
+            Message string `json:"message"`
+        }
+    DeleteReturnReasonReq struct {
+          Ids []int64 `json:"ids"`
+      }
+      DeleteReturnReasonResp struct {
+          Code int64 `json:"code"`
+          Message string `json:"message"`
+      }
+
+    ListReturnReasonReq struct {
+          Current int64 `form:"current,optional"`
+          PageSize int64 `form:"pageSize,optional"`
+          Name string `form:"name,optional "`
+          Status string `form:"status,optional"`
+      }
+      ListReturnReasonData struct {
+            ID int64 `json:"id"`
+            Name string `json:"name"`
+            Status string `json:"status"`
+      }
+      ListReturnReasonResp struct {
+          Code int64 `json:"code"`
+          Message string `json:"message"`
+          Total int64 `json:"total"`
+          Data []ListReturnReasonData `json:"data"`
+      }
+)
+
+
+@server(
+    jwt: Auth
+    group: oms/ReturnReason
+    prefix: /api/oms/returnReason
+)
+service api {
+    @handler ReturnReasonAdd
+    post /add (addReturnReasonReq) returns (addReturnReasonResp)
+
+    @handler ReturnReasonUpdate
+    post /update (UpdateReturnReasonReq) returns (UpdateReturnReasonResp)
+
+    @handler ReturnReasonDelete
+    post /delete (DeleteReturnReasonReq) returns (DeleteReturnReasonResp)
+
+    @handler ReturnReasonList
+    get /list (ListReturnReasonReq) returns (ListReturnReasonResp)
+}

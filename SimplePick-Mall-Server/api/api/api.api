@@ -1,0 +1,36 @@
+import "sys/user.api"
+import "sys/loginLog.api"
+import "sys/role.api"
+import "sys/menu.api"
+import "sys/systemLog.api"
+import "sys/upload.api"
+
+import "pms/place.api"
+import "pms/category.api"
+import "pms/attribute.api"
+import "pms/product.api"
+import "pms/sku.api"
+import "pms/attributeCategory.api"
+import "pms/merchants.api"
+import "pms/merchantsApply.api"
+
+import "ums/member.api"
+import "ums/memberLoginLog.api"
+
+import "sms/home_advertise.api"
+import "sms/coupon.api"
+import "sms/hot_recommend.api"
+import "sms/subject.api"
+import "sms/subject_product.api"
+
+import "oms/order.api"
+import "oms/returnReason.api"
+import "oms/returnApply.api"
+
+info(
+	title: "type title here"
+	desc: "type desc here"
+	author: "type author here"
+	email: "type email here"
+	version: "type version here"
+)

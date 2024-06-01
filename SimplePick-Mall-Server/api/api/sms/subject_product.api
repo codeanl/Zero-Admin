@@ -1,0 +1,86 @@
+info(
+    desc: "首页推荐商品"
+    author: "koobe"
+    email: "1002219331@qq.com"
+)
+
+type (
+    addSubjectProductReq struct {
+        SubjectID int64 `json:"subject_id"`
+        ProductID []int64 `json:"product_id"`
+        Status string `json:"status"`
+        Sort int64 `json:"sort"`
+    }
+    addSubjectProductResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+    ListSubjectProductReq struct {
+        Current int64 `form:"current,default=1"`
+        PageSize int64 `form:"pageSize,default=20"`
+        SubjectID int64 `form:"subjectId"`
+        Status string `form:"status,optional"`
+    }
+    ListSubjectProductData struct {
+        Id int64 `json:"id"`
+           SubjectID int64 `json:"subject_id"`
+           ProductID int64 `json:"product_id"`
+           Status string `json:"status"`
+           Sort int64 `json:"sort"`
+            ProductInfo ProductInfoData `json:"productInfo"`
+    }
+    ProductInfoData struct {
+          Id int64 `json:"id"`
+          CategoryID int64 `json:"categoryId"`
+           Name string `json:"name"`
+           Pic string `json:"pic,optional"`
+           ProductSn string `json:"productSn"`
+           Desc string `json:"desc,optional"`
+          OriginalPrice float64 `json:"originalPrice,optional"`
+           Unit string `json:"unit,optional"`
+          Price float64 `json:"price,optional"`
+      }
+    ListSubjectProductResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Data []ListSubjectProductData `json:"data"`
+        Total int64 `json:"total"`
+    }
+    UpdateSubjectProductReq struct {
+        ID int64 `json:"id"`
+        SubjectID int64 `json:"subject_id,optional"`
+        ProductID int64 `json:"product_id,optional"`
+        Status string `json:"status,optional"`
+        Sort int64 `json:"sort,optional"`
+    }
+    UpdateSubjectProductResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+    DeleteSubjectProductReq struct {
+        Ids []int64 `json:"ids"`
+    }
+    DeleteSubjectProductResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: sms/SubjectProduct
+    prefix: /api/sms/subjectProduct
+)
+service api {
+    @handler SubjectProductAdd
+    post /add (addSubjectProductReq) returns (addSubjectProductResp)
+
+    @handler SubjectProductList
+    get /list (ListSubjectProductReq) returns (ListSubjectProductResp)
+
+    @handler SubjectProductUpdate
+    post /update (UpdateSubjectProductReq) returns (UpdateSubjectProductResp)
+
+    @handler SubjectProductDelete
+    post /delete (DeleteSubjectProductReq) returns (DeleteSubjectProductResp)
+}

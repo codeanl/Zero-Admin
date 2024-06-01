@@ -1,0 +1,164 @@
+@startuml
+namespace model {
+    class Cart << (S,Aquamarine) >> {
+        + UserID int64
+        + SkuID int64
+        + Count int64
+
+    }
+    interface CartModel  {
+        + AddCart(Cart *Cart) (*Cart, error)
+        + UpdateCart(id int64, Cart *Cart) error
+        + DeleteCartByIds(ids []int64) error
+        + GetCartList(in *oms.CartListReq) ([]*Cart, int64, error)
+        + GetCartById(id int64) (*Cart, error)
+
+    }
+    class Order << (S,Aquamarine) >> {
+        + MemberId int64
+        + CouponId int64
+        + PlaceId int64
+        + MerchantID int64
+        + OrderSn string
+        + MemberUsername string
+        + TotalAmount float64
+        + PayAmount float64
+        + FreightAmount float64
+        + CouponAmount float64
+        + PayType string
+        + Status string
+        + OrderType string
+        + ReceiverName string
+        + ReceiverPhone string
+        + ReceiverProvince string
+        + ReceiverCity string
+        + ReceiverRegion string
+        + ReceiverDetailAddress string
+        + Note string
+        + ConfirmStatus string
+        + DeleteStatus string
+        + PaymentTime string
+        + DeliveryTime string
+        + ReceiveTime string
+        + CommentTime string
+
+    }
+    interface OrderModel  {
+        + AddOrder(order *Order) (*Order, error)
+        + UpdateOrder(id int64, order *Order) error
+        + DeleteOrderByIds(ids []int64) error
+        + GetOrderList(in *oms.OrderListReq) ([]*Order, int64, error)
+        + GetOrderById(id int64) (*Order, error)
+
+    }
+    class OrderSku << (S,Aquamarine) >> {
+        + OrderID int64
+        + SkuID int64
+        + Count int64
+
+    }
+    interface OrderSkuModel  {
+        + AddOrderSku(OrderSku *OrderSku) (*OrderSku, error)
+        + UpdateOrderSku(id int64, role *OrderSku) error
+        + DeleteOrderSkuBySpuID(id int64) error
+        + GetOrderSkuByOrderID(id int64) ([]OrderSku, error)
+
+    }
+    class ReturnApply << (S,Aquamarine) >> {
+        + UserID int64
+        + OrderID int64
+        + ReturnReasonID int64
+        + PlaceId int64
+        + MerchantID int64
+        + Status string
+        + Description string
+        + ProofPics string
+        + ReturnAmount float64
+
+    }
+    interface ReturnApplyModel  {
+        + AddReturnApply(ReturnApply *ReturnApply) (*ReturnApply, error)
+        + UpdateReturnApply(id int64, ReturnApply *ReturnApply) error
+        + DeleteReturnApplyByIds(ids []int64) error
+        + GetReturnApplyList(in *oms.ReturnApplyListReq) ([]*ReturnApply, int64, error)
+        + GetReturnApplyById(id int64) (*ReturnApply, error)
+        + GetReturnApplyByOrderID(id int64) (*ReturnApply, error)
+
+    }
+    class ReturnReason << (S,Aquamarine) >> {
+        + Name string
+        + Status string
+
+    }
+    interface ReturnReasonModel  {
+        + AddReturnReason(ReturnReason *ReturnReason) (*ReturnReason, error)
+        + UpdateReturnReason(id int64, ReturnReason *ReturnReason) error
+        + DeleteReturnReasonByIds(ids []int64) error
+        + GetReturnReasonList(in *oms.ReturnReasonListReq) ([]*ReturnReason, int64, error)
+        + GetReturnReasonById(id int64) (*ReturnReason, error)
+
+    }
+    class defaultCartModel << (S,Aquamarine) >> {
+        - conn *gorm.DB
+
+        + AddCart(info *Cart) (*Cart, error)
+        + UpdateCart(id int64, info *Cart) error
+        + GetCartById(id int64) (*Cart, error)
+        + DeleteCartByIds(ids []int64) error
+        + GetCartList(in *oms.CartListReq) ([]*Cart, int64, error)
+
+    }
+    class defaultOrderModel << (S,Aquamarine) >> {
+        - conn *gorm.DB
+
+        + AddOrder(order *Order) (*Order, error)
+        + UpdateOrder(id int64, order *Order) error
+        + GetOrderById(id int64) (*Order, error)
+        + DeleteOrderByIds(ids []int64) error
+        + GetOrderList(in *oms.OrderListReq) ([]*Order, int64, error)
+
+    }
+    class defaultOrderSkuModel << (S,Aquamarine) >> {
+        - conn *gorm.DB
+
+        + AddOrderSku(info *OrderSku) (*OrderSku, error)
+        + UpdateOrderSku(id int64, role *OrderSku) error
+        + DeleteOrderSkuBySpuID(id int64) error
+        + GetOrderSkuByOrderID(id int64) ([]OrderSku, error)
+
+    }
+    class defaultReturnApplyModel << (S,Aquamarine) >> {
+        - conn *gorm.DB
+
+        + AddReturnApply(info *ReturnApply) (*ReturnApply, error)
+        + UpdateReturnApply(id int64, info *ReturnApply) error
+        + GetReturnApplyById(id int64) (*ReturnApply, error)
+        + DeleteReturnApplyByIds(ids []int64) error
+        + GetReturnApplyByOrderID(id int64) (*ReturnApply, error)
+        + GetReturnApplyList(in *oms.ReturnApplyListReq) ([]*ReturnApply, int64, error)
+
+    }
+    class defaultReturnReasonModel << (S,Aquamarine) >> {
+        - conn *gorm.DB
+
+        + AddReturnReason(info *ReturnReason) (*ReturnReason, error)
+        + UpdateReturnReason(id int64, info *ReturnReason) error
+        + GetReturnReasonById(id int64) (*ReturnReason, error)
+        + DeleteReturnReasonByIds(ids []int64) error
+        + GetReturnReasonList(in *oms.ReturnReasonListReq) ([]*ReturnReason, int64, error)
+
+    }
+}
+"gorm.Model" *-- "model.Cart"
+"gorm.Model" *-- "model.Order"
+"gorm.Model" *-- "model.OrderSku"
+"gorm.Model" *-- "model.ReturnApply"
+"gorm.Model" *-- "model.ReturnReason"
+
+"model.CartModel" <|-- "model.defaultCartModel"
+"model.OrderModel" <|-- "model.defaultOrderModel"
+"model.OrderSkuModel" <|-- "model.defaultOrderSkuModel"
+"model.ReturnApplyModel" <|-- "model.defaultReturnApplyModel"
+"model.ReturnReasonModel" <|-- "model.defaultReturnReasonModel"
+
+@enduml

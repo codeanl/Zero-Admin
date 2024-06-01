@@ -1,0 +1,128 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+type(
+ //添加角色------------------------------------------------
+   addRoleReq struct {
+        Name string `json:"name"`
+        Remark string `json:"remark,optional"`
+    }
+    addRoleResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+     //添加角色------------------------------------------------
+
+     //角色修改------------------------------------------------
+    UpdateRoleReq struct {
+        Id int64 `json:"id"`
+        Name string `json:"name"`
+        Remark string `json:"remark"`
+    }
+    UpdateRoleResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+     //角色修改------------------------------------------------
+
+
+     //删除角色------------------------------------------------
+    DeleteRoleReq struct {
+        Ids []int64 `json:"ids"`
+    }
+    DeleteRoleResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+     //删除角色------------------------------------------------
+     //角色列表------------------------------------------------
+    ListRoleReq struct {
+   Current int64 `form:"current,optional"`
+   PageSize int64 `form:"pageSize,optional"`
+    Name string `form:"name,optional"`
+    }
+    ListRoleData struct {
+        Id int64 `json:"id"`                                // 编号
+        Name string `json:"name"`                           // 角色名称
+        Remark string `json:"remark"`                       // 备注
+        CreateBy string `json:"create_by"`                   // 创建人
+        CreateAt string `json:"create_at"`               // 创建时间
+        UpdateBy string `json:"update_by"`           // 更新人
+        UpdateAt string `json:"update_at"`       // 更新时间
+    }
+    ListRoleResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Total int64 `json:"total"`
+        Data []*ListRoleData `json:"data"`
+    }
+     //角色列表------------------------------------------------
+    RoleByUserListReq struct {
+            UserID int64 `json:"userID"`
+    }
+   RoleByUserListResp struct {
+           Code int64 `json:"code"`
+           Message string `json:"message"`
+           Data []*ListRoleData `json:"data"`
+       }
+     //------------------------------------------------
+    RoleMenuReq struct {
+        Id int64 `json:"id,optional"`
+    }
+
+    RoleMenuResp struct {
+        Data []int64 `json:"data"`
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+     //------------------------------------------------
+    UpdateRoleMenuReq struct {
+        RoleId int64 `json:"roleId"`
+        MenuIds []int64 `json:"menuIds"`
+    }
+    UpdateRoleMenuResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+
+
+)
+
+
+@server(
+    jwt: Auth
+    group: sys/role
+    prefix: /api/sys/role
+)
+service api {
+   @doc(summary: "添加角色")
+    @handler RoleAdd
+    post /add (addRoleReq) returns (addRoleResp)
+
+    @doc(summary: "角色修改")
+    @handler RoleUpdate
+    post /update (UpdateRoleReq) returns (UpdateRoleResp)
+
+    @doc(summary: "删除角色")
+    @handler RoleDelete
+    post /delete (DeleteRoleReq) returns (DeleteRoleResp)
+
+    @doc(summary: "角色列表")
+    @handler RoleList
+    get /list (ListRoleReq) returns (ListRoleResp)
+
+      @handler RoleByUserList
+      post /byUserList (RoleByUserListReq) returns (RoleByUserListResp)
+
+    @handler QueryMenuByRoleId
+    post /queryMenuByRoleId (RoleMenuReq) returns (RoleMenuResp)
+
+    @handler UpdateRoleMenu
+    post /updateRoleMenu (UpdateRoleMenuReq) returns (UpdateRoleMenuResp)
+}

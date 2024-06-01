@@ -1,0 +1,89 @@
+info(
+    desc: "属性分类"
+    author: "koobe"
+    email: "1002219331@qq.com"
+)
+
+type (
+    addAttributeReq struct {
+        AttributeCategoryID    int64  `json:"attributeCategoryID"`
+        Name           string `json:"name"`
+        Type           string `json:"type"`
+        Value           string `json:"value"`
+        Sort           int64 `json:"sort"`
+        MerchantID           int64 `json:"merchantID,optional"`
+    }
+    addAttributeResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+    ListAttributeReq struct {
+        Current int64 `form:"current,default=1"`
+        PageSize int64 `form:"pageSize,default=20"`
+        Name   string `form:"name,optional"`
+        Type   string `form:"type,optional"`
+       AttributeCategoryID int64  `form:"attributeCategoryID,optional"`
+         MerchantID   int64  `form:"merchantID,optional"`
+    }
+    ListAttributeData struct {
+        Id         int64  `json:"id"`
+         AttributeCategoryID    int64  `json:"attributeCategoryID"`
+        Name           string `json:"name"`
+        Type           string `json:"type"`
+        Value           string `json:"value"`
+        Sort           int64 `json:"sort"`
+        MerchantID      int64 `json:"merchantID,optional"`
+    }
+    AttributeValue struct{
+        Id int64 `json:"id"`
+        Name string `json:"name"`
+        AttributeCategoryID int64 `json:"attributeCategoryID"`
+    }
+    ListAttributeResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Data []ListAttributeData `json:"data"`
+        Total int64 `json:"total"`
+    }
+    UpdateAttributeReq struct {
+        Id         int64  `json:"id"`
+         AttributeCategoryID    int64  `json:"attributeCategoryID"`
+        Name           string `json:"name"`
+        Type           string `json:"type"`
+        Value           string `json:"value"`
+        Sort           int64 `json:"sort"`
+         MerchantID           int64 `json:"merchantID"`
+    }
+    UpdateAttributeResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+    DeleteAttributeReq struct {
+        Ids []int64 `json:"ids"`
+    }
+    DeleteAttributeResp struct {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+
+)
+
+@server(
+    jwt: Auth
+    group: pms/attribute
+    prefix: /api/pms/attribute
+)
+service api {
+    @handler AttributeAdd
+    post /add (addAttributeReq) returns (addAttributeResp)
+
+    @handler AttributeList
+    get /list (ListAttributeReq) returns (ListAttributeResp)
+
+
+    @handler AttributeUpdate
+    post /update (UpdateAttributeReq) returns (UpdateAttributeResp)
+
+    @handler AttributeDelete
+    post /delete (DeleteAttributeReq) returns (DeleteAttributeResp)
+}
