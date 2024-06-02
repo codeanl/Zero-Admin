@@ -1,0 +1,1 @@
+import{at as e}from"./index-bc94ad6c.js";const a=()=>e.get("/api/pms/attributeCategory/list"),s=t=>t.id?e.post("/api/pms/attributeCategory/update",t):e.post("/api/pms/attributeCategory/add",t),o=t=>e.post("/api/pms/attributeCategory/delete",t);export{s as a,o as b,a as r};

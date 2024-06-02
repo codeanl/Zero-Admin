@@ -1,0 +1,1 @@
+import{at as r}from"./index-bc94ad6c.js";const m=(p,e,s,t,a)=>r.get("/api/pms/merchantsApply/list",{params:{current:p,pageSize:e,name:s,status:t,type:a}}),n=p=>p.id?r.post("/api/pms/merchantsApply/update",p):r.post("/api/pms/merchantsApply/add",p);export{m as a,n as r};
