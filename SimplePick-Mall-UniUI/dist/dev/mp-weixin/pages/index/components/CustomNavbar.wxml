@@ -1,0 +1,1 @@
+<view class="navbar" style="{{'padding-top:' + a}}"><view class="logo"><text class="logo-text">假的商城V1.0</text></view><navigator class="search" url="/pages/seacher/index"><text class="icon-search">搜索商品</text><text class="icon-scan"></text></navigator></view>

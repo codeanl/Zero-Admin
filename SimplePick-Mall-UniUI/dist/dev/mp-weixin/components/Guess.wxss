@@ -1,0 +1,98 @@
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+:host {
+  display: block;
+}
+
+/* 分类标题 */
+.caption {
+  display: flex;
+  justify-content: center;
+  line-height: 1;
+  padding: 36rpx 0 40rpx;
+  font-size: 32rpx;
+  color: #262626;
+}
+.caption .text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 28rpx 0 30rpx;
+}
+.caption .text::before, .caption .text::after {
+  content: "";
+  width: 20rpx;
+  height: 20rpx;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAABa1BMVEUAAAA8zbMAxaYAxaXs8e8UzLIAxKSD3MsAxKT18/IAwqD38/Nw2MU2z7e9596V39DR6+UAy6/x8fGD28sAwaD38/Or49ie4NPv8fAzz7bK6eLr8O6/594AxKXq8O7U6+ZI0boAyq7N6uMAy7AAwZ+z5drm7+zW7Oe45tzI6eKK3c172sgczbJA0LgAya1a1L7e7emn4tb38/Lh7utE0blf1cC15duj4dWl4tbM6uNc1L8AzLBq18Oa4NLc7ekezbPH6eFd1L9M0rvK6eLE6OAmzbQQzLEAyKoAxqcAy6/U7OYAyawAw6Le7uri7uvY7OjO6uSr49hl1sJU070pzrQAxaTx8vDt8e/o8O3l7+zb7enJ6eLD6OC45tyf4dSK3c102cZA0bk3z7f08vLp8O6+596y5Nql4taX39GT3s+A28p72shu18RK0rsZzbLE6OC85t2w5NmZ39GQ3s6E28tr18Ne1b9b1L9N0rvq6StFAAAAR3RSTlMABqxbBvz65N/dj4lwcG9vbm1YVFRSRPz5+fjz8uTj4ODg29vb2dfQ0M/Pz87MzKyrq6amk4qJiW9ubW1cW1VTUkREQkJAQKpNtFsAAAETSURBVBjTTc5nW8JQDAXgtEWGssG99957b0upoG0RBC0tU6Z7/XzT1us13/I+T04OmGMLrri6eidWD2zwN+2uQrJ4G49dRUeOiLUVkimTru/unzd+DSkdyxhUUl+kTfM2VUSa9J+eeafK0kO2EsIfA+l4Juq3jrY6K2+ag4GgEbZN4n1ara7vwRLmT9Mis/qHvAiDmO+l6Ja/lCHoeSqpHRSPlWauG/rUsvQPT3L5RAuMYwsfRU/iURiG5exrdYbinCCILOxXtfe6m9iuIPIRDhhHTW/IO5YFRJ6P9DMAoYb8qTTnPecXgQWkm8sw4Kwr38ZLQURCa7WO1vL4Es0gYgCHo4TGwrQIw7FOu93Jcoy5/gCKLT9YRdi86gAAAABJRU5ErkJggg==);
+  background-size: contain;
+  margin: 0 10rpx;
+}
+
+/* 猜你喜欢 */
+.guess {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 20rpx;
+}
+.guess .guess-item {
+  width: 345rpx;
+  padding: 24rpx 20rpx 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+  background-color: #fff;
+}
+.guess .image {
+  width: 304rpx;
+  height: 304rpx;
+}
+.guess .name {
+  height: 75rpx;
+  margin: 10rpx 0;
+  font-size: 26rpx;
+  color: #262626;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.guess .price {
+  line-height: 1;
+  padding-top: 4rpx;
+  color: #cf4444;
+  font-size: 26rpx;
+}
+.guess .small {
+  font-size: 80%;
+}
+.loading-text {
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+  padding: 20rpx 0;
+}

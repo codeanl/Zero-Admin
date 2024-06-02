@@ -1,0 +1,1 @@
+<view class="panel hot"><view wx:for="{{a}}" wx:for-item="item" wx:key="d" class="item"><view class="title"><text class="title-text">{{item.a}}</text></view><navigator hover-class="none" url="{{item.c}}" class="cards"><image class="image" mode="aspectFit" src="{{item.b}}"></image></navigator></view></view>

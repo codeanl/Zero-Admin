@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "购物车",
+  "usingComponents": {
+    "vk-data-input-number-box": "../../components/vk-data-input-number-box/vk-data-input-number-box",
+    "uni-swipe-action-item": "../../node-modules/@dcloudio/uni-ui/lib/uni-swipe-action-item/uni-swipe-action-item",
+    "uni-swipe-action": "../../node-modules/@dcloudio/uni-ui/lib/uni-swipe-action/uni-swipe-action",
+    "guess": "../../components/Guess"
+  }
+}

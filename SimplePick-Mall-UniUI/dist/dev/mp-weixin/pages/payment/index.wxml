@@ -1,0 +1,1 @@
+<scroll-view enable-back-to-top class="viewport" scroll-y bindscrolltolower="{{a}}"><view class="overview"><view class="status icon-checked">支付成功</view><view class="buttons"><navigator hover-class="none" class="button navigator" url="/pages/index/index" open-type="switchTab"> 返回首页 </navigator></view></view></scroll-view>

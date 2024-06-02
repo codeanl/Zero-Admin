@@ -1,0 +1,1 @@
+<view class="caption data-v-923f0508"><navigator class="search data-v-923f0508"><input class="data-v-923f0508" type="text" placeholder="请输入内容" value="{{a}}" bindinput="{{b}}"/><navigator class="icon-scan data-v-923f0508" url="{{c}}"></navigator></navigator></view>
