@@ -8,6 +8,10 @@
     <h4 align="center">基于go-zero+Vue3前后端分离的开发框架</h4>
 </p>
 <p align="center">
+    <h1 align="center" style="margin:0 0 10px 0; font-weight: bold;">定点帮扶农产品直销系统</h1>
+    <h4 align="center">商场系统</h4>
+</p>
+<p align="center">
   <a href="https://github.com/vuejs/vue">
     <img src="https://img.shields.io/badge/vue-3.2-blue" alt="vue">
   </a>
